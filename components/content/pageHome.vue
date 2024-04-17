@@ -1,13 +1,37 @@
+<script setup lang="ts">
+import { ref } from "vue";
+
+interface LinkItem {
+  name: string;
+  href: string;
+  separator?: string;
+}
+
+const links = ref<LinkItem[]>([
+  { name: "Github", href: "https://github.com/iepn", separator: "+" },
+  { name: "Hackerone", href: "https://hackerone.com/iepn", separator: "+" },
+  { name: "Behance", href: "https://www.behance.net/1ui", separator: "÷" },
+  {
+    name: "Researchgate",
+    href: "https://www.researchgate.net/profile/Rhyme-Qing",
+  },
+]);
+</script>
+
 <template>
   <video src="/background.mp4" playsinline loop muted autoplay="true"></video>
   <main>
     <div class="title">
-      <p>
-        <span>Full-stack</span> development,<br />
-        <span>Security</span>, <span>Design</span>.
+      <div class="title-text">
+        <a href="">Full-stack</a> development,<br />
+        <a href="">Security</a>, <a href="">Design</a>.
         <br />
-      </p>
-      <span>github + hackerone ≈ behance ÷ researchgate</span>
+      </div>
+      <div class="link">
+        <span v-for="item in links" :key="item.href">
+          <a :href="item.href">{{ item.name }}</a> {{ item.separator }}
+        </span>
+      </div>
     </div>
     <div class="copyright">
       <p>
@@ -26,12 +50,6 @@ video {
   height: 100vh;
 }
 
-@keyframes colorTransition {
-  0%, 100% { color: #d6d6d6; }
-  33%, 66% { color: #1c0000; }
-}
-
-
 main {
   width: 90%;
   margin: 0 auto;
@@ -43,39 +61,40 @@ main {
 .title {
   line-height: 3;
   transform: translateY(30vh);
-  p {
+  .title-text {
     color: #d6d6d6;
     font-size: 4em;
-    line-height: 1;
+    line-height: initial;
     padding: 0;
     margin: 0;
-    span {
+    a {
       padding: 0;
       margin: 0;
-      text-transform: capitalize;
+      text-decoration: none;
+      text-transform: none !important;
       color: #d6d6d6;
-      animation-name: colorTransition;
-      animation-duration: 13s;
-      animation-iteration-count: infinite;
-
-      &:nth-child(1) {
-        animation-delay: 0s;
-      }
-
-      &:nth-child(2) {
-        animation-delay: 1s;
-      }
-
-      &:nth-child(3) {
-        animation-delay: 2s;
-      }
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #1c0000;
+      text-transform: none;
+      text-decoration: none;
     }
   }
-  span {
+  .link {
     padding: 0;
     margin: 0;
     text-transform: capitalize;
     color: #b7b7b7;
+    a {
+      text-decoration: none;
+      color: #b7b7b7;
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+  }
+  a:hover {
+    text-decoration: line-through;
   }
 }
 .copyright {
