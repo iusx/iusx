@@ -3,6 +3,11 @@ import { ref, computed } from "vue";
 const currentPage = ref<number>(1);
 const itemsPerPage = 5;
 
+useSeoMeta({
+  title: "Develop - RHYME.Q",
+  description: "Github + Hackerone + Behance ÷ Researchgate",
+});
+
 const { data: equalQuery } = await useAsyncData("equal", () => {
   // 返回 /more 目录下的数据，也可以（.where({ director: 'Hayao Miyazaki' }) 来进行过滤）
   return queryContent("dev/").find();
@@ -101,7 +106,9 @@ const getAllData = computed(() => {
   background: white;
   width: 80%;
   margin: 0 auto;
-
+  @media (max-width: 768px) {
+    width: 100%;
+  }
   .pages-nums {
     color: #d6d6d6;
     margin: 0;
@@ -136,12 +143,17 @@ const getAllData = computed(() => {
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 3%;
+  @media (max-width: 425px) {
+    padding-left: 3%;
+    padding-right: 3%;
+  }
 }
 .content {
   margin-bottom: 6rem;
-  transition: opacity 0.3s ease;
+  transition: filter 0.3s ease;
+  filter: grayscale(0);
   &:hover {
-    opacity: 0.9;
+    filter: grayscale(1);
   }
   a {
     text-decoration: none;
@@ -157,7 +169,6 @@ const getAllData = computed(() => {
   margin-bottom: 1rem;
   display: block;
   font-weight: bold;
-  font-family: none;
   text-decoration: none;
   color: #d6d6d6;
   transition: color 0.3s ease;

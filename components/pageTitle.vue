@@ -82,7 +82,7 @@ main {
     margin: 0;
     line-height: 1;
     @media (max-width: 425px) {
-        font-size: 1.3rem;
+      font-size: 1.3rem;
     }
   }
   span {
@@ -90,7 +90,7 @@ main {
     color: #1c0000;
     font-size: 1.3rem;
     @media (max-width: 425px) {
-        font-size: 1rem;
+      font-size: 1rem;
     }
   }
 }
@@ -116,6 +116,7 @@ main {
     color: #1c0000;
     font-size: 0.9rem;
     line-height: 1;
+    font-weight: bold;
     text-transform: uppercase;
 
     margin: 0;
