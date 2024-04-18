@@ -14,6 +14,7 @@
     "nuxt-swiper": "^1.2.2"
   },
   "devDependencies": {
+    "nuxt-icon": "^0.6.10",
     "sass": "^1.75.0"
   }
 }

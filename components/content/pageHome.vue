@@ -23,13 +23,14 @@ const links = ref<LinkItem[]>([
   <main>
     <div class="title">
       <div class="title-text">
-        <a href="">Full-stack</a> development,<br />
-        <a href="">Security</a>, <a href="">Design</a>.
+        <a href="/dev">Full-stack</a> development,<br />
+        <a href="">Security</a>, <a href="">Design</a><a href="">.</a>
         <br />
       </div>
       <div class="link">
         <span v-for="item in links" :key="item.href">
-          <a :href="item.href">{{ item.name }}</a> {{ item.separator }}
+          <a :href="item.href" target="_blank">{{ item.name }}</a>
+          {{ item.separator }}
         </span>
       </div>
     </div>
@@ -67,6 +68,9 @@ main {
     line-height: initial;
     padding: 0;
     margin: 0;
+    @media (max-height: 1000px) {
+        font-size: 2em;
+    }
     a {
       padding: 0;
       margin: 0;
@@ -86,19 +90,22 @@ main {
     margin: 0;
     text-transform: capitalize;
     color: #b7b7b7;
+    line-height: 1.3;
     a {
       text-decoration: none;
       color: #b7b7b7;
       padding-left: 3px;
       padding-right: 3px;
+      transition: color 0.3s ease;
     }
-  }
-  a:hover {
-    text-decoration: line-through;
+    a:hover {
+      color: #1c0000;
+      text-transform: none;
+      text-decoration: none;
+    }
   }
 }
 .copyright {
-  width: 25vw;
   color: #a1a1a1;
   font-size: small;
 }
