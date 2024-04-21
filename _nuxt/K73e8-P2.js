@@ -1,1 +1,0 @@
-import{_ as o}from"./BPhgjPLW.js";import{o as r,l as t,R as s}from"./CuneEKG8.js";const a={};function l(e,n){return r(),t("table",null,[s(e.$slots,"default")])}const _=o(a,[["render",l]]);export{_ as default};

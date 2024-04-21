@@ -1,0 +1,1 @@
+import{_ as r}from"./CsJSnemj.js";import{o,l as t,R as s}from"./CuneEKG8.js";const n={};function c(e,a){return o(),t("tr",null,[s(e.$slots,"default")])}const _=r(n,[["render",c]]);export{_ as default};
