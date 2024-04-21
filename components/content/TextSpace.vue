@@ -11,17 +11,32 @@ onMounted(() => {
 </script>
 
 <template>
-  <a :href="'/img/' + img" target="_blank">
+  <main>
+    <a :href="'/img/' + img" target="_blank" v-if="type === 'flat'">
+      <main
+        class="layout"
+        v-if="info"
+        :class="{
+          'page-tips-main': true,
+          'reverse-direction': direction === 'row-reverse',
+        }"
+      >
+        <img class="img" v-if="img" :src="'/img/' + img" />
+        <div v-html="info"></div></main
+    ></a>
     <main
+      v-else
+      class="layout"
       v-if="info"
       :class="{
         'page-tips-main': true,
         'reverse-direction': direction === 'row-reverse',
       }"
     >
-      <img v-if="img" :src="'/img/' + img" />
-      <div v-html="info"></div></main
-  ></a>
+      <page-image class="img" :img="img" />
+      <div v-html="info"></div>
+    </main>
+  </main>
 </template>
 
 <style lang="scss" scoped>
@@ -32,17 +47,15 @@ onMounted(() => {
   &.reverse-direction {
     flex-direction: row-reverse;
   }
-  img {
-    width: 50%;
-    height: 50%;
+  .img {
+    width: 70%;
+    height: 70%;
+    padding: 7px;
   }
 }
-main {
+.layout {
   color: #8e8e8e;
   text-align: left;
-}
-div {
-    padding: 10px;
 }
 a {
   text-decoration: none;

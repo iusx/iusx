@@ -13,7 +13,7 @@ const props = defineProps({
   },
 });
 
-const images = ref(props.img.split(',').map(item => '/img/' + item))
+const images = ref(props.img.split(",").map((item) => "/img/" + item));
 </script>
 
 <template>
@@ -37,13 +37,16 @@ const images = ref(props.img.split(',').map(item => '/img/' + item))
         },
       }"
     >
-      <SwiperSlide v-for="(item, index) in images" :key="index"><p class="tips">→</p><img :src="item" alt="page-image" /></SwiperSlide>
+      <SwiperSlide v-for="(item, index) in images" :key="index"
+        ><a :href="item" target="_blank"
+          ><p class="tips">→</p>
+          <img :src="item" alt="page-image" /></a
+      ></SwiperSlide>
     </Swiper>
-    <div class="info">
+    <div class="info" v-if="info && type">
       <div class="info-title">{{ info }}</div>
       <img :src="'/img/page/' + type + '.png'" alt="page-image-copyright" />
     </div>
-    
   </main>
 </template>
 
@@ -52,13 +55,13 @@ img {
   width: 100%;
 }
 .tips {
-    position: absolute;
-    color: #ffffff;
-    right: 0;
-    bottom: 0;
-    font-size: small;
-    background: blue;
-    padding: 10px;
+  position: absolute;
+  color: #ffffff;
+  right: 0;
+  bottom: 0;
+  font-size: small;
+  background: blue;
+  padding: 10px;
 }
 .info {
   display: flex;
