@@ -1,0 +1,1 @@
+import{d as o,o as s,l as a,E as t,F as c,H as p,I as n}from"./Dx8zHam3.js";import{_ as r}from"./D240qQ41.js";const _=e=>(p("data-v-780508b9"),e=e(),n(),e),d=_(()=>t("p",null,"全文概述",-1)),l=o({__name:"textSum",props:["desc"],setup(e){return(m,u)=>(s(),a("main",null,[d,t("span",null,c(e.desc),1)]))}}),S=r(l,[["__scopeId","data-v-780508b9"]]);export{S as default};
