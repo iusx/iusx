@@ -41,7 +41,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .page-tips-main {
-  color: #b6b6b6;
+  color: #c0c0c0;
   font-size: small;
   display: flex;
   &.reverse-direction {
@@ -54,7 +54,6 @@ onMounted(() => {
   }
 }
 .layout {
-  color: #8e8e8e;
   text-align: left;
 }
 a {

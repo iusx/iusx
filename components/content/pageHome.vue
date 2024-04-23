@@ -19,8 +19,8 @@ const links = ref<LinkItem[]>([
 </script>
 
 <template>
-  <video src="/background.mp4" playsinline loop muted autoplay="true"></video>
   <main>
+    <video src="/background.mp4" playsinline loop muted autoplay="true"></video>
     <div class="title">
       <div class="title-text">
         <a href="/dev">Full-stack</a> development,<br />
@@ -35,9 +35,14 @@ const links = ref<LinkItem[]>([
       </div>
     </div>
     <div class="copyright">
+      <div class="copy-link">
+        <a href="/about">about</a>
+        <a href="">Link</a>
+        <a href="">RSS</a>
+      </div>
       <p>
-        This work is licensed under the Creative Commons Attribution 4.0
-        International License (CC BY 4.0) and the MIT License
+        Creative Commons Attribution 4.0 International License (CC BY 4.0) and
+        the MIT License
       </p>
     </div>
   </main>
@@ -65,11 +70,12 @@ main {
   .title-text {
     color: #d6d6d6;
     font-size: 4em;
+    font-weight: 300;
     line-height: initial;
     padding: 0;
     margin: 0;
     @media (max-height: 1000px) {
-        font-size: 2em;
+      font-size: 2em;
     }
     a {
       padding: 0;
@@ -78,11 +84,11 @@ main {
       text-transform: none !important;
       color: #d6d6d6;
       transition: color 0.3s ease;
-    }
-    a:hover {
-      color: #1c0000;
-      text-transform: none;
-      text-decoration: none;
+      &:hover {
+        color: #1c0000;
+        text-transform: none;
+        text-decoration: none;
+      }
     }
   }
   .link {
@@ -97,16 +103,31 @@ main {
       padding-left: 3px;
       padding-right: 3px;
       transition: color 0.3s ease;
-    }
-    a:hover {
-      color: #1c0000;
-      text-transform: none;
-      text-decoration: none;
+      &:hover {
+        color: #1c0000;
+        text-transform: none;
+        text-decoration: none;
+      }
     }
   }
 }
 .copyright {
   color: #a1a1a1;
   font-size: small;
+  line-height: 1;
+  .copy-link {
+    a {
+      text-decoration: none;
+      text-transform: capitalize !important;
+      color: #b7b7b7;
+      padding-right: 10px;
+      transition: color 0.3s ease;
+      &:hover {
+        color: #1c0000;
+        text-transform: none;
+        text-decoration: none;
+      }
+    }
+  }
 }
 </style>

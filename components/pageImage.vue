@@ -54,6 +54,9 @@ const images = ref(props.img.split(",").map((item) => "/img/" + item));
 img {
   width: 100%;
 }
+a:hover .tips {
+    opacity: 0;
+}
 .tips {
   position: absolute;
   color: #ffffff;
@@ -62,6 +65,7 @@ img {
   font-size: small;
   background: blue;
   padding: 10px;
+  transition: opacity 0.3s ease;
 }
 .info {
   display: flex;
