@@ -38,7 +38,7 @@ const links = ref<LinkItem[]>([
       <div class="copy-link">
         <a href="/about">about</a>
         <a href="">Link</a>
-        <a href="">RSS</a>
+        <a href="/rss.xml">RSS</a>
       </div>
       <p>
         Creative Commons Attribution 4.0 International License (CC BY 4.0) and
