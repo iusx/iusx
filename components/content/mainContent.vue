@@ -24,6 +24,7 @@ defineProps(["title", "info", "time", "client", "img", "types"]);
   padding-bottom: 3rem;
   .text {
     width: 65%;
+    text-transform: capitalize;
     color: #c0c0c0;
     text-align: justify;
     @media (max-width: 768px) {

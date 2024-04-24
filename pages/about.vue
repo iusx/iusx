@@ -4,34 +4,36 @@ const contribution = [
     name: "darkworl analysis",
     time: "2015",
     post: "software engineer",
+    url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
   },
   {
     name: "Miji Innovation",
     time: "2018",
     post: "Java GUI engineer",
+    url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
   },
   {
     name: "Yichang Humanwell Pharmaceutical Co., Ltd",
     time: "2019",
-    post: "security service",
+    post: "Vulnerability Report",
     url: "http://www.ycrenfu.com.cn/",
   },
   {
     name: "China Telecom Group Guangdong Corporation",
     time: "2020",
-    post: "security service",
+    post: "Vulnerability Report",
     url: "https://www.cnvd.org.cn/flaw/show/1976603",
   },
   {
     name: "Henan Yadu Medical Group Corporation",
     time: "2020",
-    post: "security service",
+    post: "Vulnerability Report",
     url: "https://www.yadugroup.com/",
   },
   {
     name: "Topchoice Medical Invesment Co., Inc",
     time: "2020",
-    post: "security service",
+    post: "Vulnerability Report",
     url: "http://www.tcmedical.com.cn/",
   },
   {
@@ -44,27 +46,55 @@ const contribution = [
     name: "HONKER UNION OF CHINA GROUP CO., LIMITED",
     time: "2021",
     post: "Placement",
+    url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
   },
   {
     name: "Shenzhen Edraw Software CO.,LTD.",
     time: "2021",
-    post: "security service",
+    post: "Vulnerability Report",
     url: "https://www.cnvd.org.cn/flaw/show/3173261",
   },
   {
     name: "Cloud Competition Epoch co., ltd.",
     time: "2022",
     post: "Full stack",
+    url: "https://www.behance.net/gallery/186318467/Blockchain-screening-platform",
   },
   {
-    name: "Lunar art",
+    name: "Programmer Community",
+    time: "2022",
+    post: "design",
+    url: "https://www.behance.net/gallery/196951137/Programmer-Community",
+  },
+  {
+    name: "CRG",
+    time: "2022",
+    post: "design",
+    url: "https://www.behance.net/gallery/157417815/CRG-FPS-",
+  },
+  {
+    name: "vulnerability find infinite co., ltd.",
+    time: "2022",
+    post: "design",
+    url: "https://www.behance.net/gallery/196951973/vulnerability-find-infinite",
+  },
+  {
+    name: "Lunar art co., ltd.",
     time: "2022",
     post: "front-end",
+    url: "https://www.zcool.com.cn/work/ZNjE4MDAxMjg=.html",
+  },
+  {
+    name: "SETI@Home",
+    time: "2023",
+    post: "UI",
+    url: "https://www.behance.net/gallery/185824095/SETIHOME-SSITE",
   },
   {
     name: "WEB3IN TECH-LAB",
     time: "2023",
-    post: "UX",
+    post: "UI",
+    url: "https://www.behance.net/gallery/186608845/Asteroid-Web-APP",
   },
   {
     name: "astro",
@@ -73,14 +103,37 @@ const contribution = [
     url: "https://astro.build/",
   },
   {
-    name: "China Sciences Anxin",
+    name: "China Sciences Anxin co., ltd.",
+    time: "2023",
+    post: "design",
+    url: "https://www.behance.net/gallery/185824781/-Logo",
+  },
+  {
+    name: "Kong translate co., ltd.",
+    time: "2023",
+    post: "UX",
+  },
+  {
+    name: "Splash co., ltd.",
+    time: "2023",
+    post: "design",
+    url: "https://www.behance.net/gallery/185824545/Spline-logo-Web",
+  },
+  {
+    name: "NPO.NETWORK",
+    time: "2023",
+    post: "design",
+    url: "https://www.behance.net/gallery/185829509/NPONETWORK-Logo-Web",
+  },
+  {
+    name: "acglabs",
     time: "2023",
     post: "design",
   },
   {
     name: "GitHub",
     time: "2023",
-    post: "security service",
+    post: "Vulnerability Report",
     url: "https://hackerone.com/iepn",
   },
   {
@@ -112,12 +165,14 @@ const contribution = [
         <div class="desc">
           <div class="desc-layout">
             <p>
-              Lucky you stumbled upon my profile! I'm currently a freelance
-              laissez-faire designer, a developer you shouldn't trust, an
-              architect with a tech stack messier than a teenager's room, a
-              product designer whose designs have gone unnoticed, an operations
-              guy with triple-digit views, and a blockchain developer who's
-              experienced a few too many "Oops!" moments.
+              Lucky you stumbled upon my profile! Born in 2004, I've been
+              immersed in computer networking knowledge since childhood. I'm
+              currently a freelance laissez-faire designer, a developer you
+              shouldn't trust, an architect with a tech stack messier than a
+              first LEGO set, a product designer whose designs have gone
+              unnoticed, an operations guy with triple-digit views, and a
+              blockchain developer who's experienced a few too many "Oops!"
+              moments.
             </p>
             <p>
               Though I often wear the hat of a Security Researcher, my days
@@ -140,10 +195,36 @@ const contribution = [
         </div>
       </div>
       <div class="work">
-        <p>Contribution Logs</p>
+        <div class="work-info">
+          <p>Contribution Logs</p>
+          <span
+            >*I'm well aware that my understanding of design, development, and
+            security is not yet sufficient.
+          </span>
+          <span>
+            Therefore, all experiences before 2024 are flawed to some extent,
+            and I plan to address these shortcomings as I continue to learn and
+            grow.</span
+          >
+        </div>
         <div class="work-layout">
           <div class="tables">
             <an-table :table="contribution" />
+          </div>
+        </div>
+      </div>
+      <div class="work">
+        <div class="work-info">
+          <p>Work Experience</p>
+        </div>
+        <div class="work-layout">
+          <div class="job">
+            <span class="job-time">2015 - now Shenzhen </span>
+            <p class="job-name">Jiangxue Academy</p>
+            <span class="title">UNION LAB - software engineer</span>
+            <small
+              >Let Jiangxue Academy live up to the reputation of jiangxue.org.<br>让江雪不负江雪之名
+            </small>
           </div>
         </div>
       </div>
@@ -157,18 +238,51 @@ const contribution = [
   width: 80%;
   font-size: larger;
   margin: 0 auto;
+  display: flex;
+  padding-bottom: 15rem;
 }
 .work-layout {
   display: flex;
   width: 100%;
+  flex: 2;
   flex-direction: row-reverse;
   .tables {
-    width: 80%;
+    width: 90%;
+  }
+  .job {
+    display: block;
+    font-weight: 300;
+    text-transform: capitalize;
+    width: 90%;
+    small {
+      display: block;
+      padding-top: 1rem;
+      font-size: initial;
+    }
+    p {
+      margin: 0;
+    }
+    .job-time {
+        color: #5c5c5c;
+      font-size: initial;
+    }
+  }
+}
+.work-info {
+  flex: 1;
+  p {
+    padding: 0;
+  }
+  span {
+    color: #404040;
+    display: block;
+    padding-bottom: 1rem;
+    text-align: justify;
+    font-size: initial;
   }
 }
 .hello {
   background: #000000;
-  height: 200vh;
   .tip {
     height: 100vh;
     font-size: 5.8vw;
