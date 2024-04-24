@@ -1,1 +1,0 @@
-import{_ as o}from"./WLZuabpy.js";import{o as r,l as t,U as c}from"./Le-8cNPH.js";const s={};function l(e,n){return r(),t("blockquote",null,[c(e.$slots,"default")])}const _=o(s,[["render",l]]);export{_ as default};

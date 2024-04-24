@@ -2,15 +2,15 @@
     <channel>
         <title><![CDATA[RHYME.Q 韵清]]></title>
         <description><![CDATA[RHYME.Q 韵清]]></description>
-        <link>https://otvto.work</link>
+        <link>https://member.rhyme.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 23 Apr 2024 21:10:35 GMT</lastBuildDate>
-        <atom:link href="https://otvto.work/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Wed, 24 Apr 2024 15:43:34 GMT</lastBuildDate>
+        <atom:link href="https://member.rhyme.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[江雪銮音实验室]]></title>
             <description><![CDATA[从 2015 年至 2024 年，我见证了江雪从初出茅庐到技术和设计双提升的九年成长历程。在这段时间中，我们面临着如何定义完美与完成的衡量标准的挑战，并探索了诸如网际协议、组件化设计和分布式网络等领域。在即将到来的十年，我们将聚焦应用数学和边缘科学研究，坚持 “完成比完美更重要” 的原则。我们也将建立一个与时俱进、注重实现的工作流系统，以实现科学研究的透明度和可靠性。]]></description>
-            <link>otvto.work/dev/jiangxue-joint-laboratory-luanyin-project</link>
-            <guid isPermaLink="true">otvto.work/dev/jiangxue-joint-laboratory-luanyin-project</guid>
+            <link>member.rhyme.jiangxue.org/dev/jiangxue-joint-laboratory-luanyin-project</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/dev/jiangxue-joint-laboratory-luanyin-project</guid>
         </item>
     </channel>
 </rss>

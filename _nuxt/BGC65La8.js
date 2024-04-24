@@ -1,1 +1,0 @@
-import{_ as o}from"./WLZuabpy.js";import{o as r,l as t,U as n}from"./Le-8cNPH.js";const s={};function c(e,a){return r(),t("strong",null,[n(e.$slots,"default")])}const _=o(s,[["render",c]]);export{_ as default};
