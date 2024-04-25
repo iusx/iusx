@@ -4,8 +4,12 @@ import { defineProps } from "vue";
 defineProps(["table"]);
 </script>
 <template>
-    <main v-for="(person, index) in table" :key="person.name">
-    <a :href="person.url ? person.url : undefined" target="_blank" :class="{ 'no-border': index === table.length - 1 }">
+  <main v-for="(person, index) in table" :key="person.name">
+    <a
+      :href="person.url ? person.url : undefined"
+      target="_blank"
+      :class="{ 'no-border': index === table.length - 1 }"
+    >
       <p>{{ person.name }}</p>
       <span>{{ person.time }}</span>
       <span>{{ person.post }}</span>
@@ -23,6 +27,9 @@ a {
   padding-bottom: 13px;
   padding-top: 13px;
   cursor: pointer;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
   text-decoration: none;
   p {
     margin: 0;

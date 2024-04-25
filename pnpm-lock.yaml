@@ -11,6 +11,9 @@ dependencies:
   '@nuxtjs/tailwindcss':
     specifier: ^6.11.4
     version: 6.11.4
+  '@studio-freight/lenis':
+    specifier: ^1.0.42
+    version: 1.0.42
   nuxt:
     specifier: ^3.11.2
     version: 3.11.2(@unocss/reset@0.59.3)(floating-vue@5.2.2)(sass@1.75.0)(unocss@0.59.3)(vite@5.2.9)
@@ -1662,6 +1665,10 @@ packages:
 
   /@socket.io/component-emitter@3.1.1:
     resolution: {integrity: sha512-dzJtaDAAoXx4GCOJpbB2eG/Qj8VDpdwkLsWGzGm+0L7E8/434RyMbAHmk9ubXWVAb9nXmc44jUf8GKqVDiKezg==}
+    dev: false
+
+  /@studio-freight/lenis@1.0.42:
+    resolution: {integrity: sha512-HJAGf2DeM+BTvKzHv752z6Z7zy6bA643nZM7W88Ft9tnw2GsJSp6iJ+3cekjyMIWH+cloL2U9X82dKXgdU8kPg==}
     dev: false
 
   /@trysound/sax@0.2.0:
