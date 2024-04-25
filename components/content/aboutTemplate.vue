@@ -1,4 +1,8 @@
 <script setup>
+import { defineProps } from "vue";
+
+defineProps(["title", "desc", "time", "name"]);
+
 useSeoMeta({
   title: "About - RHYME.Q",
   description: "Github + Hackerone + Behance ÷ Researchgate",
@@ -151,7 +155,7 @@ const contribution = [
 </script>
 
 <template>
-  <main>
+  <main class="about-page">
     <div class="hello">
       <div class="tip">
         <p class="about">
@@ -171,48 +175,16 @@ const contribution = [
         </div>
         <div class="desc">
           <div class="desc-layout">
-            <p>
-              Lucky you stumbled upon my profile! Born in 2004, I've been
-              immersed in computer networking knowledge since childhood. I'm
-              currently a freelance laissez-faire designer, a developer you
-              shouldn't trust, an architect with a tech stack messier than a
-              first LEGO set, a product designer whose designs have gone
-              unnoticed, an operations guy with triple-digit views, and a
-              blockchain developer who's experienced a few too many "Oops!"
-              moments.
-            </p>
-            <p>
-              Though I often wear the hat of a Security Researcher, my days
-              aren't filled with the monotony of NetworkStreams. Instead, I
-              craft applications and protocols in the vast and intriguing realm
-              of cybersecurity. So, let's ditch the "Vulnerability = ALL"
-              mindset, shall we?
-            </p>
-            <p>
-              Over the past decade, I've worn many hats—product design, security
-              research, front-end, back-end, software dev, blockchain,
-              DevOps—you name it.
-            </p>
-            <p>
-              Nowadays, I lead the Jiangxue Academy Union Lab Team, dedicated to
-              Fringe Science Research and Support. Fringe Science Research and
-              Support.
-            </p>
+            <slot name="about" />
           </div>
         </div>
       </div>
       <div class="work">
         <div class="work-info">
           <p>Contribution Logs</p>
-          <span
-            >*I'm well aware that my understanding of design, development, and
-            security is not yet sufficient.
-          </span>
-          <span>
-            Therefore, all experiences before 2024 are flawed to some extent,
-            and I plan to address these shortcomings as I continue to learn and
-            grow.</span
-          >
+          <div class="work-info-text">
+            <slot name="contributiondes" />
+          </div>
         </div>
         <div class="work-layout">
           <div class="tables">
@@ -226,156 +198,158 @@ const contribution = [
         </div>
         <div class="work-layout">
           <div class="job">
-            <span class="job-time">2015 - now Shenzhen </span>
-            <p class="job-name">Jiangxue Academy</p>
-            <span class="title">UNION LAB - software engineer</span>
-            <small>"Fringe Science Research And Support"</small>
+            <span class="job-time">{{ time }}</span>
+            <p class="job-name">{{ name }}</p>
+            <span class="title">{{ title }}</span>
+            <small>"{{ desc }}"</small>
           </div>
         </div>
       </div>
       <div class="work-log">
-        <p>
-          Success is not final, failure is not fatal: It is the courage to
-          continue that counts.
-        </p>
+        <slot name="end"></slot>
       </div>
     </div>
   </main>
 </template>
 
-<style lang="scss" scoped>
-a {
-  text-decoration: none;
-}
+<style lang="scss">
+.about-page {
+  a {
+    text-decoration: none;
+  }
 
-.work {
-  color: #cbcbcb;
-  width: 80%;
-  font-size: larger;
-  margin: 0 auto;
-  @media (max-width: 768px) {
-    width: 90%;
-  }
-  @media (max-width: 1024px) {
-    display: block;
-  }
-  display: flex;
-  padding-bottom: 15rem;
-}
-.work-log {
-  width: 80%;
-  @media (max-width: 768px) {
-    width: 90%;
-  }
-  margin: 0 auto;
-  padding-bottom: 15rem;
-  color: #cbcbcb;
-  text-transform: uppercase;
-  p {
-    margin: 0;
-  }
-}
-.work-layout {
-  display: flex;
-  width: 100%;
-  flex: 2;
-  @media (max-width: 1024px) {
-    display: block;
-  }
-  flex-direction: row-reverse;
-  .tables {
-    width: 90%;
-  }
-  .job {
-    display: block;
-    font-weight: 300;
-    text-transform: capitalize;
-    width: 90%;
-    small {
+  .work {
+    color: #cbcbcb;
+    width: 80%;
+    font-size: larger;
+    margin: 0 auto;
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+    @media (max-width: 1024px) {
       display: block;
-      padding-top: 1rem;
-      font-size: initial;
     }
-    p {
-      margin: 0;
-    }
-    .job-time {
-      color: #5c5c5c;
-      font-size: initial;
-    }
+    display: flex;
+    padding-bottom: 15rem;
   }
-}
-.work-info {
-  flex: 1;
-  p {
-    padding: 0;
-  }
-  span {
-    color: #404040;
-    display: block;
-    padding-bottom: 1rem;
-    text-align: justify;
-    font-size: initial;
-  }
-}
-.hello {
-  background: #000000;
-  .tip {
-    height: 100vh;
-    font-size: 5.8vw;
+  .work-log {
     width: 80%;
     @media (max-width: 768px) {
       width: 90%;
     }
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-
-    .tip-title {
-      display: flex;
-      width: 100%;
-    }
+    padding-bottom: 15rem;
+    color: #cbcbcb;
+    text-transform: uppercase;
     p {
-      color: #404040;
       margin: 0;
-      padding-right: 5px;
     }
-    .me-tip {
+  }
+  .work-layout {
+    display: flex;
+    width: 100%;
+    flex: 2;
+    @media (max-width: 1024px) {
+      display: block;
+    }
+    flex-direction: row-reverse;
+    .tables {
+      width: 90%;
+    }
+    .job {
+      display: block;
       font-weight: 300;
+      text-transform: capitalize;
+      width: 90%;
+      small {
+        display: block;
+        padding-top: 1rem;
+        font-size: initial;
+      }
+      p {
+        margin: 0;
+      }
+      .job-time {
+        color: #5c5c5c;
+        font-size: initial;
+      }
+    }
+  }
+  .work-info {
+    flex: 1;
+    p {
+      padding: 0;
+    }
+    .work-info-text {
+      p {
+        color: #404040;
+        display: block;
+        padding-bottom: 1rem;
+        text-align: justify;
+        margin: 0;
+        font-size: initial;
+      }
+    }
+  }
+  .hello {
+    background: #000000;
+    .tip {
+      height: 100vh;
+      font-size: 5.8vw;
       width: 80%;
       @media (max-width: 768px) {
         width: 90%;
       }
-      color: #cbcbcb;
-    }
-    .desc {
-      font-size: small;
-      width: 100%;
-      margin-top: 30px;
-      line-height: 1.5;
-      .desc-layout {
-        column-count: 2;
-        text-align: justify;
-        @media (max-width: 1024px) {
-          column-count: 1;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      .tip-title {
+        display: flex;
+        width: 100%;
+      }
+      p {
+        color: #404040;
+        margin: 0;
+        padding-right: 5px;
+      }
+      .me-tip {
+        font-weight: 300;
+        width: 80%;
+        @media (max-width: 768px) {
+          width: 90%;
         }
-        p {
-          margin-bottom: 30px;
+        color: #cbcbcb;
+      }
+      .desc {
+        font-size: small;
+        width: 100%;
+        margin-top: 30px;
+        line-height: 1.5;
+        .desc-layout {
+          column-count: 2;
+          text-align: justify;
+          @media (max-width: 1024px) {
+            column-count: 1;
+          }
+          p {
+            margin-bottom: 30px;
+          }
         }
       }
     }
   }
-}
-.about {
-  font-size: x-large;
-  color: #00ffc8 !important;
-  text-transform: uppercase;
-  small {
-    color: #404040;
-    font-size: initial;
-    padding-right: 10px;
+  .about {
+    font-size: x-large;
+    color: #00ffc8 !important;
+    text-transform: uppercase;
+    small {
+      color: #404040;
+      font-size: initial;
+      padding-right: 10px;
+    }
   }
 }
 </style>
