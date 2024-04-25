@@ -1,1 +1,0 @@
-import{_ as o}from"./5sniLaF8.js";import{o as r,l as t,V as s}from"./C41Zsln6.js";const a={};function l(e,n){return r(),t("table",null,[s(e.$slots,"default")])}const _=o(a,[["render",l]]);export{_ as default};

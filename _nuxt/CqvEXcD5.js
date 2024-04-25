@@ -1,1 +1,0 @@
-import{_ as o}from"./5sniLaF8.js";import{o as r,l as t,V as c}from"./C41Zsln6.js";const s={};function l(e,n){return r(),t("blockquote",null,[c(e.$slots,"default")])}const _=o(s,[["render",l]]);export{_ as default};

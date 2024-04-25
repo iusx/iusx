@@ -1,1 +1,0 @@
-import{_ as o}from"./5sniLaF8.js";import{o as r,l as t,V as n}from"./C41Zsln6.js";const s={};function c(e,a){return r(),t("strong",null,[n(e.$slots,"default")])}const _=o(s,[["render",c]]);export{_ as default};
