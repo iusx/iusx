@@ -69,7 +69,7 @@ main {
   transform: translateY(30vh);
   .title-text {
     color: #d6d6d6;
-    font-size: 4em;
+    font-size: 6vh;
     font-weight: 300;
     line-height: initial;
     padding: 0;
@@ -97,6 +97,7 @@ main {
     text-transform: capitalize;
     color: #b7b7b7;
     line-height: 1.3;
+    font-size: 1.7vh;
     a {
       text-decoration: none;
       color: #b7b7b7;
@@ -113,7 +114,7 @@ main {
 }
 .copyright {
   color: #a1a1a1;
-  font-size: small;
+  font-size: 1vh;
   line-height: 1;
   .copy-link {
     a {

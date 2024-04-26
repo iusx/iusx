@@ -29,7 +29,7 @@ defineProps(["title", "info", "time", "client", "img", "types"]);
     text-align: justify;
     @media (max-width: 768px) {
       width: 100%;
-      font-size: small;
+      font-size: 1vh;
     }
   }
 }

@@ -36,5 +36,4 @@ div {
 ::-webkit-scrollbar {
     width: 0;
 }
-
 </style>

@@ -78,7 +78,7 @@ main {
   width: 100%;
   p {
     color: #1c0000;
-    font-size: 2rem;
+    font-size: 3vh;
     margin: 0;
     line-height: 1;
     @media (max-width: 425px) {
@@ -88,7 +88,7 @@ main {
   span {
     padding: 0;
     color: #1c0000;
-    font-size: 1.3rem;
+    font-size: 2vh;
     @media (max-width: 425px) {
       font-size: 1rem;
     }
@@ -108,14 +108,14 @@ main {
   }
   span {
     color: #cacaca;
-    font-size: 0.9rem;
+    font-size: 1.4vh;
     line-height: 1;
     text-transform: uppercase;
   }
   p {
     color: #1c0000;
     font-size: 0.9rem;
-    line-height: 1;
+    line-height: 1.4vh;
     font-weight: bold;
     text-transform: uppercase;
 

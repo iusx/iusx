@@ -42,7 +42,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .page-tips-main {
   color: #c0c0c0;
-  font-size: small;
+  font-size: 1vh;
   display: flex;
   &.reverse-direction {
     flex-direction: row-reverse;

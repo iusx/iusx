@@ -62,7 +62,7 @@ a:hover .tips {
   color: #ffffff;
   right: 0;
   bottom: 0;
-  font-size: small;
+  font-size: 1vh;
   background: blue;
   padding: 10px;
   transition: opacity 0.3s ease;
@@ -74,7 +74,7 @@ a:hover .tips {
   .info-title {
     margin: 0;
     line-height: 1;
-    font-size: 14px;
+    font-size: 1.4vh;
     color: #7f7f7f;
     padding-right: 3em;
   }

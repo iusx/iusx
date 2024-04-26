@@ -324,7 +324,7 @@ const contribution = [
         color: #cbcbcb;
       }
       .desc {
-        font-size: small;
+        font-size: 1vh;
         width: 100%;
         margin-top: 30px;
         line-height: 1.5;

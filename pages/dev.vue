@@ -160,7 +160,7 @@ const getAllData = computed(() => {
   }
 }
 .title {
-  margin-top: 2.4rem;
+  margin-top: 3vh;
   @media (max-width: 425px) {
     margin-top: 1.2rem;
   }
