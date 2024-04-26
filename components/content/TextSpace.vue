@@ -21,7 +21,7 @@ onMounted(() => {
           'reverse-direction': direction === 'row-reverse',
         }"
       >
-        <img class="img" v-if="img" :src="'/img/' + img" />
+        <img class="img" v-if="img" alt="text-desc" :src="'/img/' + img" />
         <div v-html="info"></div></main
     ></a>
     <main

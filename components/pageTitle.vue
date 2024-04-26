@@ -114,8 +114,8 @@ main {
   }
   p {
     color: #1c0000;
-    font-size: 0.9rem;
-    line-height: 1.4vh;
+    font-size: 1.4vh;
+    line-height: 1;
     font-weight: bold;
     text-transform: uppercase;
 

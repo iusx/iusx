@@ -99,7 +99,6 @@ const getAllData = computed(() => {
 <style lang="scss" scoped>
 .pagination-layout {
   display: flex;
-  background: #c2c2c224;
   box-shadow: -2px -8px 20px 1px rgb(0 0 0 / 11%);
   position: fixed;
   bottom: 0;
