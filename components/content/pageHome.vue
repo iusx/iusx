@@ -20,12 +20,9 @@ const links = ref<LinkItem[]>([
 
 <template>
   <main>
-    <video src="/background.mp4" playsinline loop muted autoplay="true"></video>
     <div class="title">
       <div class="title-text">
-        <a href="/dev">Full-stack</a> development,<br />
-        <a href="">Security</a>, <a href="">Design</a><a href="">.</a>
-        <br />
+        <a href="/dev">Originality is <br />key to infusing a work with soul.</a>
       </div>
       <div class="link">
         <span v-for="item in links" :key="item.href">
@@ -49,46 +46,63 @@ const links = ref<LinkItem[]>([
 </template>
 
 <style lang="scss" scoped>
-video {
-  position: absolute;
-  z-index: -1;
-  right: 0;
-  height: 100vh;
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
-
 main {
   width: 90%;
   margin: 0 auto;
   display: flex;
   height: 100vh;
   flex-direction: column;
+  font-family: "Source Code Pro", monospace;
   justify-content: space-between;
 }
 .title {
   line-height: 3;
   transform: translateY(30vh);
   .title-text {
+    display: block;
+    cursor: pointer;
     color: #d6d6d6;
-    font-size: 6vh;
+    font-size: 3vh;
     font-weight: 300;
     line-height: initial;
     padding: 0;
     margin: 0;
-    @media (max-height: 1000px) {
-      font-size: 2em;
-    }
     a {
       padding: 0;
       margin: 0;
       text-decoration: none;
-      text-transform: none !important;
-      color: #d6d6d6;
+      color: #1c0000;
+      text-transform: capitalize;
+      display: flex;
+      letter-spacing: -2px;
       transition: color 0.3s ease;
       &:hover {
-        color: #1c0000;
-        text-transform: none;
+        color: #b7b7b7;
         text-decoration: none;
       }
+    }
+    a::before {
+      content: "";
+      display: block;
+      height: 1vh;
+      width: 1vh;
+      background: blue;
+      border-radius: 120px;
+      animation: fade 2s linear infinite;
+      margin-top: 1.4vh;
+      margin-right: 2vh;
     }
   }
   .link {
@@ -96,8 +110,10 @@ main {
     margin: 0;
     text-transform: capitalize;
     color: #b7b7b7;
+    margin-top: 1vh;
     line-height: 1.3;
     font-size: 1.7vh;
+    margin-left: 2.5vh;
     a {
       text-decoration: none;
       color: #b7b7b7;

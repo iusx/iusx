@@ -22,6 +22,12 @@ const contribution = [
     url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
   },
   {
+    name: "Mini fridge ",
+    time: "2018",
+    post: "presented by",
+    url: "https://music.163.com/song?id=1382535015&userid=1548171212",
+  },
+  {
     name: "Yichang Humanwell Pharmaceutical Co., Ltd",
     time: "2019",
     post: "Vulnerability Report",
@@ -110,6 +116,12 @@ const contribution = [
     time: "2023",
     post: "translate",
     url: "https://astro.build/",
+  },
+  {
+    name: "Mini fridge ",
+    time: "2023",
+    post: "CD cover design",
+    url: "https://music.163.com/song?id=2075128378&userid=1548171212",
   },
   {
     name: "China Sciences Anxin co., ltd.",
