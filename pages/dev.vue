@@ -42,11 +42,10 @@ const getAllData = computed(() => {
 </script>
 
 <template>
-  <div v-for="all in getAllData" :key="all.id" style="display: none">
-    <NuxtLink :to="all._path" />
-  </div>
   <main class="layout">
-    <a class="home" href="/">HOME</a>
+    <div v-for="all in getAllData" :key="all.id" style="display: none">
+      <NuxtLink :to="all._path" />
+    </div>
     <div
       class="content"
       v-if="equalQuery"
@@ -162,19 +161,6 @@ const getAllData = computed(() => {
   margin-top: 3vh;
   @media (max-width: 425px) {
     margin-top: 1.2rem;
-  }
-}
-.home {
-  margin-bottom: 1rem;
-  display: block;
-  font-weight: bold;
-  text-decoration: none;
-  color: #d6d6d6;
-  transition: color 0.3s ease;
-  &:hover {
-    color: #1c0000;
-    text-transform: none;
-    text-decoration: none;
   }
 }
 </style>

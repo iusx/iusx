@@ -22,7 +22,10 @@ const links = ref<LinkItem[]>([
   <main>
     <div class="title">
       <div class="title-text">
-        <a href="/dev">Originality is <br />key to infusing a work with soul.</a>
+        <an-title
+          url="/dev"
+          title="Originality is <br />key to infusing a work with soul."
+        />
       </div>
       <div class="link">
         <span v-for="item in links" :key="item.href">
@@ -47,17 +50,7 @@ const links = ref<LinkItem[]>([
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
-@keyframes fade {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
+
 main {
   width: 90%;
   margin: 0 auto;
@@ -79,31 +72,6 @@ main {
     line-height: initial;
     padding: 0;
     margin: 0;
-    a {
-      padding: 0;
-      margin: 0;
-      text-decoration: none;
-      color: #1c0000;
-      text-transform: capitalize;
-      display: flex;
-      letter-spacing: -2px;
-      transition: color 0.3s ease;
-      &:hover {
-        color: #b7b7b7;
-        text-decoration: none;
-      }
-    }
-    a::before {
-      content: "";
-      display: block;
-      height: 1vh;
-      width: 1vh;
-      background: blue;
-      border-radius: 120px;
-      animation: fade 2s linear infinite;
-      margin-top: 1.4vh;
-      margin-right: 2vh;
-    }
   }
   .link {
     padding: 0;

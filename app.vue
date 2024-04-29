@@ -16,6 +16,7 @@ onMounted(() => {
 
 <template>
   <div>
+    <an-more />
     <NuxtPage />
   </div>
 </template>
