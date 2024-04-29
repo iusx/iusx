@@ -3,13 +3,13 @@
     <a href="/" :class="{ active: isCurrentPage('/') || isCurrentPage('/about') }"
       ><Icon name="RhymeIcon" size="30"
     /></a>
-    <a href="/dev" :class="{ active: isCurrentPage('/dev') }"
+    <a href="#" :class="{ active: isCurrentPage('/dev') }"
       ><Icon name="DevIcon" size="30"
     /></a>
-    <a href="/des" :class="{ active: isCurrentPage('/des') }"
+    <a href="#" :class="{ active: isCurrentPage('/des') }"
       ><Icon name="DesIcon" size="30"
     /></a>
-    <a href="/sec" :class="{ active: isCurrentPage('/sec') }"
+    <a href="#" :class="{ active: isCurrentPage('/sec') }"
       ><Icon name="SecIcon" size="30"
     /></a>
   </main>
