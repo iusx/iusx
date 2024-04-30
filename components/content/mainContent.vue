@@ -5,7 +5,6 @@ defineProps(["title", "info", "time", "client", "img", "types"]);
 </script>
 <template>
   <main class="layout">
-    <a class="home" href="/">HOME</a>
     <div class="content">
       <page-image :img="img" :info="info" :type="types" />
       <page-title class="title" :title="title" :time="time" :client="client" />
@@ -57,19 +56,6 @@ content {
   margin-top: 2.4rem;
   @media (max-width: 425px) {
     margin-top: 1.2rem;
-  }
-}
-.home {
-  margin-bottom: 1rem;
-  display: block;
-  font-weight: bold;
-  text-decoration: none;
-  color: #d6d6d6;
-  transition: color 0.3s ease;
-  &:hover {
-    color: #1c0000;
-    text-transform: none;
-    text-decoration: none;
   }
 }
 </style>

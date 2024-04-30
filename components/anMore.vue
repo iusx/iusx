@@ -1,15 +1,18 @@
 <template>
   <main>
-    <a href="/" :class="{ active: isCurrentPage('/') || isCurrentPage('/about') }"
-      ><Icon name="RhymeIcon" size="30"
+    <a
+      href="/"
+      :class="{ active: currentPage === '/' || currentPage === '/about' }"
+    >
+      <Icon name="RhymeIcon" size="30"
     /></a>
-    <a href="#" :class="{ active: isCurrentPage('/dev') }"
-      ><Icon name="DevIcon" size="30"
+    <a href="/dev" :class="{ active: currentPage.startsWith('/dev') }">
+      <Icon name="DevIcon" size="30"
     /></a>
-    <a href="#" :class="{ active: isCurrentPage('/des') }"
+    <a href="#" :class="{ active: currentPage.startsWith('/des') }"
       ><Icon name="DesIcon" size="30"
     /></a>
-    <a href="#" :class="{ active: isCurrentPage('/sec') }"
+    <a href="/sec" :class="{ active: currentPage.startsWith('/sec') }"
       ><Icon name="SecIcon" size="30"
     /></a>
   </main>
@@ -19,10 +22,6 @@
 import { ref, onMounted } from "vue";
 
 const currentPage = ref<string>("");
-
-const isCurrentPage = (path: string) => {
-  return currentPage.value === path;
-};
 
 onMounted(() => {
   currentPage.value = window.location.pathname;
