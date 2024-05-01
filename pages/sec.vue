@@ -3,7 +3,8 @@
     <div class="left">-> Vulnerability Report</div>
     <div class="main">
       <div class="main-title">
-        <p>My Vulnerability <br />Report</p>
+        <p>My Vulnerability</p>
+        <an-typing> Report </an-typing>
         <span>SECURITY</span>
         <Icon class="red" name="RedIcon" />
       </div>
@@ -107,8 +108,17 @@
     }
     img {
       width: 20vh;
-      height: -webkit-fill-available;
-      height: intrinsic;
+      height: -webkit-fill-available; /* 默认值，用于 Chrome 内核的浏览器 */
+
+      @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+        /* Safari 内核的浏览器 */
+        height: intrinsic;
+      }
+
+      @supports (-moz-appearance: none) {
+        /* Firefox 浏览器 */
+        height: fit-content;
+      }
     }
     .box-title {
       border-bottom: 10px solid red;
@@ -144,6 +154,7 @@ main {
       color: #ef0000;
       font-weight: 600;
       z-index: 10;
+      margin: 0;
       position: relative;
     }
     span {
