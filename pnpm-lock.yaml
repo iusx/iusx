@@ -17,9 +17,6 @@ dependencies:
   nuxt-swiper:
     specifier: ^1.2.2
     version: 1.2.2
-  swiper:
-    specifier: ^11.1.1
-    version: 11.1.1
 
 devDependencies:
   nuxt-icon:
@@ -6315,11 +6312,6 @@ packages:
 
   /swiper@10.3.1:
     resolution: {integrity: sha512-24Wk3YUdZHxjc9faID97GTu6xnLNia+adMt6qMTZG/HgdSUt4fS0REsGUXJOgpTED0Amh/j+gRGQxsLayJUlBQ==}
-    engines: {node: '>= 4.7.0'}
-    dev: false
-
-  /swiper@11.1.1:
-    resolution: {integrity: sha512-jGmEA/fNz1lACIcY4/40ggm1Gcyv+EUivmgV/Jd2WFPsEJhbWXnRAwzZR8OPjkBLtDxmzcoYG/iiAMWfRs0YKQ==}
     engines: {node: '>= 4.7.0'}
     dev: false
 
