@@ -31,9 +31,6 @@ body {
   width: 100%;
   height: 100%;
 }
-div {
-  overflow: hidden;
-}
 ::-webkit-scrollbar {
   width: 0;
 }

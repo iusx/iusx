@@ -9,14 +9,13 @@
   },
   "dependencies": {
     "@nuxt/content": "^2.12.1",
-    "@nuxtjs/tailwindcss": "^6.11.4",
+    "@studio-freight/lenis": "^1.0.42",
     "nuxt": "^3.11.2",
-    "nuxt-swiper": "^1.2.2",
-    "@studio-freight/lenis": "^1.0.42"
+    "nuxt-swiper": "^1.2.2"
   },
   "devDependencies": {
     "nuxt-icon": "^0.6.10",
-    "sass": "^1.75.0",
-    "rss": "^1.2.2"
+    "rss": "^1.2.2",
+    "sass": "^1.75.0"
   }
 }
