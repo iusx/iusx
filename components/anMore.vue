@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main ref="el" :style="style">
     <a
       href="/"
       :class="{ active: currentPage === '/' || currentPage === '/about' }"
@@ -20,11 +20,18 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useDraggable } from "@vueuse/core";
+
+const el = ref<HTMLElement | null>(null);
 
 const currentPage = ref<string>("");
 
 onMounted(() => {
   currentPage.value = window.location.pathname;
+});
+
+const { x, y, style } = useDraggable(el, {
+  initialValue: { x1: 0, y: 300 },
 });
 </script>
 
@@ -34,8 +41,13 @@ main {
   top: 50%;
   background: #000;
   color: white;
+  cursor: pointer;
   z-index: 11;
+  width: fit-content;
   right: 0;
+  background-repeat: no-repeat;
+  background-image: url(/img/page/drag.png);
+  background-size: 1.3vh;
 }
 a {
   display: block;
