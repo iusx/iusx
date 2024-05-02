@@ -37,9 +37,19 @@ onMounted(() => {
       <div v-html="info"></div>
     </main>
   </main>
+  <main class="tip" v-if="type == 'tip'">
+    <Icon class="tip-quto" name="QutoIcon" size="20" /><slot> </slot>
+  </main>
 </template>
 
 <style lang="scss" scoped>
+.tip {
+  padding: 1vh;
+  background: #fafafa;
+  .tip-quto {
+    opacity: 0.1;
+  }
+}
 .page-tips-main {
   color: #c0c0c0;
   font-size: 1vh;

@@ -44,7 +44,7 @@ const images = ref(props.img.split(",").map((item) => "/img/" + item));
       ></SwiperSlide>
     </Swiper>
     <div class="info" v-if="info && type">
-      <div class="info-title">{{ info }}</div>
+      <div class="info-title" style="text-transform: uppercase;">{{ info }}</div>
       <img :src="'/img/page/' + type + '.png'" alt="page-image-copyright" />
     </div>
   </main>

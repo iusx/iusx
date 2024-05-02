@@ -1,3 +1,28 @@
+<script lang="ts" setup>
+import { ref } from "vue";
+
+useSeoMeta({
+  title: "Security - RHYME.Q",
+  description: "Github + Hackerone + Behance ÷ Researchgate",
+});
+
+const equalQuerySec = ref([]);
+
+useAsyncData("equal", () => {
+  queryContent("sec/")
+    .find()
+    .then((data) => {
+      const sortedData = data.sort((a, b) => {
+        const dateA = new Date(a.time).getTime();
+        const dateB = new Date(b.time).getTime();
+        return dateB - dateA;
+      });
+
+      equalQuerySec.value = sortedData;
+    });
+});
+</script>
+
 <template>
   <main>
     <div class="left">-> Vulnerability Report</div>
@@ -14,47 +39,18 @@
           few security hiccups in my<br />
           work or daily life and reported them, more or less.
         </p>
-        <swiper :slides-per-view="3" :space-between="10">
-          <swiper-slide class="swi-width">
-            <div class="content-box">
+        <swiper :slides-per-view="'auto'" :space-between="20">
+          <swiper-slide v-for="sec in equalQuerySec" class="content-box">
+            <nuxt-link style="display: contents" :to="sec._path">
               <div class="content-time">
-                <img src="/img/page/cnvd.png" /><span>2023</span>
+                <img
+                  :src="'/img/page/' + sec.type + '.png'"
+                  alt="report-platform"
+                /><span>{{ sec.time.slice(0, 4) }}</span>
               </div>
-              <p class="box-title">CHINA TELECOM GROUP GUANGDONG CORPORATION</p>
-            </div></swiper-slide
-          >
-          <swiper-slide class="swi-width">
-            <div class="content-box">
-              <div class="content-time">
-                <img src="/img/page/cnvd.png" /><span>2023</span>
-              </div>
-              <p class="box-title">CHINA TELECOM GROUP GUANGDONG CORPORATION</p>
-            </div></swiper-slide
-          >
-          <swiper-slide class="swi-width">
-            <div class="content-box">
-              <div class="content-time">
-                <img src="/img/page/cnvd.png" /><span>2023</span>
-              </div>
-              <p class="box-title">CHINA TELECOM GROUP GUANGDONG CORPORATION</p>
-            </div></swiper-slide
-          >
-          <swiper-slide class="swi-width">
-            <div class="content-box">
-              <div class="content-time">
-                <img src="/img/page/cnvd.png" /><span>2023</span>
-              </div>
-              <p class="box-title">CHINA TELECOM GROUP GUANGDONG CORPORATION</p>
-            </div></swiper-slide
-          >
-          <swiper-slide class="swi-width">
-            <div class="content-box">
-              <div class="content-time">
-                <img src="/img/page/cnvd.png" /><span>2023</span>
-              </div>
-              <p class="box-title">CHINA TELECOM GROUP GUANGDONG CORPORATION</p>
-            </div></swiper-slide
-          >
+              <p class="box-title">{{ sec.title }}</p>
+            </nuxt-link>
+          </swiper-slide>
         </swiper>
       </div>
     </div>
@@ -62,16 +58,17 @@
 </template>
 
 <style lang="scss" scoped>
-.swi-width {
-  width: 31vh !important;
+a {
+    text-decoration: none;
+
 }
 .content-layout {
   .content-box-layout {
     display: flex;
-    overflow: auto;
   }
   .content-box {
     height: 31vh;
+    width: 31vh !important;
     background: transparent;
     border: 2px solid #dfe3e9;
     display: flex;
@@ -92,6 +89,12 @@
       .box-title {
         border-bottom: 0px solid red;
       }
+      img {
+        filter: brightness(14);
+      }
+      .box-title {
+        color: #fff;
+      }
     }
     .content-time {
       display: flex;
@@ -108,23 +111,23 @@
     }
     img {
       width: 20vh;
-      height: -webkit-fill-available; /* 默认值，用于 Chrome 内核的浏览器 */
+      height: -webkit-fill-available;
 
       @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-        /* Safari 内核的浏览器 */
         height: intrinsic;
       }
 
       @supports (-moz-appearance: none) {
-        /* Firefox 浏览器 */
         height: fit-content;
       }
     }
     .box-title {
       border-bottom: 10px solid red;
       transition: border-bottom 0.3s ease;
+      color: #000;
       margin: 0;
       padding: 2.5vh;
+      text-transform: uppercase;
       font-weight: bold;
     }
   }

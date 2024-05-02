@@ -52,6 +52,12 @@ const contribution = [
     url: "http://www.tcmedical.com.cn/",
   },
   {
+    name: "Turing Robot",
+    time: "2020",
+    post: "Vulnerability Report",
+    url: "https://www.turingapi.com/",
+  },
+  {
     name: "expressjs",
     time: "2021",
     post: "translate",
