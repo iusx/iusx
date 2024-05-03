@@ -36,6 +36,7 @@ body {
 .text {
   p {
     font-size: 1.5vh;
+    line-height: 1.6;
   }
 }
 .page-sec {
