@@ -6,7 +6,7 @@ defineProps(["desc"]);
 
 <template>
     <main>
-        <p>全文概述</p>
+        <p style="text-transform: uppercase;font-weight: bold;">overview</p>
         <span>{{desc }}</span>
     </main>
 </template>

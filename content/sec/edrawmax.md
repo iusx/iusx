@@ -2,7 +2,7 @@
 "title": EDRAW SOFTWARE watermarking bypass
 "director": "RHYME.Q"
 "time": "2021"
-"type": "cnvd"
+"platform": "cnvd"
 ---
 
 :text-an-next

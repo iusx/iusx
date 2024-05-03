@@ -1,26 +1,22 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-
 useSeoMeta({
   title: "Security - RHYME.Q",
   description: "Github + Hackerone + Behance ÷ Researchgate",
 });
 
-const equalQuerySec = ref([]);
-
-useAsyncData("equal", () => {
-  queryContent("sec/")
-    .find()
-    .then((data) => {
-      const sortedData = data.sort((a, b) => {
-        const dateA = new Date(a.time).getTime();
-        const dateB = new Date(b.time).getTime();
-        return dateB - dateA;
-      });
-
-      equalQuerySec.value = sortedData;
-    });
+const { data: equalQuerySec } = await useAsyncData("equal", () => {
+  return queryContent("sec/").find();
 });
+
+if (equalQuerySec.value) {
+  equalQuerySec.value.sort((a, b) => {
+    const dateA = new Date(a.time).getTime();
+    const dateB = new Date(b.time).getTime();
+    return dateB - dateA;
+  });
+}
+
+const sortedData = computed(() => equalQuerySec.value);
 </script>
 
 <template>
@@ -40,11 +36,11 @@ useAsyncData("equal", () => {
           work or daily life and reported them, more or less.
         </p>
         <swiper :slides-per-view="'auto'" :space-between="20">
-          <swiper-slide v-for="sec in equalQuerySec" class="content-box">
+          <swiper-slide v-for="sec in sortedData" class="content-box">
             <nuxt-link style="display: contents" :to="sec._path">
               <div class="content-time">
                 <img
-                  :src="'/img/page/' + sec.type + '.png'"
+                  :src="'/img/page/' + sec.platform + '.png'"
                   alt="report-platform"
                 /><span>{{ sec.time.slice(0, 4) }}</span>
               </div>
@@ -111,15 +107,7 @@ a {
     }
     img {
       width: 20vh;
-      height: -webkit-fill-available;
-
-      @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
-        height: intrinsic;
-      }
-
-      @supports (-moz-appearance: none) {
-        height: fit-content;
-      }
+      height: 2vh;
     }
     .box-title {
       border-bottom: 10px solid red;
