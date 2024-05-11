@@ -4,16 +4,16 @@
       href="/"
       :class="{ active: currentPage === '/' || currentPage === '/about' }"
     >
-      <Icon name="RhymeIcon" size="30"
+      <Icon name="RhymeIcon" size="2.8vh"
     /></a>
     <a href="/dev" :class="{ active: currentPage.startsWith('/dev') }">
-      <Icon name="DevIcon" size="30"
+      <Icon name="DevIcon" size="2.8vh"
     /></a>
     <a href="#" :class="{ active: currentPage.startsWith('/des') }"
-      ><Icon name="DesIcon" size="30"
+      ><Icon name="DesIcon" size="2.8vh"
     /></a>
     <a href="/sec" :class="{ active: currentPage.startsWith('/sec') }"
-      ><Icon name="SecIcon" size="30"
+      ><Icon name="SecIcon" size="2.8vh"
     /></a>
   </main>
 </template>
