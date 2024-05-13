@@ -45,6 +45,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .tip {
   padding: 1vh;
+  margin-top: 1.2vh;
+  margin-bottom: 1.2vh;
   background: #fafafa;
   .tip-quto {
     opacity: 0.1;

@@ -59,5 +59,5 @@ info: Figure 2 | My first PR and analysis from gitroll (I personally think it's 
 
 My first GitHub PR came from Node.js three years ago when I was still in school. While learning Node.js, I got to know [expressjs](https://expressjs.com/). Undoubtedly, I felt the enthusiasm from the open-source community for the first time, and they didn't criticize my code for its lack of elegance. Instead, they provided suggestions and how they would write the code if they were in my shoes.
 
-Fortunately, the GitHub rating portraits recently gained popularity on Twitter, and my gitroll score is 8.97. I don't think this metric is very authoritative or should be used to measure a person's coding level. However, raising gitroll to 9 or even close to 10 still has some significance.
+Fortunately, the GitHub rating portraits recently gained popularity on Twitter, and my gitroll score is 9,10. I don't think this metric is very authoritative or should be used to measure a person's coding level. However, raising gitroll to 9.5 or even close to 10 still has some significance.
 ::
