@@ -2,6 +2,7 @@
 import { defineProps, onMounted } from "vue";
 
 defineProps(["info", "img", "type"]);
+const colorMode = useColorMode();
 
 const direction = ref<"row" | "row-reverse">("row");
 
@@ -52,17 +53,23 @@ onMounted(() => {
     opacity: 0.1;
   }
 }
+.dark-mode .page-tips-main {
+    color: #5c5c5c;
+}
 .page-tips-main {
   color: #c0c0c0;
   font-size: 1vh;
   display: flex;
+  width: 100%;
   &.reverse-direction {
     flex-direction: row-reverse;
   }
   .img {
-    width: 70%;
-    height: 70%;
+    width: 60%;
     padding: 7px;
+  }
+  div {
+    width: 40%;
   }
 }
 .layout {

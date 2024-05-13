@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 const currentPage = ref<number>(1);
 const itemsPerPage = 5;
+const colorMode = useColorMode()
 
 useSeoMeta({
   title: "Develop - RHYME.Q",
@@ -96,6 +97,9 @@ const getAllData = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.dark-mode .pagination-layout{
+    background: #171717;
+}
 .pagination-layout {
   display: flex;
   box-shadow: -2px -8px 20px 1px rgb(0 0 0 / 11%);

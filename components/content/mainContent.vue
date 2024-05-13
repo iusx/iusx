@@ -1,10 +1,11 @@
 <script setup>
 import { defineProps } from "vue";
+const colorMode = useColorMode();
 
 defineProps(["title", "info", "time", "client", "img", "types"]);
 </script>
 <template>
-  <main class="layout">
+  <main class="layout page-content">
     <div class="content">
       <page-image :img="img" :info="info" :type="types" />
       <page-title class="title" :title="title" :time="time" :client="client" />
@@ -16,6 +17,10 @@ defineProps(["title", "info", "time", "client", "img", "types"]);
 </template>
 
 <style lang="scss" scoped>
+.dark-mode .text {
+  color: #5c5c5c !important;
+}
+
 .text-layout {
   width: 100%;
   display: flex;
@@ -24,7 +29,7 @@ defineProps(["title", "info", "time", "client", "img", "types"]);
   .text {
     width: 65%;
     text-transform: capitalize;
-    color: #c0c0c0;
+    color: #888888;
     text-align: justify;
     @media (max-width: 768px) {
       width: 100%;

@@ -3,6 +3,7 @@ useSeoMeta({
   title: "Security - RHYME.Q",
   description: "Github + Hackerone + Behance ÷ Researchgate",
 });
+const colorMode = useColorMode();
 
 const { data: equalQuerySec } = await useAsyncData("equal", () => {
   return queryContent("sec/").find();
@@ -55,8 +56,33 @@ const sortedData = computed(() => equalQuerySec.value);
 
 <style lang="scss" scoped>
 a {
-    text-decoration: none;
+  text-decoration: none;
+}
 
+.dark-mode {
+  .content-layout {
+    .content-box {
+      border: 2px solid rgb(31, 31, 31) !important;
+      .content-time {
+        span {
+            color: #1b1b1b;
+        }
+      }
+    }
+  }
+  img {
+    filter: brightness(5);
+  }
+  .left {
+    background: #0e0e0e;
+  }
+  .main {
+    .main-title {
+      span {
+        -webkit-text-stroke: 1px #2c2c2c;
+      }
+    }
+  }
 }
 .content-layout {
   .content-box-layout {
@@ -67,6 +93,7 @@ a {
     width: 31vh !important;
     background: transparent;
     border: 2px solid #dfe3e9;
+
     display: flex;
     flex-direction: column;
     cursor: pointer;

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
+const colorMode = useColorMode()
 
 defineProps(["title", "url"]);
 </script>
@@ -18,6 +19,9 @@ defineProps(["title", "url"]);
   100% {
     opacity: 0;
   }
+}
+.dark-mode a {
+    color: rgb(255, 255, 255);
 }
 
 a {

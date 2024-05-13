@@ -24,8 +24,8 @@ types: "cc"
 
 ::text-space
 ---
-img: 01/info/6.png,01/info/7.png
-info: 图 1 | Jiangxue academy - Fringe Science Research And Support<br>启用了新的设计语言和风格，让其更加现代化但又不负的江雪文化底蕴
+img: 01/info/6.png,01/info/7.png,01/info/8.png,01/info/9.png,01/info/10.png,01/info/11.png,01/info/12.png,01/info/13.png
+info: 图 1 | Jiangxue academy - Fringe Science Research And Support<br>启用了新的设计语言和风格，让其更加现代化且与时俱进的风格与江雪完美融合。
 ---
 ::
 
@@ -80,7 +80,7 @@ JTPS 的核心是 JTPS-Task 模块，它将负责实现任务的执行，包括�
 ---
 img: 01/info/8.png
 type: flat
-info: 图 4 | 根据科学家的目标请求触发自主工作流，作为在知识图谱中传播信息。https://como.ceb.cam.ac.uk/media/preprints/c4e-preprint-310.pdf
+info: 图 4 | 根据科学家的目标请求触发自主工作流，作为在知识图谱中传播信息<br> https://como.ceb.cam.ac.uk/media/preprints/c4e-preprint-310.pdf
 ---
 ::
 

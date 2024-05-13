@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import Lenis from "@studio-freight/lenis";
+const colorMode = useColorMode()
 
 onMounted(() => {
   const lenis: Lenis = new Lenis();
@@ -22,6 +23,9 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.dark-mode body {
+    background: #000;
+}
 @font-face {
   font-family: "tsing";
   src: url("/tsing.ttf");
@@ -34,6 +38,9 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+}
+.dark-mode .page-content img {
+    filter: brightness(70%);
 }
 ::-webkit-scrollbar {
   width: 0;

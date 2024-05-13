@@ -16,6 +16,7 @@
     "nuxt-swiper": "^1.2.2"
   },
   "devDependencies": {
+    "@nuxtjs/color-mode": "^3.4.1",
     "nuxt-icon": "^0.6.10",
     "rss": "^1.2.2",
     "sass": "^1.75.0"

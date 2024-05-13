@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import * as d3 from "d3";
+const colorMode = useColorMode()
 
 const force = ref(null);
 let simulation, node, link;
@@ -123,7 +124,12 @@ const links = ref([
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
-
+.dark-mode main {
+    background: rgb(0, 0, 0);
+    .data {
+        opacity: 0.13 !important;
+    }
+}
 .nav {
   position: absolute;
   top: 5vh;
@@ -164,6 +170,9 @@ const links = ref([
         text-transform: none;
         text-decoration: none;
       }
+      .dark-mode &:hover {
+        color: #757575;
+      }
     }
   }
 }
@@ -185,6 +194,9 @@ const links = ref([
         color: #1c0000;
         text-transform: none;
         text-decoration: none;
+      }
+      .dark-mode &:hover {
+        color: #757575;
       }
     }
   }

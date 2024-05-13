@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
+const colorMode = useColorMode();
 
 const monthNames = [
   "January",
@@ -68,6 +69,13 @@ const formattedTime = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.dark-mode p,
+span {
+  color: rgb(212, 212, 212) !important;
+}
+.dark-mode .client span {
+  opacity: 0.7;
+}
 main {
   display: flex;
   @media (max-width: 768px) {
@@ -107,7 +115,7 @@ main {
     opacity: 0.5;
   }
   span {
-    color: #cacaca;
+    color: #888888;
     font-size: 1.4vh;
     line-height: 1;
     text-transform: uppercase;

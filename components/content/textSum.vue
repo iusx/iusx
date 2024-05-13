@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
+const colorMode = useColorMode()
 
 defineProps(["desc"]);
 </script>
@@ -18,5 +19,8 @@ main {
     font-size: 1vh;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.dark-mode main {
+    background: #121212;
 }
 </style>
