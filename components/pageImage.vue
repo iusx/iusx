@@ -12,7 +12,6 @@ const props = defineProps({
     type: String,
   },
 });
-
 const images = ref(props.img.split(",").map((item) => "/img/" + item));
 const loading = ref(true);
 const imagesLoadedCount = ref(0); // 新增计数器
@@ -109,7 +108,6 @@ a:hover .tips {
 .info {
   display: flex;
   margin-top: 0.4em;
-
   .info-title {
     margin: 0;
     line-height: 1;

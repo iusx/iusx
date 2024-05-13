@@ -51,6 +51,9 @@ body {
     line-height: 1.6;
   }
 }
+.tips {
+    z-index: 10;
+}
 .page-sec {
     .swiper-slide {
         height: 31vh !important;

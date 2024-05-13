@@ -65,8 +65,11 @@ a {
       border: 2px solid rgb(31, 31, 31) !important;
       .content-time {
         span {
-            color: #1b1b1b;
+          color: #1b1b1b;
         }
+      }
+      .box-title {
+        color: #5d5d5d;
       }
     }
   }

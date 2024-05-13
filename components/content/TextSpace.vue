@@ -53,6 +53,13 @@ onMounted(() => {
     opacity: 0.1;
   }
 }
+.dark-mode .tip {
+    background: #121212;
+    .tip-quto {
+        opacity: 1;
+        stroke: #575757;
+    }
+}
 .dark-mode .page-tips-main {
     color: #5c5c5c;
 }
