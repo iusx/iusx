@@ -39,7 +39,7 @@ body {
   width: 100%;
   height: 100%;
 }
-.dark-mode .page-content img {
+.dark-mode .page-content, .content img {
     filter: brightness(70%);
 }
 ::-webkit-scrollbar {
