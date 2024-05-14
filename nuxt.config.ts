@@ -7,6 +7,10 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "nuxt-swiper",
     "@vueuse/nuxt",
-    "@nuxtjs/color-mode"
+    "@nuxtjs/color-mode",
+    "@nuxtjs/sitemap"
   ],
+  site: {
+    url: 'https://member.rhyme.jiangxue.org/',
+  }
 });

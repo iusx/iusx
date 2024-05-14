@@ -112,6 +112,7 @@ const links = ref([
           <a href="/about">about</a>
           <a href="">Link</a>
           <a href="/rss.xml">RSS</a>
+          <a href="/sitemap.xml">Sitemap</a>
         </div>
         <p>
           Creative Commons Attribution 4.0 International License (CC BY 4.0) and
