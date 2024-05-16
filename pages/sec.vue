@@ -36,7 +36,7 @@ const sortedData = computed(() => equalQuerySec.value);
           few security hiccups in my<br />
           work or daily life and reported them, more or less.
         </p>
-        <swiper :slides-per-view="'auto'" :space-between="20">
+        <swiper :slides-per-view="'auto'">
           <swiper-slide v-for="sec in sortedData" class="content-box">
             <nuxt-link style="display: contents" :to="sec._path">
               <div class="content-time">
@@ -96,7 +96,7 @@ a {
     width: 31vh !important;
     background: transparent;
     border: 2px solid #dfe3e9;
-
+    margin-right: 1vw;
     display: flex;
     flex-direction: column;
     cursor: pointer;
