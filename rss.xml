@@ -4,13 +4,50 @@
         <description><![CDATA[RHYME.Q 韵清]]></description>
         <link>https://member.rhyme.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 16 May 2024 05:18:30 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 18 May 2024 14:16:18 GMT</lastBuildDate>
         <atom:link href="https://member.rhyme.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[江雪銮音实验室]]></title>
             <description><![CDATA[从 2015 年至 2024 年，我见证了江雪从初出茅庐到技术和设计双提升的九年成长历程。在这段时间中，我们面临着如何定义完美与完成的衡量标准的挑战，并探索了诸如网际协议、组件化设计和分布式网络等领域。在即将到来的十年，我们将聚焦应用数学和边缘科学研究，坚持 “完成比完美更重要” 的原则。我们也将建立一个与时俱进、注重实现的工作流系统，以实现科学研究的透明度和可靠性。]]></description>
             <link>member.rhyme.jiangxue.org/dev/jiangxue-joint-laboratory-luanyin-project</link>
             <guid isPermaLink="true">member.rhyme.jiangxue.org/dev/jiangxue-joint-laboratory-luanyin-project</guid>
+        </item>
+        <item>
+            <title><![CDATA[EDRAW SOFTWARE watermarking bypass]]></title>
+            <link>member.rhyme.jiangxue.org/sec/edrawmax</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/edrawmax</guid>
+        </item>
+        <item>
+            <title><![CDATA[GraphQL Misconfiguration in CWE-16 Github API]]></title>
+            <description><![CDATA[This is my first time submitting a bug and receiving a bounty along with other rewards, so it's quite memorable for me. Since I've been fully immersed in product design and development, discovering security flaws in well-known companies or platforms again is like reaching a milestone for me.]]></description>
+            <link>member.rhyme.jiangxue.org/sec/github-misconfiguration</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/github-misconfiguration</guid>
+        </item>
+        <item>
+            <title><![CDATA[CHINA TELECOM IPTV Payment bypass]]></title>
+            <description><![CDATA[发现智能电视机顶盒的网络电视功能，开启了家人的全新娱乐体验。从经典节目到热门电影，一应俱全。不过，发现了一个让人忍不住好奇的漏洞。利用这个小技巧，我们尽情享受了一周的节目，直到漏洞被修复，CNVD 的那份证书让我倍感荣幸。时光流逝，我回顾起四年前的梦想，感慨万分。如今，安全领域的探索已不再是我的重心，但那份热爱和期待依然存在，或许，下一个 CVE 编号就在不远的将来。]]></description>
+            <link>member.rhyme.jiangxue.org/sec/iptv</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/iptv</guid>
+        </item>
+        <item>
+            <title><![CDATA[TOPCHOICE MEDICAL INVESMENT CO., INC]]></title>
+            <link>member.rhyme.jiangxue.org/sec/tcmedical</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/tcmedical</guid>
+        </item>
+        <item>
+            <title><![CDATA[Turing Robot Payment bypass]]></title>
+            <link>member.rhyme.jiangxue.org/sec/turing</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/turing</guid>
+        </item>
+        <item>
+            <title><![CDATA[HENAN YADU MEDICAL GROUP CORPORATION]]></title>
+            <link>member.rhyme.jiangxue.org/sec/yadugroup</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/yadugroup</guid>
+        </item>
+        <item>
+            <title><![CDATA[HENAN YADU MEDICAL GROUP CORPORATION]]></title>
+            <link>member.rhyme.jiangxue.org/sec/ycrenfu</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/ycrenfu</guid>
         </item>
     </channel>
 </rss>
