@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     .find();
 
   const blogPosts = docs.filter(
-    (doc) => doc?._path?.includes("/dev")
+    (doc) => doc?._path?.includes("/dev") || doc?._path?.includes("/sec")
   );
   for (const doc of blogPosts) {
     feed.item({
