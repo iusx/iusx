@@ -1,1 +1,0 @@
-import{_ as e}from"./dPyapNmu.js";import{o as t,q as o,J as s}from"./DTMzonkn.js";const c={},n={width:"22",height:"22",viewBox:"0 0 22 22",fill:"none",xmlns:"http://www.w3.org/2000/svg"},r=s("rect",{width:"22",height:"22",fill:"#EF0000"},null,-1),_=[r];function i(a,h){return t(),o("svg",n,_)}const f=e(c,[["render",i]]);export{f as default};
