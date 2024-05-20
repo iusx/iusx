@@ -62,4 +62,23 @@ body {
     width: 31vh !important;
   }
 }
+
+.ref {
+  a {
+    text-decoration: none;
+    text-transform: initial;
+    color: #888888;
+  }
+}
+.text h3 a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.dark-mode .text h3 a {
+    color: white;
+}
+.dark-mode .ref a {
+  color: #5c5c5c !important;
+}
 </style>
