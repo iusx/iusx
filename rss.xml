@@ -4,7 +4,7 @@
         <description><![CDATA[RHYME.Q 韵清]]></description>
         <link>https://member.rhyme.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sun, 19 May 2024 05:31:48 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 20 May 2024 14:11:27 GMT</lastBuildDate>
         <atom:link href="https://member.rhyme.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[江雪銮音实验室]]></title>
@@ -13,7 +13,8 @@
             <guid isPermaLink="true">member.rhyme.jiangxue.org/dev/jiangxue-joint-laboratory-luanyin-project</guid>
         </item>
         <item>
-            <title><![CDATA[EDRAW SOFTWARE watermarking bypass]]></title>
+            <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
+            <description><![CDATA[有时候在做流程图时需要一个好用的绘图软件。我尝试过 Draw.io、Visio、Dia、Graphviz、Umbrello、ProcessOn 等。这些软件各有特色，主要比较的是用户体验和免费程度。Edraw 早期界面像 Visio，现在融入了 Figma 等产品的交互方式。使用时发现它支持复制粘贴 SVG 数据，方便导出无水印流程图。我喜欢支持 SVG 的软件，比如 Figma 和 Illustrator。最喜欢的流程图风格是 IETF RFC 文件中的，用制表符绘制的 ASCII-Art，简洁而美观。]]></description>
             <link>member.rhyme.jiangxue.org/sec/edrawmax</link>
             <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/edrawmax</guid>
         </item>
