@@ -60,7 +60,7 @@ const contribution = [
   {
     name: "expressjs",
     time: "2021",
-    post: "translate",
+    post: "translate contribution",
     url: "https://expressjs.com/",
   },
   {
@@ -120,7 +120,7 @@ const contribution = [
   {
     name: "astro",
     time: "2023",
-    post: "translate",
+    post: "translate contribution",
     url: "https://astro.build/",
   },
   {
@@ -166,8 +166,8 @@ const contribution = [
   {
     name: "Ethereum ORG",
     time: "2024",
-    post: "UX",
-    url: "https://ethereum.org/",
+    post: "UX contribution",
+    url: "https://ethereum.org/en/contributing/#contributors",
   },
 ];
 </script>
