@@ -16,9 +16,10 @@ defineProps(["desc"]);
 main {
     background: #fafafa;
     padding: 10px;
-    font-size: 1vh;
+    font-size: 1.4vh;
     margin-top: 10px;
     margin-bottom: 10px;
+    line-height: 1.7;
 }
 .dark-mode main {
     background: #121212;
