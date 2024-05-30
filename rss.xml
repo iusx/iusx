@@ -4,7 +4,7 @@
         <description><![CDATA[RHYME.Q 韵清]]></description>
         <link>https://member.rhyme.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 22 May 2024 17:03:03 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 30 May 2024 11:49:20 GMT</lastBuildDate>
         <atom:link href="https://member.rhyme.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[江雪銮音实验室]]></title>
@@ -46,7 +46,8 @@
             <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/yadugroup</guid>
         </item>
         <item>
-            <title><![CDATA[HENAN YADU MEDICAL GROUP CORPORATION]]></title>
+            <title><![CDATA[YICHANG HUMANWELL PHARMACEUTICAL CWE-89]]></title>
+            <description><![CDATA[从对安全的兴趣到学习第一个漏洞，我探索了 OWASP TOP 10，并发现了 Injection 漏洞，尤其是 SQL 注入。漏洞的发现让我认识到安全问题是系统设计和逻辑处理不当的结果。随着学习的深入，发现了更多类型的漏洞，而安全研究也不断拓展。安全领域的探索是一个持续学习和探索的过程，每个人都有自己的独特见解和关注点。]]></description>
             <link>member.rhyme.jiangxue.org/sec/ycrenfu</link>
             <guid isPermaLink="true">member.rhyme.jiangxue.org/sec/ycrenfu</guid>
         </item>
