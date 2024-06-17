@@ -45,5 +45,6 @@ Science Research and Support. Fringe Science Research and Support.
 Therefore, all experiences before 2024 are flawed to some extent, and I plan to address these shortcomings as I continue to learn and grow.
 
 #end
-Success is not final, failure is not fatal: It is the courage to continue that counts.
+failure is not fatal: It is the courage to continue that counts.<br>
+失败无可厚非；重要的是拾起继续前行的勇气。
 ::

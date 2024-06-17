@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+const colorMode = useColorMode();
 
 defineProps(["table"]);
 </script>
@@ -23,7 +24,7 @@ a {
   justify-content: space-between;
   font-weight: 300;
   font-size: initial;
-  border-bottom: 1px solid #1c1c1c;
+  border-bottom: 1px solid #e1e1e1;
   padding-bottom: 13px;
   padding-top: 13px;
   cursor: pointer;
@@ -44,20 +45,36 @@ a {
     text-transform: capitalize;
   }
 }
+.dark-mode a {
+  border-bottom: 1px solid #e1e1e120 !important;
+}
 a.no-border {
   border-bottom: none;
 }
 a {
-  background-image: linear-gradient(white, white);
+  background-image: linear-gradient(black, black);
   background-repeat: no-repeat;
   background-size: 100% 0%;
-  color: white;
+  color: #a6a6a6;
   transition: background-size 0.1s ease-in-out, padding 0.2s ease-in-out;
 }
 
 a:hover {
   background-size: 100% 100%;
   padding: 13px;
-  color: #000 !important;
+  color: #ffffff !important;
+  span {
+    color: #fff !important;
+  }
+}
+.dark-mode a:hover {
+  background-image: linear-gradient(white, white);
+  color: rgb(0, 0, 0) !important;
+  span {
+    color: #5f5f5f !important;
+  }
+}
+.dark-mode a {
+  color: #fff;
 }
 </style>

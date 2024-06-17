@@ -44,9 +44,6 @@ body {
   filter: brightness(70%);
 }
 
-::-webkit-scrollbar {
-  width: 0;
-}
 .text {
   p {
     font-size: 1.5vh;
@@ -71,12 +68,12 @@ body {
   }
 }
 .text h3 a {
-    text-decoration: none;
-    color: #000000;
+  text-decoration: none;
+  color: #000000;
 }
 
 .dark-mode .text h3 a {
-    color: white;
+  color: white;
 }
 .dark-mode .ref a {
   color: #5c5c5c !important;

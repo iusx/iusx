@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps } from "vue";
-
+const colorMode = useColorMode();
 defineProps(["title", "desc", "time", "name"]);
 
 useSeoMeta({
@@ -288,8 +288,9 @@ const contribution = [
         margin: 0;
       }
       .job-time {
-        color: #5c5c5c;
+        color: #a6a6a6;
         font-size: initial;
+        font-weight: bold;
       }
     }
   }
@@ -297,10 +298,11 @@ const contribution = [
     flex: 1;
     p {
       padding: 0;
+      color: #000;
     }
     .work-info-text {
       p {
-        color: #404040;
+        color: #a6a6a6;
         display: block;
         padding-bottom: 1rem;
         text-align: justify;
@@ -310,11 +312,11 @@ const contribution = [
     }
   }
   .hello {
-    background: #000000;
+    background: #ffffff;
     .tip {
       height: 100vh;
-      font-size: 5.8vw;
-      width: 80%;
+      font-size: 2.8vw;
+      width: 60%;
       @media (max-width: 768px) {
         width: 90%;
       }
@@ -329,7 +331,7 @@ const contribution = [
         width: 100%;
       }
       p {
-        color: #404040;
+        color: #a6a6a6;
         margin: 0;
         padding-right: 5px;
       }
@@ -369,5 +371,12 @@ const contribution = [
       padding-right: 10px;
     }
   }
+}
+
+.dark-mode .hello {
+  background: rgb(0, 0, 0);
+}
+.dark-mode .work-info p {
+  color: #ffffff;
 }
 </style>

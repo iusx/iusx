@@ -9,7 +9,7 @@
     <a href="/dev" :class="{ active: currentPage.startsWith('/dev') }">
       <Icon name="DevIcon" size="2.8vh"
     /></a>
-    <a href="#" :class="{ active: currentPage.startsWith('/des') }"
+    <a href="/des" :class="{ active: currentPage.startsWith('/des') }"
       ><Icon name="DesIcon" size="2.8vh"
     /></a>
     <a href="/sec" :class="{ active: currentPage.startsWith('/sec') }"
