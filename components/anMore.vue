@@ -15,6 +15,9 @@
     <a href="/sec" :class="{ active: currentPage.startsWith('/sec') }"
       ><Icon name="SecIcon" size="2.8vh"
     /></a>
+    <a href="/book" :class="{ active: currentPage.startsWith('/book') }"
+      ><Icon name="BookIcon" size="2.8vh"
+    /></a>
   </main>
 </template>
 

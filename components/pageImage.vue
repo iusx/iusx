@@ -15,7 +15,6 @@ const props = defineProps({
 const images = ref(props.img.split(",").map((item) => "/img/" + item));
 const loading = ref(true);
 const imagesLoadedCount = ref(0); // 新增计数器
-
 onMounted(() => {
   images.value.forEach((imageUrl, index) => {
     const img = new Image();
@@ -24,7 +23,7 @@ onMounted(() => {
     img.onload = () => {
       // 图片加载成功，增加计数
       imagesLoadedCount.value++;
-      
+
       // 当所有图片都加载完成时，更新加载状态
       if (imagesLoadedCount.value === images.value.length) {
         loading.value = false;
@@ -37,7 +36,6 @@ onMounted(() => {
     };
   });
 });
-
 </script>
 
 <template>
@@ -67,7 +65,7 @@ onMounted(() => {
             <template #template>
               <an-skeleton-item
                 variant="image"
-                style="width: 100vw;height: 80vh"
+                style="width: 100vw; height: 80vh"
               />
               <div style="padding: 14px">
                 <an-skeleton-item variant="h3" style="width: 50%" />
