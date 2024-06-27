@@ -14,7 +14,8 @@
     "@vueuse/nuxt": "^10.9.0",
     "d3": "^7.9.0",
     "nuxt": "^3.11.2",
-    "nuxt-swiper": "^1.2.2"
+    "nuxt-swiper": "^1.2.2",
+    "remark-toc": "^9.0.0"
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^3.4.1",

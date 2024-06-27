@@ -5,4 +5,12 @@
 img: "01/1"
 ---
 
-:text-an-next
+::book-content{:title="title"}
+
+# title 1
+
+# title 2
+
+# Test 3
+
+::

@@ -56,13 +56,15 @@ const sortedData = computed(() => equalQueryBook.value);
             'background-repeat': 'no-repeat',
           }"
         >
-          <div class="note-book-box-desc">
-            <span>in reading</span>
-            <p>
-              {{ des.title }}
-            </p>
-          </div>
-          <div class="note-book-state"></div>
+          <nuxt-link :to="des._path">
+            <div class="note-book-box-desc">
+              <span>in reading</span>
+              <p>
+                {{ des.title }}
+              </p>
+            </div>
+            <div class="note-book-state"></div>
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -70,6 +72,10 @@ const sortedData = computed(() => equalQueryBook.value);
 </template>
 
 <style lang="scss" scoped>
+a {
+  color: white;
+  text-decoration: none;
+}
 .scale-effect {
   @media (max-width: 1440px) {
     transform: scale(1);
@@ -105,6 +111,10 @@ main {
 }
 .note-des {
   flex: 1.5;
+  position: sticky;
+  top: 10px;
+  height: 51vw;
+  z-index: -30;
   @media (max-width: 1668px) {
     flex: 1.2;
   }
@@ -169,7 +179,7 @@ main {
     background: url("/img/book/01.png") no-repeat;
     cursor: pointer;
     color: white;
-    border-radius: 13px;
+    border-radius: 5px;
     @media (max-width: 1440px) {
       width: 100vw;
       margin-bottom: 3vw;

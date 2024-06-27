@@ -76,6 +76,34 @@ body {
   color: white;
 }
 .dark-mode .ref a {
-  color: #5c5c5c !important;
+  color: #a2a2a2 !important;
+}
+
+html::-webkit-scrollbar {
+  width: 3px;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 25px;
+}
+.markdown-content h1 {
+  display: flex;
+  width: -moz-max-content;
+  width: max-content;
+  flex-direction: row-reverse;
+  align-items: center;
+  &::before {
+    content: " ";
+    display: block;
+    width: 18px;
+    height: 39px;
+    background: #ffffff;
+    margin-left: -18px;
+  }
 }
 </style>

@@ -84,6 +84,9 @@ const sortedData = computed(() => equalQueryDes.value);
 </template>
 
 <style lang="scss" scoped>
+a {
+  color: rgb(0, 0, 0);
+}
 .work-pop {
   position: absolute;
   height: 100vh; /* 确保 .work-pop 的高度是 100vh */
