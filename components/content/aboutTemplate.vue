@@ -169,6 +169,12 @@ const contribution = [
     post: "UX contribution",
     url: "https://ethereum.org/en/contributing/#contributors",
   },
+  {
+    name: "Xmatrix",
+    time: "2024",
+    post: "UX&Dev",
+    url: "",
+  },
 ];
 </script>
 
@@ -185,7 +191,7 @@ const contribution = [
             class="me-tip"
             :text="[
               'Software development',
-              'Security research',
+              'Security amateur',
               'Designer',
               'Full stack development',
             ]"

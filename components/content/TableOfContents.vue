@@ -1,14 +1,17 @@
 <template>
-  <nav>
-    <ul>
-      <li v-for="heading in toc" :key="heading.id">
-        <a :href="`#${heading.id}`">{{ heading.text.slice(0, -1) }}</a>
-        <template v-for=" key in parseInt(heading.text.slice(-1))">
-            <span></span>
+  <ul>
+    <li v-for="heading in toc" :key="heading.id">
+      <a :href="`#${heading.id}`">{{ heading.text.slice(0, -1) }}</a>
+      <template v-if="!isNaN(parseInt(heading.text.slice(-1), 10))">
+        <template v-for="key in parseInt(heading.text.slice(-1), 10)">
+          <span></span>
         </template>
-      </li>
-    </ul>
-  </nav>
+      </template>
+      <template v-if="parseInt(heading.text.slice(-1), 10) == 0">
+        <div class="no"></div>
+      </template>
+    </li>
+  </ul>
 </template>
 
 <script setup>
@@ -21,6 +24,7 @@ const props = defineProps({
 });
 
 const toc = ref([]);
+const colorMode = useColorMode();
 
 onMounted(() => {
   const content = document.querySelector(".markdown-content");
@@ -41,19 +45,20 @@ const getSpanCount = computed(() => (text) => {
 </script>
 
 <style lang="scss" scoped>
-nav ul {
+ul {
   list-style: none;
   padding: 0;
 }
-nav ul li {
-  margin: 0.5em 0;
+ul li {
+  margin: 0.8vw 2px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 100%;
 }
 
 li {
-  background: url("data:image/svg+xml,%3Csvg width='430' height='1' viewBox='0 0 430 1' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 0.5H430' stroke='%23D7D7D7'/%3E%3C/svg%3E%0A")
+  background: url("data:image/svg+xml,%3Csvg width='930' height='1' viewBox='0 0 930 1' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 0.5H930' stroke='%23D7D7D7'/%3E%3C/svg%3E%0A")
     no-repeat center;
 }
 a {
@@ -64,23 +69,41 @@ a {
   display: flex;
   padding-right: 0.6vw;
   align-items: center;
+  font-size: 0.8vw;
   &::before {
     content: "";
     display: block;
     margin-right: 0.5vw;
-    width: 7px;
-    height: 7px;
+    width: 0.4vw;
+    height: 0.4vw;
     border: 1px solid #000000;
     transform: rotate(45deg);
+  }
+}
+.dark-mode a {
+  color: #898989;
+  background: #000;
+  &::before {
+    border: 1px solid #898989;
   }
 }
 span::before {
   content: "";
   display: block;
-  width: 7px;
-  height: 7px;
+  width: 0.4vw;
+  height: 0.4vw;
   border: 1px solid #000000;
   transform: rotate(45deg);
   background-color: white;
+}
+.no::before {
+  content: "";
+  display: block;
+  width: 0.4vw;
+  height: 0.4vw;
+  background-color: #d7d7d7;
+  border-radius: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 </style>

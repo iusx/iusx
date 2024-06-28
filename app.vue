@@ -80,7 +80,7 @@ body {
 }
 
 html::-webkit-scrollbar {
-  width: 3px;
+  width: 1px;
 }
 
 html::-webkit-scrollbar-track {
@@ -92,18 +92,26 @@ html::-webkit-scrollbar-thumb {
   border-radius: 25px;
 }
 .markdown-content h1 {
-  display: flex;
-  width: -moz-max-content;
-  width: max-content;
-  flex-direction: row-reverse;
-  align-items: center;
-  &::before {
-    content: " ";
-    display: block;
-    width: 18px;
-    height: 39px;
-    background: #ffffff;
-    margin-left: -18px;
+  font-size: 0.1vw;
+  color: rgba(0, 0, 0, 0.189);
+  text-transform: uppercase;
+}
+.markdown-content {
+  padding-top: 4vw;
+  @media (max-width: 1024px) {
+    padding-top: 10vw;
   }
+}
+.markdown-content p {
+  display: block;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  color: #888888;
+  font-size: 1.5vh;
+  line-height: 1.6;
+}
+.dark-mode .markdown-content h1 {
+  color: rgba(255, 255, 255, 0.588);
 }
 </style>

@@ -134,6 +134,7 @@ main {
     display: block;
   }
   .title-desc-about {
+    font-size: 0.8vw;
     color: #c0c0c0;
     line-height: 1.5;
     text-align: justify;
@@ -199,7 +200,7 @@ main {
         padding-right: 4vw;
       }
       justify-content: flex-end;
-      border-radius: 13px;
+      border-radius: 5px;
       background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
       span {
         font-weight: bold;

@@ -89,22 +89,9 @@ a {
 }
 .work-pop {
   position: absolute;
-  height: 100vh; /* 确保 .work-pop 的高度是 100vh */
-  width: 30vw;
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 45.8px 49px rgba(166, 166, 166, 0.25);
   z-index: 9000000999 !important;
-  overflow: hidden; /* 禁止 .work-pop 的溢出 */
-  @media (max-width: 1024px) {
-    width: 50vw;
-  }
-  @media (max-width: 768px) {
-    width: 70vw;
-  }
-  @media (max-width: 425px) {
-    width: 90vw;
-  }
-
   .work-pop-title {
     display: flex;
     justify-content: space-between;
@@ -115,7 +102,7 @@ a {
   .work-pop-layout {
     margin: 0 auto;
     width: 90%;
-    height: 100%; /* 确保 .work-pop-layout 的高度是 100% */
+    height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -123,7 +110,6 @@ a {
   .work-pop-des {
     flex: 1;
     padding-right: 20px;
-    overflow-y: auto !important;
     padding-bottom: 20px;
   }
 

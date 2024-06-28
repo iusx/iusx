@@ -22,14 +22,61 @@ const titleParts = computed(() => {
     secondPart: "",
   };
 });
+
+const isWorkPopVisible = ref(false);
+
+const showWorkPop = () => {
+  isWorkPopVisible.value = true;
+};
+
+const hideWorkPop = () => {
+  isWorkPopVisible.value = false;
+};
 </script>
 <template>
   <main class="layout">
-    <div class="book-info">
-      <img src="/img/book/01/1.png" alt="book-home" />
-      <div class="book-info-author">
-        <p>By James Forshaw</p>
-        <span>be reading 10%</span>
+    <div class="book-info pc">
+      <div class="book-info-home-img">
+        <img src="/img/book/01/1.png" alt="book-home" />
+        <div class="book-info-author">
+          <p>By James Forshaw</p>
+          <span>be reading 10%</span>
+        </div>
+      </div>
+      <div class="title">
+        <p>{{ titleParts.firstPart }}</p>
+        <span>{{ titleParts.secondPart }}</span>
+      </div>
+      <div class="dir-layout">
+        <p class="title">directory</p>
+        <TableOfContents />
+      </div>
+    </div>
+    <div class="an">
+      <div class="more" @click="showWorkPop">Directory</div>
+    </div>
+    <div
+      class="book-info"
+      v-if="isWorkPopVisible"
+      style="
+        width: 85vw !important;
+        background: rgb(0 0 0 / 0%);
+        backdrop-filter: blur(19.4px);
+      "
+    >
+      <Icon
+        name="DesClose"
+        size="2.2vh"
+        style="cursor: pointer"
+        class="pop-close"
+        @click="hideWorkPop"
+      />
+      <div class="book-info-home-img">
+        <img src="/img/book/01/1.png" alt="book-home" />
+        <div class="book-info-author">
+          <p>By James Forshaw</p>
+          <span>be reading 10%</span>
+        </div>
       </div>
       <div class="title">
         <p>{{ titleParts.firstPart }}</p>
@@ -47,10 +94,45 @@ const titleParts = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.pc {
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+.pop-close {
+  cursor: pointer;
+  width: 3vw;
+  height: 7vw;
+  color: #ffffff;
+}
+.more {
+  color: white;
+}
+.an {
+  display: none;
+  @media (max-width: 1024px) {
+    display: block;
+    display: block;
+    position: fixed;
+    background: #002eff;
+    padding: 8px;
+    font-size: 1vw;
+    font-weight: bold;
+  }
+}
 .book-info {
+  width: 21vw;
+  position: fixed;
+  height: 100vh;
+  overflow: inherit;
+  padding-right: 1vw;
   img {
     width: 100%;
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
   }
+  position: fixed;
   .book-info-author {
     display: flex;
     align-items: center;
@@ -86,17 +168,61 @@ const titleParts = computed(() => {
     }
   }
 }
+.dark-mode .book-info .title span {
+  color: rgb(255 255 255 / 59%);
+}
+.dark-mode .book-info .title p {
+  color: #b3b3b3;
+}
+.dark-mode .book-info img {
+  opacity: 0.7;
+}
+.dark-mode .book-info .dir-layout .title {
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
+.dark-mode .dir-layout {
+  opacity: 0.8;
+}
+.book-info::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  cursor: pointer !important;
+}
+
+.book-info::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer !important;
+}
+
+.book-info::-webkit-scrollbar-thumb {
+  border: 1px solid rgba(0, 0, 0, 0.197);
+  cursor: pointer !important;
+  transition: background 0.5s ease;
+  &:hover {
+    cursor: pointer !important;
+    background: rgba(0, 0, 0, 0.068);
+  }
+}
+
+.dark-mode .book-info::-webkit-scrollbar-thumb {
+  border: 1px solid rgba(255, 255, 255, 0.238);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.068);
+  }
+}
 .main-con {
-  margin-left: 4vw;
-  width: 100%;
+  margin-left: 25vw;
+  @media (max-width: 1024px) {
+    margin-left: 0;
+  }
+}
+main {
+  overflow-x: hidden;
+  width: 85%;
+  margin: 0 auto;
 }
 .layout {
   display: flex;
-  padding-left: 10%;
-  padding-right: 10%;
-  @media (max-width: 425px) {
-    padding-left: 3%;
-    padding-right: 3%;
-  }
 }
 </style>

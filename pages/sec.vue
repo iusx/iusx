@@ -147,6 +147,7 @@ a {
       padding: 2.5vh;
       text-transform: uppercase;
       font-weight: bold;
+      font-size: 0.8vw;
     }
   }
 }
@@ -161,7 +162,12 @@ main {
     color: #b5b5b5;
     margin-top: 4vh;
     margin-bottom: 3vh;
-    font-size: small;
+    font-size: 0.6vw;
+    width: 80vw;
+  }
+  @media (max-width: 768px) {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }
 .main {
@@ -206,5 +212,8 @@ main {
   background: #f5f5f5;
   height: 100vh;
   letter-spacing: 3.28px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 </style>
