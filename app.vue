@@ -110,6 +110,11 @@ html::-webkit-scrollbar-thumb {
   color: #888888;
   font-size: 1.5vh;
   line-height: 1.6;
+  margin-block: 1vw;
+  text-align: justify;
+  &:last-child {
+    margin-bottom: 0vw;
+  }
 }
 .dark-mode .markdown-content h1 {
   color: rgba(255, 255, 255, 0.588);

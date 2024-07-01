@@ -7,6 +7,15 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  img: {
+    type: String,
+  },
+  by: {
+    type: String,
+  },
+  plan: {
+    type: String,
+  },
 });
 
 const titleParts = computed(() => {
@@ -37,10 +46,10 @@ const hideWorkPop = () => {
   <main class="layout">
     <div class="book-info pc">
       <div class="book-info-home-img">
-        <img src="/img/book/01/1.png" alt="book-home" />
+        <img :src="'/img/book/' + props.img" alt="book-home" />
         <div class="book-info-author">
-          <p>By James Forshaw</p>
-          <span>be reading 10%</span>
+          <p>By {{ by }}</p>
+          <span>be reading {{ plan }}%</span>
         </div>
       </div>
       <div class="title">
