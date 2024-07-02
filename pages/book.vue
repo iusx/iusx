@@ -21,16 +21,6 @@ const sortedData = computed(() => equalQueryBook.value);
 
 const loading = ref(true);
 
-onMounted(() => {
-  const img = new Image();
-  img.src = "/img/book/" + props.img + ".png";
-  img.onload = () => {
-    loading.value = false;
-  };
-  img.onerror = () => {
-    console.error(`Failed to load image ${img.src}`);
-  };
-});
 </script>
 <template>
   <main>
