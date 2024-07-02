@@ -1,0 +1,1 @@
+import{_ as o}from"./C4IXhTX1.js";import{o as r,q as t,B as s}from"./ds1vZoer.js";const a={};function n(e,c){return r(),t("table",null,[s(e.$slots,"default")])}const _=o(a,[["render",n]]);export{_ as default};
