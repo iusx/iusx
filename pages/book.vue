@@ -18,9 +18,6 @@ if (equalQueryBook.value) {
   });
 }
 const sortedData = computed(() => equalQueryBook.value);
-
-const loading = ref(true);
-
 </script>
 <template>
   <main>
@@ -49,27 +46,7 @@ const loading = ref(true);
           </div>
         </div>
       </div>
-      <div class="note-book">
-        <div
-          class="note-book-box"
-          v-for="(des, index) in sortedData"
-          :class="{ 'scale-effect': index % 3 !== 1 }"
-          :style="{
-            'background-image': `url('/img/book/${des.img}.png')`,
-            'background-repeat': 'no-repeat',
-          }"
-        >
-          <nuxt-link :to="des._path">
-            <div class="note-book-box-desc">
-              <span>in reading</span>
-              <p>
-                {{ des.title }}
-              </p>
-            </div>
-            <div class="note-book-state"></div>
-          </nuxt-link>
-        </div>
-      </div>
+      <div class="note-book"><sk-book-img :sorted-data="sortedData" />"</div>
     </div>
   </main>
 </template>
@@ -93,10 +70,7 @@ const loading = ref(true);
 .dark-mode .no-img {
   background-color: rgb(29, 29, 29);
 }
-a {
-  color: white;
-  text-decoration: none;
-}
+
 .scale-effect {
   @media (max-width: 1440px) {
     transform: scale(1);
@@ -171,13 +145,6 @@ main {
   }
 }
 
-.dark-mode .title-desc-about {
-  opacity: 0.6;
-}
-
-.dark-mode .note-book-box {
-  opacity: 0.5;
-}
 
 .note-book {
   display: flex;
