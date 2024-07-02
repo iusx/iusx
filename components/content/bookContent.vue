@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onMounted } from "vue";
+import { defineProps, onMounted, ref } from "vue";
 const colorMode = useColorMode();
 
 const props = defineProps({
@@ -41,12 +41,27 @@ const showWorkPop = () => {
 const hideWorkPop = () => {
   isWorkPopVisible.value = false;
 };
+
+const loading = ref(true);
+
+onMounted(() => {
+  const img = new Image();
+  img.src = "/img/book/" + props.img + ".png";
+  img.onload = () => {
+    loading.value = false;
+  };
+  img.onerror = () => {
+    console.error(`Failed to load image ${img.src}`);
+  };
+});
 </script>
+
 <template>
   <main class="layout">
     <div class="book-info pc">
       <div class="book-info-home-img">
-        <img :src="'/img/book/' + props.img + '.png'" alt="book-home" />
+        <div class="no-img" v-if="loading"></div>
+        <img v-else :src="'/img/book/' + props.img + '.png'" alt="book-home" />
         <div class="book-info-author">
           <p>By {{ by }}</p>
           <span>be reading {{ plan }}%</span>
@@ -81,7 +96,8 @@ const hideWorkPop = () => {
         @click="hideWorkPop"
       />
       <div class="book-info-home-img">
-        <img src="/img/book/01/1.png" alt="book-home" />
+        <div class="no-img" v-if="loading" style="width: 50% !important;"></div>
+        <img v-else :src="'/img/book/' + props.img + '.png'" alt="book-home" />
         <div class="book-info-author">
           <p>By James Forshaw</p>
           <span>be reading 10%</span>
@@ -103,6 +119,25 @@ const hideWorkPop = () => {
 </template>
 
 <style lang="scss" scoped>
+@keyframes loading {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.no-img {
+  background-color: #f2f2f2;
+  animation: loading 1.5s infinite;
+  aspect-ratio: 54 / 71;
+}
+.dark-mode .no-img {
+  background-color: rgb(29, 29, 29);
+}
+
 .pc {
   @media (max-width: 1024px) {
     display: none;

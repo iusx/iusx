@@ -18,6 +18,19 @@ if (equalQueryBook.value) {
   });
 }
 const sortedData = computed(() => equalQueryBook.value);
+
+const loading = ref(true);
+
+onMounted(() => {
+  const img = new Image();
+  img.src = "/img/book/" + props.img + ".png";
+  img.onload = () => {
+    loading.value = false;
+  };
+  img.onerror = () => {
+    console.error(`Failed to load image ${img.src}`);
+  };
+});
 </script>
 <template>
   <main>
@@ -72,6 +85,24 @@ const sortedData = computed(() => equalQueryBook.value);
 </template>
 
 <style lang="scss" scoped>
+@keyframes loading {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.no-img {
+  background-color: #f2f2f2;
+  animation: loading 1.5s infinite;
+  aspect-ratio: 54 / 71;
+}
+.dark-mode .no-img {
+  background-color: rgb(29, 29, 29);
+}
 a {
   color: white;
   text-decoration: none;
