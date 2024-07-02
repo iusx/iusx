@@ -2,7 +2,7 @@
 "title": "Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation"
 "director": "James Forshaw"
 "time": "2024"
-img: "01/1.png"
+img: "01/1"
 plan: "1"
 ---
 

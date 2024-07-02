@@ -46,7 +46,7 @@ const hideWorkPop = () => {
   <main class="layout">
     <div class="book-info pc">
       <div class="book-info-home-img">
-        <img :src="'/img/book/' + props.img" alt="book-home" />
+        <img :src="'/img/book/' + props.img + '.png'" alt="book-home" />
         <div class="book-info-author">
           <p>By {{ by }}</p>
           <span>be reading {{ plan }}%</span>
