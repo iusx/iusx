@@ -26,7 +26,37 @@ const showWorkPop = () => {
 const hideWorkPop = () => {
   isWorkPopVisible.value = false;
 };
+
 const sortedData = computed(() => equalQueryDes.value);
+
+const firstImg = computed(() => {
+  return sortedData.value.length > 0 ? sortedData.value[0].img : null;
+});
+
+const images = ref([]);
+const loading = ref(true);
+const imagesLoadedCount = ref(0);
+
+onMounted(() => {
+  sortedData.value.forEach((item) => {
+    const formattedPath = `/img/des/${item.img}`;
+    images.value.push(formattedPath);
+
+    const img = new Image();
+    img.src = formattedPath;
+
+    img.onload = () => {
+      imagesLoadedCount.value++;
+      if (imagesLoadedCount.value === images.value.length) {
+        loading.value = false;
+      }
+    };
+
+    img.onerror = () => {
+      console.error(`Failed to load image ${formattedPath}`);
+    };
+  });
+});
 </script>
 <template>
   <main>
@@ -48,7 +78,6 @@ const sortedData = computed(() => equalQueryDes.value);
             <div class="work-pop-des-box" v-for="des in sortedData">
               <nuxt-link :to="des._path">
                 <img :src="'/img/des/' + des.img" :alt="des.title" />
-
                 <p>{{ des.title }}</p>
               </nuxt-link>
             </div>
@@ -59,7 +88,8 @@ const sortedData = computed(() => equalQueryDes.value);
     <div class="main-page">
       <div class="all-work" style="z-index: 1111" @click="showWorkPop"></div>
       <div class="des-layout">
-        <swiper>
+        <div v-if="loading" class="no-img"></div>
+        <swiper v-else>
           <swiper-slide
             v-for="des in sortedData"
             style="height: 100vh; width: 100vw"
@@ -84,6 +114,28 @@ const sortedData = computed(() => equalQueryDes.value);
 </template>
 
 <style lang="scss" scoped>
+@keyframes loading {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.no-img {
+  background-color: #d0d0d0;
+  animation: loading 1.5s infinite;
+  height: 100%;
+  width: 100%;
+  border: 1px soldi red;
+  position: absolute;
+}
+.dark-mode .no-img {
+  background-color: rgb(29, 29, 29);
+}
+
 a {
   color: rgb(0, 0, 0);
 }
