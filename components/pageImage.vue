@@ -12,19 +12,18 @@ const props = defineProps({
     type: String,
   },
 });
+
 const images = ref(props.img.split(",").map((item) => "/img/" + item));
 const loading = ref(true);
-const imagesLoadedCount = ref(0); // 新增计数器
+const imagesLoadedCount = ref(0);
 onMounted(() => {
   images.value.forEach((imageUrl, index) => {
     const img = new Image();
     img.src = imageUrl;
 
     img.onload = () => {
-      // 图片加载成功，增加计数
       imagesLoadedCount.value++;
 
-      // 当所有图片都加载完成时，更新加载状态
       if (imagesLoadedCount.value === images.value.length) {
         loading.value = false;
       }
@@ -32,7 +31,6 @@ onMounted(() => {
 
     img.onerror = () => {
       console.error(`Failed to load image ${imageUrl}`);
-      // 即便有图片加载失败，也尝试加载其他图片，这里可根据需求调整
     };
   });
 });

@@ -46,7 +46,7 @@ const sortedData = computed(() => equalQueryBook.value);
           </div>
         </div>
       </div>
-      <div class="note-book"><sk-book-img :sorted-data="sortedData" />"</div>
+      <div class="note-book"><sk-book-img :sorted-data="sortedData" /></div>
     </div>
   </main>
 </template>
