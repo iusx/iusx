@@ -58,6 +58,7 @@ onMounted(() => {
   });
 });
 </script>
+
 <template>
   <main>
     <transition name="fade">
@@ -88,14 +89,14 @@ onMounted(() => {
     <div class="main-page">
       <div class="all-work" style="z-index: 1111" @click="showWorkPop"></div>
       <div class="des-layout">
-        <div v-if="loading" class="no-img"></div>
-        <swiper v-else>
+        <swiper>
           <swiper-slide
             v-for="des in sortedData"
             style="height: 100vh; width: 100vw"
           >
             <div class="des-box">
-              <img :src="'/img/des/' + des.img" :alt="des.title" />
+              <div v-if="loading" class="no-img"></div>
+              <img v-else :src="'/img/des/' + des.img" :alt="des.title" />
               <nuxt-link :to="des._path">
                 <div class="des-title-layout">
                   <div class="des-title">
@@ -125,7 +126,7 @@ onMounted(() => {
 }
 
 .no-img {
-  background-color: #d0d0d0;
+  background-color: #f2f2f2;
   animation: loading 1.5s infinite;
   height: 100%;
   width: 100%;
