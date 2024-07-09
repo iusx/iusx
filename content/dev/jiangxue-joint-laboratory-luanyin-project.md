@@ -22,14 +22,15 @@ types: "cc"
 
 在即将来临的 2025 年，也就是江雪成立十年之前。我打算将：“边缘科学研究与支持” 作为江雪的座右铭，英文是 "Fringe Science Research And Support"。并且，在未来十年里，江雪会着重聚焦应用数学等方向进行耕耘。
 
+未来，我认为 “完成比完美更重要”，任何事物都并不是一开始非常完美的，而是随着时间的迁移慢慢完善，重新拾起自信，不可重蹈前十年的覆辙。
+
 ::text-space
 ---
-img: 01/info/6.png,01/info/7.png,01/info/8.png,01/info/9.png,01/info/10.png,01/info/11.png,01/info/12.png,01/info/13.png
-info: 图 1 | Jiangxue academy - Fringe Science Research And Support<br>启用了新的设计语言和风格，让其更加现代化且与时俱进的风格与江雪完美融合(虽然没被接受，但有很大的改进空间）。
+img: 01/info/6.png
+type: flat
+info: 图 1 | 为江雪设计的一个全新的字体，希望在未来的时间中，江雪可以脱离以往的设计，面向更加清新、简洁和干练的设计风格。https://www.behance.net/gallery/199536557/TSING-FONT
 ---
 ::
-
-未来，我认为 “完成比完美更重要”，任何事物都并不是一开始非常完美的，而是随着时间的迁移慢慢完善，重新拾起自信，不可重蹈前十年的覆辙。
 
 衡量一个作品的标准是原创性。也许普罗大众并不知道背后的点点滴滴，只知道用户层面可视角度上的分析得出的结果。因此，江雪未来要尽可能避免直接与用户信息源进行接触。新闻消息源也是使江雪接收多方消息和思考的主要途径，既要知道当前动向，也要避免深陷浮躁信息的迷雾。
 
@@ -43,32 +44,16 @@ info: 图 1 | Jiangxue academy - Fringe Science Research And Support<br>启用�
 
 在商业或者说类似民间团体的角度来说，江雪无疑是失败的。并没有核心的技术和超高的运营能力，甚至没有足够的资金去维持这眼花缭乱的想法和目标。仅有的资金还是贡献出自己的一部分工资，打两份工去维持这看上去可笑的目标。至于从民间团体的角度来说，江雪的定位和处境极其尴尬。看得懂的人瞧不上，想看的人看不懂这一尴尬位置。
 
-如果从技术、设计、运营的角度来说，江雪的综合实力较为薄弱，技术停留在应用，未有较高的建树，针对性能、优化等领较为薄弱。从设计美学的角度来讲，设计一致性、统一性较为薄弱，缺少交互上的精致呈现。从运营上的角度来讲，江雪缺少一个符合自身定位的社区和交流环境，因此难有新鲜血液流入，导致陷入一种绝境。
+如果从技术、设计、运营的角度来说，江雪的综合实力较为薄弱，技术停留在应用，未有较高的建树，针对性能、优化等领较为薄弱。从设计美学的角度来讲，设计一致性、统一性较为接近于无，缺少交互上的精致呈现。从运营上的角度来讲，江雪缺少一个符合自身定位的社区和交流环境，因此难有新鲜血液流入，导致陷入一种绝境。
 
 为了改善目前的这种困境，我打算在江雪设立一个实验室针对性解决模拟计算、数据分析等多边领域研究的团队。以保证江雪核心方向的持续迭代，以突破目前不上不下的困境。也许未来将会有很多脍炙人口的项目从此地诞生，不断的通过应用数学的方式来实现计算和分析，来实现江雪其他方向的可靠性论证和模拟。
-
-我希望它可以达到现实中各类院校、企业的科研院所的实验室同等水准。
-
-最近。剑桥的研究团队和合作者巧妙地利用了 SDLs 的方式，即虚拟实验室，在这篇论文中被称为 SDLs（Distributed Self-Driving Laboratories，分布式自主实验室）刊登在 [Nature Journal](https://www.nature.com/articles/s41467-023-44599-9)。
-
-::text-space
----
-img: 01/info/1.png
-type: flat
-info: 图源 2 | From Platform to Knowledge Graph:Distributed Self-Driving Laboratories <br/> https://como.ceb.cam.ac.uk/media/preprints/c4e-preprint-310.pdf
----
-::
-
-这一概念可以让江雪的联合实验室成为一种可能。毕竟如此严谨和客观的科学研究都可以通过一个一个节点交互实现通信，更何况江雪目前还未入流的边缘科学领域。同时，我打算构建一个像 IETF RFC 那样的 Workflow 来保证工作的透明和留痕，区别在于江雪的 workflow 更加注重实现，而不是文本记录，这可以保证团队大多数时间是沉浸在实现的过程，将剩余的时间进行复盘，将剩余时间用于构思的信息编写成提案。
-
-同时也需要借助外力，自动记录每次提交的内容进行整合，比如类似 CodeRabbit 这样的工作流上的工具。之所以列举 CodeRabbit 是因为它每次总结较为客观，描述的非常棒，很少有人能够如此客观且公正地描述一段 code 的实现和其作用了。因此这类不亚于程序员鼓励师的工具，在江雪的工作流中，是必不可少的。
 
 我将江雪的 workflow 命名为 JTPS，即 Jiangxue Task Processing System。全称为 “Distributed Task Execution workflow and Computer Supported Cooperative Work”。
 
 ::text-space
 ---
 img: 01/info/2.png,01/info/3.png,01/info/4.png,01/info/5.png
-info: 图 3 | Jiangxue Task Processing System <br> 江雪针对透明度和组织协作所设计的综合工作流
+info: 图 2 | Jiangxue Task Processing System <br> 江雪针对透明度和组织协作所设计的综合工作流
 ---
 ::
 
@@ -80,7 +65,7 @@ JTPS 的核心是 JTPS-Task 模块，它将负责实现任务的执行，包括�
 ---
 img: 01/info/14.png
 type: flat
-info: 图 4 | 根据科学家的目标请求触发自主工作流，作为在知识图谱中传播信息<br> https://como.ceb.cam.ac.uk/media/preprints/c4e-preprint-310.pdf
+info: 图 3 | 根据科学家的目标请求触发自主工作流，作为在知识图谱中传播信息<br> https://como.ceb.cam.ac.uk/media/preprints/c4e-preprint-310.pdf
 ---
 ::
 

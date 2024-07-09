@@ -92,7 +92,7 @@ onMounted(() => {
 }
 
 .dark-mode .note-book-box {
-  opacity: 0.5;
+  filter: brightness(0.5);
 }
 
 .dark-mode .note-book-box-no {

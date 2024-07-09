@@ -111,7 +111,7 @@ const links = ref([
         <div class="copy-link">
           <a href="/about">about</a>
           <a href="/link">Link</a>
-          <a href="/rss.xml">RSS</a>
+          <a href="/rss.xml">Rss</a>
           <a href="/sitemap.xml">Sitemap</a>
         </div>
         <p>

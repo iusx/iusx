@@ -39,7 +39,7 @@ const sortedData = computed(() => equalQuerySec.value);
         <swiper :slides-per-view="'auto'">
           <swiper-slide v-for="sec in sortedData" class="content-box">
             <nuxt-link style="display: contents" :to="sec._path">
-              <div class="content-time">
+              <div class="content-time" style="height: 100%;">
                 <img
                   :src="'/img/page/' + sec.platform + '.png'"
                   alt="report-platform"
@@ -101,7 +101,9 @@ a {
     flex-direction: column;
     cursor: pointer;
     justify-content: space-between;
-    transition: background-color 0.3s ease, color 0.3s ease,
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
       box-shadow 0.3s ease;
     &:hover {
       background: #181818;
