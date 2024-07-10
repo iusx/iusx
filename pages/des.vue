@@ -39,7 +39,7 @@ const imagesLoadedCount = ref(0);
 
 onMounted(() => {
   sortedData.value.forEach((item) => {
-    const formattedPath = `/img/des/${item.img}`;
+    const formattedPath = `${item.img}`;
     images.value.push(formattedPath);
 
     const img = new Image();
@@ -78,7 +78,7 @@ onMounted(() => {
           <div class="work-pop-des">
             <div class="work-pop-des-box" v-for="des in sortedData">
               <nuxt-link :to="des._path">
-                <img :src="'/img/des/' + des.img" :alt="des.title" />
+                <img :src="des.img" :alt="des.title" />
                 <p>{{ des.title }}</p>
               </nuxt-link>
             </div>
@@ -96,7 +96,7 @@ onMounted(() => {
           >
             <div class="des-box">
               <div v-if="loading" class="no-img"></div>
-              <img v-else :src="'/img/des/' + des.img" :alt="des.title" />
+              <img v-else :src="des.img" :alt="des.title" />
               <nuxt-link :to="des._path">
                 <div class="des-title-layout">
                   <div class="des-title">
@@ -249,6 +249,10 @@ main {
     height: 100%;
     object-fit: cover;
     object-position: center;
+
+    @media (max-width: 1440px) {
+      width: max-content !important;
+    }
     cursor: grab;
   }
 }
