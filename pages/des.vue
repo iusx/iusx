@@ -77,7 +77,7 @@ onMounted(() => {
           </div>
           <div class="work-pop-des">
             <div class="work-pop-des-box" v-for="des in sortedData">
-              <nuxt-link :to="des._path">
+              <nuxt-link :to="des.url" target="_blank">
                 <img :src="des.img" :alt="des.title" />
                 <p>{{ des.title }}</p>
               </nuxt-link>
@@ -94,10 +94,10 @@ onMounted(() => {
             v-for="des in sortedData"
             style="height: 100vh; width: 100vw"
           >
-            <div class="des-box">
-              <div v-if="loading" class="no-img"></div>
-              <img v-else :src="des.img" :alt="des.title" />
-              <nuxt-link :to="des._path">
+            <nuxt-link :to="des.url" target="_blank">
+              <div class="des-box">
+                <div v-if="loading" class="no-img"></div>
+                <img v-else :src="des.img" :alt="des.title" />
                 <div class="des-title-layout">
                   <div class="des-title">
                     <p>/</p>
@@ -105,8 +105,8 @@ onMounted(() => {
                   </div>
                   <div class="des-more">MORE +</div>
                 </div>
-              </nuxt-link>
-            </div>
+              </div>
+            </nuxt-link>
           </swiper-slide>
         </swiper>
       </div>
@@ -162,7 +162,6 @@ a {
 
   .work-pop-des {
     flex: 1;
-    padding-right: 20px;
     padding-bottom: 20px;
   }
 
@@ -170,6 +169,9 @@ a {
     cursor: pointer;
     transition: filter 0.3s ease;
     margin-bottom: 2vw;
+    @media (max-width: 1024px) {
+      margin-bottom: 10vw;
+    }
     a {
       text-decoration: none;
     }
@@ -249,10 +251,6 @@ main {
     height: 100%;
     object-fit: cover;
     object-position: center;
-
-    @media (max-width: 1440px) {
-      width: max-content !important;
-    }
     cursor: grab;
   }
 }

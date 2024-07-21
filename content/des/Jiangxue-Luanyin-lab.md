@@ -2,8 +2,7 @@
 "title": Jiangxue Luanyin lab
 "director": "RHYME.Q"
 "time": "2023.12.25"
-img: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/3d6d92187423063.65b62669aff5f.png"
+img: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/bac18e187423063.6690358ea4bcf.png"
 "client": "Jiangxue Academy"
+url: "https://www.behance.net/gallery/187423063/Jiangxue-Luanyin-lab"
 ---
-
-:text-an-next{url="https://www.behance.net/gallery/187423063/Jiangxue-Luanyin-lab"}
