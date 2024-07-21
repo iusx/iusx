@@ -151,7 +151,7 @@ onMounted(() => {
   @media (max-width: 1440px) {
     width: 100vw;
     margin-bottom: 3vw;
-    height: 40vh;
+    height: 100vw;
   }
   background-size: 100%;
   .note-book-box-desc {

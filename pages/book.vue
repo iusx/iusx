@@ -113,6 +113,9 @@ main {
   @media (max-width: 1668px) {
     flex: 1.2;
   }
+  @media (max-width: 1024px) {
+    margin-bottom: 10vw;
+  }
   .title {
     color: #000;
     font-size: 5vw;
@@ -134,6 +137,9 @@ main {
     line-height: 1.5;
     text-align: justify;
     margin-top: 3vw;
+    @media (max-width: 1440px) {
+      font-size: 1.6vw !important;
+    } 
     .title-desc-tip {
       margin-top: 2vw;
       display: flex;

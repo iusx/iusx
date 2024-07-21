@@ -22,7 +22,6 @@ const sortedData = computed(() => equalQuerySec.value);
 
 <template>
   <main>
-    <div class="left">-> Vulnerability Report</div>
     <div class="main">
       <div class="main-title">
         <p>My Vulnerability</p>
@@ -59,6 +58,9 @@ a {
   text-decoration: none;
 }
 
+main {
+  margin-left: 3vw !important;
+}
 .dark-mode {
   .content-layout {
     .content-box {
@@ -75,9 +77,6 @@ a {
   }
   img {
     filter: brightness(5);
-  }
-  .left {
-    background: #0e0e0e;
   }
   .main {
     .main-title {
