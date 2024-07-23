@@ -18,7 +18,7 @@ const imagesLoadedCount = ref(0);
 
 onMounted(() => {
   props.sortedData.forEach((item) => {
-    const formattedPath = `/img/book/${item.img}.png`;
+    const formattedPath = `/img/book/${item.img}`;
     images.value.push(formattedPath);
 
     const img = new Image();
@@ -61,7 +61,7 @@ onMounted(() => {
     v-for="(des, index) in sortedData"
     :class="{ 'scale-effect': index % 3 !== 1 }"
     :style="{
-      'background-image': `url('/img/book/${des.img}.png')`,
+      'background-image': `url('/img/book/${des.img}')`,
       'background-repeat': 'no-repeat',
     }"
   >

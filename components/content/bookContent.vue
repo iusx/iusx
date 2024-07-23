@@ -46,7 +46,7 @@ const loading = ref(true);
 
 onMounted(() => {
   const img = new Image();
-  img.src = "/img/book/" + props.img + ".png";
+  img.src = "/img/book/" + props.img;
   img.onload = () => {
     loading.value = false;
   };
@@ -61,7 +61,7 @@ onMounted(() => {
     <div class="book-info pc">
       <div class="book-info-home-img">
         <div class="no-img" v-if="loading"></div>
-        <img v-else :src="'/img/book/' + props.img + '.png'" alt="book-home" />
+        <img v-else :src="'/img/book/' + props.img" alt="book-home" />
         <div class="book-info-author">
           <p>By {{ by }}</p>
           <span>be reading {{ plan }}%</span>
@@ -97,7 +97,7 @@ onMounted(() => {
       />
       <div class="book-info-home-img">
         <div class="no-img" v-if="loading" style="width: 50% !important;"></div>
-        <img v-else :src="'/img/book/' + props.img + '.png'" alt="book-home" />
+        <img v-else :src="'/img/book/' + props.img" alt="book-home" />
         <div class="book-info-author">
           <p>By James Forshaw</p>
           <span>be reading 10%</span>

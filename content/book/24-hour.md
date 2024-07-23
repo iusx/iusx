@@ -2,7 +2,7 @@
 "title": "24 hour"
 "director": "RHYME.Q"
 "time": "2024.7.22"
-img: "05/1"
+img: "05/1.png"
 plan: "30"
 ---
 

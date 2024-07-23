@@ -41,8 +41,7 @@ const sortedData = computed(() => equalQueryBook.value);
       </div>
       <div class="note-book"><sk-book-img :sorted-data="sortedData" /></div>
     </div>
-  </main>
-</template>
+  </main> </template>
 
 <style lang="scss" scoped>
 @keyframes loading {
@@ -164,7 +163,6 @@ main {
     width: 22vw;
     height: 29vw;
     margin: 0.3vw;
-    background: url("/img/book/01.png") no-repeat;
     cursor: pointer;
     color: white;
     border-radius: 5px;
