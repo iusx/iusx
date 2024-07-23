@@ -54,29 +54,37 @@ onMounted(() => {
   }
 }
 .dark-mode .tip {
-    background: #121212;
-    .tip-quto {
-        opacity: 1;
-        stroke: #575757;
-    }
+  background: #121212;
+  .tip-quto {
+    opacity: 1;
+    stroke: #575757;
+  }
 }
 .dark-mode .page-tips-main {
-    color: #5c5c5c;
+  color: #5c5c5c;
 }
 .page-tips-main {
   color: #c0c0c0;
   font-size: 1vh;
   display: flex;
   width: 100%;
-  &.reverse-direction {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
+
+  @media (max-width: 1440px) {
+    flex-direction: column !important;
+    div {
+      width: 100% !important;
+    }
   }
   .img {
-    width: 60%;
-    padding: 7px;
+    width: 100%;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
   }
   div {
     width: 40%;
+    min-width: 40%;
+    padding-right: 1.3vw;
   }
 }
 .layout {

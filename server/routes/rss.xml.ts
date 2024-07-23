@@ -15,7 +15,11 @@ export default defineEventHandler(async (event) => {
     .find();
 
   const blogPosts = docs.filter(
-    (doc) => doc?._path?.includes("/dev") || doc?._path?.includes("/sec")
+    (doc) =>
+      doc?._path?.includes("/dev") ||
+      doc?._path?.includes("/sec") ||
+      doc?._path?.includes("/book") ||
+      doc?._path?.includes("/des"),
   );
   for (const doc of blogPosts) {
     feed.item({
@@ -30,3 +34,4 @@ export default defineEventHandler(async (event) => {
   event.res.setHeader("content-type", "text/xml");
   event.res.end(feedString);
 });
+

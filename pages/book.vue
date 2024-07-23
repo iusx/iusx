@@ -31,18 +31,11 @@ const sortedData = computed(() => equalQueryBook.value);
         <div class="title-hr"></div>
         <div class="title-desc-about">
           <p>
-            A few years ago, I was very passionate about applied technology.
-            However, now I want to delve into the underlying principles and
-            fundamentals as they form the foundation upon which new technologies
-            are built. These principles remain relevant and enduring despite the
-            rapid advancements in technology.
+          几年前，我对应用技术非常热衷。然而，现在我更希望将时间留给不那么容易会变的原理和生活，因此在这个页面不仅会有我对一本书的感悟，更有对电影、甚至是游戏、剧集的感受。
           </p>
           <div class="title-desc-tip">
             <img src="/icon/info-tip.svg" />
-            After reading this information, I will organize my knowledge into
-            shorthand notes, indicating their purpose and even their application
-            scenarios. In the future, when needed, I will conduct in-depth
-            learning.
+            看完这些信息之后，我会把自己的知识整理成速记笔记，标明它们的用途，甚至它们的应用场景，未来有需要的时候再进行深度学习。
           </div>
         </div>
       </div>

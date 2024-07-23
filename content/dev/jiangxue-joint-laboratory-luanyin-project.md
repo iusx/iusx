@@ -27,7 +27,6 @@ types: "cc"
 ::text-space
 ---
 img: 01/info/6.png
-type: flat
 info: 图 1 | 为江雪设计的一个全新的字体，希望在未来的时间中，江雪可以脱离以往的设计，面向更加清新、简洁和干练的设计风格。https://www.behance.net/gallery/199536557/TSING-FONT
 ---
 ::
@@ -53,7 +52,7 @@ info: 图 1 | 为江雪设计的一个全新的字体，希望在未来的时间
 ::text-space
 ---
 img: 01/info/2.png,01/info/3.png,01/info/4.png,01/info/5.png
-info: 图 2 | Jiangxue Task Processing System <br> 江雪针对透明度和组织协作所设计的综合工作流
+info: 图 2 | 江雪针对透明度和组织协作所设计的综合工作流 Jiangxue Task Processing System
 ---
 ::
 
@@ -64,7 +63,6 @@ JTPS 的核心是 JTPS-Task 模块，它将负责实现任务的执行，包括�
 ::text-space
 ---
 img: 01/info/14.png
-type: flat
 info: 图 3 | 根据科学家的目标请求触发自主工作流，作为在知识图谱中传播信息<br> https://como.ceb.cam.ac.uk/media/preprints/c4e-preprint-310.pdf
 ---
 ::

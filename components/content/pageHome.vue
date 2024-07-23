@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import * as d3 from "d3";
-const colorMode = useColorMode()
+const colorMode = useColorMode();
 
 const force = ref(null);
 let simulation, node, link;
@@ -51,7 +51,7 @@ onMounted(() => {
       d3
         .forceLink(links)
         .id((d) => d.id)
-        .distance(900)
+        .distance(900),
     )
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
@@ -79,13 +79,10 @@ onMounted(() => {
 });
 
 const links = ref([
-  { name: "Github", href: "https://github.com/iepn", separator: " + " },
-  { name: "Hackerone", href: "https://hackerone.com/iepn", separator: " + " },
-  { name: "Behance", href: "https://www.behance.net/1ui", separator: " ÷ " },
-  {
-    name: "Researchgate",
-    href: "https://www.researchgate.net/profile/Rhyme-Qing",
-  },
+  { name: "Develop", href: "/dev", separator: " + " },
+  { name: "Security", href: "/sec", separator: " + " },
+  { name: "Design", href: "/des", separator: " ÷ " },
+  { name: "Life", href: "/book" },
 ]);
 </script>
 
@@ -96,7 +93,6 @@ const links = ref([
       <div class="title">
         <div class="title-text">
           <an-title
-            url="/dev"
             title="Originality is <br />key to infusing a work with soul."
           />
         </div>
@@ -126,10 +122,10 @@ const links = ref([
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
 .dark-mode main {
-    background: rgb(0, 0, 0);
-    .data {
-        opacity: 0.13 !important;
-    }
+  background: rgb(0, 0, 0);
+  .data {
+    opacity: 0.13 !important;
+  }
 }
 .nav {
   position: absolute;

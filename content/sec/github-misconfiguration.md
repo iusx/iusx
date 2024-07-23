@@ -5,7 +5,7 @@ director: "RHYME.Q"
 time: "2023.12.04"
 platform: "github"
 img: "02/1.png"
-info: "https://github.com/"
+info: "https://hackerone.com/iepn"
 types: "cc"
 client: "Github"
 ---
