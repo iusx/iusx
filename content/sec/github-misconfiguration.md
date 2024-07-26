@@ -1,6 +1,6 @@
 ---
 title: GraphQL Misconfiguration in CWE-16 Github API 
-description: "This is my first time submitting a bug and receiving a bounty along with other rewards, so it's quite memorable for me. Since I've been fully immersed in product design and development, discovering security flaws in well-known companies or platforms again is like reaching a milestone for me."
+description: "这是我第一次提交漏洞缺陷并且获得赏金等奖励，所以对我来说还是比较难忘的。由于我已经全身心投入到产品设计和开发中，再次发现知名公司或平台的安全漏洞对我来说就像达到了一个里程碑。"
 director: "RHYME.Q"
 time: "2023.12.04"
 platform: "github"
@@ -14,20 +14,16 @@ client: "Github"
 
 :text-sum{:desc="description"}
 
-I really like the GitHub Octocat, and I've even had friends who use it as their avatar.  The Octocat on the cover comes from [GitHub Octocats](https://octodex.github.com/), designed by [@James Kang](https://jeejkang.com/Information).  You can create your own Octocat at [myOctocat](https://myoctocat.com/).
-
-In 2011, GitHub decided it was time to upgrade their mascot, the Octocat.  They invited many designers to create their own versions, including [Cameron McEfee](https://cameronmcefee.com/work/the-octocat/), [@James Kang](https://jeejkang.com/Information), [@KimEstoesta](https://www.kimestoesta.com/), and more.
+我非常喜欢 GitHub Octocat，甚至有朋友用它作为头像。封面上的 Octocat 来自 [GitHub Octocats](https://octodex.github.com/)，由 [@James Kang](https://jeejkang.com/Information) 设计。您可以在 [myOctocat](https://myoctocat.com/) 创建自己的 Octocat。 2011 年，GitHub 决定是时候升级他们的吉祥物 Octocat 了。他们邀请了许多设计师来创建自己的版本，包括 [Cameron McEfee](https://cameronmcefee.com/work/the-octocat/)、[@James Kang](https://jeejkang.com/Information)、[@KimEstoesta](https://www.kimestoesta.com/) 等。
 
 ::text-space
 ---
 type: tip
 ---
-@Cameron McEfee: From stickers on laptops and graphics on clothing to stickers on every bar wall, telephone pole, and street sign, the Octocat is one of the most recognizable symbols in the tech industry.
+@Cameron McEfee：从笔记本电脑上的贴纸和衣服上的图案到酒吧墙壁、电线杆和街道标志上的贴纸，Octocat 是科技行业最知名的标志之一。
 ::
 
-One of the Octocats designed by James Kang, the Private Investocat, serves as the iconic avatar for GitHub Security - GitHub Bug Bounty.
-
-I also received a $200 USD ≈ 1,439 CNY bug bounty from GitHub Bug Bounty, the first time I've received such a generous cash reward on my security journey.
+由 James Kang 设计的 Octocats 之一——Private Investocat，是 GitHub Security - GitHub Bug Bounty 的标志性头像。我还从 GitHub Bug Bounty 获得了 200 美元≈1,439 元人民币的漏洞赏金，这是我在安全旅程中第一次获得如此丰厚的现金奖励。
 
 ::text-space
 ---
@@ -36,19 +32,17 @@ info: Figure 1 | I was lucky enough to receive their physical stickers and pins 
 ---
 ::
 
-Unfortunately, my role has always been as an ACD (Assistant) in the team, slow to grow and easy to be taken down solo. I have some achievements in various fields and limited recognition, but I lack significant influence and solid project support.
+可惜我的角色一直是团队里的ACD（助理），成长缓慢，容易被单枪匹马干掉。在各个领域都有所成就，认可度有限，但缺乏影响力和坚实的项目支持。
 
-Four years ago, when I realized that security exists beneath development, I started transitioning slowly towards development. One of my teachers once said, "If you truly have talent, you shouldn't invest your time in applications and frameworks; you should focus on designing principles and underlying logic."
+四年前，当我意识到开发之下还有安全时，我开始慢慢向开发转型。我的一位老师曾说过，“如果你真的有天赋，就不要把时间花在应用和框架上，而应该专注于设计原理和底层逻辑。”
 
-Clearly, I have zero talent and weak foundations, and I cannot achieve much in my lifetime. After realizing my shortcomings, I became less adept at socializing and withdrew from all community groups to focus on self-improvement.
+显然，我天赋为零，基础薄弱，一辈子也成不了大事。意识到自己的不足后，我变得不那么擅长社交，退出了所有的社区团体，专注于自我提升。
 
-However, when I truly witnessed the outstanding participants in various competitions and security experts easily winning rewards of 100k or 300k in various rankings, I lost the confidence I had in the past.
+然而，当我真正看到各种比赛中的优秀选手和安全专家在各种排行榜上轻松获得十几万、三十万的奖励时，我失去了过去的自信。
 
-Gradually, I realized that sometimes you don't need a beautiful interface, elegant code, perfect logic processing, or even low security. You just need a gimmick to let them know you can do it; you don't need to be perfect.
+渐渐地，我发现有时候你不需要漂亮的界面，不需要优雅的代码，不需要完美的逻辑处理，甚至不需要低安全性，你只需要一个噱头让他们知道你能行，不需要完美。
 
-There are many examples around me where, after reaching a certain level of development, they develop a "craftsman spirit," realizing that what they did before was not good enough and striving for higher standards.
-
-Therefore, the two types of people I admire most in my life are those who have achieved or are pursuing this level of success and those who have not pursued this level and have remained at the initial stage.
+我身边有很多例子，他们在发展到一定程度后，发展出一种“工匠精神”，意识到自己之前做的不够好，努力追求更高的标准。所以我一生中最敬佩的两类人，一类是已经达到或正在追求这种程度的人，一类是没有追求这种程度，一直停留在初级阶段的人。
 
 ::text-space
 ---
@@ -57,7 +51,8 @@ info: Figure 2 | My first PR and analysis from gitroll (I personally think it's 
 ---
 ::
 
-My first GitHub PR came from Node.js three years ago when I was still in school. While learning Node.js, I got to know [expressjs](https://expressjs.com/). Undoubtedly, I felt the enthusiasm from the open-source community for the first time, and they didn't criticize my code for its lack of elegance. Instead, they provided suggestions and how they would write the code if they were in my shoes.
+我的第一条 GitHub PR 来自于 Node.js，三年前我还在上学。在学习 Node.js 的过程中，我认识了 [expressjs](https://expressjs.com/)。毫无疑问，我第一次感受到了来自开源社区的热情，他们没有批评我的代码不够优雅，而是给出了建议，并告诉我如果换做是 TA，TA 会如何写 Code。
 
-Fortunately, the GitHub rating portraits recently gained popularity on Twitter, and my gitroll score is 9,10. I don't think this metric is very authoritative or should be used to measure a person's coding level. However, raising gitroll to 9.5 or even close to 10 still has some significance.
+幸运的是，最近 GitHub 评分画像在推特上流行起来，我的 gitroll 得分是 9,10。我不认为这个指标非常权威，也不应该用来衡量一个人的编码水平。不过，将 gitroll 提高到 9.5 甚至接近 10 还是有一定意义的。
+
 ::
