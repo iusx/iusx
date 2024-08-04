@@ -9,6 +9,7 @@ plan: "30"
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}
 
 :text-title{:t="1~3 季"}
+
 # 1~3 季：不要内耗 1
 
 看完了 1~2 季，看到了第三季突然想弃剧。第一次因为一个角色而丧失继续看下去的欲望。Bauer 的女儿 Kim 真的是太烦了，第三季竟然直接进入到了 CTU，令我大受震撼。第一季爱上保释期的罪犯也就算了，因为确实还挺帅的。但第一季 Kim 的表现总有一种：“我爹是 CTU，所有人都得让着我” 的感觉，特别是因为男友贩毒被抓了之后，对警长的态度，总感觉自己比其他人高人一等。最后警长运送 Kim 到 CTU 的途中还给车创了，还感觉挺可惜的，是一个非常有特色的角色。
@@ -31,5 +32,18 @@ plan: "30"
 
 从第一季到第三季，编剧和导演不仅阐述了其犯罪题材，更替现出了个人英雄主义下的弊端，对其角色家庭的刻画非常具体，告诉了观众当一个人拥有非常高的荣誉之后，其家庭可能会出现什么样的问题和影响。同时，其行事作风也有很大的关系。我觉得 Kim 都可以出一部 《我的 CTU 华盛顿地区主管父亲》和《我的父亲与总统》这两本书了。
 
+:text-title{:t="Subchannel chip"}
 
+# 子通道芯片: Subchannel chip 2
+
+这个芯片貌似是虚构的，是影视道具的一部分，[24 Wiki](https://24.fandom.com/wiki/Subchannel_chip) 中有一点的描述。在现实生活中，想实现类似功能的设备有很多，比如 [频率跳变(Frequency Hopping Spread Spectrum, FHSS)](https://en.wikipedia.org/wiki/Frequency-hopping_spread_spectrum#Usage)、[超宽频(UWB, Ultra-wideband)](https://en.wikipedia.org/wiki/Ultra-wideband#)，[低功耗广域网(Low-power wide-area network, LPWAN)](https://en.wikipedia.org/wiki/Low-power_wide-area_network) 所常用的 [窄带物联网(Narrowband IoT
+, NB-IoT)](https://en.wikipedia.org/wiki/Narrowband_IoT#Deployments) 协议。
+
+| 名称   | 描述                                                                             | 领域           |
+| ------ | -------------------------------------------------------------------------------- | -------------- |
+| FHSS   | 发送方快速改变频率，接收方根据已知的跳变顺序以解码信号                           | 无线电         |
+| UWB    | 使用非常低的频谱，低功率密度传输。利用较高的频谱带宽进行传输，可以理解为广撒网。 | 无线电         |
+| NB-IoT | 基于蜂窝网络的低功耗、窄带信号技术，支持大规模设备连接和身份认证管理             | 无线电与物联网 |
+
+这些技术或多或少都是无线电、物联网等领域的，因此想自己 DIY 一套类似的设备，也需要有一些相关的硬件设计的底子，比如自己画一个板子。找个第三方厂家生产或面包板设计设计原型，之后设计一个比较低调且沉稳的骨灰盒外壳。测试测试，也是非常不错的体验。
 ::

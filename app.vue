@@ -23,6 +23,36 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+.main-con {
+  table {
+    width: 100% !important;
+    thead {
+      background: #f6f6f694;
+    }
+    tr th {
+      padding: 10px;
+      text-align: inherit;
+      font-weight: inherit;
+      color: #888888;
+    }
+    td {
+      padding: 10px;
+      color: #888888;
+    }
+  }
+  p a {
+    text-decoration: underline;
+  }
+}
+.dark-mode table {
+  thead {
+    background: #f6f6f612;
+    color: #6d6d6d;
+  }
+  td {
+    color: #8f8f8f;
+  }
+}
 .dark-mode body {
   background: #000;
 }

@@ -96,7 +96,7 @@ onMounted(() => {
         @click="hideWorkPop"
       />
       <div class="book-info-home-img">
-        <div class="no-img" v-if="loading" style="width: 50% !important;"></div>
+        <div class="no-img" v-if="loading" style="width: 50% !important"></div>
         <img v-else :src="'/img/book/' + props.img" alt="book-home" />
         <div class="book-info-author">
           <p>By James Forshaw</p>
@@ -262,11 +262,16 @@ onMounted(() => {
   }
 }
 main {
+
   overflow-x: hidden;
   width: 85%;
   margin: 0 auto;
 }
 .layout {
   display: flex;
+}
+
+table {
+  width: 100%;
 }
 </style>
