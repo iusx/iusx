@@ -1,3 +1,7 @@
+<script setup>
+const colorMode = useColorMode();
+</script>
+
 <template>
   <main class="text-tip">
     <slot />
@@ -20,5 +24,8 @@
     color: #888888;
     margin-top: 0;
   }
+}
+.dark-mode .text-tip {
+  background: rgba(246, 246, 246, 0.0705882353);
 }
 </style>
