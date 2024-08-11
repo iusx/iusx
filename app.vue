@@ -30,15 +30,22 @@ onMounted(() => {
       background: #f6f6f694;
     }
     tr th {
-      padding: 10px;
+      padding: 0.7vw;
       text-align: inherit;
       font-weight: inherit;
       color: #888888;
+      font-size: 1.6vh;
     }
     td {
-      padding: 10px;
+      padding: 0.7vw;
       color: #888888;
+      font-size: 1.5vh;
     }
+  }
+  tbody a {
+    color: rgb(152, 152, 152);
+    text-decoration: underline;
+    transition: color 0.3s ease;
   }
   p a {
     text-decoration: underline;
@@ -145,6 +152,9 @@ html::-webkit-scrollbar-thumb {
   text-align: justify;
   &:last-child {
     margin-bottom: 0vw;
+  }
+  @media (max-width: 1024px){
+    margin-block: 4vw;
   }
 }
 .dark-mode .markdown-content h1 {
