@@ -11,7 +11,7 @@ plan: "1"
 :text-title{:t="Google Project Zero"}
 # 作者 1
 
-本书的作者是 [James Forshaw](https://github.com/tyranid)，也是著名的 [Google Project Zero](https://googleprojectzero.blogspot.com/) 成员之一。他负责维护很多开源的分析工具，同时自己也根据多年的经验总结出自己想要的工具。同时在一些会议中分享，甚至是 open source。到目前，他已经是一位高级猎食者，从当初的破解游戏机，到揭秘操作系统中的复杂问题，具有十余年应用网络协议分析、利用经验。
+本书的作者是 [James Forshaw](https://github.com/tyranid)，也是著名的 [Google Project Zero](https://googleprojectzero.blogspot.com/) 成员之一。他负责维护很多开源的分析工具，同时自己也根据多年的经验总结出自己想要的工具。并在一些会议中分享，甚至是 open source。到目前，他已经是一位高级猎食者，从当初的破解游戏机，到揭秘操作系统中的复杂问题，具有十余年应用网络协议分析、利用经验。
 
 | 会议 | 描述 |
 | --- | --- |

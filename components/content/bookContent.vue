@@ -79,15 +79,7 @@ onMounted(() => {
     <div class="an">
       <div class="more" @click="showWorkPop">Directory</div>
     </div>
-    <div
-      class="book-info"
-      v-if="isWorkPopVisible"
-      style="
-        width: 85vw !important;
-        background: rgb(0 0 0 / 0%);
-        backdrop-filter: blur(19.4px);
-      "
-    >
+    <div class="book-info book-table" v-if="isWorkPopVisible">
       <Icon
         name="DesClose"
         size="2.2vh"
@@ -119,6 +111,13 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.book-table {
+  background: white !important;
+  width: 100vw !important;
+}
+.dark-mode .book-table {
+  background: #000 !important;
+}
 @keyframes loading {
   0%,
   100% {
@@ -147,6 +146,9 @@ onMounted(() => {
   cursor: pointer;
   width: 3vw;
   height: 7vw;
+  color: #000;
+}
+.dark-mode .pop-close {
   color: #ffffff;
 }
 .more {
@@ -160,7 +162,7 @@ onMounted(() => {
     position: fixed;
     background: #002eff;
     padding: 8px;
-    font-size: 1vw;
+    font-size: 1.3vh;
     font-weight: bold;
   }
 }
@@ -182,33 +184,33 @@ onMounted(() => {
     align-items: center;
     justify-content: space-between;
     color: #7f7f7f;
-    font-size: 0.9vw;
+    font-size: 1.5vh;
     span {
       text-transform: uppercase;
     }
   }
   .title {
     p {
-      font-size: 1.4vw;
+      font-size: 2.3vh;
       margin: 0;
       margin-bottom: 5px;
     }
     span {
-      font-size: 0.9vw;
+      font-size: 1.9vh;
       color: rgba(0, 0, 0, 0.593);
     }
   }
   .dir-layout {
     .title {
       text-transform: uppercase;
-      padding: 0.5vw;
+      padding: 0.8vh;
       border: 1px solid #000000;
       color: #000000;
       display: block;
       width: fit-content;
-      margin-top: 1.5vw;
-      font-size: 0.5vw;
-      margin-bottom: 1.2vw;
+      margin-top: 1.5vh;
+      font-size: 1.1vh;
+      margin-bottom: 1.2vh;
     }
   }
 }
@@ -262,7 +264,6 @@ onMounted(() => {
   }
 }
 main {
-
   overflow-x: hidden;
   width: 85%;
   margin: 0 auto;

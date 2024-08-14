@@ -13,7 +13,7 @@ defineProps(["t", "type"]);
 
 <style lang="scss" scoped>
 .title {
-  font-size: 1.3vw !important;
+  font-size: 2vh !important;
   color: #3f3f3f;
 }
 .dark-mode .title {

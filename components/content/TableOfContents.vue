@@ -69,13 +69,13 @@ a {
   display: flex;
   padding-right: 0.6vw;
   align-items: center;
-  font-size: 0.8vw;
+  font-size: 1.4vh;
   &::before {
     content: "";
     display: block;
-    margin-right: 0.5vw;
-    width: 0.4vw;
-    height: 0.4vw;
+    margin-right: 0.9vh;
+    width: 0.7vh;
+    height: 0.7vh;
     border: 1px solid #000000;
     transform: rotate(45deg);
   }
@@ -90,8 +90,8 @@ a {
 span::before {
   content: "";
   display: block;
-  width: 0.4vw;
-  height: 0.4vw;
+  width: 0.7vh;
+  height: 0.7vh;
   border: 1px solid #000000;
   transform: rotate(45deg);
   background-color: white;
@@ -99,8 +99,8 @@ span::before {
 .no::before {
   content: "";
   display: block;
-  width: 0.4vw;
-  height: 0.4vw;
+  width: 0.7vh;
+  height: 0.7vh;
   background-color: #d7d7d7;
   border-radius: 100%;
   margin: 0 !important;

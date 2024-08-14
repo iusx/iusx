@@ -129,7 +129,7 @@ html::-webkit-scrollbar-thumb {
   border-radius: 25px;
 }
 .markdown-content h1 {
-  font-size: 0.1vw;
+  font-size: 0;
   color: rgba(0, 0, 0, 0.189);
   text-transform: uppercase;
 }
