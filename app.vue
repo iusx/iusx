@@ -133,12 +133,25 @@ html::-webkit-scrollbar-thumb {
   color: rgba(0, 0, 0, 0.189);
   text-transform: uppercase;
 }
+.markdown-content hr {
+  margin: 10vh;
+  border-color: #ffffff6b;
+}
+  .dark-mode .markdown-content hr {
+    border-color: #6d6d6d80;
+  }
 .markdown-content {
   padding-top: 4vw;
   padding-bottom: 10vw;
   @media (max-width: 1024px) {
     padding-top: 10vw;
   }
+}
+.markdown-content pre code {
+  color: #888888;
+}
+.dark-mode .markdown-content pre code {
+  color: #404040;
 }
 .markdown-content p {
   display: block;
@@ -153,7 +166,7 @@ html::-webkit-scrollbar-thumb {
   &:last-child {
     margin-bottom: 0vw;
   }
-  @media (max-width: 1024px){
+  @media (max-width: 1024px) {
     margin-block: 4vw;
   }
 }

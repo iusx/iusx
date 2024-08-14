@@ -111,6 +111,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+
 .book-table {
   background: white !important;
   width: 100vw !important;
