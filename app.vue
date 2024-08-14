@@ -137,14 +137,36 @@ html::-webkit-scrollbar-thumb {
   margin: 10vh;
   border-color: #ffffff6b;
 }
-  .dark-mode .markdown-content hr {
-    border-color: #6d6d6d80;
-  }
+.dark-mode .markdown-content hr {
+  border-color: #6d6d6d80;
+}
 .markdown-content {
   padding-top: 4vw;
   padding-bottom: 10vw;
   @media (max-width: 1024px) {
     padding-top: 10vw;
+  }
+}
+.markdown-content {
+  width: 100% !important;
+}
+.markdown-content {
+  pre,
+  code {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block; /* 确保它们是块级元素 */
+  }
+
+  pre {
+    overflow: auto; /* 允许出现滚动条 */
+  }
+
+  code {
+    white-space: pre-wrap; /* 允许换行 */
+    overflow-wrap: break-word; /* 长单词换行 */
   }
 }
 .markdown-content pre code {
