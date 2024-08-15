@@ -175,6 +175,13 @@ html::-webkit-scrollbar-thumb {
 .dark-mode .markdown-content pre code {
   color: #404040;
 }
+
+.markdown-content ol {
+  font-size: 1.5vh;
+  color: #888888;
+}
+.dark-mode .markdown-content {
+}
 .markdown-content p {
   display: block;
   word-wrap: break-word;

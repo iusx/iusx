@@ -55,7 +55,7 @@ info: 图 1 ｜ IETF RFC 上的流程图，通过简单的制表符表达出的�
 
 假设还要追求在 Markdown 中无缝使用，那可以选择下 [mermaid](https://github.com/mermaid-js/mermaid) 虽然很多 Markdown 都支持，比如 Github 的 Markdown 语法，但我总感觉默认的颜色还是很有识别性的。 [<sup>3</sup>](#refer-anchor-3)
 
-
+但是我最喜欢的，莫过于在 Hacker news [<sup>5</sup>](#refer-anchor-5)中发现到的 [Monodraw](https://monodraw.helftone.com/) 无论是用户体验和便携性。我认为都比上述的要好，甚至是让我感受到 Figma 的舒适性，对于一个绘制 ASCII art 图表来说，简直是一个非常好的产品。
 
 ### References
 
@@ -74,4 +74,8 @@ info: 图 1 ｜ IETF RFC 上的流程图，通过简单的制表符表达出的�
 <div id="refer-anchor-4" class="ref" />
 
 - [4] https://www.cnvd.org.cn/flaw/show/3173261
+
+<div id="refer-anchor-5" class="ref" />
+
+- [5] https://news.ycombinator.com/item?id=31891226
 ::
