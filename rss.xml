@@ -4,8 +4,33 @@
         <description><![CDATA[RHYME.Q 韵清]]></description>
         <link>https://member.rhyme.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 14 Aug 2024 16:10:40 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 15 Aug 2024 16:58:07 GMT</lastBuildDate>
         <atom:link href="https://member.rhyme.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[24 hour]]></title>
+            <link>member.rhyme.jiangxue.org/book/24-hour</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/24-hour</guid>
+        </item>
+        <item>
+            <title><![CDATA[Ex-President Moon's memoir]]></title>
+            <link>member.rhyme.jiangxue.org/book/ex-president-moon-s-memoir</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/ex-president-moon-s-memoir</guid>
+        </item>
+        <item>
+            <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
+            <link>member.rhyme.jiangxue.org/book/attacking-network-protocols</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/attacking-network-protocols</guid>
+        </item>
+        <item>
+            <title><![CDATA[TCP/IP Illustrated, Vol. 1: The Protocols]]></title>
+            <link>member.rhyme.jiangxue.org/book/tcp-ip-illustrated-vol-1</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/tcp-ip-illustrated-vol-1</guid>
+        </item>
+        <item>
+            <title><![CDATA[The Calculus Lifesaver: All the Tools You Need to Excel at Calculus]]></title>
+            <link>member.rhyme.jiangxue.org/book/the-calculus-lifesaver</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/the-calculus-lifesaver</guid>
+        </item>
         <item>
             <title><![CDATA[CRG FPS 電子競技]]></title>
             <link>member.rhyme.jiangxue.org/des/crg-fps</link>
@@ -80,31 +105,6 @@
             <title><![CDATA[Tsing font]]></title>
             <link>member.rhyme.jiangxue.org/des/tsing</link>
             <guid isPermaLink="true">member.rhyme.jiangxue.org/des/tsing</guid>
-        </item>
-        <item>
-            <title><![CDATA[24 hour]]></title>
-            <link>member.rhyme.jiangxue.org/book/24-hour</link>
-            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/24-hour</guid>
-        </item>
-        <item>
-            <title><![CDATA[Ex-President Moon's memoir]]></title>
-            <link>member.rhyme.jiangxue.org/book/ex-president-moon-s-memoir</link>
-            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/ex-president-moon-s-memoir</guid>
-        </item>
-        <item>
-            <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
-            <link>member.rhyme.jiangxue.org/book/attacking-network-protocols</link>
-            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/attacking-network-protocols</guid>
-        </item>
-        <item>
-            <title><![CDATA[TCP/IP Illustrated, Vol. 1: The Protocols]]></title>
-            <link>member.rhyme.jiangxue.org/book/tcp-ip-illustrated-vol-1</link>
-            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/tcp-ip-illustrated-vol-1</guid>
-        </item>
-        <item>
-            <title><![CDATA[The Calculus Lifesaver: All the Tools You Need to Excel at Calculus]]></title>
-            <link>member.rhyme.jiangxue.org/book/the-calculus-lifesaver</link>
-            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/the-calculus-lifesaver</guid>
         </item>
         <item>
             <title><![CDATA[江雪銮音实验室]]></title>
