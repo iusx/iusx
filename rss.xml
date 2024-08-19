@@ -4,7 +4,7 @@
         <description><![CDATA[RHYME.Q 韵清]]></description>
         <link>https://member.rhyme.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 15 Aug 2024 16:58:07 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 19 Aug 2024 15:54:01 GMT</lastBuildDate>
         <atom:link href="https://member.rhyme.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -20,11 +20,6 @@
             <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
             <link>member.rhyme.jiangxue.org/book/attacking-network-protocols</link>
             <guid isPermaLink="true">member.rhyme.jiangxue.org/book/attacking-network-protocols</guid>
-        </item>
-        <item>
-            <title><![CDATA[TCP/IP Illustrated, Vol. 1: The Protocols]]></title>
-            <link>member.rhyme.jiangxue.org/book/tcp-ip-illustrated-vol-1</link>
-            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/tcp-ip-illustrated-vol-1</guid>
         </item>
         <item>
             <title><![CDATA[The Calculus Lifesaver: All the Tools You Need to Excel at Calculus]]></title>
