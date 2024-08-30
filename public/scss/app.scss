@@ -1,7 +1,8 @@
 .main-con {
   table {
     width: 100% !important;
-
+    margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
     thead {
       background: #f6f6f694;
     }
@@ -174,7 +175,7 @@ html::-webkit-scrollbar-thumb {
     box-sizing: border-box;
     font-size: calc(0.8vw);
     @media (max-width: 800px) {
-      font-size: calc(1.3vw)
+      font-size: calc(1.3vw);
     }
   }
 
