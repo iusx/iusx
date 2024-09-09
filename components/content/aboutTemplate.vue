@@ -187,15 +187,12 @@ const contribution = [
         </p>
         <div class="tip-title">
           <p>TAG://</p>
-          <an-font
-            class="me-tip"
-            :text="[
-              'Software development',
-              'Security amateur',
-              'Designer',
-              'Full stack development',
-            ]"
-          />
+          <an-font class="me-tip" :text="[
+            'Software development',
+            'Security amateur',
+            'Designer',
+            'Full stack development',
+          ]" />
         </div>
         <div class="desc">
           <div class="desc-layout">
@@ -247,52 +244,67 @@ const contribution = [
     width: 80%;
     font-size: larger;
     margin: 0 auto;
+
     @media (max-width: 768px) {
       width: 90%;
     }
+
     @media (max-width: 1024px) {
       display: block;
     }
+
     display: flex;
     padding-bottom: 15rem;
   }
+
   .work-log {
     width: 80%;
+
     @media (max-width: 768px) {
       width: 90%;
     }
+
     margin: 0 auto;
     padding-bottom: 15rem;
     color: #cbcbcb;
     text-transform: uppercase;
+
     p {
       margin: 0;
     }
   }
+
   .work-layout {
     display: flex;
     width: 100%;
     flex: 2;
+
     @media (max-width: 1024px) {
       display: block;
     }
+
     flex-direction: row-reverse;
+
     .tables {
       width: 90%;
     }
+
     .job {
       display: block;
       font-weight: 300;
       text-transform: capitalize;
       width: 90%;
+
       small {
         display: block;
         padding-top: 1rem;
         font-size: initial;
       }
+
       p {
         margin: 0;
       }
+
       .job-time {
         color: #a6a6a6;
         font-size: initial;
@@ -300,32 +312,41 @@ const contribution = [
       }
     }
   }
+
   .work-info {
     flex: 1;
+
     p {
       padding: 0;
       color: #000;
     }
+
     .work-info-text {
       p {
         color: #a6a6a6;
+        font-weight: 400 !important;
         display: block;
         padding-bottom: 1rem;
         text-align: justify;
         margin: 0;
-        font-size: initial;
+        font-size: 1.45vh;
       }
     }
   }
+
   .hello {
     background: #ffffff;
+
     .tip {
-      height: 100vh;
+      padding-top: 20vh;
+      padding-bottom: 15vh;
       font-size: 2.8vw;
       width: 60%;
+
       @media (max-width: 768px) {
         width: 90%;
       }
+
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -336,30 +357,37 @@ const contribution = [
         display: flex;
         width: 100%;
       }
+
       p {
         color: #a6a6a6;
         margin: 0;
         padding-right: 5px;
       }
+
       .me-tip {
         font-weight: 300;
         width: 80%;
+
         @media (max-width: 768px) {
           width: 90%;
         }
+
         color: #cbcbcb;
       }
+
       .desc {
-        font-size: 1vh;
+        font-size: 2vh;
         width: 100%;
-        margin-top: 30px;
         line-height: 1.5;
+        margin-top: 1vh;
+
         .desc-layout {
-          column-count: 2;
           text-align: justify;
+
           @media (max-width: 1024px) {
             column-count: 1;
           }
+
           p {
             margin-bottom: 30px;
           }
@@ -367,10 +395,12 @@ const contribution = [
       }
     }
   }
+
   .about {
     font-size: x-large;
     color: #00ffc8 !important;
     text-transform: uppercase;
+
     small {
       color: #404040;
       font-size: initial;
@@ -382,6 +412,7 @@ const contribution = [
 .dark-mode .hello {
   background: rgb(0, 0, 0);
 }
+
 .dark-mode .work-info p {
   color: #ffffff;
 }
