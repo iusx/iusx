@@ -4,12 +4,17 @@
         <description><![CDATA[RHYME.Q 韵清]]></description>
         <link>https://member.rhyme.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 09 Sep 2024 01:45:04 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 30 Oct 2024 04:43:57 GMT</lastBuildDate>
         <atom:link href="https://member.rhyme.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
             <link>member.rhyme.jiangxue.org/book/24-hour</link>
             <guid isPermaLink="true">member.rhyme.jiangxue.org/book/24-hour</guid>
+        </item>
+        <item>
+            <title><![CDATA[Criminal Minds]]></title>
+            <link>member.rhyme.jiangxue.org/book/criminal_minds</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/criminal_minds</guid>
         </item>
         <item>
             <title><![CDATA[Ex-President Moon's memoir]]></title>
@@ -25,6 +30,11 @@
             <title><![CDATA[The Calculus Lifesaver: All the Tools You Need to Excel at Calculus]]></title>
             <link>member.rhyme.jiangxue.org/book/the-calculus-lifesaver</link>
             <guid isPermaLink="true">member.rhyme.jiangxue.org/book/the-calculus-lifesaver</guid>
+        </item>
+        <item>
+            <title><![CDATA[The IDA Pro Book: The Unofficial Guide to the World’s Most Popular Disassembler, 2nd Edition]]></title>
+            <link>member.rhyme.jiangxue.org/book/the_ida_pro_book</link>
+            <guid isPermaLink="true">member.rhyme.jiangxue.org/book/the_ida_pro_book</guid>
         </item>
         <item>
             <title><![CDATA[CRG FPS 電子競技]]></title>
