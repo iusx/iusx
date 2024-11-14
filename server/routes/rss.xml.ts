@@ -16,7 +16,6 @@ export default defineEventHandler(async (event) => {
 
   const blogPosts = docs.filter(
     (doc) =>
-      doc?._path?.includes("/dev") ||
       doc?._path?.includes("/sec") ||
       doc?._path?.includes("/book") ||
       doc?._path?.includes("/des"),

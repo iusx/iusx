@@ -6,9 +6,6 @@
     >
       <Icon name="RhymeIcon" size="2.8vh"
     /></a>
-    <a href="/dev" :class="{ active: currentPage.startsWith('/dev') }">
-      <Icon name="DevIcon" size="2.8vh"
-    /></a>
     <a href="/des" :class="{ active: currentPage.startsWith('/des') }"
       ><Icon name="DesIcon" size="2.8vh"
     /></a>

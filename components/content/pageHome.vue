@@ -79,7 +79,6 @@ onMounted(() => {
 });
 
 const links = ref([
-  { name: "Develop", href: "/dev", separator: " + " },
   { name: "Security", href: "/sec", separator: " + " },
   { name: "Design", href: "/des", separator: " ÷ " },
   { name: "Life", href: "/book" },
