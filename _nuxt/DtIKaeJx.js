@@ -1,1 +1,0 @@
-import{u as e}from"./D5kEi0OH.js";import{o,q as s,B as r}from"./Cgb0lF4l.js";const a={class:"text-tip"},_={__name:"text-tip",setup(n){return e(),(t,c)=>(o(),s("main",a,[r(t.$slots,"default")]))}};export{_ as default};
