@@ -1,6 +1,6 @@
 ---
 "title": TOPCHOICE MEDICAL INVESMENT CO., INC
-"director": "RHYME.Q"
+"director": "ritsu"
 "time": "2021"
 "platform": "cnnvd"
 ---

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 useSeoMeta({
-  title: "Friendly link - RHYME.Q",
+  title: "Friendly link - ritsu",
   description: "Github + Hackerone + Behance ÷ Researchgate",
 });
 

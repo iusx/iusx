@@ -1,6 +1,6 @@
 ---
 "title": "Criminal Minds"
-"director": "RHYME.Q"
+"director": "ritsu"
 "time": "2024.10.11"
 img: "06/1.png"
 plan: "01"

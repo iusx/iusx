@@ -1,6 +1,6 @@
 ---
 "title": Turing Robot Payment bypass
-"director": "RHYME.Q"
+"director": "ritsu"
 "time": "2020"
 "platform": "cnvd"
 ---

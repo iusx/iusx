@@ -4,7 +4,7 @@
       href="/"
       :class="{ active: currentPage === '/' || currentPage === '/about' }"
     >
-      <Icon name="RhymeIcon" size="2.8vh"
+      <Icon name="ritsuIcon" size="2.8vh"
     /></a>
     <a href="/des" :class="{ active: currentPage.startsWith('/des') }"
       ><Icon name="DesIcon" size="2.8vh"

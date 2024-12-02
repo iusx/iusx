@@ -4,9 +4,9 @@ import RSS from "rss";
 
 export default defineEventHandler(async (event) => {
   const feed = new RSS({
-    title: "RHYME.Q 韵清",
-    site_url: "https://member.rhyme.jiangxue.org/",
-    feed_url: `https://member.rhyme.jiangxue.org/rss.xml`,
+    title: "ritsu りつ",
+    site_url: "https://member.ritsu.jiangxue.org/",
+    feed_url: `https://member.ritsu.jiangxue.org/rss.xml`,
   });
 
   const docs = await serverQueryContent(event)
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   for (const doc of blogPosts) {
     feed.item({
       title: doc.title ?? "-",
-      url: `member.rhyme.jiangxue.org${doc._path}`,
+      url: `member.ritsu.jiangxue.org${doc._path}`,
       date: doc.release_date,
       description: doc.description,
     });

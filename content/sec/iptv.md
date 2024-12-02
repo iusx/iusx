@@ -1,7 +1,7 @@
 ---
 title: CHINA TELECOM IPTV Payment bypass 
 description: "发现智能电视机顶盒的网络电视功能，开启了家人的全新娱乐体验。从经典节目到热门电影，一应俱全。不过，发现了一个让人忍不住好奇的漏洞。利用这个小技巧，我们尽情享受了一周的节目，直到漏洞被修复，CNVD 的那份证书让我倍感荣幸。时光流逝，我回顾起四年前的梦想，感慨万分。如今，安全领域的探索已不再是我的重心，但那份热爱和期待依然存在，或许，下一个 CVE 编号就在不远的将来。"
-director: "RHYME.Q"
+director: "ritsu"
 time: "2020.02.04"
 platform: "cnvd"
 img: "03/1.png"

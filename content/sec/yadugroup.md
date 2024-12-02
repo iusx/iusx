@@ -1,6 +1,6 @@
 ---
 "title": HENAN YADU MEDICAL GROUP CORPORATION
-"director": "RHYME.Q"
+"director": "ritsu"
 "time": "2021"
 "platform": "cnnvd"
 ---

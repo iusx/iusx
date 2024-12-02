@@ -6,7 +6,7 @@ const { data: equalQueryBook } = await useAsyncData("equalBook", () => {
 const colorMode = useColorMode();
 
 useSeoMeta({
-  title: "Bookshelf - RHYME.Q",
+  title: "Bookshelf - ritsu",
   description: "Github + Hackerone + Behance ÷ Researchgate",
 });
 

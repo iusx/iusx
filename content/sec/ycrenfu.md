@@ -1,6 +1,6 @@
 ---
 "title": YICHANG HUMANWELL PHARMACEUTICAL CWE-89
-"director": "RHYME.Q"
+"director": "ritsu"
 "time": "2019.08.06"
 "platform": "cnnvd"
 description: "从对安全的兴趣到学习第一个漏洞，我探索了 OWASP TOP 10，并发现了 Injection 漏洞，尤其是 SQL 注入。漏洞的发现让我认识到安全问题是系统设计和逻辑处理不当的结果。随着学习的深入，发现了更多类型的漏洞，而安全研究也不断拓展。安全领域的探索是一个持续学习和探索的过程，每个人都有自己的独特见解和关注点。"

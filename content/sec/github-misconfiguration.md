@@ -1,7 +1,7 @@
 ---
 title: GraphQL Misconfiguration in CWE-16 Github API 
 description: "这是我第一次提交漏洞缺陷并且获得赏金等奖励，所以对我来说还是比较难忘的。由于我已经全身心投入到产品设计和开发中，再次发现知名公司或平台的安全漏洞对我来说就像达到了一个里程碑。"
-director: "RHYME.Q"
+director: "ritsu"
 time: "2023.12.04"
 platform: "github"
 img: "02/1.png"

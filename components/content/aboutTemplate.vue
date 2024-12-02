@@ -4,7 +4,7 @@ const colorMode = useColorMode();
 defineProps(["title", "desc", "time", "name"]);
 
 useSeoMeta({
-  title: "About - RHYME.Q",
+  title: "About - ritsu",
   description: "Github + Hackerone + Behance ÷ Researchgate",
 });
 

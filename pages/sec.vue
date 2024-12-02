@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 useSeoMeta({
-  title: "Security - RHYME.Q",
+  title: "Security - ritsu",
   description: "Github + Hackerone + Behance ÷ Researchgate",
 });
 const colorMode = useColorMode();

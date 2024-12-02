@@ -1,6 +1,6 @@
 ---
 "title": Myung
-"director": "RHYME.Q"
+"director": "ritsu"
 "time": "2023.11.17"
 img: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/1ebc97184760937.668dec404a8a0.png"
 "client": "Jiangxue Academy"

@@ -1,16 +1,16 @@
 ---
-title: "About - RHYME.Q"
+title: "About - ritsu"
 description: "Full-stack development, Security, and Design."
 head:
   meta:
     - name: "keywords"
-      content: "RHYME.Q"
+      content: "ritsu"
     - name: "robots"
       content: "index, follow"
     - name: "author"
-      content: "RHYME.Q"
+      content: "ritsu"
     - name: "copyright"
-      content: "© 2024 RHYME.QING"
+      content: "© 2024 ritsuING"
 ---
 
 ::about-template

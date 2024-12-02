@@ -1,6 +1,6 @@
 ---
 "title": "The Calculus Lifesaver: All the Tools You Need to Excel at Calculus"
-"director": "RHYME.Q"
+"director": "ritsu"
 "time": "2023"
 img: "03/3.png"
 ---
