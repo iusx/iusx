@@ -1,5 +1,5 @@
 ---
-title: 'ritsu'
+title: 'ritsu りつ'
 description: 'Full-stack development, Security, and Design.'
 head:
   meta:

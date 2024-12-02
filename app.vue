@@ -13,6 +13,7 @@ onMounted(() => {
     requestAnimationFrame(raf);
   }
 });
+
 </script>
 
 <template>
