@@ -91,11 +91,11 @@ main {
     display: flex;
   }
   .content-box {
-    height: 31vh;
-    width: 31vh !important;
+    height: 300px;
+    width: 300px !important;
     background: transparent;
-    border: 2px solid #dfe3e9;
-    margin-right: 1vw;
+    border: 1px solid #dfe3e9;
+    margin-right: 22px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -126,7 +126,7 @@ main {
     .content-time {
       display: flex;
       flex-direction: row;
-      padding: 2.5vh;
+      padding: 25px;
 
       justify-content: space-between;
       span {
@@ -137,18 +137,18 @@ main {
       }
     }
     img {
-      width: 20vh;
-      height: 2vh;
+      width: 200px;
+      height: 20px;
     }
     .box-title {
       border-bottom: 10px solid red;
       transition: border-bottom 0.3s ease;
       color: #000;
       margin: 0;
-      padding: 2.5vh;
+      padding: 25px;
       text-transform: uppercase;
       font-weight: bold;
-      font-size: 0.8vw;
+      font-size: 15px;
     }
   }
 }
@@ -161,9 +161,9 @@ main {
   position: fixed;
   .title-desc {
     color: #b5b5b5;
-    margin-top: 4vh;
-    margin-bottom: 3vh;
-    font-size: 0.6vw;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    font-size: 14px;
     width: 80vw;
   }
   @media (max-width: 768px) {
@@ -178,7 +178,7 @@ main {
   justify-content: space-around;
   .main-title {
     p {
-      font-size: 6vh;
+      font-size: 60px;
       color: #ef0000;
       font-weight: 600;
       z-index: 10;
@@ -204,7 +204,7 @@ main {
 }
 .left {
   text-transform: uppercase;
-  padding: 2vh;
+  padding: 20px;
   writing-mode: tb-rl;
   padding-right: 5vw;
   font-weight: bold;

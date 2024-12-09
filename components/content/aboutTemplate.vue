@@ -398,7 +398,7 @@ const contribution = [
 
   .about {
     font-size: x-large;
-    color: #00ffc8 !important;
+    color: blue !important;
     text-transform: uppercase;
 
     small {

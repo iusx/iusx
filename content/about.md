@@ -21,7 +21,8 @@ title: "UNION LAB - Software Engineer"
 desc: "Fringe Science Research And Support"
 ---
 #about
-Fail,being laughed at, is my life.
+Tempus fugit,
+Ars longa, vita brevis
 
 #contributiondes
 \*I'm well aware that my understanding of design, development, and security is not yet sufficient.

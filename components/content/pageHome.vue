@@ -92,8 +92,8 @@ const links = ref([
       <div class="title">
         <div class="title-text">
           <an-title
-            title="Loser, 
- <br />being laughed at, is my life."
+            title="Tempus fugit, 
+ <br />Ars longa, vita brevis"
           />
         </div>
         <div class="link">
