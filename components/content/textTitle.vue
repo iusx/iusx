@@ -21,10 +21,10 @@ defineProps(["t", "type"]);
   color: #3f3f3f !important;
 }
 .title {
-  font-size: 2vh !important;
+  font-size: 20px !important;
 }
 .h2 {
-  font-size: 1.5vh;
+  font-size: 15px;
 }
 .dark-mode .text-title-color p {
   color: white !important;

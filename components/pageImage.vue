@@ -107,7 +107,7 @@ a:hover .tips {
   .info-title {
     margin: 0;
     line-height: 1;
-    font-size: 1.4vh;
+    font-size: 14px;
     color: #7f7f7f;
     padding-right: 3em;
   }

@@ -46,7 +46,7 @@ a::before {
   background: blue;
   border-radius: 120px;
   animation: fade 2s linear infinite;
-  margin-top: 1.4vh;
+  margin-top: 14px;
   margin-right: 2vh;
 }
 </style>

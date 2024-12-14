@@ -69,7 +69,7 @@ a {
   display: flex;
   padding-right: 0.6vw;
   align-items: center;
-  font-size: 1.4vh;
+  font-size: 14px;
   &::before {
     content: "";
     display: block;

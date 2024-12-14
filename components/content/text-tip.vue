@@ -12,10 +12,10 @@ const colorMode = useColorMode();
 .text-tip {
   border-left: 1px solid #888888;
   background: rgba(246, 246, 246, 0.5803921569);
-  padding: 0.7vw;
+  padding: 7px;
 
   p {
-    font-size: 1.3vh;
+    font-size: 13px;
     color: #888888;
     width: fit-content;
     margin-bottom: 0 !important;
@@ -27,7 +27,7 @@ const colorMode = useColorMode();
   }
 
   ol li {
-    font-size: 1.3vh;
+    font-size: 13px;
     color: #888888;
   }
 }

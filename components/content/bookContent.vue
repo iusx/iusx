@@ -185,14 +185,14 @@ onMounted(() => {
     align-items: center;
     justify-content: space-between;
     color: #7f7f7f;
-    font-size: 1.5vh;
+    font-size: 15px;
     span {
       text-transform: uppercase;
     }
   }
   .title {
     p {
-      font-size: 2.3vh;
+      font-size: 23px;
       margin: 0;
       margin-bottom: 5px;
     }
@@ -204,14 +204,14 @@ onMounted(() => {
   .dir-layout {
     .title {
       text-transform: uppercase;
-      padding: 0.8vh;
+      padding: 8px;
       border: 1px solid #000000;
       color: #000000;
       display: block;
       width: fit-content;
-      margin-top: 1.5vh;
-      font-size: 1.1vh;
-      margin-bottom: 1.2vh;
+      margin-top: 15px;
+      font-size: 11px;
+      margin-bottom: 12px;
     }
   }
 }

@@ -1,6 +1,6 @@
 ---
 "title": "24 hour"
-"director": "R/N"
+"director": "ritsu"
 "time": "2024.7.22"
 img: "05/1.png"
 plan: "30"

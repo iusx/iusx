@@ -16,7 +16,7 @@ defineProps(["desc"]);
 main {
     background: #fafafa;
     padding: 10px;
-    font-size: 1.4vh;
+    font-size: 14px;
     margin-top: 10px;
     margin-bottom: 10px;
     line-height: 1.7;
