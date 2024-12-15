@@ -2,7 +2,7 @@
   <main>
     <img :src="imagePath" :alt="altText" />
     <p v-html="text">
-      
+
     </p>
   </main>
 </template>
@@ -29,6 +29,9 @@ main {
   display: flex;
   flex-direction: row-reverse;
   gap: 12px;
+
+  margin-top: 15px;
+  margin-bottom: 15px;
 
   img {
     width: 50%;
