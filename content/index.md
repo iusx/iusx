@@ -1,6 +1,6 @@
 ---
-title: 'ritsu りつ'
-description: 'Full-stack development, Security, and Design.'
+title: 'ritsu'
+description: 'Full-stack development, Security, and Design Enthusiast.'
 head:
   meta:
     - name: 'keywords'
@@ -10,7 +10,7 @@ head:
     - name: 'author'
       content: 'ritsu'
     - name: 'copyright'
-      content: '© 2024 ritsuING'
+      content: '© 2024 ritsu'
 ---
 
 :page-home

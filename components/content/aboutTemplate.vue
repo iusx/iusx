@@ -5,7 +5,7 @@ defineProps(["title", "desc", "time", "name"]);
 
 useSeoMeta({
   title: "About - ritsu",
-  description: "Github + Hackerone + Behance ÷ Researchgate",
+  description: "Full-stack development, Security, and Design Enthusiast.",
 });
 
 const contribution = [
@@ -192,6 +192,7 @@ const contribution = [
             'Security amateur',
             'Designer',
             'Full stack development',
+            'Enthusiast'.
           ]" />
         </div>
         <div class="desc">
