@@ -192,7 +192,7 @@ const contribution = [
             'Security amateur',
             'Designer',
             'Full stack development',
-            'Enthusiast'.
+            'Enthusiast.'
           ]" />
         </div>
         <div class="desc">
