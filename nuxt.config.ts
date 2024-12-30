@@ -11,6 +11,6 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap"
   ],
   site: {
-    url: 'https://member.Ritsu.jiangxue.org/',
+    url: 'https://m.ritsu.jiangxue.org/',
   }
 });
