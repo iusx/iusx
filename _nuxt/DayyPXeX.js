@@ -1,1 +1,0 @@
-import{_ as o}from"./CvdaMP8z.js";import{o as r,q as t,B as n}from"./Cgb0lF4l.js";const s={};function c(e,a){return r(),t("strong",null,[n(e.$slots,"default")])}const _=o(s,[["render",c]]);export{_ as default};
