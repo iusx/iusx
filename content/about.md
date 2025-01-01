@@ -16,7 +16,7 @@ head:
 ::about-template
 ---
 time: "2015 - Now Shenzhen"
-name: "Jiangxue Academy"
+name: "Jiangxue analysis"
 title: "UNION LAB - Software Engineer"
 desc: "Fringe Science Research And Support"
 ---
