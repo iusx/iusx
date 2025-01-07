@@ -114,7 +114,7 @@ onMounted(() => {
 
 .book-table {
   background: white !important;
-  width: 100vw !important;
+  width: 85vw !important;
 }
 .dark-mode .book-table {
   background: #000 !important;
