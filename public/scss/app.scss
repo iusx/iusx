@@ -153,8 +153,17 @@ html::-webkit-scrollbar-thumb {
   @media (max-width: 1024px) {
     padding-top: 100px;
   }
+  table tr {
+    &:hover {
+      background: rgba(246, 246, 246, 0.5803921569);
+    }
+  }
 }
-
+.dark-mode table tr {
+  &:hover {
+    background: rgba(246, 246, 246, 0.0705882353);
+  }
+}
 .markdown-content {
   /* pre, */
   /* code { */
@@ -208,7 +217,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 .markdown-content pre code {
-  color: #888888;
+  color: #bbbbbb;
 }
 
 .dark-mode .markdown-content pre code {
