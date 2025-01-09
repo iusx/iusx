@@ -80,13 +80,7 @@ onMounted(() => {
       <div class="more" @click="showWorkPop">Directory</div>
     </div>
     <div class="book-info book-table" v-if="isWorkPopVisible">
-      <Icon
-        name="DesClose"
-        size="2.2vh"
-        style="cursor: pointer"
-        class="pop-close"
-        @click="hideWorkPop"
-      />
+      <Icon name="DesClose" size="2.2vh" style="cursor: pointer" class="pop-close" @click="hideWorkPop" />
       <div class="book-info-home-img">
         <div class="no-img" v-if="loading" style="width: 50% !important"></div>
         <img v-else :src="'/img/book/' + props.img" alt="book-home" />
@@ -105,25 +99,30 @@ onMounted(() => {
       </div>
     </div>
     <div class="main-con">
-      <div class="text markdown-content"><slot></slot></div>
+      <div class="text markdown-content">
+        <slot></slot>
+      </div>
     </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
-
 .book-table {
   background: white !important;
   width: 85vw !important;
 }
+
 .dark-mode .book-table {
   background: #000 !important;
 }
+
 @keyframes loading {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -134,6 +133,7 @@ onMounted(() => {
   animation: loading 1.5s infinite;
   aspect-ratio: 54 / 71;
 }
+
 .dark-mode .no-img {
   background-color: rgb(29, 29, 29);
 }
@@ -143,20 +143,25 @@ onMounted(() => {
     display: none;
   }
 }
+
 .pop-close {
   cursor: pointer;
   width: 3vw;
   height: 7vw;
   color: #000;
 }
+
 .dark-mode .pop-close {
   color: #ffffff;
 }
+
 .more {
   color: white;
 }
+
 .an {
   display: none;
+
   @media (max-width: 1024px) {
     display: block;
     display: block;
@@ -167,40 +172,49 @@ onMounted(() => {
     font-weight: bold;
   }
 }
+
 .book-info {
   width: 21vw;
   position: fixed;
   height: 100vh;
   overflow: inherit;
   padding-right: 1vw;
+
   img {
     width: 100%;
+
     @media (max-width: 1024px) {
       width: 50%;
     }
   }
+
   position: fixed;
+
   .book-info-author {
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: #7f7f7f;
     font-size: 15px;
+
     span {
       text-transform: uppercase;
     }
   }
+
   .title {
     p {
       font-size: 23px;
       margin: 0;
       margin-bottom: 5px;
     }
+
     span {
       font-size: 1.9vh;
       color: rgba(0, 0, 0, 0.593);
     }
   }
+
   .dir-layout {
     .title {
       text-transform: uppercase;
@@ -215,22 +229,28 @@ onMounted(() => {
     }
   }
 }
+
 .dark-mode .book-info .title span {
   color: rgb(255 255 255 / 59%);
 }
+
 .dark-mode .book-info .title p {
   color: #b3b3b3;
 }
+
 .dark-mode .book-info img {
   opacity: 0.7;
 }
+
 .dark-mode .book-info .dir-layout .title {
   border: 1px solid #ffffff;
   color: #ffffff;
 }
+
 .dark-mode .dir-layout {
   opacity: 0.8;
 }
+
 .book-info::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -246,6 +266,7 @@ onMounted(() => {
   border: 1px solid rgba(0, 0, 0, 0.197);
   cursor: pointer !important;
   transition: background 0.5s ease;
+
   &:hover {
     cursor: pointer !important;
     background: rgba(0, 0, 0, 0.068);
@@ -254,21 +275,26 @@ onMounted(() => {
 
 .dark-mode .book-info::-webkit-scrollbar-thumb {
   border: 1px solid rgba(255, 255, 255, 0.238);
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.068);
   }
 }
+
 .main-con {
   margin-left: 25vw;
+
   @media (max-width: 1024px) {
     margin-left: 0;
   }
 }
+
 main {
   overflow-x: hidden;
   width: 85%;
   margin: 0 auto;
 }
+
 .layout {
   display: flex;
 }
