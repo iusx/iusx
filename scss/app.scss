@@ -1,4 +1,10 @@
 .main-con {
+  li {
+    color: #888888;
+    a {
+      color: #888888;
+    }
+  }
   table {
     width: 100% !important;
     margin-top: 15px;
@@ -46,6 +52,11 @@
 
 .dark-mode body {
   background: #000;
+  li {
+    a {
+      color: #888888;
+    }
+  }
 }
 
 @font-face {
@@ -207,6 +218,7 @@ html::-webkit-scrollbar-thumb {
 .markdown-content ol {
   font-size: 15px;
   color: #888888;
+  line-height: 2;
 }
 
 .dark-mode .markdown-content {
