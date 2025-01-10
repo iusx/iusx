@@ -67,7 +67,7 @@ and a little stronger because I, too, am a canvas shaped by the master.
 This book is dedicated with love to Lynda Lyle Tate, 1936–2010.
 ::
 
-所以在前沿的结尾，作者说目前对作者的影响很大。这无关他的目前连 Windows 都不会用，而是传授给了儿子拆解的艺术。看一个产品如果从成品看肯定是高攀不起的，但如果一步一步的拆解，一个一个的功能实现，就会发现也不是那么的特别高攀不起。
+所以在前沿的结尾，作者说母亲对作者的影响很大。这无关他的目前连 Windows 都不会用，而是传授给了儿子拆解的艺术。看一个产品如果从成品看肯定是高攀不起的，但如果一步一步的拆解，一个一个的功能实现，就会发现也不是那么的特别高攀不起。
 
 ---
 
