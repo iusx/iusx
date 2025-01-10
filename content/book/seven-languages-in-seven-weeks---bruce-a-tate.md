@@ -31,9 +31,9 @@ plan: "01"
 ---
 
 
-:text-title{:t="前言"}
+:text-title{:t="作者致谢"}
 
-# 前言 2
+# 致谢 2
 
 又到了一个非常具有代表性的篇幅，也就是：“What Readers Are Saying About Seven Languages in Seven Weeks” 你会看到国内那种类似 xxx 专家，xxx 公司 xxx 总监 xxx 团队 xxx 实验室对某本书的友情肯定和推荐。你别说你还真别说，如果这本书讲的是思维逻辑和拆解，那确实是很不错的。但如果是技术性的，那可能从 2010 年发售至今 2025 年历经十多年的发展，技术也可能会淘汰，语法可能会变，但逻辑和思维，依然是那套惯式。
 
@@ -75,24 +75,51 @@ This book is dedicated with love to Lynda Lyle Tate, 1936–2010.
 
 在致谢阶段，作者展示出了这本书的含金量，甚至比开篇那几位挂名推荐的还重量级。首先映入眼帘的是 Ruby community：
 
+::text-tip
+*相信能在 Wikipedia 中留名的实力。
+::
+
 1. [松本行弘(Matz)](https://ja.wikipedia.org/wiki/%E3%81%BE%E3%81%A4%E3%82%82%E3%81%A8%E3%82%86%E3%81%8D%E3%81%B2%E3%82%8D) 他最著名的是 Ruby 编程语言及其原始参考实现 Matz 的 Ruby 解释器的首席设计师；
 
-2. [Charles Nutter](https://github.com/headius) —— [Jruby](https://en.wikipedia.org/wiki/JRuby) 的作者之一，能在 Java 和 Ruby 代码之间进行完全双向访问（类似于 Python 语言的 Jython ）。
+2. [Charles Nutter](https://github.com/headius): [Jruby](https://en.wikipedia.org/wiki/JRuby) 的作者之一，能在 Java 和 Ruby 代码之间进行完全双向访问（类似于 Python 语言的 Jython ）。
 
-3. [Evan Phoenix](https://github.com/evanphx) —— [Rubinius](https://en.wikipedia.org/wiki/Rubinius) 的作者；旨在 “为运行 Ruby 代码提供丰富、高性能的环境” 
+3. [Evan Phoenix](https://github.com/evanphx) : [Rubinius](https://en.wikipedia.org/wiki/Rubinius) 的作者；旨在 “为运行 Ruby 代码提供丰富、高性能的环境” 
 
-4. [Tim Bray](https://en.wikipedia.org/wiki/Tim_Bray) —— 原始 XML 规范的共同作者之一;
+4. [Tim Bray](https://en.wikipedia.org/wiki/Tim_Bray): 原始 XML 规范的共同作者之一;
+
+Ruby 以完全面向对象、可读性和简洁性、灵活性而知名。例如灵活的语法与动态特性：
+
+```
+class Greeter
+  def initialize(name)
+    @name = name.capitalize
+  end
+end
+
+# 动态添加方法
+Greeter.define_method(:greet) do
+  "Hello, #{@name}!"
+end
+
+g = Greeter.new("ruby")
+puts g.greet
+# 输出：Hello, Ruby!
+```
+
+但看输出 `Hello, Ruby!` 的这个过程就感觉元编程也是 ruby 的特点之一。
 
 我之前浏览过 [Ruby China](https://ruby-china.org/)，那时候我有一个对 Ruby 的问题。但 Ruby China community 有一个会员限制。注册完需要三个月后才能发帖或发消息，结果就是一天后我的问题被我自己解决了，之后我就再也没有浏览过这个社区。
 
-接下来的就是 Io community, 并不是国内 IO 竞赛的那个 IO。而是 Io Programming Language：
+---
 
-1. [Jeremy Tregunna](https://github.com/jeremytregunna) —— [ioLang](https://github.com/jeremytregunna) 的作者之一;Io 的目标是探索概念统一和动态语言，因此权衡往往倾向于简单性和灵活性而不是性能。
+接下来的就是 Io community, 并不是信息学奥林匹克竞赛 (英语：Olympiad in Informatics，简称：OI) 的那个 IO。而是 Io Programming Language：
 
-2. [Steve Dekorte](https://github.com/stevedekorte) —— Iolang 的作者之一；Iolang 于 2002 年创建，当时他试图用他的语言 Cel 来帮助朋友 Dru Nelson。他发现自己确实不太了解语言的工作原理，并开始编写一种小型语言来更好地理解问题。(ps: 我什么时候才能拥有这样的好朋友)
+1. [Jeremy Tregunna](https://github.com/jeremytregunna): [ioLang](https://github.com/jeremytregunna) 的作者之一;Io 的目标是探索概念统一和动态语言，因此权衡往往倾向于简单性和灵活性而不是性能。
+
+2. [Steve Dekorte](https://github.com/stevedekorte): Iolang 的作者之一；Iolang 于 2002 年创建，当时他试图用他的语言 Cel 来帮助朋友 Dru Nelson。他发现自己确实不太了解语言的工作原理，并开始编写一种小型语言来更好地理解问题。(ps: 我什么时候才能拥有这样的好朋友)
 
 光从描述，我已经对 Iolang 开始有兴趣了，特别句尾处的: "You captured the imagination of the beta readers and cre-
-ated the favorite language of many of them.(您俘获了测试读者的想象力并创造了许多人最喜欢的语言。)"
+ated the favorite language of many of them.(你激发并测试了读者的想象力，同时创造了许多人最喜欢的语言。)"
 
 Iolang 作为动态语言，在类型阶段就比较宽松，比较灵活，例如:
 
@@ -119,6 +146,153 @@ x = "Hello"; // 编译错误：类型不匹配
 | Lua | Rust |
 | Io | Swift |
 
-* 相信能在 Wikipedia 中留名的各位英杰的实力。
+---
+
+再然后就是 [Prolog community(Programming in Logic community)](https://en.wikipedia.org/wiki/Prolog)，这是一种逻辑编程语言。这种类型的我还没有接触过，他更像是数学中的逻辑推理。他的基础是一阶逻辑(First-order logic) 其核心的写法和经常接触到的语言有很大的不同。他的语法例如：
+
+```
+grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
+父母关系：如果 X 是 Y 的父母，且 Y 是 Z 的父母，则 X 是 Z 的祖父母。
+```
+
+在一些大学中，会将 Prolog 放到[逻辑编程课](https://en.wikipedia.org/wiki/Logic_programming) 中。如果很不幸你没有上过（ps: 我也没上过）那可以蹭一下 The University of Texas at Dallas(德克萨斯大学达拉斯分校) 的课件 [Logic Programming:CS 6371: Advanced Programming Languages](https://personal.utdallas.edu/~hamlen/cs6371sp14/lecture21.pdf)；如果要介绍 Prolong 那就需要介绍一阶逻辑和逻辑连接词、谓词逻辑、量词等。所以我会将这部分的介绍放到 Prolog 那一章节中，这里我们就介绍作者致谢的大佬。
+
+1. [Brian Tarbox](https://aws.amazon.com/cn/developer/community/heroes/brian-tarbox/): 通过 Prolong 进行建模，用于模拟和分析海豚在实验中的思维模式，非常有趣。可以前往他的个人 [blog](https://briantarbox.com/) 了解更多 
+
+2. [Joe Armstrong](https://en.wikipedia.org/wiki/Joe_Armstrong_(programmer)): [Erlang](https://en.wikipedia.org/wiki/Erlang_(programming_language)) 设计者之一。这是一种并发、分布式、容错的编程语言，[Elixir](https://en.wikipedia.org/wiki/Elixir_(programming_language)) 就是构建在 Erlang 之上。
+
+作为以分布式、多线程而闻名的语言。“Let it crash（让它崩溃）” 是 Erlang 语言的一种设计哲学。当一个进程发生错误或异常时，不必尝试捕获和处理错误，而是让该进程崩溃，然后通过其他机制（如重启或恢复）来恢复系统的正常运行。
+
+
+---
+
+接下来轮到了 Scala community 登场。该语言旨在解决 对 Java 的批评，一句话就以证明其含金量。他是一种 强大的静态类型高级通用编程语言，支持面向对象编程和函数式编程。
+
+```
+import java.time.LocalDate as Date
+import Payment.*
+
+val name = "Bib Fortuna"
+val digits = 1983_0525_0000_0000L
+val expires = Date.of(1983, 5, 25)
+
+enum Payment:
+  case Card(name: String, digits: Long, expires: Date)
+  case PayPal(email: String)
+
+def process(kind: Payment) = kind match
+  case Card(name, digits, expires) =>
+    s"Processing credit card $name, $digits, $expires"
+  case PayPal(email) =>
+    s"Processing PayPal account $email"
+
+process(Card(name, digits, expires))
+```
+
+1. [Venkat Subramaniam ](https://dev.java/author/VenkatSubramaniam/): ACM 高级会员，[Programming Scala](https://pragprog.com/titles/vsscala2/pragmatic-scala/) 一书作者。
+
+2. [Martin Odersky](https://en.wikipedia.org/wiki/Martin_Odersky): 他设计了 Scala。
+
+---
+
+还有 [Clojure community](https://en.wikipedia.org/wiki/Clojure)。Clojure 是 [lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)) 家族的一部分，或者说他是 Lisp 的现代化变体。他继承了 lisp 的特性。同时在并在并发和不变数据结构上做出了优化（Lisp 是可变的）
+
+Lisp 发明和推广的 [S 表达式(S-expression)](https://en.wikipedia.org/wiki/S-expression) 还是很有特点的，例如一个计算式子：
+
+```
+(* (+ 1 2) (+ 3 4))
+
+  + 1 2：表示加法操作，等于 3。
+  + 3 4：表示加法操作，等于 7。
+  *：表示乘法操作，将 3 和 7 相乘，结果是 21。
+  
+  如果是 Python 式子就是：
+
+result = (1 + 2) * (3 + 4)
+print(result)
+```
+
+到这里可能 Python 的式子比 S-expression 更接近传统的数学表达式。如果看到这那就可能认为 Lisp 还是不行，不如去学 Python。但 Lisp 还有一个特点是 [元编程（Metaprogramming）能力](https://en.wikipedia.org/wiki/Metaprogramming#:~:text=Metaprogramming%20is%20a%20computer%20programming,even%20modify%20itself%2C%20while%20running.) 指编写可以操作、生成、或修改程序代码的程序的能力。也就是 **——把代码当作数据来处理，从而实现动态的行为和更高的灵活性。**
+
+```
+;; 定义一个宏，用来生成“加法函数”
+(defmacro make-adder (n)
+  `(lambda (x) (+ x ,n)))
+
+;; 使用宏生成一个加法函数
+(defparameter add-five (make-adder 5))
+
+;; 测试生成的函数
+(format t "Result: ~A~%" (funcall add-five 10))  ; 输出 "Result: 15"
+```
+
+1. make-adder 是一个宏，它接收参数 n，并返回一个 新的函数代码：(lambda (x) (+ x ,n))。注意，这里返回的是代码，而不是一个值。
+2. 宏的作用是在 编译时生成或修改代码，而不是像 Python 闭包那样只是生成行为。
+3. 宏展开时，(make-adder 5) 会变成 (lambda (x) (+ x 5))，并且这个生成的函数将在运行时执行。
+
+在上面这个例子中，`宏的定义实际上是操作代码的模板，生成新的 Code。` 如果是 Python，那么可以通过函数来生成一个加法函数：
+
+```
+def make_adder(n):
+    return lambda x: x + n
+
+# 使用函数生成一个加法函数
+add_five = make_adder(5)
+
+# 测试生成的函数
+print(f"Result: {add_five(10)}")  # 输出 "Result: 15"
+```
+
+1. make_adder 函数返回了一个新的函数（lambda x: x + n）。
+2. n 被捕获在闭包中，生成了一个 “动态的行为”：返回的函数始终会把输入值 x 加上 n。
+3. 这只是动态生成了一个函数，而 没有生成或修改代码。我们只是定义了一个行为，而不是在代码层面进行操作。
+
+Lisp、Clojure、Scheme 等语言通过其 S-expression 和宏系统提供强大的元编程能力。特点是代码即数据（homoiconicity），天然支持元编程；而 Python 通过反射和动态代码生成支持元编程，他的运行时动态性强，支持动态类型，如果要展示不可变结构，那下面的例子就很贴合：
+
+```
+(defn transform [person]
+   (update (assoc person :hair-color :gray) :age inc))
+
+(transform {:name "Socrates", :age 39})
+;; => {:name "Socrates", :age 40, :hair-color :gray}
+```
+
+最后输出的还是 40，因为在这个过程中 `age` 通过 `inc` 函数进行了递增操作，所以是 40 而不是 39。这展示了 Clojure 的不可变结构的特性。所以，我们花了几个部分了解 Lisp 和 Clojure，不仅是处于了解，而是对 **一个具有悠久历史和独特的、完全括号的前缀表示法的编程语言家族。** 的敬意。
+
+1. [Stuart Halloway](https://github.com/stuarthalloway): Clojure 协作者; [Programming Clojure](https://pragprog.com/titles/shcloj3/programming-clojure-third-edition/) 一书作者。
+2. [Rich Hickey ](https://en.wikipedia.org/wiki/Rich_Hickey): Clojure 创建者。
+
+---
+
+还还还有 [Haskell community](https://en.wikipedia.org/wiki/Haskell)，Haskell 专为教学、研究和工业应用而设计。以逻辑学家[哈斯克尔・柯里 (Haskell Curry) ](https://en.wikipedia.org/wiki/Haskell_Curry) 的名字命名，他的 [Lambda 演算（Lambda Calculus）](https://en.wikipedia.org/wiki/Lambda_calculus) 是函数式编程的基础，以及他对 [Currying](https://en.wikipedia.org/wiki/Currying) 的贡献。
+
+	•	在 Haskell 诞生之前，函数式编程语言如 Lisp、ML 等已经存在，但它们没有完全基于纯函数式的理念。
+	•	Haskell 作为一门“纯函数式编程语言”，其命名体现了其与数学逻辑和 Lambda 演算的深厚联系。
+
+所以，作为一个纯函数式的编程语言，它的式子是这样的：
+
+```
+-- 纯函数：输入相同，输出总是相同
+add :: Int -> Int -> Int
+add x y = x + y
+
+-- 调用
+main = print (add 3 5)  -- 输出 8
+```
+
+那么不是纯函数的是这样的：
+
+```
+counter = 0
+
+def increment():
+    global counter
+    counter += 1
+    return counter
+```
+
+1. [Phillip Wadler](https://en.wikipedia.org/wiki/Philip_Wadler): 创造的 [Orwell](https://en.wikipedia.org/wiki/Orwell_(programming_language)) 被认为是 Haskell 的先驱; Haskell 设计者之一。推动了函数式编程从理论研究到实际应用的转变。
+
+2. [Simon Peyton Jones](https://en.wikipedia.org/wiki/Simon_Peyton_Jones): [GHC(The Glasgow Haskell Compiler, Haskell 编译器) ](https://en.wikipedia.org/wiki/Glasgow_Haskell_Compiler) 开发者之一，他推动了 [类型推导](https://en.wikipedia.org/wiki/Type_inference) 和 [类型安全](https://en.wikipedia.org/wiki/Type_safety) 的概念
 
 ::
