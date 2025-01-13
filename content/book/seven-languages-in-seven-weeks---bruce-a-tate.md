@@ -297,7 +297,7 @@ def increment():
 
 ---
 
-# 前言 2
+# 前言 3
 
 :text-title{:t="前言"}
 
@@ -410,5 +410,70 @@ This is the quickest way to mastering a skill.
 ::
 
 在引库调参和生成大模型的时代，独立思考以及实现某个比较基础的功能逻辑是比较难的。大多数人都会依赖于无数个包或库来实现需要的功能，甚至不需要了解这个功能怎么实现的就可以实现其想要的。这就是我对这句话的理解，但是在一些地方还有少数人认为，Copy 开源项目改一改加一个支付页面就是自己的，才是作者的意思。
+
+作者在前言给出了一个很有含金量的逻辑。**学习一个语言，不需要了解其基础的原理实现，先理解其语法规则。知道怎么表达即可。** 我具有一些开发经验的读者肯定会感同身受，因为一个框架、一个语言，这一个版本是这样的写法，但过几个月、半年、一年。就会是另一个写法了，因此需要不断学习，不断花时间去适应和理解。
+
+所以一些 Coder 倡导终身学习，学 Code 可以有效的避免老年痴呆。
+
+::text-tip
+Each language has its own set of idioms, its strengths, and its weak-
+nesses. By learning several different programming languages, you will
+be able to see which language is best suited to the kinds of problems
+that interest you most.
+- 每种语言都有自己的一套习语、优点和缺点。通过学习几种不同的编程语言，您将能够了解哪种语言最适合您最感兴趣的问题。
+
+Ultimately, programming is
+about understanding, and understanding is about ideas.
+- 归根结底，编程就是理解，而理解就是想法。
+
+So, exposure
+to new ideas is essential to a deeper understanding of what program-
+ming is all about.
+- 因此，接触新想法对于更深入地了解编程的意义至关重要。
+::
+
+---
+
+:text-title{:t="我那一事无成且一直在学习的一生"}
+
+让我意外的是，这本书的前言竟然不是作者自己写的。而是 Erlang 的创建者 Joe Armstrong。我认为结尾处是比较具有讽刺意味的，如果一直学习，那么就会感觉自己超级菜，从而缺少了勇气去创建、编写一个项目，甚至是与人分享的喜悦。但在 2022 年，这个现象可以解决了，因为 ChatGPT 出来了。
+
+如果你将自己的项目分享到某个群组，那个群组的人可能觉得你打广告，或者说炫耀？于是 Code 警察开始出动，不断的给你批斗拉踩甚至是网暴。如果你的抗压能力不是很强，或许就开始退群退网、Github 设置为隐私三件套走起。
+
+但你如果与 ChatGPT 分享一个项目、一个思路。TA 会先肯定你，然后提出可以优化的建议。虽然整个流程看起来很正常，属于非常理智的。但如果是几十人、几百人的群组，理智往往是那么的珍贵和稀缺，大改只有立场先行和整活、玩梗的存在。
+
+::text-tip
+A Zen master might tell you that to be better at mathematics you’d
+better study Latin. Thus it is with programming. To better understand
+the essence of OO programming, you should study logic or functional
+programming (FP). To be better at FP, you should study Assembler.
+
+- 禅师可能会告诉你，要想学好数学，最好学习拉丁语。编程也是如此。为了更好地理解面向对象编程的本质，你应该学习逻辑或函数式编程 (FP)。为了更好地掌握 FP，你应该学习汇编语言。
+
+Books on comparative programming languages were popular when I
+grew up as a programmer, but most of these were academic tomes that
+gave little practical guidance to how to actually go about using a lan-
+guage. This reflected the technology of the age. You could read about
+the ideas in a language, but actually trying it out was virtually impos-
+sible.
+
+- 在我作为程序员成长的过程中，比较编程语言的书籍很受欢迎，但其中大多数都是学术性的大部头，几乎没有提供关于如何实际使用语言的实用指导。这反映了那个时代的技术。你可以阅读语言中的想法，但实际上尝试它几乎是不可能的。
+
+Today, not only can we read about the ideas, but we can try them in
+practice. This makes the difference between standing on the poolside
+wondering whether it would be nice to swim and diving in and enjoying
+the water.
+
+- 今天，我们不仅可以阅读这些想法，还可以在实践中尝试它们。这使得站在泳池边想知道游泳是否好玩和跳进水里享受水的差别。
+
+I warmly recommend this book and hope that you enjoy reading it as
+much as I have.
+
+- 我热烈推荐这本书，希望你和我一样喜欢阅读它。
+
+<br>
+
+Joe Armstrong, creator of Erlang<br> 2 March 2010 <br>Stockholm
+::
 
 ::
