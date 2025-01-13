@@ -140,7 +140,7 @@ const links = ref([
       display: block;
       cursor: pointer;
       color: #d6d6d6;
-      font-size: 3vh;
+      font-size: 30px;
       font-weight: 300;
       line-height: initial;
       padding: 0;
@@ -154,7 +154,7 @@ const links = ref([
     color: #b7b7b7;
     margin-top: 1vh;
     line-height: 1.3;
-    font-size: 1.7vh;
+    font-size: 16px;
     margin-left: 2.5vh;
     a {
       text-decoration: none;
@@ -178,7 +178,7 @@ const links = ref([
   position: absolute;
   bottom: 10px;
   color: #a1a1a1;
-  font-size: 1vh;
+  font-size: 13px;
   line-height: 1;
   .copy-link {
     a {

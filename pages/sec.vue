@@ -188,7 +188,7 @@ main {
     span {
       color: transparent;
       -webkit-text-stroke: 1px #dfdfdf;
-      font-size: 19vw;
+      font-size: 330px;
       position: absolute;
       top: 0;
       z-index: 0;

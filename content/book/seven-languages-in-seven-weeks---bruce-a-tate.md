@@ -295,4 +295,120 @@ def increment():
 
 2. [Simon Peyton Jones](https://en.wikipedia.org/wiki/Simon_Peyton_Jones): [GHC(The Glasgow Haskell Compiler, Haskell 编译器) ](https://en.wikipedia.org/wiki/Glasgow_Haskell_Compiler) 开发者之一，他推动了 [类型推导](https://en.wikipedia.org/wiki/Type_inference) 和 [类型安全](https://en.wikipedia.org/wiki/Type_safety) 的概念
 
+---
+
+# 前言 2
+
+:text-title{:t="前言"}
+
+在本书的开篇，作者引用了 'How Proust Can Make You a Better Programmer' 直译为 《普鲁斯特如何让你成为更好的程序员》作者是 Erlang 的创建者 Joe Armstrong。这里有个小彩蛋，Marcel Proust 就是 'A la
+recherche du temps perdu.' 的作者。也就是说出色的 Coder 需要具备耐心、有创造力、抽象思维、细节。这么表达还是比较抽象。
+
+对于耐心、思考我们可以以一个 Bug 举例，假如你碰到了一个 Bug，少则几分钟多则几小时甚至几天。在这么个阶段中，不断的经历失败还没有放弃，还是非常难能可贵的。但如果你具备抽象思维的能力，那么可以换一个视角思考。
+
+“既然我这样实现会碰到这样的问题，那么我换一种实现思路，是不是就能避免这样的问题，有概率陷入一个更简单或比这个问题更复杂的问题呢？”
+
+::text-tip
+“The Gmail editor cannot get typographic quotes right.”
+
+- “Gmail 编辑器无法正确排版引号，例如：‘单引号’、“双引号””
+
+“Disgraceful,” said Margery, “the sign of an illiterate programmer and a
+decadent culture.”
+
+- “可耻，”Margery 说，“这是文盲程序员和颓废文化的标志。”
+
+
+“What should we do about it?”
+- “我们应该怎么做？”
+
+
+“We must insist that the next programmer we hire has read all of ‘A la
+recherche du temps perdu.”’
+
+- 我们必须坚持要求我们雇用的下一个程序员阅读《追忆似水年华》的全部内容。
+
+
+“All seven volumes?”
+
+- “全部七卷？”
+
+“All seven volumes.”
+
+- “全部七卷。”
+
+“Will it make them better at punctuation and make them get their quotes
+right?”
+
+- “这会让他们更好地使用标点符号并正确引用吗？”
+
+“Not necessarily, but it will make them a better programmer. It’s a Zen
+thing....”
+- “不一定，但它会让他们成为更好的程序员。这是禅宗的事情......”
+::
+
+这里的举例：”Gmail 编辑器无法正确排版引号，例如：‘单引号’、“双引号”“ 我觉得很大一部分原因是因为当时为了避免构造注入语句，然后又不想重构源数据所以就不渲染引号来得快些所导致的。即使现在是 2025 年，有些网站依然不允许除了 Gmail、Outlook、Yahoo、ProtonMail、Zoho 的邮箱注册账号。
+
+这种做法通常是为了减少后端 API 针对一些特殊字符的处理和过滤。有些甚至是为了解决下 OWASP TOP TEN 的注入问题，因此这么做最保险的做法就是不允许传入特殊字符，比如 ‘“/.!@#*()!$) 这种。
+
+::text-tip
+Learning to program is like learning to swim. No amount of theory is
+a substitute for diving into the pool and flailing around in the water
+gasping for air. 
+- 学习编程就像学习游泳。再多的理论也无法代替跳入游泳池并在水中挣扎呼吸的感觉。
+
+The first time you sink under the water, you panic, but
+when you bob to the surface and gulp in some air, you feel elated.
+- 第一次尝试跳入水中时，你会感到恐慌，但当你浮出水面并大口呼吸时，你会感到兴奋。
+
+You
+think to yourself, “I can swim.” At least that’s how I felt when I learned
+to swim.
+- 你会想，“我会游泳。” 至少这是我学游泳时的感觉。
+::
+
+很多人第一次接触计算机时。其恐惧在于会不会将系统、硬件破坏掉，前期是系统环境，后期是服务器、数据库等。但经历过无数次重装系统和格式化之后，就会发现也没什么难的。于是就有了尝试的勇气，不断经历恐惧、失败，这正是 Code 所带来的体验。
+
+::text-tip
+It’s the same with programming. The first steps are the most difficult,
+- 编程也一样。万事开头难，
+
+and you need a good teacher to encourage you to jump into the water.
+- 你需要一个好老师来鼓励你跳入水中。
+::
+
+Code 就像搭积木一样，如果你学习过后端相关的技术栈，例如 MVC。在未深入学习的时候，整个 Code 都显得很乱，所有功能都包含在一个文件中。动不动就是及千行几百行，但通过 MVC 这样的设计模式，一个功能就是一个文件的划分，就能很好的梳理整个项目的逻辑。Code 功能简洁明了，方便后续的维护与扩充。
+
+
+::text-tip
+Let’s assume that you’ve actually managed the difficult task of down-
+loading and installing the interpreter or compiler for the language you
+are interested in. 
+- 假设你已经完成了下载并安装你感兴趣的语言的解释器或编译器这一艰巨的任务。
+
+ What should you do next? What will be your first
+program?
+- 你下一步该做什么？你的第一个程序是什么？
+::
+
+看到这里的时候我大概已经知道作者整本书的意图了。即 ”自信“，我个人认为自信是比较难能可贵的。特别是互联网黑社会遍地走的今天，如何树立起自信是很难的。如果你创建了一个开源项目，那衡量你的就是 Star、Fork 甚至是有多少人在用。
+
+如果出了点问题，有些人还会直接开喷。当然，这也是体验的一部分，毕竟挨骂的机会并不是谁都有的，免费打工的机会也不是什么人都行的，所以这也是一个很好的人生经历。因此如果您跨过此关，那么还会经历推广的阶段，因为 Code 厉害的大佬不一定圈子就多，所以即使 Code 再厉害，可能还没有那些比他 Code 不那么厉害的人 Star 多。
+
+如果您恰好在 CHINA，那您在未来肯定会接触到一句话：”技术哪有推广重要“。也就是：”橘生淮南则为橘，生于淮北则为枳“
+
+因此就跨入到比拼圈子和推广的阶段了，如果您是一个不善言辞、朝九晚五、循规蹈矩。没什么圈子的人，朋友就几个，那大概也就是 100+ Star。如果您混迹开源设计，各个群都是 200+，那么您大概是 1000+ Star。如果我是一个带货主播，那我会为你推荐 《被讨厌的勇气》，恰好我不是。
+
+::text-tip
+The first step in acquiring any new skill is not being able to do your own
+thing but being able to reproduce what other people have done before
+you.
+- 获得任何新技能的第一步不是能够做自己的事情，而是能够复制别人在你之前做过的事情。
+
+This is the quickest way to mastering a skill.
+- 这是掌握技能最快的方法。
+::
+
+在引库调参和生成大模型的时代，独立思考以及实现某个比较基础的功能逻辑是比较难的。大多数人都会依赖于无数个包或库来实现需要的功能，甚至不需要了解这个功能怎么实现的就可以实现其想要的。这就是我对这句话的理解，但是在一些地方还有少数人认为，Copy 开源项目改一改加一个支付页面就是自己的，才是作者的意思。
+
 ::

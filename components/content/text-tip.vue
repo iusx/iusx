@@ -14,7 +14,8 @@ const colorMode = useColorMode();
   background: rgba(246, 246, 246, 0.5803921569);
   padding: 7px;
 
-  p {
+  p,
+  li {
     font-size: 13px;
     color: #888888;
     width: fit-content;
@@ -29,6 +30,10 @@ const colorMode = useColorMode();
   ol li {
     font-size: 13px;
     color: #888888;
+  }
+
+  ul:last-child {
+    margin-bottom: 0;
   }
 }
 
