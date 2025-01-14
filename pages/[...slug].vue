@@ -14,8 +14,4 @@ p a {
     color: blue;
   }
 }
-
-html {
-  scroll-behavior: smooth;
-}
 </style>
