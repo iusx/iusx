@@ -35,7 +35,7 @@ const sortedData = computed(() => equalQueryBook.value);
           </p>
           <div class="title-desc-tip">
             <img src="/icon/info-tip.svg" />
-            看完这些信息之后，我会把自己的知识整理成速记笔记，标明它们的用途，甚至它们的应用场景，未来有需要的时候再进行深度学习。
+            文章多有纰漏，仅代表个人在当时的主观感受，不代表其第三方立场。
           </div>
         </div>
       </div>
