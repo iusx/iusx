@@ -1,9 +1,16 @@
 <script setup>
 const colorMode = useColorMode();
+
+import { defineProps } from "vue";
+
+defineProps(["type"]);
 </script>
 
 <template>
-  <main class="text-tip">
+  <main class="text-tip big" v-if="type == 'big'">
+    <slot />
+  </main>
+  <main class="text-tip" v-else>
     <slot />
   </main>
 </template>
@@ -39,5 +46,16 @@ const colorMode = useColorMode();
 
 .dark-mode .text-tip {
   background: rgba(246, 246, 246, 0.0705882353);
+}
+
+.big {
+  display: flex;
+  justify-content: center;
+  padding: 13px;
+  font-style: oblique;
+
+  p {
+    font-size: 15px;
+  }
 }
 </style>

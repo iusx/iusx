@@ -24,7 +24,8 @@ defineProps(["t", "type"]);
   font-size: 20px !important;
 }
 .h2 {
-  font-size: 15px;
+  font-size: 17px;
+  opacity: 0.8;
 }
 .dark-mode .text-title-color p {
   color: white !important;
