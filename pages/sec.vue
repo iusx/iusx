@@ -114,7 +114,6 @@ main {
         }
       }
       .box-title {
-        border-bottom: 0px solid red;
       }
       img {
         filter: brightness(14);
@@ -141,7 +140,6 @@ main {
       height: 20px;
     }
     .box-title {
-      border-bottom: 10px solid red;
       transition: border-bottom 0.3s ease;
       color: #000;
       margin: 0;

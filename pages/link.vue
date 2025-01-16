@@ -157,7 +157,6 @@ main {
   margin: 0 auto;
   @media (max-width: 1440px) {
     width: 60% !important;
-    border: 1px solid red;
   }
   margin-top: 10%;
 }
