@@ -1,1 +1,0 @@
-import{u as r}from"./CBSv4pUO.js";import{o as e,q as s,B as o}from"./Cgb0lF4l.js";const i={key:0,class:"text-tip big"},l={key:1,class:"text-tip"},m={__name:"text-tip",props:["type"],setup(a){return r(),(t,n)=>a.type=="big"?(e(),s("main",i,[o(t.$slots,"default")])):(e(),s("main",l,[o(t.$slots,"default")]))}};export{m as default};
