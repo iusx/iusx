@@ -49,7 +49,7 @@ const getPaddingStyle = (heading) => {
   const padding = (heading.level - 1) * basePadding;
 
   return {
-    paddingLeft: `${padding}px`,
+    marginLeft: `${padding}px`,
   };
 };
 </script>
@@ -88,6 +88,7 @@ a {
     margin-right: 0.9vh;
     width: 0.7vh;
     height: 0.7vh;
+    margin-left: 1px;
     border: 1px solid #000000;
     transform: rotate(45deg);
   }
