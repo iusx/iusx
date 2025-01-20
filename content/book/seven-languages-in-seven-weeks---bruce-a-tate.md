@@ -636,4 +636,266 @@ Ruby 虽然这个保姆也是要督促你喝鱼肝油，但她会加一颗糖奖
 - C 家族的目标是让机器运行得更高效，因此对底层细节的掌控更严格，但对程序员的友好度较低。
 - Ruby 的目标是让开发者工作得更高效，它更注重开发体验和代码的可读性，使编程变得更愉快、更直观。
 
+---
+
+:text-title{:t="面向对象" :type="2"}
+
+## 面向对象 1
+
+Ruby 是一种解释型、面向对象、动态类型的语言，属于所谓的脚本语言家族。因此我们需要了解，解释型、动态类型、面向对象到底是什么个概念，以及他们的具象化实现：
+
+
+| 特点 | 概念 |
+| --- | --- |
+| 解释型 | 代码由解释器直接执行，而不是通过编译器先转换为机器码。|
+| 动态类型 | 数据类型在运行时绑定，而不是在编译时。这种策略通常在灵活性与执行安全性之间权衡。 |
+| 面向对象 | 支持封装（将数据和行为打包在一起）、继承（通过类组织对象类型）、多态（对象可以以多种形式出现）。 |
+
+解释型和动态类型我们在致谢阶段就已经有了了解，那么面向对象几乎是一个家喻户晓的特性。要理解其对象，我们需要想象一个场景：
+
+你在开发一个“动物园管理系统”。这个系统需要记录动物的信息，比如名字(name)、种类(species)，以及它们会发出的声音。用面向对象的方法来设计系统。
+
+```python
+# 定义一个类
+class Animal:
+    def __init__(self, name, species):
+        self.name = name
+        self.species = species
+
+    def speak(self):
+        print(f"{self.name} makes a sound.")
+
+# 创建对象
+dog = Animal("Buddy", "Dog")  # 狗狗对象
+cat = Animal("Whiskers", "Cat")  # 猫咪对象
+
+dog.speak()  # 输出: Buddy makes a sound.
+cat.speak()  # 输出: Whiskers makes a sound.
+```
+
+类（Class）
+- 类就像一张蓝图，定义了某一类东西的共同特性和行为。
+- 动物的蓝图：每只动物都有名字（name）和种类（species），而且都会发出声音。
+
+对象（Object）
+- 对象是具体的东西，是从类里“制造”出来的实例。
+- 动物类中的“狗狗”对象，名字是“Buddy”，种类是“狗”。
+
+如果没有面向对象，可复用性几乎为 0：
+
+```
+# 没有类，每只动物都要单独定义
+dog_name = "Buddy"
+dog_species = "Dog"
+
+cat_name = "Whiskers"
+cat_species = "Cat"
+
+def dog_speak():
+    print(f"{dog_name} makes a sound.")
+
+def cat_speak():
+    print(f"{cat_name} makes a sound.")
+
+dog_speak()
+cat_speak()
+```
+
+---
+
+:text-title{:t="面向对象的四大特性"}
+
+:text-title{:t="封装" :type="2"}
+
+- 保护数据，隐藏细节
+
+想象你在操作一辆车,你不需要知道引擎如何运作，只需要按下启动按钮。程序中，类可以“隐藏”它内部的细节，外部只需要调用公开的方法。
+
+```
+class Car:
+    def __init__(self, brand):
+        self.__engine_on = False  # 私有变量，外部无法直接访问
+        self.brand = brand
+
+    def start_engine(self):  # 提供方法启动引擎
+        self.__engine_on = True
+        print(f"{self.brand} engine started.")
+
+car = Car("Toyota")
+car.start_engine()  # 输出: Toyota engine started.
+```
+
+
+:text-title{:t="继承" :type="2"}
+
+- 复用代码
+
+假如动物园里有很多动物，很多行为是相似的，比如“发出声音”。我们可以用“动物”作为父类，然后让“狗”和“猫”继承它，省去重复代码。
+
+```
+# 定义一个类
+class Animal:
+    def __init__(self, name, species):
+        self.name = name
+        self.species = species
+
+class Dog(Animal):  # Dog 继承自 Animal
+    def speak(self):  # 重写 speak 方法
+        print(f"{self.name} barks!")
+
+class Cat(Animal):  # Cat 继承自 Animal
+    def speak(self):
+        print(f"{self.name} meows!")
+
+dog = Dog("Buddy", "Dog")
+cat = Cat("Whiskers", "Cat")
+
+dog.speak()  # 输出: Buddy barks!
+cat.speak()  # 输出: Whiskers meows!
+```
+
+Dog 和 Cat 类继承了 Animal 类：
+- Dog 和 Cat 类没有重新定义 `__init__` 方法，但它们可以直接用 Animal 类的` __init__` 方法来初始化名字和种类。
+
+子类扩展父类
+- Dog 和 Cat 类在继承了 Animal 的基础上，增加了自己的特性（如 `speak()` 方法）。
+
+<br>
+
+```
+dog = Dog("Buddy", "Dog")
+```
+
+创建 dog 对象时，Dog 类没有自己的 `__init__` 方法，所以调用了 Animal 类的 `__init__` 方法。
+
+`self.name` 被赋值为 "Buddy"，`self.species` 被赋值为 "Dog"。
+
+
+:text-title{:t="多态" :type="2"}
+
+多态（Polymorphism）是面向对象编程中的一个重要概念，指的是同一个接口（方法），在不同对象上表现出不同的行为。
+
+```
+# 定义一个类
+class Animal:
+    def __init__(self, name, species):
+        self.name = name
+        self.species = species
+
+class Dog(Animal):  # Dog 继承自 Animal
+    def speak(self):  # 重写 speak 方法
+        print(f"{self.name} barks!")
+
+class Cat(Animal):  # Cat 继承自 Animal
+    def speak(self):
+        print(f"{self.name} meows!")
+
+animals = [Dog("Buddy", "Dog"), Cat("Whiskers", "Cat")]
+
+for animal in animals:
+    animal.speak()  # Buddy barks! 和 Whiskers meows!
+```
+
+**“一个接口，不同表现”**
+
+- 这里的接口就是 `speak()` 方法。
+
+Dog 和 Cat 类都实现了`speak()` 方法，但它们的表现不同
+- Dog 的 `speak()` 输出的是 "Buddy barks!"
+- Cat 的 `speak()` 输出的是 "Whiskers meows!"
+
+**为什么这是多态？**
+
+```
+animals = [Dog("Buddy", "Dog"), Cat("Whiskers", "Cat")]
+
+for animal in animals:
+    animal.speak()
+```
+
+调用 `animal.speak()` 时，不关心 animal 是 Dog 还是 Cat，程序会自动根据 `animal` 的实际类型调用相应的 `speak() ` 方法。
+
+一个通用的方法（`speak()`），在不同对象上实现了不同的行为（狗叫或猫叫）。
+
+**多态的特征**
+
+父类引用可以指向子类对象
+
+```
+animals = [Dog("Buddy", "Dog"), Cat("Whiskers", "Cat")]
+```
+
+列表中的元素类型是 Animal（父类）的引用，但它们实际是 Dog 和 Cat 的对象（子类）。
+
+动态绑定（动态多态）
+- 在运行时，根据对象的实际类型调用相应的方法，而不是编译时决定。例如：
+
+```
+for animal in animals:
+    animal.speak()
+```
+
+每次调用 speak()，Python 会根据 animal 的实际类型（Dog 或 Cat），执行不同的 speak() 方法。
+
+意义在于增强了代码的灵活性和可扩展性。以下是两大好处：
+
+- 统一接口，简化代码
+- 方便扩展
+
+不需要为每种动物分别写逻辑，只需调用 speak() 方法即可：
+
+```
+for animal in animals:
+    animal.speak()
+```
+
+无论是 Dog 还是 Cat，只要它们有 speak() 方法，就可以统一处理。
+
+如果以后新增一种动物，比如 Bird，只需定义它的类并实现 speak() 方法，无需修改已有代码：
+
+```
+class Bird(Animal):
+    def speak(self):
+        print(f"{self.name} chirps!")
+
+animals = [Dog("Buddy", "Dog"), Cat("Whiskers", "Cat"), Bird("Tweety", "Bird")]
+
+for animal in animals:
+    animal.speak()
+```
+
+:text-title{:t="抽象" type="2"}
+
+理解“抽象”是理解面向对象的一个关键点，我们从现实中的例子来解释为什么“抽象只关注核心功能”。
+
+在一个动物园管理系统中，管理员需要统计各种动物的叫声，但管理员不关心具体是哪种动物，只需要知道它们会“说话”即可。因此，我们用抽象类 Animal 定义了所有动物的共同特性，并让具体的动物（如狗和猫）实现各自的叫声。
+
+```
+from abc import ABC, abstractmethod
+
+class Animal(ABC):  # 抽象类：定义动物的核心功能
+    @abstractmethod
+    def speak(self):
+        pass  # 动物都会叫，但具体怎么叫由子类决定
+
+class Dog(Animal):  # 子类：具体实现
+    def speak(self):
+        return "Bark!"
+
+class Cat(Animal):  # 子类：具体实现
+    def speak(self):
+        return "Meow!"
+
+# 使用抽象类
+animals = [Dog(), Cat()]  # 动物园里有狗和猫
+for animal in animals:  # 遍历动物，不关心具体是哪种
+    print(f"The animal says: {animal.speak()}")  # 统一调用接口获取叫声
+```
+
+**为什么抽象只关注核心功能？**
+
+1. Animal 只定义了 speak() 方法，说明每个动物都能“发声”，这是核心功能。
+2. 子类（Dog 和 Cat）实现各自的细节，用户只需调用 speak()，不必关心内部逻辑。
+
+抽象简化了程序的逻辑，只暴露必要的功能，隐藏了实现的复杂性。
 ::

@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="heading in toc" :key="heading.id">
+    <li v-for="heading in toc" :key="heading.id" :style="getPaddingStyle(heading)">
       <a :href="`#${heading.id}`">{{ heading.text.slice(0, -1) }}</a>
       <template v-if="!isNaN(parseInt(heading.text.slice(-1), 10))">
         <template v-for="key in parseInt(heading.text.slice(-1), 10)">
@@ -34,6 +34,7 @@ onMounted(() => {
     ).map((heading) => ({
       id: heading.id,
       text: heading.innerText,
+      level: parseInt(heading.tagName.slice(1)),
     }));
   }
 });
@@ -42,6 +43,15 @@ const getSpanCount = computed(() => (text) => {
   const match = text.match(/\[(\d+)\]/);
   return match ? parseInt(match[1], 10) : 0;
 });
+
+const getPaddingStyle = (heading) => {
+  const basePadding = 20;
+  const padding = (heading.level - 1) * basePadding;
+
+  return {
+    paddingLeft: `${padding}px`,
+  };
+};
 </script>
 
 <style lang="scss" scoped>
@@ -49,8 +59,9 @@ ul {
   list-style: none;
   padding: 0;
 }
+
 ul li {
-  margin: 0.8vw 2px;
+  margin: 10.8px 2px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -58,9 +69,9 @@ ul li {
 }
 
 li {
-  background: url("data:image/svg+xml,%3Csvg width='930' height='1' viewBox='0 0 930 1' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 0.5H930' stroke='%23D7D7D7'/%3E%3C/svg%3E%0A")
-    no-repeat center;
+  background: url("data:image/svg+xml,%3Csvg width='930' height='1' viewBox='0 0 930 1' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 0.5H930' stroke='%23D7D7D7'/%3E%3C/svg%3E%0A") no-repeat center;
 }
+
 a {
   background: white;
   width: max-content;
@@ -70,6 +81,7 @@ a {
   padding-right: 0.6vw;
   align-items: center;
   font-size: 14px;
+
   &::before {
     content: "";
     display: block;
@@ -80,13 +92,16 @@ a {
     transform: rotate(45deg);
   }
 }
+
 .dark-mode a {
   color: #898989;
   background: #000;
+
   &::before {
     border: 1px solid #898989;
   }
 }
+
 span::before {
   content: "";
   display: block;
@@ -96,6 +111,7 @@ span::before {
   transform: rotate(45deg);
   background-color: white;
 }
+
 .no::before {
   content: "";
   display: block;

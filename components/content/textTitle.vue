@@ -19,6 +19,8 @@ defineProps(["t", "type"]);
 <style lang="scss" scoped>
 .text-title-color p {
   color: #3f3f3f !important;
+  z-index: -1;
+  position: relative;
 }
 .title {
   font-size: 20px !important;
