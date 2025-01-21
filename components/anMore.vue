@@ -38,7 +38,7 @@ const { x, y, style } = useDraggable(el, {
 <style lang="scss" scoped>
 main {
   position: fixed;
-  top: 50%;
+  top: 30% !important;
   background: #000;
   color: white;
   cursor: pointer;
@@ -55,9 +55,9 @@ a {
   color: white;
   margin: 1vh;
   font-size: small;
-  filter: brightness(4);
   opacity: 0.5;
   transition: filter 0.3s ease, opacity 0.3s ease;
+  filter: grayscale(100%);
   &:hover {
     filter: brightness(1);
     opacity: 1;
