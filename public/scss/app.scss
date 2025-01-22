@@ -131,7 +131,12 @@ html::-webkit-scrollbar-thumb {
   border-radius: 25px;
 }
 
-.markdown-content h1,h2,h3,h4,h5,h6 {
+.markdown-content h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: 0;
   color: rgba(0, 0, 0, 0.189);
   text-transform: uppercase;
@@ -169,10 +174,15 @@ html::-webkit-scrollbar-thumb {
     background: rgba(246, 246, 246, 0.0705882353);
   }
 }
-.dark-mode .markdown-content strong,b {
+.dark-mode .markdown-content strong,
+b {
   color: #fff;
 }
 .markdown-content {
+  strong,
+  b {
+    color: #000;
+  }
   /* pre, */
   /* code { */
   /*   width: 100%; */
