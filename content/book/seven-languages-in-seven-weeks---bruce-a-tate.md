@@ -127,6 +127,8 @@ puts g.greet
 
 ## Io:更好的理解 1
 
+:text-title{:t="IO：更好的理解语言" type="2"}
+
 接下来的就是 Io community, 并不是信息学奥林匹克竞赛 (英语：Olympiad in Informatics，简称：OI) 的那个 IO。而是 Io Programming Language：
 
 1. [Jeremy Tregunna](https://github.com/jeremytregunna): [ioLang](https://github.com/jeremytregunna) 的作者之一;Io 的目标是探索概念统一和动态语言，因此权衡往往倾向于简单性和灵活性而不是性能。
@@ -165,6 +167,8 @@ x = "Hello"; // 编译错误：类型不匹配
 
 ## Prolog:逻辑编程 1
 
+:text-title{:t="Prolog:逻辑编程" type="2"}
+
 再然后就是 [Prolog community(Programming in Logic community)](https://en.wikipedia.org/wiki/Prolog)，这是一种逻辑编程语言。这种类型的我还没有接触过，他更像是数学中的逻辑推理。他的基础是一阶逻辑(First-order logic) 其核心的写法和经常接触到的语言有很大的不同。他的语法例如：
 
 ```
@@ -184,6 +188,8 @@ grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
 ---
 
 ## Scala:解决对Java批评 1
+:text-title{:t="Scala：为了解决对 Java 的批评" type=2}
+
 
 接下来轮到了 Scala community 登场。该语言旨在解决 对 Java 的批评，一句话就以证明其含金量。他是一种 强大的静态类型高级通用编程语言，支持面向对象编程和函数式编程。
 
@@ -215,6 +221,8 @@ process(Card(name, digits, expires))
 ---
 
 ## Clojure:不变数据结构 1
+
+:text-title{:t="Clojure: 不可变数据结构" type="2"}
 
 还有 [Clojure community](https://en.wikipedia.org/wiki/Clojure)。Clojure 是 [lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)) 家族的一部分，或者说他是 Lisp 的现代化变体。他继承了 lisp 的特性。同时在并在并发和不变数据结构上做出了优化（Lisp 是可变的）
 
@@ -286,6 +294,9 @@ Lisp、Clojure、Scheme 等语言通过其 S-expression 和宏系统提供强大
 ---
 
 ## Haskell:纯函数语言 1
+
+:text-title{:t="Haskell: 纯函数语言" type="2"}
+
 
 还还还有 [Haskell community](https://en.wikipedia.org/wiki/Haskell)，Haskell 专为教学、研究和工业应用而设计。以逻辑学家[哈斯克尔・柯里 (Haskell Curry) ](https://en.wikipedia.org/wiki/Haskell_Curry) 的名字命名，他的 [Lambda 演算（Lambda Calculus）](https://en.wikipedia.org/wiki/Lambda_calculus) 是函数式编程的基础，以及他对 [Currying](https://en.wikipedia.org/wiki/Currying) 的贡献。
 
@@ -971,5 +982,20 @@ Ruby is fun.
 - Ruby 的线程模型一直被批评为不够现代化。Matz 自己也提到，如果重新设计 Ruby，他会选择更先进的并发模型（如 Actor 模式），来应对并发编程的复杂性。
 
 ---
+
+## 语言的基础概括 1
+
+:text-title{:t="语言的基础概括"}
+
+接触一个语言时，要了解该语言的 **核心编程模型、它如何处理数据类型？**。也就将一个语言概括了两个问题，即：
+
+1. 这门语言的设计理念是什么？是面向对象、函数式还是其他编程范式？
+2. Ruby 是动态类型语言，它如何简化类型的使用？它怎么就高效了？
+
+但是 2025 年这个较为浮躁的环境，我可能还会加一个：
+
+3. 这个语言的生态系统怎么样？能否轻松的实现我想要的功能？有没有比较活跃的库、插件维护社区？
+
+但是对于一些第三点不足的来说，可能是一个机会，但还是要看运气。万一人家自己都放弃不维护了，那作为生态开发者，又该如何应对？有时候这种事情是相互成就的。使用该语言的人数越多，那么生态就越完善，生态维护者也能享受到一定的开源声誉。
 
 ::
