@@ -1,6 +1,6 @@
 ---
 title: "About - ritsu"
-description: "Full-stack development, Security, and Design."
+description: "Computer networking, Security, and Design."
 head:
   meta:
     - name: "keywords"
@@ -17,7 +17,7 @@ head:
 ---
 time: "2015 - Now Shenzhen"
 name: "Jiangxue analysis"
-title: "UNION LAB - Software Engineer"
+title: "Software Engineering Intern"
 desc: "Fringe Science Research And Support"
 ---
 #about
@@ -30,6 +30,5 @@ Ars longa, vita brevis
 Therefore, all experiences before 2024 are flawed to some extent, and I plan to address these shortcomings as I continue to learn and grow.
 
 #end
-failure is not fatal: It is the courage to continue that counts.<br>
-失败无可厚非；重要的是拾起继续前行的勇气。
+
 ::

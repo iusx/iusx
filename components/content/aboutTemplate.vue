@@ -5,7 +5,7 @@ defineProps(["title", "desc", "time", "name"]);
 
 useSeoMeta({
   title: "About - ritsu",
-  description: "Full-stack development, Security, and Design Enthusiast.",
+  description: "Computer networking,Security, and Design Enthusiast.",
 });
 
 const contribution = [
