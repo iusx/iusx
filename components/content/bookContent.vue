@@ -54,6 +54,22 @@ onMounted(() => {
     console.error(`Failed to load image ${img.src}`);
   };
 });
+
+// 解析 plan 字符串并计算百分比
+const percentage = computed(() => {
+  // 将 plan 字符串分割成数组，并转换为数字
+  const [current, total] = props.plan.split(',').map(Number);
+
+  // 如果只有一个值或无法正确解析，则直接返回该值
+  if (isNaN(current) || isNaN(total) || total === 0) {
+    return props.plan;
+  }
+
+  // 计算百分比，四舍五入到最接近的整数
+  const percent = ((current / total) * 100).toFixed(0);
+
+  return percent;
+});
 </script>
 
 <template>
@@ -64,7 +80,7 @@ onMounted(() => {
         <img v-else :src="'/img/book/' + props.img" alt="book-home" />
         <div class="book-info-author">
           <p>By {{ by }}</p>
-          <span>be reading {{ plan }}%</span>
+          <span>be reading {{ percentage }}%</span>
         </div>
       </div>
       <div class="title">

@@ -3,7 +3,7 @@
 "director": "James Forshaw"
 "time": "2024"
 img: "01/1.png"
-plan: "1"
+plan: "100,100"
 ---
 
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}

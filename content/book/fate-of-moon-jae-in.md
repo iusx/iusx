@@ -3,10 +3,11 @@
 "director": "문재인"
 "time": "2024"
 img: "04/4.png"
+plan: "100,100"
 ---
 
 
-::book-content{:title="title" :img="img" :by="director" :plan="100"}
+::book-content{:title="title" :img="img" :by="director" :plan="plan"}
 
 # 理念 1
 

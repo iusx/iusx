@@ -3,7 +3,7 @@
 "director": "R/N"
 "time": "2024.10.11"
 img: "06/1.png"
-plan: "01"
+plan: "1,100"
 ---
 
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}

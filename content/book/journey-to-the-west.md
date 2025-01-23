@@ -3,9 +3,10 @@
 "director": "吴承恩"
 "time": "2025"
 img: "07/1.png"
+plan: "30,323"
 ---
 
-::book-content{:title="title" :img="img" :by="director" :plan="100"}
+::book-content{:title="title" :img="img" :by="director" :plan="plan"}
 
 # 四大名著 1
 
