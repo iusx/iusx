@@ -84,6 +84,8 @@ This book is dedicated with love to Lynda Lyle Tate, 1936–2010.
 
 :text-title{:t="作者的致谢"}
 
+## Ruby:简洁，灵活，面向对象 1
+
 在致谢阶段，作者展示出了这本书的含金量，甚至比开篇那几位挂名推荐的还重量级。首先映入眼帘的是 Ruby community：
 
 ::text-tip
@@ -123,6 +125,8 @@ puts g.greet
 
 ---
 
+## Io:更好的理解 1
+
 接下来的就是 Io community, 并不是信息学奥林匹克竞赛 (英语：Olympiad in Informatics，简称：OI) 的那个 IO。而是 Io Programming Language：
 
 1. [Jeremy Tregunna](https://github.com/jeremytregunna): [ioLang](https://github.com/jeremytregunna) 的作者之一;Io 的目标是探索概念统一和动态语言，因此权衡往往倾向于简单性和灵活性而不是性能。
@@ -159,6 +163,8 @@ x = "Hello"; // 编译错误：类型不匹配
 
 ---
 
+## Prolog:逻辑编程 1
+
 再然后就是 [Prolog community(Programming in Logic community)](https://en.wikipedia.org/wiki/Prolog)，这是一种逻辑编程语言。这种类型的我还没有接触过，他更像是数学中的逻辑推理。他的基础是一阶逻辑(First-order logic) 其核心的写法和经常接触到的语言有很大的不同。他的语法例如：
 
 ```
@@ -176,6 +182,8 @@ grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
 
 
 ---
+
+## Scala:解决对Java批评 1
 
 接下来轮到了 Scala community 登场。该语言旨在解决 对 Java 的批评，一句话就以证明其含金量。他是一种 强大的静态类型高级通用编程语言，支持面向对象编程和函数式编程。
 
@@ -205,6 +213,8 @@ process(Card(name, digits, expires))
 2. [Martin Odersky](https://en.wikipedia.org/wiki/Martin_Odersky): 他设计了 Scala。
 
 ---
+
+## Clojure:不变数据结构 1
 
 还有 [Clojure community](https://en.wikipedia.org/wiki/Clojure)。Clojure 是 [lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)) 家族的一部分，或者说他是 Lisp 的现代化变体。他继承了 lisp 的特性。同时在并在并发和不变数据结构上做出了优化（Lisp 是可变的）
 
@@ -275,6 +285,8 @@ Lisp、Clojure、Scheme 等语言通过其 S-expression 和宏系统提供强大
 
 ---
 
+## Haskell:纯函数语言 1
+
 还还还有 [Haskell community](https://en.wikipedia.org/wiki/Haskell)，Haskell 专为教学、研究和工业应用而设计。以逻辑学家[哈斯克尔・柯里 (Haskell Curry) ](https://en.wikipedia.org/wiki/Haskell_Curry) 的名字命名，他的 [Lambda 演算（Lambda Calculus）](https://en.wikipedia.org/wiki/Lambda_calculus) 是函数式编程的基础，以及他对 [Currying](https://en.wikipedia.org/wiki/Currying) 的贡献。
 
 	•	在 Haskell 诞生之前，函数式编程语言如 Lisp、ML 等已经存在，但它们没有完全基于纯函数式的理念。
@@ -309,6 +321,7 @@ def increment():
 ---
 
 # 前言 3
+## 学习的快乐 1
 
 :text-title{:t="前言"}
 
@@ -445,6 +458,7 @@ ming is all about.
 
 ---
 
+## 我那一事无成且一直在学习的一生 2
 :text-title{:t="我那一事无成且一直在学习的一生"}
 
 让我意外的是，这本书的前言竟然不是作者自己写的。而是 Erlang 的创建者 Joe Armstrong。我认为结尾处是比较具有讽刺意味的，如果一直学习，那么就会感觉自己超级菜，从而缺少了勇气去创建、编写一个项目，甚至是与人分享的喜悦。但在 2022 年，这个现象可以解决了，因为 ChatGPT 出来了。
@@ -496,6 +510,7 @@ Joe Armstrong, creator of Erlang<br> 2 March 2010 <br>Stockholm
 学习第一种语言，可能是为了生活。但如果学习第二个语言，那大概是想扩充下自己或者为了职业道路更加宽阔。人类对于求知的需求是刻在其基因的，编程语言亦是如此。这本书所想传达的，并不是让你照着敲击 Code，而是思考其逻辑思维。
 
 
+## 疯狂的想法 1
 :text-title{:t="1.1 疯狂的想法" :type="2"}
 
 <br/>
@@ -528,6 +543,7 @@ guages, but you will know what each uniquely has to offer.
 
 ---
 
+## 为什么选择这些语言 1
 :text-title{:t="1.2 为什么选这几个语言？" :type="2"}
 
 书中选择的七种编程语言（Ruby、Io、Prolog、Scala、Erlang、Clojure、Haskell）以及每种语言的选择理由和独特价值。作者表示，这些语言未必是最流行或最实用的，但它们在类型系统、编程范式、并发性、元编程等方面具有独特的学习价值：
@@ -558,7 +574,7 @@ one is unique, with something important to teach you.
 
 ---
 
-
+## 出版社的背景 1
 :text-title{:t="2 谁该看这本书？" :type="2"}
 
 作者介绍了这家出版社，也就是 [Pragmatic Bookshelf](https://pragprog.com/) 这家出版社几乎技术性的书籍占比很多。毕竟名字直译过来就是:"实用书架"  这家出版社的创始人 David Thomas 曾经还写过一本书叫 ["The Pragmatic Programmer"](https://en.wikipedia.org/wiki/The_Pragmatic_Programmer) 直译过来就是：“务实的程序员”。并定义了务实的程序员具有以下品质：
