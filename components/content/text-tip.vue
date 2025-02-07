@@ -50,7 +50,9 @@ defineProps(["type"]);
 
 .big {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
   padding: 13px;
   font-style: oblique;
 
