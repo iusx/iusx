@@ -6,7 +6,7 @@
       <input v-model="foodName" type="text" id="foodName" placeholder="请输入食物名称" />
     </div>
     <div>
-      <label for="energyPer100g">每100克食物的能量 (kcal): </label>
+      <label for="energyPer100g">每100克食物的能量 (kJ): </label>
       <input v-model="energyPer100g" type="number" id="energyPer100g" />
     </div>
     <div>
@@ -14,7 +14,7 @@
       <input v-model="weight" type="number" id="weight" />
     </div>
     <button @click="calculateEnergy">计算能量 (kcal)</button>
-    <p v-if="energyResult">{{ foodName }} - 能量为: {{ energyResult }} kcal</p>
+    <p v-if="energyResult">{{ energyResult }}</p>
     <button @click="clearStorage">清除缓存</button>
 
     <h2>今日计算结果</h2>
@@ -31,10 +31,10 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 
-const colorMode = useColorMode()
+const colorMode = useColorMode();
 
 const foodName = ref(''); // 食物名称
-const energyPer100g = ref(500); // 默认每100克食物的能量为500kcal
+const energyPer100g = ref(870); // 默认每100克食物的能量为870kJ（约等于209.93kcal）
 const weight = ref(0);
 const energyResult = ref(null);
 const todayResults = ref([]); // 存储今日计算的结果
@@ -61,8 +61,10 @@ onMounted(() => {
 
 function calculateEnergy() {
   if (weight.value > 0 && energyPer100g.value > 0 && foodName.value.trim() !== '') {
-    const calculatedEnergy = (energyPer100g.value / 100) * weight.value;
-    const formattedResult = `${foodName.value} - 能量为: ${calculatedEnergy.toFixed(3)} kcal`;
+    // 计算能量并转换为kcal
+    const calculatedEnergyKj = (energyPer100g.value / 100) * weight.value;
+    const calculatedEnergyKcal = calculatedEnergyKj * 0.239; // 将kJ转换为kcal
+    const formattedResult = `${foodName.value} - 能量为: ${calculatedEnergyKcal.toFixed(3)} kcal`;
     energyResult.value = formattedResult;
 
     // 将结果、食物名称和每100克能量保存到本地存储
@@ -111,7 +113,7 @@ function clearStorage() {
   localStorage.removeItem('energyPer100g');
   energyResult.value = null;
   foodName.value = '';
-  energyPer100g.value = 500; // 重置默认值
+  energyPer100g.value = 870; // 重置默认值，870kJ 约等于 209.93kcal
 }
 
 function clearTodayResults() {
