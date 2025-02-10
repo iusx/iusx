@@ -1112,5 +1112,15 @@ If it looks like a duck, swims like a duck, and quacks like a duck, then it prob
 
 上面 code 中， `'100'` 是字符串，而 `100.0` 是浮点数，但在 ruby 运行时来看，100.0 是 100,‘100' 也是 100 所以这是鸭子类型的应用效果。
 
+:text-title{t="猴子补丁" type="2"}
+
+## 猴子补丁 1
+
+在 Ruby 中，开放类(Open classes) 被叫作[猴子补丁(Monkey Patch)](https://en.wikipedia.org/wiki/Monkey_patch#:~:text=In%20computer%20programming%2C%20monkey%20patching,altering%20the%20original%20source%20code.)。指的是通过动态修改现有的类或模块来增加、修改或替换它们的功能。这种做法使得原本不支持某些功能的类能够在运行时被修改，从而增加新的行为。
+
+虽然这种做法可以作为元编程的特性，但也有一些安全问题，演变成为了一种攻击手法。例如 [CVE-2024-21896](https://access.redhat.com/security/cve/CVE-2024-21896) 通过猴子补丁修改 Buffer 内部实现，导致路径遍历漏洞的问题。
+
+
 
 ::
+
