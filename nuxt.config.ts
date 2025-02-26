@@ -8,9 +8,15 @@ export default defineNuxtConfig({
     "nuxt-swiper",
     "@vueuse/nuxt",
     "@nuxtjs/color-mode",
-    "@nuxtjs/sitemap"
+    "@nuxtjs/sitemap",
   ],
   site: {
-    url: 'https://m.ritsu.jiangxue.org/',
-  }
+    url: "https://m.ritsu.jiangxue.org/",
+  },
+  content: {
+    markdown: {
+      remarkPlugins: ['remark-math'],
+      rehypePlugins: ["rehype-mathjax"],
+    },
+  },
 });

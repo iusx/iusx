@@ -1120,6 +1120,139 @@ If it looks like a duck, swims like a duck, and quacks like a duck, then it prob
 
 虽然这种做法可以作为元编程的特性，但也有一些安全问题，演变成为了一种攻击手法。例如 [CVE-2024-21896](https://access.redhat.com/security/cve/CVE-2024-21896) 通过猴子补丁修改 Buffer 内部实现，导致路径遍历漏洞的问题。
 
+---
+
+# Io Lang 1
+:text-title{:t="Io Lang"}
+
+第一次看到 IO 还有点意外，我联想到了 I/O、甚至是 CS 很火的信息学奥林匹克竞赛（英语：Olympiad in Informatics，简称：OI）后者让我有联想的是太多互联网很社会参加这个比赛了，看到初中高中的大放异彩很难不觉得自己是个废物的实事。这些大佬参加 IO 后还会去打 CTF，然后刷 hackthebox、以及各种靶场。当然像我这样的只能提交个签到题，虽然不知现在签到题难度如何。
+
+在我 15 岁的时候接触到了一点，做了个签到题没想到还会记录至今。[Real World CTF 2019 Quals](https://ctftime.org/team/87624)。没想到现在长亭已经给阿里收购了，不过长亭这个名字挺好听的，最近我还听到了一个名字叫「基调听云」也是很好听，一看就是注册资本没到 1000w 不给注册的那种存在。(有一说一长亭之前的官网有点 low，现在虽然慢慢变帅了，但是移动端有点小问题，不过不是我样的 loser 能评价的)
+
+我了解过 IO 的历史，根据维基百科的介绍：
+
+::text-tip
+该语言由 Steve Dekorte 于 2002 年创建，当时他试图用他的语言 Cel 来帮助朋友 Dru Nelson。他发现自己确实不太了解语言的工作原理，并开始编写一种小型语言来更好地理解问题。
+::
+
+看到这时我开始深深反思为什么我没有一个为了教会我语言而去编写一个语言的好朋友。如果要在线体验 Io lang 可以使用 [Tio.run](https://tio.run/) （看 Io lang 的 Twitter 发现的好用工具）
+
+---
+
+## 对象、原型和继承 2
+:text-title{:t="对象、原型和继承"}
+
+Io lang 可以更好的理解对象、原型以及继承，因为他是基于原型的面向对象语言:
+
+
+```
+   +----------------+                                   
+   |                |                                   
++->|     object     |                                   
+|  |                |                                   
+|  +----------------+                                   
+|                                                       
+|  +----------------+                                   
+|  |                |                                   
++->|    Vehicle     |                                   
+|  |     +----------+----------------------------------+
+|  +-----+Prototype: Object                            |
+|        +---------------------------------------------+
+|        |Description: Something to take you far away  |
+|        +---------------------------------------------+
+|                                                       
+|  +----------------+                                   
+|  |                |                                   
++->|      Car       |                                   
+|  |     +----------+----------------------------------+
+|  +-----+Prototype: Vehicle                           |
+|        +---------------------------------------------+
+|                                                       
+|  +----------------+                                   
+|  |                |                                   
++--|    Ferrari     |                                   
+   |     +----------+----------------------------------+
+   +-----+Prototype: Car                               |
+         +---------------------------------------------+
+
+
+// 创建一个基础原型对象 Object
+Object := Object clone
+
+// 创建 Vehicle 原型，继承自 Object
+Vehicle := Object clone
+
+// 给 Vehicle 添加一个描述属性
+Vehicle description := "Something to take you far away"
+
+// 创建 Car 原型，继承自 Vehicle
+Car := Vehicle clone
+
+// 给 Car 添加属性
+Car description := "A fast car"
+
+// 创建 Ferrari 原型，继承自 Car
+Ferrari := Car clone
+
+// 给 Ferrari 添加新的属性
+Ferrari description := "A Ferrari, a dream car"
+
+// 测试创建的对象
+
+// 访问 Ferrari 的描述属性，应该返回 Ferrari 的描述
+Ferrari description print  // 输出: A Ferrari, a dream car
+
+// 访问 Car 的描述属性，应该返回 Car 的描述
+Car description print      // 输出: A fast car
+
+// 访问 Vehicle 的描述属性，应该返回 Vehicle 的描述
+Vehicle description print  // 输出: Something to take you far away
+```
+
+这张图表示了对象的构成，描述一个对象，也就是面向对象（当然我是从书上偷的，因为我觉得这张图确实很简洁明了。）说实话我并不是很喜欢这个写法，太多继承了。
+
+---
+
+## 方法 1
+:text-title{:t="方法和块"}
+
+在 Io lang 中，方法也是对象，不过给出了更符合的类型，即 Block：
+
+```
+method() type print
+==> Block
+```
+
+### 函数 1
+
+ | 编程语言    | 方法是否为对象         | 说明                                                       |
+|-------------|------------------------|------------------------------------------------------------|
+| **Io**      | 是                     | 在 Io 中，方法是对象，可以像其他对象一样操作、赋值、传递。 |
+| **JavaScript** | 是                     | JavaScript 中的函数本质上是对象，可以作为参数传递、存储。 |
+| **Python**  | 是                     | Python 中的函数是对象，可以像其他对象一样操作、传递。    |
+| **Ruby**    | 否（但支持块作为对象）  | Ruby 中方法本身不是对象，但可以使用块（block）传递和调用。 |
+| **Java**    | 否                     | Java 中方法不是对象，方法是属于类的。可以使用 Lambda 表达式作为方法的引用，但这些并非对象。 |
+| **C#**      | 否（但支持委托作为对象）| C# 中方法不是对象，但可以使用委托（Delegate）作为方法引用传递和存储。 |
+
+我相信看到这肯定会有疑问，函数和数学中的函数有那些共同的作用？比如数学中的函数 $$ f(x) = x^2 $$ 这个函数我们可以通过 javascript 中的 `function` 即函数理解：
+
+```
+function add(x, y) {
+    return x + y;
+}
+
+let result = add(2, 3);  // result = 5
+```
+
+函数是一个特别重要的概念，特别是在数学领域。在普林斯顿微积分读本中，说明了函数在微积分的重要性：
+
+::text-tip{type="big"}
+不借助函数却想去做微积分，这无疑会是你所能做的最无意义的事。<br>
+如果说微积分也有营养成分表，那么函数肯定会排在最前面。
+::
+
+有一说一我始终没有接触到应用到微积分的层次，但我会慢慢往这方面发展。
+
 
 
 ::
