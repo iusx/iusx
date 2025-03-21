@@ -1211,6 +1211,41 @@ Vehicle description print  // 输出: Something to take you far away
 
 这张图表示了对象的构成，描述一个对象，也就是面向对象（当然我是从书上偷的，因为我觉得这张图确实很简洁明了。）说实话我并不是很喜欢这个写法，太多继承了。
 
+如果是原型继承（Prototype Inheritance）的语言，他们的特性之一就是 **动态修改**:
+
+```
+io lang
+---
+duck := Object clone
+duck name := "Duck"
+duck speak := method("quack" println)
+
+# 动态修改 slot
+duck walk := method("waddle" println)
+duck speak  # 输出：quack
+duck walk   # 输出：waddle
+
+javascript
+---
+
+// 创建一个对象
+const duck = {
+  name: "Duck",
+  speak: function () {
+    console.log("quack");
+  }
+};
+
+// 动态添加或修改方法
+duck.walk = function () {
+  console.log("waddle");
+};
+
+// 调用方法
+duck.speak(); // 输出：quack
+duck.walk();  // 输出：waddle
+```
+
 ---
 
 ## 方法 1
@@ -1293,6 +1328,139 @@ let result = add(2, 3);  // result = 5
 | **几乎一切都是函数** | Haskell、JavaScript | 代码执行依赖函数，控制语句、计算等都是函数操作 |
 
 
+---
+
+### 反射机制 2
+:text-title{:t="反射机制"}
+
+我一开始看到 `slot` 还以为是 vue 中的 `<slot>` 但他们其实是两个概念。但都有一个共同的特点即 **灵活性、动态性、扩展性**,它们都体现了“灵活性”和“动态化设计”的编程哲学：
+
+1. Io 中的 Slot 更适合描述为一个“动态对象的核心特性”，与属性、方法、反射、元编程相关。
+2. Vue 中的 Slot 则是一个“组件内容占位机制”，专注于解决组件复用和模板动态化的问题。
+
+
+```
+duck := Object clone
+duck name := "Duck"
+duck speak := method("quack" println)
+
+# 动态修改 slot
+duck walk := method("waddle" println)
+duck speak  # 输出：quack
+duck walk   # 输出：waddle
+```
+
+---
+
+## 领域特定语言 (DSL) 2
+:text-title{:t="时代的尘土"}
+
+我相信 IO Lang 在当时这些特性一定会受到很多人的喜爱（抛出那个作者和朋友之间的故事不谈）。但可惜是的 Io lang 目前貌似并不是特别的活跃，社区、生态都很小众。支持 IO Lang 特性的语言有很多，他们可能实现起来稍微或者说略微复杂，但他们的生态和社区可以弥补这一点。举个例子：
+
+如果你在面试的时候，说你熟练使用 Io lang，你的面试官可能并不知道 Io lang。<br>
+人家可能只知道 Java、PHP、C++、Python……这些主流的语言。
+
+目前。以我的知识储备来理解 DSL，更多的是处理特定格式的数据。以及多语言之间的配合，为某一个特定领域量身定制的语言，它的语法和功能紧密围绕该领域的需求。
+
+```
+iolang
+---
+
+# 创建一个新的对象 Builder，继承自 Object
+Builder := Object clone
+
+# 为 Builder 添加一个 `forward` 方法，用于捕获未定义的消息
+Builder forward := method(
+  # 打印开始标签，比如 `<ul>` 或 `<li>`，基于收到的消息名称
+  writeln("<", call message name, ">")
+
+  # 遍历消息的所有参数
+  call message arguments foreach(
+    arg,  # 当前遍历到的参数
+    # 对参数进行处理，将它解析为内容
+    content := self doMessage(arg);
+
+    # 如果参数类型是字符串（Sequence），直接打印内容
+    if(content type == "Sequence", writeln(content))
+  )
+
+  # 打印结束标签，比如 `</ul>` 或 `</li>`
+  writeln("</", call message name, ">")
+)
+
+# 使用 Builder 创建一个 HTML 结构
+Builder ul(  # `<ul>` 标签
+  li("Io"),           # `<li>Io</li>`
+  li("Lua"),          # `<li>Lua</li>`
+  li("JavaScript")    # `<li>JavaScript</li>`
+)
+
+python
+---
+
+class Builder:
+    # 动态捕获未定义的方法
+    def __getattr__(self, tag):
+        def handler(*args):
+            # 开始标签
+            html = [f"<{tag}>"]
+            
+            # 遍历方法的参数
+            for arg in args:
+                if isinstance(arg, str):
+                    html.append(arg)  # 如果是字符串，直接添加内容
+                elif callable(arg):
+                    html.append(arg())  # 如果是嵌套标签，递归调用
+            
+            # 结束标签
+            html.append(f"</{tag}>")
+            return "".join(html)  # 返回完整 HTML
+        return handler
+
+
+# 创建 Builder 实例
+builder = Builder()
+
+# 使用 DSL 构建 HTML
+html = builder.ul(
+    builder.li("Io"),
+    builder.li("Lua"),
+    builder.li("JavaScript")
+)
+
+# 打印生成的 HTML
+print(html)
+```
+
+---
+
+## 并发 1
+
+| **特性**          | **描述**                                                                                                  |
+|--------------------|----------------------------------------------------------------------------------------------------------|
+| **协程（Coroutines）** | - 提供主动暂停与恢复的机制，类似拥有多个入口和出口的函数。<br>- 使用 `yield` 主动让出执行权以实现协作式多任务。         |
+| **Actor 模型**      | - 每个对象通过异步消息 (`@@`) 转变为 Actor。<br>- Actor 独立管理状态，通过队列通信，避免竞争条件（Race Condition）。 |
+| **Future（未来值）** | - 异步调用返回的结果对象，允许程序继续执行，结果可用时阻塞获取。<br>- 支持自动死锁检测，适合复杂并发场景。                |
+
+| **Io 的并发优势**       | **描述**                                                                                               |
+|-------------------------|-------------------------------------------------------------------------------------------------------|
+| **主动式多任务**         | - 与 Java/C 的抢占式不同，协程让程序在合理点主动暂停，减少资源竞争和调试难度。                                     |
+| **线程安全性**           | - Actor 模型通过受控队列管理状态，避免线程直接修改彼此状态的问题，消除了竞争条件的风险。                                |
+| **灵活性与易用性**       | - `@@` 语法简单易用，能快速将对象转变为 Actor，同时内置现代并发模型（协程、Actor、Future）。                     |
+| **性能优化**            | - 即使单线程性能一般，Io 的并发机制让多线程任务更易编写，并提供更高的执行效率，适合高并发需求的程序设计。                 |
+
+| **具体实现方式**                    | **代码示例**                                                                                 |
+|------------------------------------|---------------------------------------------------------------------------------------------|
+| **协程**                           | ```io<br>vizzini talk := method(<br>"message" println; yield)<br>vizzini @@talk```            |
+| **Actor 模型**                     | ```io<br>slower start := method(wait(2); println("slow"))<br>slower @@start```               |
+| **Future（未来值）**               | ```io<br>futureResult := URL with("http://google.com/") @fetch```                            |
+
+| **为什么 Io 的并发厉害**             | **描述**                                                                                     |
+|------------------------------------|---------------------------------------------------------------------------------------------|
+| **现代模型**                       | - 协程、Actor 和 Future 等现代并发技术内置，减少程序设计复杂性。                                         |
+| **更易测试与调试**                 | - 主动式多任务避免了抢占式多线程的不可预测性，程序行为更可预测。                                            |
+| **灵活且强大**                     | - 支持动态修改对象行为，甚至自定义语法，同时提供线程安全的并发模型。                                         |
+| **跨语言启发**                     | - Io 的 Actor 模型在 Scala、Erlang 等语言中有广泛应用，其并发设计影响深远。                                   |
 ::
 
 
