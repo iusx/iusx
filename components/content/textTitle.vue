@@ -17,18 +17,31 @@ defineProps(["t", "type"]);
 </template>
 
 <style lang="scss" scoped>
+main:hover {
+  border-left: 10px solid #00dd82;
+  cursor: pointer;
+  padding-left: 30px;
+}
+
+main {
+  transition: padding-left 0.3s ease, border-left 0.3s ease;
+}
+
 .text-title-color p {
   color: #3f3f3f !important;
   z-index: -1;
   position: relative;
 }
+
 .title {
   font-size: 20px !important;
 }
+
 .h2 {
   font-size: 17px;
   opacity: 0.8;
 }
+
 .dark-mode .text-title-color p {
   color: white !important;
 }

@@ -174,10 +174,14 @@ h6 {
     background: rgba(246, 246, 246, 0.0705882353);
   }
 }
-.dark-mode .markdown-content strong,
-b {
-  color: #fff !important;
+
+@media (prefers-color-scheme: dark) {
+  .markdown-content strong,
+  b {
+    color: #fff !important;
+  }
 }
+
 .markdown-content {
   strong,
   b {
