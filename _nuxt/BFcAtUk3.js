@@ -1,1 +1,0 @@
-import{_ as o}from"./CIylNvPi.js";import{o as r,q as t,B as s}from"./CZxr-oIr.js";const a={};function n(e,c){return r(),t("thead",null,[s(e.$slots,"default")])}const _=o(a,[["render",n]]);export{_ as default};
