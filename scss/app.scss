@@ -180,9 +180,15 @@ h6 {
   b {
     color: #fff !important;
   }
+  .markdown-content pre {
+    border: 1px solid #444444 !important; 
+  }
 }
 
 .markdown-content {
+  width: 100%;
+  max-width: 100%;
+  display: block;
   strong,
   b {
     color: #000;
@@ -208,31 +214,27 @@ h6 {
   strong {
     color: #000;
   }
+
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
   pre,
   code {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     display: block;
-    box-sizing: border-box;
-    font-size: calc(0.8vw);
-    @media (max-width: 800px) {
-      font-size: calc(1.3vw);
-    }
-  }
-
-  pre {
     overflow: auto;
-    max-width: 100%;
-
-    code {
-      white-space: pre-wrap;
-      overflow-wrap: break-word;
-    }
+    padding: 1em;
+    margin: 0.5em 0;
+    font-family: "Courier New", Courier, monospace;
+    line-height: 1.5;
+    border: 1px solid #cdcdcd;
+    word-wrap: break-word;
   }
+
   code {
     color: #1e6eb2;
     display: contents;
@@ -242,11 +244,11 @@ h6 {
 }
 
 .markdown-content pre code {
-  color: #bbbbbb;
+  color: #000000;
 }
 
 .dark-mode .markdown-content pre code {
-  color: #404040;
+  color: #a0a0a0;
 }
 
 .markdown-content ol {
