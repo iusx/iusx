@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Tue, 25 Mar 2025 14:20:28 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 26 Mar 2025 13:32:52 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -27,7 +27,7 @@
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/fate-of-moon-jae-in</guid>
         </item>
         <item>
-            <title><![CDATA[第九艺术]]></title>
+            <title><![CDATA[游戏]]></title>
             <link>m.ritsu.jiangxue.org//book/game-life</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/game-life</guid>
         </item>
