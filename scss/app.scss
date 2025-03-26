@@ -193,23 +193,6 @@ h6 {
   b {
     color: #000;
   }
-  /* pre, */
-  /* code { */
-  /*   width: 100%; */
-  /*   overflow: hidden; */
-  /*   white-space: nowrap; */
-  /*   text-overflow: ellipsis; */
-  /*   display: block; */
-  /* } */
-  /**/
-  /* pre { */
-  /*   overflow: auto; */
-  /**/
-  /*   code { */
-  /*     white-space: pre-wrap; */
-  /*     overflow-wrap: break-word; */
-  /*   } */
-  /* } */
 
   strong {
     color: #000;
@@ -229,7 +212,7 @@ h6 {
     overflow: auto;
     padding: 1em;
     margin: 0.5em 0;
-    font-family: "Courier New", Courier, monospace;
+    font-style: italic;
     line-height: 1.5;
     border: 1px solid #cdcdcd;
     word-wrap: break-word;
