@@ -39,10 +39,8 @@ const sortedData = computed(() => equalQuerySec.value);
           <swiper-slide v-for="sec in sortedData" class="content-box">
             <nuxt-link style="display: contents" :to="sec._path">
               <div class="content-time" style="height: 100%;">
-                <img
-                  :src="'/img/page/' + sec.platform + '.png'"
-                  alt="report-platform"
-                /><span>{{ sec.time.slice(0, 4) }}</span>
+                <img :src="'/img/page/' + sec.platform + '.png'" alt="report-platform" /><span>{{ sec.time.slice(0, 4)
+                  }}</span>
               </div>
               <p class="box-title">{{ sec.title }}</p>
             </nuxt-link>
@@ -61,23 +59,28 @@ a {
 main {
   margin-left: 3vw !important;
 }
+
 .dark-mode {
   .content-layout {
     .content-box {
       border: 2px solid rgb(31, 31, 31) !important;
+
       .content-time {
         span {
           color: #1b1b1b;
         }
       }
+
       .box-title {
         color: #5d5d5d;
       }
     }
   }
+
   img {
-    filter: brightness(5);
+    filter: brightness(225);
   }
+
   .main {
     .main-title {
       span {
@@ -86,10 +89,12 @@ main {
     }
   }
 }
+
 .content-layout {
   .content-box-layout {
     display: flex;
   }
+
   .content-box {
     height: 300px;
     width: 300px !important;
@@ -104,30 +109,36 @@ main {
       background-color 0.3s ease,
       color 0.3s ease,
       box-shadow 0.3s ease;
+
     &:hover {
       background: #181818;
       color: white;
       box-shadow: 0px 4px 64.5px 11px rgba(0, 0, 0, 0.26);
+
       .content-time {
         span {
           color: #3a3a3a;
         }
       }
-      .box-title {
-      }
+
+      .box-title {}
+
       img {
         filter: brightness(14);
       }
+
       .box-title {
         color: #fff;
       }
     }
+
     .content-time {
       display: flex;
       flex-direction: row;
       padding: 25px;
 
       justify-content: space-between;
+
       span {
         transition: color 0.3s ease;
         writing-mode: tb-rl;
@@ -135,10 +146,12 @@ main {
         font-size: 3vh;
       }
     }
+
     img {
       width: 200px;
       height: 20px;
     }
+
     .box-title {
       transition: border-bottom 0.3s ease;
       color: #000;
@@ -150,6 +163,7 @@ main {
     }
   }
 }
+
 main {
   display: flex;
   padding: 0;
@@ -157,6 +171,7 @@ main {
   height: 100%;
   width: 100%;
   position: fixed;
+
   .title-desc {
     color: #b5b5b5;
     margin-top: 40px;
@@ -164,16 +179,19 @@ main {
     font-size: 14px;
     width: 80vw;
   }
+
   @media (max-width: 768px) {
     padding-left: 5%;
     padding-right: 5%;
   }
 }
+
 .main {
   width: inherit;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+
   .main-title {
     p {
       font-size: 60px;
@@ -183,6 +201,7 @@ main {
       margin: 0;
       position: relative;
     }
+
     span {
       color: transparent;
       -webkit-text-stroke: 1px #dfdfdf;
@@ -191,15 +210,18 @@ main {
       top: 0;
       z-index: 0;
     }
+
     .red {
       position: absolute;
       right: 3vw;
     }
   }
 }
+
 .title {
   width: 40vw !important;
 }
+
 .left {
   text-transform: uppercase;
   padding: 20px;
@@ -211,6 +233,7 @@ main {
   background: #f5f5f5;
   height: 100vh;
   letter-spacing: 3.28px;
+
   @media (max-width: 768px) {
     display: none;
   }
