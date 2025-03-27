@@ -1,1 +1,0 @@
-import{_ as o}from"./a_Of4VXl.js";import{o as r,q as t,B as s}from"./CZxr-oIr.js";const a={};function n(e,c){return r(),t("table",null,[s(e.$slots,"default")])}const _=o(a,[["render",n]]);export{_ as default};
