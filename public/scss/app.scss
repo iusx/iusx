@@ -268,6 +268,16 @@ h6 {
   }
 }
 
+.markdown-content {
+  p,table,span,li,b,div,pre,ol {
+
+    border-left: 1px solid transparent;
+    &:hover {
+      border-left: 1px solid #00dd82 !important;
+    }
+  }
+}
+
 .dark-mode .markdown-content h1 {
   color: rgba(255, 255, 255, 0.588);
 }
