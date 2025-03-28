@@ -1,3 +1,6 @@
+body {
+  overflow: hidden;
+}
 .main-con {
   li {
     color: #888888;
@@ -181,7 +184,10 @@ h6 {
     color: #fff !important;
   }
   .markdown-content pre {
-    border: 1px solid #444444 !important; 
+    border: 1px solid #444444 !important;
+  }
+  .markdown-content .MathJax {
+    color: #fff;
   }
 }
 
@@ -214,10 +220,24 @@ h6 {
     margin: 0.5em 0;
     font-style: italic;
     line-height: 1.5;
-    border: 1px solid #cdcdcd;
+    border: 1px solid #cdcdcd !important;
     word-wrap: break-word;
   }
+  pre::-webkit-scrollbar {
+    height: 10px;
+  }
 
+  pre::-webkit-scrollbar-track {
+    background: transition;
+  }
+
+  pre::-webkit-scrollbar-thumb {
+    background-color: #666;
+  }
+
+  pre::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+  }
   code {
     color: #1e6eb2;
     display: contents;
@@ -257,7 +277,6 @@ h6 {
   color: #888888;
   font-size: 15px;
   margin-block: 1vw;
-  text-align: justify;
 
   &:last-child {
     margin-bottom: 0vw;
@@ -269,12 +288,28 @@ h6 {
 }
 
 .markdown-content {
-  p,table,span,li,b,div,pre,ol,main {
-
+  p,
+  table,
+  span,
+  li,
+  b,
+  div,
+  pre,
+  ol,
+  main,
+  mjx-container {
     border-left: 1px solid transparent;
     &:hover {
       border-left: 1px solid #00dd82 !important;
     }
+  }
+
+  .MathJax {
+    display: inline-block;
+    white-space: normal !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: 100%;
   }
 }
 
