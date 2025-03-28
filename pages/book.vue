@@ -23,7 +23,6 @@ const sortedData = computed(() => equalQueryBook.value);
   <main>
     <div class="note-layout">
       <div class="note-des">
-        <a href="/"><img src="/icon/logo.svg" alt="logo" class="logo" /></a>
         <p class="title">
           the My note<br />
           Collector
@@ -118,7 +117,7 @@ main {
     margin-top: 10vw;
   }
   .title-hr {
-    background: #0054f8;
+    background: #00dd82;
     width: 300px;
     height: 3px;
     display: block;

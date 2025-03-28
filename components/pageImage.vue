@@ -97,7 +97,7 @@ a:hover .tips {
   right: 0;
   bottom: 0;
   font-size: 1vh;
-  background: blue;
+  background: #00dd82;
   padding: 10px;
   transition: opacity 0.3s ease;
 }

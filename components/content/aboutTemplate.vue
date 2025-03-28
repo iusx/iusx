@@ -399,7 +399,7 @@ const contribution = [
 
   .about {
     font-size: x-large;
-    color: blue !important;
+    color: #00dd82 !important;
     text-transform: uppercase;
 
     small {

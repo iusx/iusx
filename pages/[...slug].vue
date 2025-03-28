@@ -11,7 +11,7 @@ p a {
   transition: color 0.3s ease;
 
   &:hover {
-    color: blue;
+    color: #00dd82;
   }
 }
 </style>

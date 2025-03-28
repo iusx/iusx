@@ -40,8 +40,8 @@ onMounted(() => {
     .data(nodes)
     .enter()
     .append("circle")
-    .attr("r", 3)
-    .attr("fill", "blue");
+    .attr("r", 5)
+    .attr("fill", "#00dd82");
 
   simulation = d3
     .forceSimulation(nodes)
@@ -57,7 +57,7 @@ onMounted(() => {
     .on("tick", ticked);
 
   simulation.alphaDecay(0).restart();
-  simulation.alphaMin(0.001).restart();
+  simulation.alphaMin(0.0101).restart();
 
   link = svg
     .selectAll(".link")
