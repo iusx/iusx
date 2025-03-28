@@ -30,24 +30,26 @@ const sortedData = computed(() => equalQueryBook.value);
         <div class="title-hr"></div>
         <div class="title-desc-about">
           <p>
-          几年前，我对应用技术非常热衷。然而，现在我更希望将时间留给不那么容易会变的原理和生活，因此在这个页面不仅会有我对一本书的感悟，更有对电影、甚至是游戏、剧集的感受。
+            几年前，我对应用技术非常热衷。然而，现在我更希望将时间留给不那么容易会变的原理和生活，因此在这个页面不仅会有我对一本书的感悟，更有对电影、甚至是游戏、剧集的感受。
           </p>
           <div class="title-desc-tip">
-            <img src="/icon/info-tip.svg" />
             文章多有纰漏，仅代表个人在当时的主观感受，不代表其第三方立场。
           </div>
         </div>
       </div>
       <div class="note-book"><sk-book-img :sorted-data="sortedData" /></div>
     </div>
-  </main> </template>
+  </main>
+</template>
 
 <style lang="scss" scoped>
 @keyframes loading {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -58,6 +60,7 @@ const sortedData = computed(() => equalQueryBook.value);
   animation: loading 1.5s infinite;
   aspect-ratio: 54 / 71;
 }
+
 .dark-mode .no-img {
   background-color: rgb(29, 29, 29);
 }
@@ -66,26 +69,36 @@ const sortedData = computed(() => equalQueryBook.value);
   @media (max-width: 1440px) {
     transform: scale(1);
   }
+
   transform: scale(0.94);
 }
+
 .note-layout {
   display: flex;
   width: 85%;
   margin: 0 auto;
+
   @media (max-width: 1521px) {
     display: flex;
     width: 85%;
     margin: 0 auto;
     flex-direction: column;
     flex-wrap: nowrap;
+
+    .note-book {
+      margin-top: 70px;
+      justify-content: space-between !important;
+    }
   }
 }
+
 main {
   padding: 0;
   margin: 0;
   width: 100%;
   height: 100%;
 }
+
 .logo {
   width: 49px;
   padding-top: 1vw;
@@ -95,18 +108,16 @@ main {
 .dark-mode .title {
   color: white !important;
 }
+
 .note-des {
   flex: 1.5;
   position: sticky;
   top: 10px;
   height: 51vw;
   z-index: -30;
-  @media (max-width: 1668px) {
-    flex: 1.2;
-  }
-  @media (max-width: 1024px) {
-    margin-bottom: 10vw;
-  }
+
+
+
   .title {
     color: #000;
     font-size: 5vw;
@@ -116,28 +127,30 @@ main {
     margin-bottom: 4vh;
     margin-top: 10vw;
   }
+
   .title-hr {
     background: #00dd82;
     width: 300px;
     height: 3px;
     display: block;
   }
+
   .title-desc-about {
-    font-size: 0.8vw;
+    font-size: 15px;
     color: #c0c0c0;
     line-height: 1.5;
     text-align: justify;
     margin-top: 3vw;
-    @media (max-width: 1440px) {
-      font-size: 1.6vw !important;
-    } 
+
     .title-desc-tip {
-      margin-top: 2vw;
+      margin-top: 20px;
       display: flex;
+      align-items: center;
+
       img {
-        margin-right: 1vw;
+        margin-right: 5px;
       }
-      align-items: flex-start;
+
     }
   }
 }
@@ -150,13 +163,7 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-end;
-  @media (max-width: 1521px) {
-    display: flex;
-    width: 100%;
-    margin-top: 3vw;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+
 
   .note-book-box {
     width: 22vw;
@@ -165,12 +172,9 @@ main {
     cursor: pointer;
     color: white;
     border-radius: 5px;
-    @media (max-width: 1440px) {
-      width: 100vw;
-      margin-bottom: 3vw;
-      height: 40vh;
-    }
+
     background-size: 100%;
+
     .note-book-box-desc {
       opacity: 0;
       transition: opacity 0.3s ease-out;
@@ -179,18 +183,22 @@ main {
       flex-direction: column;
       padding-left: 1vw;
       padding-right: 1vw;
+
       @media (max-width: 1440px) {
         padding-left: 4vw;
         padding-right: 4vw;
       }
+
       justify-content: flex-end;
       border-radius: 5px;
       background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+
       span {
         font-weight: bold;
         text-transform: uppercase;
       }
     }
+
     &:hover {
       .note-book-box-desc {
         opacity: 1;

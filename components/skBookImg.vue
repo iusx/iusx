@@ -108,11 +108,6 @@ onMounted(() => {
   cursor: pointer;
   color: white;
   border-radius: 5px;
-  @media (max-width: 1440px) {
-    width: 100vw;
-    margin-bottom: 3vw;
-    height: 40vh;
-  }
   background-size: 100%;
   .note-book-box-desc {
     opacity: 0;
@@ -148,10 +143,10 @@ onMounted(() => {
   cursor: pointer;
   color: white;
   border-radius: 5px;
-  @media (max-width: 1440px) {
-    width: 100vw;
+  @media (max-width: 900px) {
+    width: 100%;
     margin-bottom: 3vw;
-    height: 100vw;
+    height: 557px;
   }
   background-size: 100%;
   .note-book-box-desc {
