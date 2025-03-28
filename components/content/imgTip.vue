@@ -33,8 +33,14 @@ main {
   margin-top: 15px;
   margin-bottom: 15px;
 
+  width: 100%;
+
   img {
-    width: 50%;
+    max-width: 50%;
+  }
+
+  p {
+    max-width: 50%;
   }
 }
 </style>

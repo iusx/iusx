@@ -297,6 +297,18 @@ const percentage = computed(() => {
   }
 }
 
+
+@-moz-document url-prefix() {
+  .book-info {
+    scrollbar-width: thin; // 或者使用 'auto' 或 'none'
+    scrollbar-color: rgba(0, 0, 0, 0.197) transparent;
+    // Dark mode for Firefox
+    .dark-mode & {
+      scrollbar-color: rgba(255, 255, 255, 0.238) transparent;
+    }
+  }
+}
+
 .main-con {
   margin-left: 25vw;
 

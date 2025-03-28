@@ -3,7 +3,7 @@
 "director": "Bruce A. Tate"
 "time": "2025.01.08"
 img: "08/1.png"
-plan: "109,323"
+plan: "120,323"
 ---
 
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}
@@ -1740,8 +1740,96 @@ factorial(5, Result).
 $$n! = n \times (n-1) \times (n-2) \times \dots \times 1$$
 ::
 
+在这个过程中，递归分为了 **向下递** 和 **向上归** 的两个阶段。
+
+```math
+\text{factorial}(n) =
+\begin{cases}
+1 & \text{if } n = 0 \\
+n \cdot \text{factorial}(n - 1) & \text{if } n > 0
+\end{cases}
+```
+
+这是函数逐步调用的展开过程, 最后通过 $$\text{factorial}(n) = n \cdot (n - 1) \cdot (n - 2) \cdot \dots \cdot 1$$ 从基准情况开始 **逐步向上计算结果，将子问题的解组合成最终解。** 他对应了 `Result is N * SubResult.` 这一部分，在 **结果返回时** 调用。**将子问题的结果（SubResult）与当前层的值（N）相乘，逐层合并结果。**
+
+
 之后，更多的是数据结构的范畴。通过递归和不同数据结构的搭配，以解决复杂的问题。这个过程称之为 **算法**，而数据结构的魅力在于，**组织和管理数据**。
 
-我打算看完这本书后，会看一些数据结构类的书籍。之前我认为数据结构就是存储、组织数据的方式。现在我觉得数据结构是语言的基础，和功能、性能息息相关，语言操控着数据结构的 **存储、修改、遍历、删除**，以实现各类效果和功能。
+我打算看完这本书后，会看一些数据结构类的书籍。之前我认为数据结构就是存储、组织数据的方式。现在我觉得数据结构是语言的基础，和功能、性能息息相关，语言操控着数据如何利用，例如 **存储、修改、遍历、删除**，以实现各类效果和功能。
 
+
+### 不仅是连接 2
+:text-title{:t="不仅是连接" type="2"}
+
+在我了解 `append` 的时候。我只是单纯的认为他就是普通的连接数据，比如连接数组之类的，然后连接起来输出、还可以拆分。感觉没什么特别重要的，很不解为什么作者将它加入到本章节中。
+
+```
+?-append([1, 2], [3, 4], What).
+---
+What = [1, 2, 3, 4].
+
+?-append(Part1, Part2, [1, 2, 3, 4]).
+---
+Part1 = [],
+Part2 = [1, 2, 3, 4] ;
+Part1 = [1],
+Part2 = [2, 3, 4] ;
+Part1 = [1, 2],
+Part2 = [3, 4] ;
+```
+
+后来，我可能觉得这是递归的经典应用之一。它展示了通过简单规则，递归地**将复杂问题分解成小问题的过程**, 例如可以应用于：
+
+- 分治法：将一个大问题拆分成多个小问题（例如合并排序）
+- 树和图的遍历：通过递归规则遍历复杂数据结构。
+
+### 数据结构不仅是结构 1
+:text-title{:t="数据结构不仅是数据结构" type="2"}
+
+在此之前，我一直认为数据结构仅仅是存储数据的一种方法。但之后和 [dragove](https://dragove.site/) 聊天后才意识到，数据的结构决定了如何 **操作数据** 以及 **使用数据的方式**，以及用什么样的写法，才能方便的操纵、使用这些数据。
+
+```
+class Cons {
+  constructor(h, t) {
+    this.h = h
+    this.t = t
+  }
+  toString() {
+    function iter(that) {
+      if (that.t == null) return that.h
+      return that.h + ", " + iter(that.t)
+    }
+    return "[" + iter(this) + "]"
+  }
+
+  // 通过递归的方式遍历链表，并将一个函数 f 应用到每一个元素上，生成一个新的链表。
+  map(f) {
+    if (this.t == null) return new Cons(f(this.h), null)
+    return new Cons(f(this.h), this.t.map(f))
+  }
+
+  //  通过循环遍历整个链表，直接修改每个元素。
+  // 展示了操作数据的不同策略：递归与迭代。
+  map2(f) {
+    let it = this
+    while (it != null) {
+      it.h = f(it.h)
+      it = it.t
+    }
+  }
+}
+
+const cons = (h, t) => new Cons(h, t)
+const list = (...args) => {
+  if (args.length == 0) return null
+  return cons(args[0], list(...args.slice(1)))
+}
+
+const c = list(2, 3, 4, 5, 6)
+console.log(list(2, 5, 8).map(x => x * 2).toString())
+c.map2(x => x + 8)
+console.log(c.toString())
+```
+
+在这几十行 code 中，不仅实现了 **链表** 结构，同时还定义了 `map` 和 `map2` 方法来操控这些数据。
 ::
