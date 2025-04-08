@@ -17,7 +17,6 @@ defineProps(["t", "type"]);
 </template>
 
 <style lang="scss" scoped>
-
 .text-title-color p {
   color: #3f3f3f !important;
   z-index: -1;
@@ -31,6 +30,7 @@ defineProps(["t", "type"]);
 .h2 {
   font-size: 17px;
   opacity: 0.8;
+  margin-top: 130px;
 }
 
 .dark-mode .text-title-color p {
