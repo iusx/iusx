@@ -12,6 +12,8 @@ plan: "0,71"
 
 起因是在 neovim 群中看到了群友的名字是 `panic!("⁧;("` 每次 @ 他的时候文字都会被 `""` 包裹起来。类似你看到的这个情况，这个问题不仅是在群组，就算在浏览器、终端环境下都是存在的。实际上我并没有将文字写在 `""` 中，而是默认这样的。
 
+不过 unicode 在日常生活中是经常应用的, 比如在 bilibili 就经常有用 Unicode 字符来弄一些标题，例如: 𝑾𝒆 𝑨𝒓𝒆 𝑳𝒐𝒔𝒆𝒓、𝓦𝓮 𝓐𝓻𝓮 𝓛𝓸𝓼𝓮𝓻 显得与众不同，有时候也会有歌名用 unicode 字符显得比较独特。这些都可以通过 [Unicode Text Converter](https://qaz.wtf/u/convert.cgi?text=We+Are+Loser) 来进行生成和转换。
+
 ---
 
 # Trojan Source 1
