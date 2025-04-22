@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 21 Apr 2025 02:24:21 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 22 Apr 2025 07:46:44 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -37,9 +37,9 @@
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/journey-to-the-west</guid>
         </item>
         <item>
-            <title><![CDATA[句子摘抄]]></title>
-            <link>m.ritsu.jiangxue.org//book/quotes</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/quotes</guid>
+            <title><![CDATA[快捷键备忘录]]></title>
+            <link>m.ritsu.jiangxue.org//book/key-note</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/key-note</guid>
         </item>
         <item>
             <title><![CDATA[Seven Languages in Seven Weeks]]></title>
