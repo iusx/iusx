@@ -19,10 +19,8 @@ time: "2015 - Now Shenzhen"
 name: "Jiangxue analysis"
 title: "Software Engineering Intern"
 desc: "Fringe Science Research And Support"
+about: "<p>My config</p><span>macOS system use neovim + kitty</span>"
 ---
-#about
-Tempus fugit,
-Ars longa, vita brevis
 
 #contributiondes
 \*I'm well aware that my understanding of design, development, and security is not yet sufficient.

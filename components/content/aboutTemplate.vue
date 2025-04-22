@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps } from "vue";
 const colorMode = useColorMode();
-defineProps(["title", "desc", "time", "name"]);
+defineProps(["title", "desc", "time", "name", "about"]);
 
 useSeoMeta({
   title: "About - ritsu",
@@ -177,7 +177,7 @@ const contribution = [
   },
 ];
 </script>
-
+desc-layout
 <template>
   <main class="about-page">
     <div class="hello">
@@ -197,7 +197,7 @@ const contribution = [
         </div>
         <div class="desc">
           <div class="desc-layout">
-            <slot name="about" />
+            <div v-html="about"></div>
           </div>
         </div>
       </div>
@@ -238,6 +238,19 @@ const contribution = [
 .about-page {
   a {
     text-decoration: none;
+  }
+
+  .desc-layout {
+
+    color: #cbcbcb;
+    font-size: 15px;
+
+    margin-top: 30px;
+
+    p {
+      margin: 0px;
+      margin-bottom: 0px;
+    }
   }
 
   .work {
@@ -389,9 +402,6 @@ const contribution = [
             column-count: 1;
           }
 
-          p {
-            margin-bottom: 30px;
-          }
         }
       }
     }
