@@ -22,5 +22,9 @@ plan: "100,100"
 | --- | --- |
 | Shift+D | 复制对象 |
 | F2 | 重命名 | 
+| Control/Ctrol + I | 遮罩反转 |
+| M | 遮罩 |
+| Control/Ctrol + Space | 全屏窗口 |
+| / | 单独显示当前 3D 资源 |
 
 ::
