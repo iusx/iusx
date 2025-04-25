@@ -38,13 +38,55 @@ end)
 
 ---
 
-## neovim 1
+# neovim 1
 :text-title{t="Neovim"}
 
 这里会记录我个性化自己 Neovim 的一些小笔记，虽然我的改动很小，比如改成自己喜欢的主题颜色之类的。
 
-# highlight 2
+## highlight 2
 :text-title{t=":highlight" type="2"}
 
 虽然 Neovim 本身的配色方案很少，但加入了一些插件，配色方案很容易到 99999, 因此就需要 [highlight](https://neovim.io/doc/user/syntax.html#_13.-highlight-command) 来查询一些颜色。之后我会用 ` vim.api.nvim_set_hl` 无情的将他替换掉。(因为我使用的是 [nvim-noirbuddy](https://github.com/jesseleite/nvim-noirbuddy) 也就是极简颜色，就一两个颜色，所以需要一个一个改（相当于自己做了个配色主题？)
+
+::img-tip
+---
+url: 12/1.png
+text: 由于我是双向识别障碍+色盲，所以在颜色很多的地方会感觉大脑凌乱，刚好 nvim-noirbuddy 这种单色的主题可以让我看清楚字。
+---
+::
+
+```
+local noiropts = {
+  preset = "minimal",
+  colors = {
+    primary = "#00D9BD",
+    background = "#000000",
+  },
+}
+
+return {
+  {
+    "jesseleite/nvim-noirbuddy",
+    dependencies = {
+      "tjdevries/colorbuddy.nvim",
+    },
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("noirbuddy").setup(noiropts)
+    end,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = function()
+        require("noirbuddy").setup(noiropts)
+        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#00D9BD", bold = true })
+        vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#323232", bg = "NONE" })
+     end,
+    },
+  },
+}
+```
+
 ::
