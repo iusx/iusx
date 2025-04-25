@@ -1,1 +1,0 @@
-import{_ as e}from"./HIE9jqNJ.js";import{q as t,o}from"./CZxr-oIr.js";const r={},c={href:"/test.jpg.zip"};function s(n,_){return o(),t("a",c,"Download")}const p=e(r,[["render",s]]);export{p as default};
