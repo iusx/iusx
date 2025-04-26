@@ -177,7 +177,7 @@ const contribution = [
   },
 ];
 </script>
-desc-layout
+
 <template>
   <main class="about-page">
     <div class="hello">
@@ -324,6 +324,7 @@ desc-layout
         font-size: initial;
         font-weight: bold;
       }
+
     }
   }
 
@@ -397,6 +398,10 @@ desc-layout
 
         .desc-layout {
           text-align: justify;
+
+          p:nth-child(n+2) {
+            margin-top: 20px;
+          }
 
           @media (max-width: 1024px) {
             column-count: 1;

@@ -18,8 +18,8 @@ head:
 time: "2015 - Now Shenzhen"
 name: "Jiangxue analysis"
 title: "Software Engineering Intern"
-desc: "Fringe Science Research And Support"
-about: "<p>My config</p><span>macOS system use neovim + kitty</span>"
+desc: "We are losers, for the next"
+about: "<p>My config</p><span>macOS system use neovim + kitty</span><p>Educational Background</p><span>Technical Secondary School (Equivalent to High School Diploma)</span>"
 ---
 
 #contributiondes
