@@ -344,7 +344,7 @@ const contribution = [
         padding-bottom: 1rem;
         text-align: justify;
         margin: 0;
-        font-size: 1.45vh;
+        font-size: 14px;
       }
     }
   }

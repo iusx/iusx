@@ -65,7 +65,7 @@ onMounted(() => {
 }
 .page-tips-main {
   color: #c0c0c0;
-  font-size: 1vh;
+  font-size: 13px;
   display: flex;
   width: 100%;
   flex-direction: row-reverse;
