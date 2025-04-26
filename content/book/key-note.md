@@ -27,5 +27,7 @@ plan: "100,100"
 | Control/Ctrol + Space | 全屏窗口 |
 | / | 单独显示当前 3D 资源 |
 | N | 集合节点命名 tag |
+| Control/Ctrol + B | 倒角 |
+| M | 将选中的对象移动到某个集合中 |
 
 ::

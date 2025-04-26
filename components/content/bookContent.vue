@@ -182,7 +182,7 @@ const percentage = computed(() => {
     display: block;
     display: block;
     position: fixed;
-    background: #002eff;
+    background: #00dd82;
     padding: 8px;
     font-size: 1.3vh;
     font-weight: bold;
