@@ -18,16 +18,21 @@ plan: "100,100"
 
 正如你所见这是建模工具，是不是很意外我其实也会建模，有不少项目需要 3D 的设计素材。包括在一些新兴前端项目中，可能会使用类似 Three.js 这样的技术栈，都是需要 blender 来进行配合的，虽然我一般都是 blender to spline。
 
-| KEY | INFO |
-| --- | --- |
-| Shift+D | 复制对象 |
-| F2 | 重命名 | 
-| Control/Ctrol + I | 遮罩反转 |
-| M | 遮罩 |
-| Control/Ctrol + Space | 全屏窗口 |
-| / | 单独显示当前 3D 资源 |
-| N | 集合节点命名 tag |
-| Control/Ctrol + B | 倒角 |
-| M | 将选中的对象移动到某个集合中 |
+| KEY | INFO | EXP |
+| --- | --- | --- |
+| Shift+D | 复制对象 | |
+| F2 | 重命名 |  |
+| Control/Ctrol + I | 遮罩反转 | |
+| M | 遮罩 | |
+| Control/Ctrol + Space | 全屏窗口 | |
+| / | 单独显示当前 3D 资源 | |
+| N | 集合节点命名 tag | |
+| Control/Ctrol + B | 倒角 | |
+| M | 将选中的对象移动到某个集合中 | |
+| Command+L | 关联/传递数据 | 将颜色关联到五个对象中 |
+| Command+a | 应用 | 如果改变了大小没有应用缩放，那么可能在 Shading 中无法显示 |
+| / | 单独查看 | 如果全选可以全部查看 |
+| N | 显示、隐藏侧栏 | |
+
 
 ::

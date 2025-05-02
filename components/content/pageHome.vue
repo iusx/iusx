@@ -91,10 +91,8 @@ const links = ref([
     <div class="nav">
       <div class="title">
         <div class="title-text">
-          <an-title
-            title="Computer networking, 
- <br />Security, and Design Enthusiast."
-          />
+          <an-title title="Computer networking, 
+ <br />Security, and Design Enthusiast." />
         </div>
         <div class="link">
           <span v-for="item in links" :key="item.href">
@@ -107,6 +105,7 @@ const links = ref([
         <div class="copy-link">
           <a href="/about">about</a>
           <a href="/link">Link</a>
+          <a href="/tools/plan">Plan</a>
           <a href="/rss.xml">Rss</a>
           <a href="/sitemap.xml">Sitemap</a>
         </div>
@@ -121,21 +120,26 @@ const links = ref([
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+
 .dark-mode main {
   background: rgb(0, 0, 0);
+
   .data {
     opacity: 0.13 !important;
   }
 }
+
 .nav {
   position: absolute;
   top: 5vh;
   bottom: 0;
   left: 5vw;
   font-family: "Source Code Pro", monospace;
+
   .title {
     line-height: 3;
     transform: translateY(30vh);
+
     .title-text {
       display: block;
       cursor: pointer;
@@ -147,6 +151,7 @@ const links = ref([
       margin: 0;
     }
   }
+
   .link {
     padding: 0;
     margin: 0;
@@ -156,17 +161,20 @@ const links = ref([
     line-height: 1.3;
     font-size: 16px;
     margin-left: 2.5vh;
+
     a {
       text-decoration: none;
       color: #b7b7b7;
       padding-left: 3px;
       padding-right: 3px;
       transition: color 0.3s ease;
+
       &:hover {
         color: #1c0000;
         text-transform: none;
         text-decoration: none;
       }
+
       .dark-mode &:hover {
         color: #757575;
       }
@@ -180,18 +188,21 @@ const links = ref([
   color: #a1a1a1;
   font-size: 13px;
   line-height: 1;
+  text-transform: uppercase;
+
   .copy-link {
     a {
       text-decoration: none;
-      text-transform: capitalize !important;
       color: #b7b7b7;
       padding-right: 10px;
       transition: color 0.3s ease;
+
       &:hover {
         color: #1c0000;
         text-transform: none;
         text-decoration: none;
       }
+
       .dark-mode &:hover {
         color: #757575;
       }

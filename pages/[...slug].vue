@@ -1,8 +1,16 @@
 <template>
-  <main>
-    <ContentDoc />
-  </main>
+  <ContentDoc :path="path">
+    <template #not-found>
+      <error />
+    </template>
+  </ContentDoc>
 </template>
+
+<script setup lang="ts">
+const slug = useRoute().params.slug;
+
+import error from '../error.vue';
+</script>
 
 <style lang="scss">
 p a {

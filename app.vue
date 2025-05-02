@@ -19,10 +19,36 @@ onMounted(() => {
 <template>
   <div id="app">
     <an-more />
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 
 <style lang="scss">
 @import "/public/scss/app.scss";
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@font-face {
+  font-family: "Tsing";
+  src: url("Tsing.woff2") format("woff2"), url("Tsing.woff") format("woff"),
+    url("Tsing.ttf") format("truetype");
+}
+
+#app {
+  opacity: 0;
+  visibility: hidden;
+  animation: fadeIn 2s 1s forwards;
+}
 </style>
