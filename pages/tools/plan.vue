@@ -44,6 +44,10 @@ const plans = ref([
   },
 ])
 
+useSeoMeta({
+  title: "PLAN",
+});
+
 const formatNumber = (value) => {
   return value.toLocaleString()
 }
@@ -68,6 +72,13 @@ main {
   margin-top: 90px !important;
   padding-left: 30px;
   margin: 0 auto;
+}
+
+
+@font-face {
+  font-family: "Tsing";
+  src: url("/Tsing.woff2") format("woff2"), url("/Tsing.woff") format("woff"),
+    url("/Tsing.ttf") format("truetype");
 }
 
 @media (max-width: 1440px) {

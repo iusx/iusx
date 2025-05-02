@@ -3,6 +3,12 @@ import { onMounted } from "vue";
 import Lenis from "@studio-freight/lenis";
 const colorMode = useColorMode();
 
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - ritsu` : 'ritsu';
+  }
+})
+
 onMounted(() => {
   const lenis: Lenis = new Lenis();
   if (typeof window !== "undefined") {
@@ -38,12 +44,6 @@ onMounted(() => {
     opacity: 1;
     visibility: visible;
   }
-}
-
-@font-face {
-  font-family: "Tsing";
-  src: url("Tsing.woff2") format("woff2"), url("Tsing.woff") format("woff"),
-    url("Tsing.ttf") format("truetype");
 }
 
 #app {
