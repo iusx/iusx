@@ -4,7 +4,7 @@ const colorMode = useColorMode();
 defineProps(["title", "desc", "time", "name", "about"]);
 
 useSeoMeta({
-  title: "About - ritsu",
+  title: "About",
   description: "Computer networking,Security, and Design Enthusiast.",
 });
 

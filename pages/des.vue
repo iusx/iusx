@@ -2,7 +2,7 @@
 const colorMode = useColorMode();
 
 useSeoMeta({
-  title: "Design - ritsu",
+  title: "Design",
   description: "Github + Hackerone + Behance ÷ Researchgate",
 });
 

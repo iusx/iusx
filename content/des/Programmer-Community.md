@@ -2,7 +2,7 @@
 "title": Programmer-Community
 "director": "ritsu"
 "time": "2023.4.24"
-img: "https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/16b9f8196951137.66285e918ecac.png"
+img: "/img/des/01/8.png"
 "client": "Jiangxue Academy"
 url: "https://www.behance.net/gallery/196951137/Programmer-Community"
 ---

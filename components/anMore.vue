@@ -1,20 +1,17 @@
 <template>
   <main ref="el" :style="style">
-    <a
-      href="/"
-      :class="{ active: currentPage === '/' || currentPage === '/about' }"
-    >
-      <Icon name="RhymeIcon" size="2.8vh"
-    /></a>
-    <a href="/des" :class="{ active: currentPage.startsWith('/des') }"
-      ><Icon name="DesIcon" size="2.8vh"
-    /></a>
-    <a href="/sec" :class="{ active: currentPage.startsWith('/sec') }"
-      ><Icon name="SecIcon" size="2.8vh"
-    /></a>
-    <a href="/book" :class="{ active: currentPage.startsWith('/book') }"
-      ><Icon name="BookIcon" size="2.8vh"
-    /></a>
+    <a href="/" :class="{ active: currentPage === '/' || currentPage === '/about' }">
+      <Icon name="RhymeIcon" size="2.8vh" />
+    </a>
+    <a href="/des" :class="{ active: currentPage.startsWith('/des') }">
+      <Icon name="DesIcon" size="2.8vh" />
+    </a>
+    <a href="/sec" :class="{ active: currentPage.startsWith('/sec') }">
+      <Icon name="SecIcon" size="2.8vh" />
+    </a>
+    <a href="/book" :class="{ active: currentPage.startsWith('/book') }">
+      <Icon name="BookIcon" size="2.8vh" />
+    </a>
   </main>
 </template>
 
@@ -39,16 +36,18 @@ const { x, y, style } = useDraggable(el, {
 main {
   position: fixed;
   top: 30% !important;
-  background: #000;
   color: white;
   cursor: pointer;
   z-index: 11;
   width: fit-content;
   right: 0;
+  box-shadow: -1px 0px 0px 0px rgb(0 255 72);
   background-repeat: no-repeat;
   background-image: url(/img/page/drag.png);
+  background: #000;
   background-size: 1.3vh;
 }
+
 a {
   display: block;
   text-decoration: none;
@@ -58,11 +57,13 @@ a {
   opacity: 0.5;
   transition: filter 0.3s ease, opacity 0.3s ease;
   filter: grayscale(100%);
+
   &:hover {
     filter: brightness(1);
     opacity: 1;
   }
 }
+
 .active {
   filter: brightness(1);
   opacity: 1;

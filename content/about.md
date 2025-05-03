@@ -1,5 +1,5 @@
 ---
-title: "About - ritsu"
+title: "About"
 description: "Computer networking, Security, and Design."
 head:
   meta:
