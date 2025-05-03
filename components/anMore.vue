@@ -1,16 +1,16 @@
 <template>
-  <main ref="el" :style="style">
+  <main ref="el" :style="style" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
     <a href="/" :class="{ active: currentPage === '/' || currentPage === '/about' }">
-      <Icon name="RhymeIcon" size="2.8vh" />
+      <Icon name="RhymeIcon" size="30px" />
     </a>
     <a href="/des" :class="{ active: currentPage.startsWith('/des') }">
-      <Icon name="DesIcon" size="2.8vh" />
+      <Icon name="DesIcon" size="30px" />
     </a>
     <a href="/sec" :class="{ active: currentPage.startsWith('/sec') }">
-      <Icon name="SecIcon" size="2.8vh" />
+      <Icon name="SecIcon" size="30px" />
     </a>
     <a href="/book" :class="{ active: currentPage.startsWith('/book') }">
-      <Icon name="BookIcon" size="2.8vh" />
+      <Icon name="BookIcon" size="30px" />
     </a>
   </main>
 </template>
@@ -20,7 +20,6 @@ import { ref, onMounted } from "vue";
 import { useDraggable } from "@vueuse/core";
 
 const el = ref<HTMLElement | null>(null);
-
 const currentPage = ref<string>("");
 
 onMounted(() => {
@@ -30,6 +29,16 @@ onMounted(() => {
 const { x, y, style } = useDraggable(el, {
   initialValue: { x1: 0, y: 300 },
 });
+
+const handleMouseEnter = () => {
+  el.value!.style.transition = "right 0.3s ease-in-out";
+  el.value!.style.right = "0px";
+};
+
+const handleMouseLeave = () => {
+  el.value!.style.transition = "right 0.3s ease-in-out";
+  el.value!.style.right = "-40px";
+};
 </script>
 
 <style lang="scss" scoped>
@@ -41,18 +50,19 @@ main {
   z-index: 11;
   width: fit-content;
   right: 0;
+border-left: 3px solid rgb(0 255 72);;
   box-shadow: -1px 0px 0px 0px rgb(0 255 72);
   background-repeat: no-repeat;
   background-image: url(/img/page/drag.png);
   background: #000;
-  background-size: 1.3vh;
+  right: -40px;
 }
 
 a {
   display: block;
   text-decoration: none;
   color: white;
-  margin: 1vh;
+  margin: 10px;
   font-size: small;
   opacity: 0.5;
   transition: filter 0.3s ease, opacity 0.3s ease;

@@ -11,26 +11,25 @@
           <span>NOW: {{ formatNumber(plan.current) }} USD</span>
         </div>
         <div class="plan-box">
-          <div class="progress-bar" :style="{ width: plan.progress + '%' }">
-            {{ plan.progress }}%
+          <div class="progress-bar" :class="plan.barClass" :style="{ width: plan.progress + '%' }">
+            <p> {{ plan.progress }}%</p>
+          </div>
+        </div>
+
+        <div v-for="(subPlan, subIndex) in plan.subPlans" :key="subIndex" class="sub-plan">
+          <div class="title">
+            <p>SAVE {{ formatNumber(plan.target) }} USD (Inherited from Parent)</p>
+            <span>NOW: {{ formatNumber(subPlan.current) }} USD</span>
+          </div>
+          <div class="plan-box">
+            <div class="progress-bar" :class="subPlan.barClass" :style="{ width: subPlan.progress + '%' }">
+              <p> {{ subPlan.progress }}%</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="copyright">
-      <div class="copy-link">
-        <a href="/about">about</a>
-        <a href="/link">Link</a>
-        <a href="/rss.xml">Rss</a>
-        <a href="/sitemap.xml">Sitemap</a>
-      </div>
-      <p>
-        Creative Commons Attribution 4.0 International License (CC BY 4.0) and
-        the MIT License
-      </p>
-    </div>
   </main>
-
 </template>
 
 <script setup>
@@ -38,9 +37,21 @@ import { ref, onMounted } from 'vue'
 
 const plans = ref([
   {
+    id: "1",
+    name: 'Pay Home',
     target: 13000,
     current: 177,
-    progress: 0
+    progress: 0,
+    barClass: '',
+    subPlans: [
+      {
+        id: "2",
+        name: "TEST",
+        current: 100,
+        progress: 0,
+        barClass: ''
+      }
+    ]
   },
 ])
 
@@ -54,17 +65,33 @@ const formatNumber = (value) => {
 
 const calculateProgress = () => {
   plans.value.forEach(plan => {
-    const progress = Math.min(Math.round((plan.current / plan.target) * 100), 100)
-    plan.progress = progress
+    let progress = ((plan.current / plan.target) * 100).toFixed(2);
+    plan.progress = parseFloat(progress);
+
+    plan.barClass = plan.current < plan.target ? 'progress-positive' : 'progress-negative';
+
+    plan.subPlans.forEach(subPlan => {
+      let subProgress = 0;
+
+      if (subPlan.current > plan.current) {
+        subProgress = (((subPlan.current - plan.current) / plan.current) * 100).toFixed(2);
+
+        plan.barClass = 'progress-negative';
+        subPlan.barClass = 'progress-negative';
+      } else {
+        subProgress = ((subPlan.current / plan.target) * 100).toFixed(2);
+        subPlan.barClass = subPlan.current < plan.target ? 'progress-positive' : 'progress-negative';
+      }
+
+      subPlan.progress = Math.min(100, parseFloat(subProgress))
+    })
   })
 }
 
 onMounted(() => {
   calculateProgress()
 })
-</script
 </script>
-
 <style lang="scss" scoped>
 main {
   width: 50%;
@@ -74,6 +101,10 @@ main {
   margin: 0 auto;
 }
 
+.progress-negative {
+  background: #ff1100 !important;
+  box-shadow: 0px 4px 15px 3px #ff1100 !important;
+}
 
 @font-face {
   font-family: "Tsing";
@@ -97,7 +128,8 @@ main {
 }
 
 .dark-mode .progress-bar {
-  color: #000;
+  color: #fff;
+  text-shadow: 0px 2px 6px rgb(255 255 255 / 95%);
 }
 
 .dark-mode main {
@@ -175,6 +207,11 @@ main {
   line-height: 27px;
   box-shadow: 0px 4px 15px 3px #00E989;
   transition: width 0.5s ease-in-out;
+
+  p {
+    text-shadow: 0px 2px 6px rgb(0 0 0 / 95%);
+    margin: 0;
+  }
 }
 
 .dark-mode .copyright {
@@ -216,5 +253,10 @@ main {
       }
     }
   }
+}
+
+.sub-plan {
+  margin-top: 40px;
+  padding-left: 30px;
 }
 </style>
