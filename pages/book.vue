@@ -22,21 +22,6 @@ const sortedData = computed(() => equalQueryBook.value);
 <template>
   <main>
     <div class="note-layout">
-      <div class="note-des">
-        <p class="title">
-          the My note<br />
-          Collector
-        </p>
-        <div class="title-hr"></div>
-        <div class="title-desc-about">
-          <p>
-            几年前，我对应用技术非常热衷。然而，现在我更希望将时间留给不那么容易会变的原理和生活，因此在这个页面不仅会有我对一本书的感悟，更有对电影、甚至是游戏、剧集的感受。
-          </p>
-          <div class="title-desc-tip">
-            文章多有纰漏，仅代表个人在当时的主观感受，不代表其第三方立场。
-          </div>
-        </div>
-      </div>
       <div class="note-book"><sk-book-img :sorted-data="sortedData" /></div>
     </div>
   </main>
