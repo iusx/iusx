@@ -83,13 +83,14 @@ main {
   width: 100%;
   height: 100%;
 }
+
 .note-book {
   display: flex;
   width: 100%;
   flex: 2;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
 
   .note-book-box {
     width: 22vw;
