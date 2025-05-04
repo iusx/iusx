@@ -15,43 +15,59 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, computed } from "vue";
+import { ref, onMounted, nextTick, watchEffect } from 'vue'
 
-const props = defineProps({
-  num: {
-    type: Number,
-  },
-});
+const toc = ref([])
 
-const toc = ref([]);
-const colorMode = useColorMode();
+watchEffect(async (onCleanup) => {
+  let retries = 0
+  const maxRetries = 5
 
-onMounted(() => {
-  const content = document.querySelector(".markdown-content");
-  if (content) {
-    toc.value = Array.from(
-      content.querySelectorAll("h1, h2, h3, h4, h5, h6")
-    ).map((heading) => ({
+  const checkContent = async () => {
+    const content = document.querySelector('.markdown-content')
+    if (!content) {
+      if (retries++ < maxRetries) {
+        setTimeout(checkContent, 300)
+      }
+      return
+    }
+
+    const headings = Array.from(content.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+    const validHeadings = headings.filter(h => h.innerText.trim() !== '')
+
+    if (validHeadings.length === 0 && retries++ < maxRetries) {
+      setTimeout(checkContent, 300)
+      return
+    }
+
+    toc.value = validHeadings.map(heading => ({
       id: heading.id,
       text: heading.innerText,
-      level: parseInt(heading.tagName.slice(1)),
-    }));
+      level: parseInt(heading.tagName.slice(1))
+    }))
   }
-});
 
-const getSpanCount = computed(() => (text) => {
-  const match = text.match(/\[(\d+)\]/);
-  return match ? parseInt(match[1], 10) : 0;
-});
+  const timer = setTimeout(checkContent, 100)
+  onCleanup(() => clearTimeout(timer))
+})
+
+const getTextContent = (element) => {
+  return Array.from(element.childNodes)
+    .map(node => {
+      if (node.nodeType === Node.TEXT_NODE) return node.textContent
+      if (node.nodeType === Node.ELEMENT_NODE) return node.textContent
+      return ''
+    })
+    .join('')
+    .trim()
+}
 
 const getPaddingStyle = (heading) => {
-  const basePadding = 20;
-  const padding = (heading.level - 1) * basePadding;
-
   return {
-    marginLeft: `${padding}px`,
-  };
-};
+    marginLeft: `${(heading.level - 1) * 20}px`,
+    listStyleType: heading.level > 2 ? 'circle' : 'disc'
+  }
+}
 </script>
 
 <style lang="scss" scoped>
