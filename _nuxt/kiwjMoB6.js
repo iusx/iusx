@@ -1,1 +1,0 @@
-import{j as o,a as n,N as s,b as u,z as l,A as c}from"./Bgq8xjFh.js";const p=o({__name:"textAnNext",props:{url:{type:String,required:!0}},setup(a){const e=a,t=n(!1);return s(()=>{e.url?(t.value=!0,window.location.href=e.url):history.back()}),u(()=>e.url,r=>{r&&!t.value&&(t.value=!0,window.location.href=r)}),(r,i)=>(l(),c("main"))}});export{p as default};
