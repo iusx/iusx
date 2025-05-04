@@ -83,64 +83,6 @@ main {
   width: 100%;
   height: 100%;
 }
-
-.logo {
-  width: 49px;
-  padding-top: 1vw;
-  cursor: pointer;
-}
-
-.dark-mode .title {
-  color: white !important;
-}
-
-.note-des {
-  flex: 1.5;
-  position: sticky;
-  top: 10px;
-  height: 51vw;
-  z-index: -30;
-
-
-
-  .title {
-    color: #000;
-    font-size: 5vw;
-    font-weight: bold;
-    text-transform: capitalize;
-    padding: 0;
-    margin-bottom: 4vh;
-    margin-top: 10vw;
-  }
-
-  .title-hr {
-    background: #00dd82;
-    width: 300px;
-    height: 3px;
-    display: block;
-  }
-
-  .title-desc-about {
-    font-size: 15px;
-    color: #c0c0c0;
-    line-height: 1.5;
-    text-align: justify;
-    margin-top: 3vw;
-
-    .title-desc-tip {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-
-      img {
-        margin-right: 5px;
-      }
-
-    }
-  }
-}
-
-
 .note-book {
   display: flex;
   width: 100%;
@@ -148,7 +90,6 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-end;
-
 
   .note-book-box {
     width: 22vw;
