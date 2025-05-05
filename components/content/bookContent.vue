@@ -55,17 +55,14 @@ onMounted(() => {
   };
 });
 
-// 解析 plan 字符串并计算百分比
 const percentage = computed(() => {
-  // 将 plan 字符串分割成数组，并转换为数字
+
   const [current, total] = props.plan.split(',').map(Number);
 
-  // 如果只有一个值或无法正确解析，则直接返回该值
   if (isNaN(current) || isNaN(total) || total === 0) {
     return props.plan;
   }
 
-  // 计算百分比，四舍五入到最接近的整数
   const percent = ((current / total) * 100).toFixed(0);
 
   return percent;
@@ -297,12 +294,11 @@ const percentage = computed(() => {
   }
 }
 
-
 @-moz-document url-prefix() {
   .book-info {
-    scrollbar-width: thin; // 或者使用 'auto' 或 'none'
+    scrollbar-width: thin; 
     scrollbar-color: rgba(0, 0, 0, 0.197) transparent;
-    // Dark mode for Firefox
+
     .dark-mode & {
       scrollbar-color: rgba(255, 255, 255, 0.238) transparent;
     }

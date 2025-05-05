@@ -2105,6 +2105,88 @@ Q . . .     列: 1        3 Q . . .   ← Q3 在第3行第1列
 . . Q .     列: 3        4 . . Q .   ← Q4 在第4行第3列
 ```
 
+---
+
+# Scala 1
+:text-title{t="Scala"}
+
+对 Scala 印象比较深的就是 Scala 社区主要的维护者[李浩毅](https://github.com/lihaoyi),竟然是新加坡前总理李显龙的次子。还是 [Hands-on Scala Programming](https://www.handsonscala.com/) 一书的作者（这本书还免费观看章节部分的内容，对引导学习 scala 很有帮助）。我第一次看到 Scala 这个名字，还以为是某个数据库，毕竟 LOGO 不太像是一个 lang。
+
+
+## 编程范式 3
+:text-title{t="编程范式" type="2"}
+
+在此之前，作者通过 Ruby, IO lang, Prolog 介绍了 起码三种编程范式，每一种编程范式都会掀起一场腥风血雨。而 Scala 是函数式和面向对象的一种桥梁，本书作者称之为 “混合语言”。目的是 **架起 Java 和 Haskell** 之间的鸿沟连接起来
+
+::text-space
+---
+type: tip
+---
+
+2009: 作者的总结<br>
+随着程序需求的增加，编程语言也在不断进化。每二十年左右，旧的编程范式无法满足新的需求，新的范式必须出现。每个新的范式都会诞生一批编程语言，最初可能效率高但不实用（如 Smalltalk 和 Lisp）。最终，某些混合语言（如 C++）成为“桥梁”，然后是商业化语言（如 Java 或 C#），最终成熟的语言会实现新的范式。
+
+<br>
+
+2025: 说的太对了
+::
+
+不过由于我看这本书是总结语言的学习思路，所以我不会再本机装 lang，基本上用在线环境来运行。这里我推荐使用 Scala 提供的在线环境 [Scastie](https://scastie.scala-lang.org/) 对于 Scala 给我的直接映像就是输出 Hello 有很多种方法，比如：
+
+```
+object Main extends App{print("Hello, World!")}
+
+@main
+def hello(): Unit =
+  println("Hello, World!")
+
+println("Hello, World")
+```
+
+如你所见起码有三种方式可以输出 `Hello, World`， 这三种方式体现了 Scala 灵活性：
+
+1. 使用 object 和 App，继承 App trait，简化主程序结构
+2. Scala 3 的 @main 注解,不需要显式声明类和方法。
+3. 不依赖类或对象结构
+
+不过和 Java 相比，那也是非常的直观明了的：
+
+```
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+
+| LANG | TYPE |
+| --- | --- |
+| Ruby | 面向对象 |
+| IO | 原型式编程 |
+| Prolog | 声明式编程 |
+
+
+## 类型 1
+:text-title{t="类型" type="2"}
+
+Scala 是可以推断出类型的，比如 `1 + 1`，IDE 会在旁边显示 `2: scala.Int`, 例如下面的类型转换（String 真方便啊）
+
+
+::text-space
+---
+type: tip
+---
+在 Scala 2 的某个小版本中，Int + String 之类的 **插值** 被废弃掉了，需要使用 `val x = s"$4abc"` 进行插值，反正最后都会被归类到 `String` type。（String 和 Json 以及 Object 是我最喜欢的类型）
+::
+
+```
+val x = 4 + "abc"
+println(x.getClass) 
+
+val s = "abc" + 4
+println(s.getClass) // class java.lang.String
+```
 
 
 ::
