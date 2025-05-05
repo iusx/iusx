@@ -3,7 +3,7 @@
 "director": "Bruce A. Tate"
 "time": "2025.01.08"
 img: "08/1.png"
-plan: "120,323"
+plan: "153,323"
 ---
 
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}
@@ -2192,6 +2192,149 @@ println(x.getClass)
 val s = "abc" + 4
 println(s.getClass) // class java.lang.String
 ```
+
+
+Scala 2 和 3 version 的语法可能略有不同。所以这就是我读本书的理由，语言和语法结构是会变的。无论多么熟悉，过个两三年和四五年就会改变很多，但如果根据语言的基础来学，则很快就能上手。
+
+### AST 2
+:text-title{t="AST" type="2"}
+
+AST 是抽象语法树（AST, Abstract Syntax Tree）的简称。当你写一段 Scala 代码时，Scala 编译器会将其转换为抽象语法树（AST），然后再进行后续的编译阶段（如类型检查、优化、字节码生成）。可以 **查看该代码在编译阶段形成的 AST 结构:**。
+
+在 Scala 中，可以使用 [Scala AST explorer](https://scalameta.org/ast-explorer/#) 来进行查看。例如上面我说 **反正最后都要归类到 String** 其实很不严谨，可以将 Copy 放进去查看在编译的时候都做了什么：
+
+```
+val x = 4 + "abc"
+println(x.getClass) 
+
+---
+
+Source [0;38]
+├── Defn.Val [0;17]
+│   ├── Pat.Var [4;5]
+│   │   └── Term.Name [4;5]   // x
+│   └── Term.ApplyInfix [8;17]
+│       ├── Lit.Int [8;9]     // 4
+│       ├── Term.Name [10;11] // +
+│       ├── Type.ArgClause [12;12]
+│       └── Term.ArgClause [12;17]
+│           └── Lit.String [12;17] // "abc"
+└── Term.Apply [18;37]
+    ├── Term.Name [18;25]     // println
+    └── Term.ArgClause [25;37]
+        └── Term.Select [26;36]
+            ├── Term.Name [26;27]   // x
+            └── Term.Name [28;36]   // getClass
+```
+
+也就是说 `4` 是被编译器推理到了是 `Int` 类型的，`abc` 是 `String` 虽然最后组合成了 `4abc` 也还是 `String` 但你不觉得看到了编译过程不还是很酷的吗？
+
+---
+
+### 泛型 1
+:text-title{t="泛型"}
+
+泛型（Generics）类型是一个 **在程序设计中用于定义可以处理不同类型的类、特质或函数** 方式。泛型类型的基本概念：
+
+
+1. 类型参数：可以为类、特质或函数提供一个占位符类型，这个类型在使用时会被实际的类型所替代。
+2. 类型推断：Scala 会根据您传递的具体类型自动推断出类型参数。
+
+简单点来说，其作用在于 **在定义类、特质、或方法时，使用类型参数来使其可以处理不同类型的数据**。让方法或类处理不同类型的数据，而不需要为每种类型都写一个单独的实现。
+
+```
+// 定义一个泛型类 Box
+class Box[A](val value: A) {
+  def getValue: A = value
+}
+
+val intBox = new Box(10)       // A 被推断为 Int
+val stringBox = new Box("Hello") // A 被推断为 String
+
+println(intBox.getValue)    // 输出: 10
+println(stringBox.getValue) // 输出: Hello
+```
+
+泛型很像 TypeScript 中 `Interface`, ：
+
+```
+// 定义一个泛型接口
+interface Box<T> {
+  value: T;
+  getValue(): T;
+}
+
+// 实现泛型接口
+class NumberBox implements Box<number> {
+  constructor(public value: number) {}
+  getValue(): number {
+    return this.value;
+  }
+}
+
+class StringBox implements Box<string> {
+  constructor(public value: string) {}
+  getValue(): string {
+    return this.value;
+  }
+}
+
+const numBox = new NumberBox(42);
+console.log(numBox.getValue()); // 输出: 42
+
+const strBox = new StringBox("Hello");
+console.log(strBox.getValue()); // 输出: Hello
+```
+
+---
+
+### trait 2
+:text-title{t="trait"} 
+
+Trait (特质)，trait 和泛型几乎同时出没，所以要理解 trait 之前需要理解泛型。
+
+---
+
+
+### 隐式类型 3
+:text-title{t="隐式类型"}
+
+| 机制类型        | 英文名              | 主要作用                                       | 示例作用                          |
+|-----------------|---------------------|------------------------------------------------|-----------------------------------|
+| 隐式转换        | Implicit Conversion | 当类型不匹配时，自动将一个类型转换为另一个类型 | Int → String / 自定义类型转化     |
+| 隐式参数        | Implicit Parameter  | 自动填入函数所需的上下文参数                   | 注入默认值、依赖注入、上下文控制 |
+| 隐式类          | Implicit Class      | 为已有类型添加新方法（类似扩展方法）           | 给 Int 添加 `squared` 方法        |
+
+#### 隐式类型转换 2
+:text-title{t="隐式类型转换" type="2"}
+
+如果要学习一个语言，那么类型系统无非是重要的。在 Scala 中是支持类型推断的，也就是不像静态语言那样需要自己指定类型 `let x: number = 42;`。[隐式类型(Implicit type conversion)](https://en.wikipedia.org/wiki/Type_conversion#Implicit_type_conversion)转换, **是由编译器自动执行的类型转换。**
+
+也就是说，当一个类型不符合预期时，编译器会尝试通过一个标记为 `implicit` 的函数将其自动转换为所需的类型。如果你将之前的插值放到 AST 里面，就会看到 `implicit`:
+
+```
+val pi = 3.14159
+println(f"Pi is approximately $pi%1.2f")
+
+---
+
+Source [0;57]
+├── Defn.Val [0;16]
+│   ├── Pat.Var [4;6]
+│   │   └── Term.Name [4;6]         // pi
+│   └── Lit.Double [9;16]           // 3.14159
+└── Term.Apply [17;57]
+    ├── Term.Name [17;24]           // println
+    └── Term.ArgClause [24;57]
+        └── Term.Interpolate [25;56]
+            ├── Term.Name [25;26]       // f (interpolator)
+            ├── Lit.String [27;47]      // "Pi is approximately "
+            ├── Term.Name [48;50]       // pi (in interpolation)
+            └── Lit.String [50;55]      // "%1.2f"
+```
+
+#### 隐式类型参数 1
+:text-title{t="隐式类型参数" type="2"}
 
 
 ::
