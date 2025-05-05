@@ -2177,7 +2177,12 @@ Scala 是可以推断出类型的，比如 `1 + 1`，IDE 会在旁边显示 `2: 
 ---
 type: tip
 ---
-在 Scala 2 的某个小版本中，Int + String 之类的 **插值** 被废弃掉了，需要使用 `val x = s"$4abc"` 进行插值，反正最后都会被归类到 `String` type。（String 和 Json 以及 Object 是我最喜欢的类型）
+在 Scala 2 的某个小版本中，Int + String 之类的 **插值** 被废弃掉了，需要使用 `$` 进行插值，反正最后都会被归类到 `String` type。（String 和 Json 以及 Object 是我最喜欢的类型）:
+
+```
+val pi = 3.14159
+println(f"Pi is approximately $pi%1.2f")  // 输出：Pi is approximately 3.14
+```
 ::
 
 ```
