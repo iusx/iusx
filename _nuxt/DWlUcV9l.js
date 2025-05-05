@@ -1,1 +1,0 @@
-import{a as r}from"./BZh4uOpt.js";import{z as e,A as s,F as o}from"./xdD9q-ho.js";const i={key:0,class:"text-tip big"},l={key:1,class:"text-tip"},m={__name:"text-tip",props:["type"],setup(a){return r(),(t,n)=>a.type=="big"?(e(),s("main",i,[o(t.$slots,"default")])):(e(),s("main",l,[o(t.$slots,"default")]))}};export{m as default};
