@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import Lenis from "@studio-freight/lenis";
-const colorMode = useColorMode();
+const colorMode = useColorMode()
 
 useHead({
   titleTemplate: (titleChunk) => {

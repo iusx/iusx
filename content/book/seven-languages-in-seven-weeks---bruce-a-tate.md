@@ -2178,11 +2178,7 @@ Scala 是可以推断出类型的，比如 `1 + 1`，IDE 会在旁边显示 `2: 
 type: tip
 ---
 在 Scala 2 的某个小版本中，Int + String 之类的 **插值** 被废弃掉了，需要使用 `$` 进行插值，反正最后都会被归类到 `String` type。（String 和 Json 以及 Object 是我最喜欢的类型）:
-
-```
-val pi = 3.14159
-println(f"Pi is approximately $pi%1.2f")  // 输出：Pi is approximately 3.14
-```
+`val pi = 3.14159; println(f"Pi is approximately $pi%1.2f")`
 ::
 
 ```
@@ -2288,10 +2284,132 @@ console.log(strBox.getValue()); // 输出: Hello
 
 ---
 
+#### EventBus 2
+:text-title{t="EventBus"}
+
+EventBus 是一个类型安全的概念，有点像是 Vue 中的 [Events](https://v3-migration.vuejs.org/zh/breaking-changes/events-api.html)。不过类型安全好像远没有 **内存安全** 那么让人感到欣喜，仿佛是必须的？
+
+::text-space
+---
+type: tip
+---
+一个类型安全的“事件通道”——你可以向里面发送（emit）事件，其他组件可以监听（subscribe）这些事件并作出反应。
+::
+
+
+```
+enum CopyEvent:
+  case CopyWholeTree
+  case CopyNode(id: Int)
+
+... 
+val copyEvents = EventBus[CopyEvent]()
+...
+onClick.mapToStrict(CopyEvent.CopyWholeTree) --> copyEvents
+...
+// in app scope: div(
+copyEvents --> { 
+  case CopyEvent.CopyWholeTree =>  ...
+  case CopyEvent.CopyNode(id) => ...
+}
+// ...)
+```
+
+
+##### ADT 3
+:text-title{t="代数数据类型" type="2"}
+
+密封的代数数据类型（Algebraic Data Types, ADTs）是函数式编程核心的类型系统之一，通常包括了：
+
+1. 积类型（Product Type） = A 和 B 一起出现（“组合”数据）
+2. 和类型（Sum Type） = A 或 B 之一出现（“选择”数据）
+
+例如上面的 Code 就用到了 ADT 中的 `Sum Types` :
+
+```
+enum PaymentMethod:
+  case CreditCard(number: String)
+  case Cash
+  case PayPal(email: String)
+// 这表示付款方式只能是三种之一 —— 你不能“同时”用信用卡 + PayPal。
+```
+
+如果是 Product type，那就是：
+
+```
+case class Person(name: String, age: Int)
+// Person 拥有 name 和 age，你无法只给其中一个，必须两个都有 —— 这就是积类型。
+```
+
+
+
+---
+
 ### trait 2
 :text-title{t="trait"} 
 
-Trait (特质)，trait 和泛型几乎同时出没，所以要理解 trait 之前需要理解泛型。
+Trait (特质)，trait 和泛型几乎同时出没，所以要理解 trait 之前需要理解泛型。Trait 和接口很像，我觉得中文翻译成“特质”不太理解，“特征、特点”倒是很符合 Trait 实现的逻辑：
+
+::text-space
+---
+type: tip
+---
+我觉得这里可以参考下 Rust 的文档 [Traits](https://doc.rust-lang.org/book/ch10-02-traits.html): **Trait:定义共同行为**。 
+
+Trait 在心理学中是一个理论，即 [特质理论](https://en.wikipedia.org/wiki/Trait_theory)。是研究人类个性的一种方法，所以 Rust 的文档更符合 Trait 的意思。
+::
+
+比如下面 Code 就实现了一个 `动物(Animal)` 的 `Trait` 即它们都会 `speak`
+
+```
+// 定义 trait
+trait Animal:
+  def speak(): String
+
+// 定义实现 trait 的类
+class Dog extends Animal:
+  def speak(): String = "Woof!"
+
+class Cat extends Animal:
+  def speak(): String = "Meow!"
+
+// 创建实例
+val dog = new Dog()
+val cat = new Cat()
+
+// 调用方法
+println(dog.speak()) // 输出: Woof!
+println(cat.speak()) // 输出: Meow!
+```
+
+如果用 `interface` 的话，比如 Java:
+
+```
+interface Animal {
+    String speak();
+}
+
+class Dog implements Animal {
+    public String speak() {
+        return "Woof!";
+    }
+}
+
+class Cat implements Animal {
+    public String speak() {
+        return "Meow!";
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal dog = new Dog();
+        Animal cat = new Cat();
+        System.out.println(dog.speak());  // Woof!
+        System.out.println(cat.speak());  // Meow!
+    }
+}
+```
 
 ---
 
@@ -2336,6 +2454,61 @@ Source [0;57]
 #### 隐式类型参数 1
 :text-title{t="隐式类型参数" type="2"}
 
+隐式类型参数我的理解就是一种 **类型** 安全的注入机制，例如：
+
+```
+implicit val defaultGreeting: String = "Hello"
+
+def greet(name: String)(implicit greeting: String) = println(s"$greeting, $name")
+
+greet("Alice") // Alice, Hello 
+```
+
+通过 [Scala AST explorer](https://scalameta.org/ast-explorer/#) 可以看到，`$greeting` 在编译的时候，是会被 `Interpolate` 占位的：
+
+```
+- Term.Interpolate [109;128]
+    Term.Name [109;110]
+    Lit.String [111;111]
+    Lit.String [120;122]
+    Lit.String [127;127]
+    Term.Name [112;120]
+    Term.Name [123;127]
+```
+
+如果不依赖隐式类型参数来写，那么就会是这样的：
+
+```
+def greet(name: String, greeting: String) = println(s"$greeting, $name")
+
+val defaultGreeting = "Hello"
+
+greet("Alice", defaultGreeting) // Hello, Alice
+```
+
+
+#### 隐式类 1
+:text-title{t="隐式类" type="2"}
+
+隐式类非常好理解，很像 JavaScript 中的 `prototype` 例如：
+
+```
+implicit class RichInt(val x: Int) {
+  def squared: Int = x * x
+}
+
+println(4.squared)  // 16
+```
+
+在 Javascript 中就是：
+
+```
+Number.prototype.square = function() {
+  return this * this;
+};
+
+console.log((5).square()); // 25
+```
 
 ::
 

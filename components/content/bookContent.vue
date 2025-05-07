@@ -255,6 +255,7 @@ const percentage = computed(() => {
   opacity: 0.7;
 }
 
+
 .dark-mode .book-info .dir-layout .title {
   border: 1px solid #ffffff;
   color: #ffffff;
