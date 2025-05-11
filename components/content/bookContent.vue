@@ -177,11 +177,11 @@ const percentage = computed(() => {
 
   @media (max-width: 1024px) {
     display: block;
-    display: block;
     position: fixed;
     background: #00dd82;
     padding: 8px;
     font-size: 1.3vh;
+    z-index: 9999;
     font-weight: bold;
   }
 }
@@ -190,7 +190,7 @@ const percentage = computed(() => {
   width: 21vw;
   position: fixed;
   height: 100vh;
-  overflow: inherit;
+  overflow: auto;
   padding-right: 1vw;
 
   img {
@@ -297,7 +297,7 @@ const percentage = computed(() => {
 
 @-moz-document url-prefix() {
   .book-info {
-    scrollbar-width: thin; 
+    scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.197) transparent;
 
     .dark-mode & {
@@ -316,6 +316,7 @@ const percentage = computed(() => {
 
 main {
   overflow-x: hidden;
+  overflow: visible;
   width: 85%;
   margin: 0 auto;
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, onMounted } from "vue";
 
 const props = defineProps({
   img: {
@@ -13,7 +13,7 @@ const props = defineProps({
   },
 });
 
-const images = ref(props.img.split(",").map((item) => "/img/" + item));
+const images = ref(props.img);
 const loading = ref(true);
 const imagesLoadedCount = ref(0);
 onMounted(() => {
@@ -25,7 +25,6 @@ onMounted(() => {
       imagesLoadedCount.value++;
 
       if (imagesLoadedCount.value === images.value.length) {
-        loading.value = false;
       }
     };
 
