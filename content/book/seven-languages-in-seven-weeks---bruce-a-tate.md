@@ -2510,5 +2510,37 @@ Number.prototype.square = function() {
 console.log((5).square()); // 25
 ```
 
+---
+
+## 不可变性 2
+:text-title{t="不可变性"}
+
+感觉这本书上讲的一些 Scala 特性，在 2025 年的现在好像都是现代语言的必需品了(可能当时确实是比较新颖的)。对于不可变性好像函数式语言都支持？起码 JavaScript 是这样的。在 English 中，[不可变性（Immutability）](https://en.wikipedia.org/wiki/Immutable_object) 通常会在后面加一个 `object`，组合起来就是 **不可变对象**。
+
+所以不可变性包含了 **不可变对象** 和 **不可变函数/变量**, 比如在 scala 中，`var` 是可变的，`val` 就不可变:
+
+
+```
+var a = "mutable"
+a = "changed"   // OK
+
+val b = "immutable"
+b = "change"     // 编译错误
+```
+
+Scala 明确区分了可变（mutable）对象和不可变（immutable）类，具体可以参考 [Concrete Mutable Collection Classes](https://docs.scala-lang.org/overviews/collections-2.13/concrete-mutable-collection-classes.html), **也就是将可变的和不可变的都弄了个类型**：
+
+| 集合类型 | 不可变版本（immutable）                          | 可变版本（mutable）                              | 特点说明 |
+|----------|--------------------------------------------------|--------------------------------------------------|----------|
+| 序列（seq） | `list`, `vector`               | `arraybuffer`, `listbuffer`, `queue`              | list 是不可变链表，vector 性能更平衡，arraybuffer 可变、适合追加 |
+| 集合（set） | `set`, `sortedset`                    | `hashset`            | 不可变集合默认使用 hash 实现，可变集合有更多实现 |
+| 映射（map） | `map`,`SortedMap`                    | `hashmap` , `weakhashmap`         | 不可变 map 默认使用 hashmap，可变版本适合高性能需求 |
+| 栈 / 队列   |                                  | `queue`, `stack`, `arraydeque`                    | 可变和不可变队列同名，但位于不同包中 |
+| 数组       | `array`              | `arraybuffer`                         | `array` 不是集合框架成员，但常用 |
+| 特殊集合   | `range`, `emptyset`           |                                               | 用于构造或默认空集合值 |
+
+(真的是太多了，可能不是很全)
+
+
 ::
 
