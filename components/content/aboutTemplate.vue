@@ -175,6 +175,18 @@ const contribution = [
     post: "UX&Dev",
     url: "",
   },
+  {
+    name: "Fail Better",
+    time: "2025",
+    post: "Music plan",
+    url: "https://music.163.com/album?id=269753280&uct2=U2FsdGVkX18HYVDgqixHSCRrizD9UnRXY4cZjvOxTVY=",
+  },
+  {
+    name: "Scala AST-explorer",
+    time: "2025",
+    post: "Contributor",
+    url: "https://scalameta.org/ast-explorer/"
+  },
 ];
 </script>
 
