@@ -29,4 +29,52 @@ plan: "0,71"
 This diff contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters. [Learn more about bidirectional Unicode characters](https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/)
 ::
 
+---
+
+# 转义 3
+:text-title{t="Unicode 转义序列"}
+
+Unicode 转义序列又称之为 Escaped Unicode characters, 可以参考 [Escape character ](https://en.wikipedia.org/wiki/Escape_character) **。就是说将一个字符转义成另一个编码** 的过程, 基于 Unicode 的各种编码，可以做很多事情。这也意味着需要做很多类似转义的操作，可以用在线工具或 code lang 来完成这个过程，如使用 PY 的 [`s.encode`](https://docs.python.org/3/howto/unicode.html) 对象方法：
+
+```
+s = '你好'
+unicode_str = s.encode('unicode_escape').decode()
+print(unicode_str)  # 输出: \u4f60\u597d
+```
+
+之后，我们拿到 `\u4f60\u597d` 到 [CyberChef](https://gchq.github.io/CyberChef/) 来进行添加 Unicode 字符，之后将 output 结果 copy 到剪贴板中即可使用（需要添加 `Unescape string` 模块）例如：
+
+```
+\u5b87\u5b99\u65e0\u654c\u67e0\u6aac\u738b\u2067\uD83C\uDF4B
+```
+
+
+这是是一串 Unicode 字符，转义成字符串就是：
+
+```
+宇宙无敌柠檬王⁧🍋
+```
+
+| 字符   | 名称                                 | 类型 | Bidi 类别 | 简介说明                           |
+|----------|--------------------------------------|------|-----------|------------------------------------|
+| U+200E   | LEFT-TO-RIGHT MARK (LRM)             | Cf   | L         | 插入一个不可见的 LTR 方向提示符    |
+| U+202A   | LEFT-TO-RIGHT EMBEDDING (LRE)        | Cf   | LRE       | 开始一个嵌入式 LTR 片段，需 `PDF` 结束 |
+| U+202D   | LEFT-TO-RIGHT OVERRIDE (LRO)         | Cf   | LRO       | 强制后续文本以 LTR 显示，需 `PDF` 结束 |
+| U+2066   | LEFT-TO-RIGHT ISOLATE (LRI)          | Cf   | LRI       | 开始 LTR 隔离段，推荐用法，需 `PDI` 结束 |
+| U+2067   | RIGHT-TO-LEFT ISOLATE (RLI)          | Cf   | RLI       | 开始 RTL 隔离段，推荐用法，需 `PDI` 结束 |
+| U+200F   | RIGHT-TO-LEFT MARK (RLM)             | Cf   | R         | 插入一个不可见的 RTL 方向提示符    |
+| U+202B   | RIGHT-TO-LEFT EMBEDDING (RLE)        | Cf   | RLE       | 开始一个嵌入式 RTL 片段，需 `PDF` 结束 |
+| U+202E   | RIGHT-TO-LEFT OVERRIDE (RLO)         | Cf   | RLO       | 强制后续文本以 RTL 显示，需 `PDF` 结束 |
+| U+1BC77  | DUPLOYAN AFFIX ATTACHED... (略)      | Lo   | L         | 杜波洛扬速记字符，天然 LTR，可显示 |
+
+像是 `\u5b87` 这种的，一般称之为 [UTF-16](https://en.wikipedia.org/wiki/UTF-16),在上面的 Unicode 字符中，`u2066` 这个系 [LEFT-TO-RIGHT](https://www.compart.com/en/unicode/U+2066#UNC_DB) 这个序列的，根据维基百科 [Bidirectional text](https://en.wikipedia.org/wiki/Bidirectional_text) 的介绍，这种被称之为 “双向文本”, 用于波斯语和阿拉伯语甚至是数学表达式。
+
+由于用了 `u2067`, 这会导致渲染的时候会隔断 `🍋`，别人 @ 我的时候就会夹着消息，比如 @ 我的时候输入 Hello 就会变成：
+
+```
+@宇宙无敌柠檬王 Hello 🍋
+---如果是正常的
+@宇宙无敌柠檬王🍋 Hello
+```
+
 ::
