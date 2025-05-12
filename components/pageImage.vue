@@ -13,7 +13,7 @@ const props = defineProps({
   },
 });
 
-const images = ref(props.img);
+const images = ref(props.img.split(",").map((item) => "/img/" + item));
 const loading = ref(true);
 const imagesLoadedCount = ref(0);
 onMounted(() => {
@@ -25,6 +25,7 @@ onMounted(() => {
       imagesLoadedCount.value++;
 
       if (imagesLoadedCount.value === images.value.length) {
+        loading.value = false;
       }
     };
 
