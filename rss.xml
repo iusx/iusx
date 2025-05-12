@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 12 May 2025 12:06:39 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 12 May 2025 14:34:36 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -55,45 +55,6 @@
             <title><![CDATA[Unicode Explained]]></title>
             <link>m.ritsu.jiangxue.org//book/unicode-explained</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/unicode-explained</guid>
-        </item>
-        <item>
-            <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
-            <description><![CDATA[有时候在做流程图时需要一个好用的绘图软件。我尝试过 Draw.io、Visio、Dia、Graphviz、Umbrello、ProcessOn 等。这些软件各有特色，主要比较的是用户体验和免费程度。Edraw 早期界面像 Visio，现在融入了 Figma 等产品的交互方式。使用时发现它支持复制粘贴 SVG 数据，方便导出无水印流程图。我喜欢支持 SVG 的软件，比如 Figma 和 Illustrator。最喜欢的流程图风格是 IETF RFC 文件中的，用制表符绘制的 ASCII-Art，简洁而美观。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/edrawmax</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/edrawmax</guid>
-        </item>
-        <item>
-            <title><![CDATA[GraphQL Misconfiguration in CWE-16 Github API]]></title>
-            <description><![CDATA[这是我第一次提交漏洞缺陷并且获得赏金等奖励，所以对我来说还是比较难忘的。由于我已经全身心投入到产品设计和开发中，再次发现知名公司或平台的安全漏洞对我来说就像达到了一个里程碑。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/github-misconfiguration</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/github-misconfiguration</guid>
-        </item>
-        <item>
-            <title><![CDATA[CHINA TELECOM IPTV Payment bypass]]></title>
-            <description><![CDATA[发现智能电视机顶盒的网络电视功能，开启了家人的全新娱乐体验。从经典节目到热门电影，一应俱全。不过，发现了一个让人忍不住好奇的漏洞。利用这个小技巧，我们尽情享受了一周的节目，直到漏洞被修复，CNVD 的那份证书让我倍感荣幸。时光流逝，我回顾起四年前的梦想，感慨万分。如今，安全领域的探索已不再是我的重心，但那份热爱和期待依然存在，或许，下一个 CVE 编号就在不远的将来。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/iptv</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/iptv</guid>
-        </item>
-        <item>
-            <title><![CDATA[TOPCHOICE MEDICAL INVESMENT CO., INC]]></title>
-            <link>m.ritsu.jiangxue.org//sec/tcmedical</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/tcmedical</guid>
-        </item>
-        <item>
-            <title><![CDATA[Turing Robot Payment bypass]]></title>
-            <link>m.ritsu.jiangxue.org//sec/turing</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/turing</guid>
-        </item>
-        <item>
-            <title><![CDATA[HENAN YADU MEDICAL GROUP CORPORATION]]></title>
-            <link>m.ritsu.jiangxue.org//sec/yadugroup</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/yadugroup</guid>
-        </item>
-        <item>
-            <title><![CDATA[YICHANG HUMANWELL PHARMACEUTICAL CWE-89]]></title>
-            <description><![CDATA[从对安全的兴趣到学习第一个漏洞，我探索了 OWASP TOP 10，并发现了 Injection 漏洞，尤其是 SQL 注入。漏洞的发现让我认识到安全问题是系统设计和逻辑处理不当的结果。随着学习的深入，发现了更多类型的漏洞，而安全研究也不断拓展。安全领域的探索是一个持续学习和探索的过程，每个人都有自己的独特见解和关注点。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/ycrenfu</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/ycrenfu</guid>
         </item>
         <item>
             <title><![CDATA[CRG FPS 電子競技]]></title>
@@ -174,6 +135,45 @@
             <title><![CDATA[Tsing font]]></title>
             <link>m.ritsu.jiangxue.org//des/tsing</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//des/tsing</guid>
+        </item>
+        <item>
+            <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
+            <description><![CDATA[有时候在做流程图时需要一个好用的绘图软件。我尝试过 Draw.io、Visio、Dia、Graphviz、Umbrello、ProcessOn 等。这些软件各有特色，主要比较的是用户体验和免费程度。Edraw 早期界面像 Visio，现在融入了 Figma 等产品的交互方式。使用时发现它支持复制粘贴 SVG 数据，方便导出无水印流程图。我喜欢支持 SVG 的软件，比如 Figma 和 Illustrator。最喜欢的流程图风格是 IETF RFC 文件中的，用制表符绘制的 ASCII-Art，简洁而美观。]]></description>
+            <link>m.ritsu.jiangxue.org//sec/edrawmax</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/edrawmax</guid>
+        </item>
+        <item>
+            <title><![CDATA[GraphQL Misconfiguration in CWE-16 Github API]]></title>
+            <description><![CDATA[这是我第一次提交漏洞缺陷并且获得赏金等奖励，所以对我来说还是比较难忘的。由于我已经全身心投入到产品设计和开发中，再次发现知名公司或平台的安全漏洞对我来说就像达到了一个里程碑。]]></description>
+            <link>m.ritsu.jiangxue.org//sec/github-misconfiguration</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/github-misconfiguration</guid>
+        </item>
+        <item>
+            <title><![CDATA[CHINA TELECOM IPTV Payment bypass]]></title>
+            <description><![CDATA[发现智能电视机顶盒的网络电视功能，开启了家人的全新娱乐体验。从经典节目到热门电影，一应俱全。不过，发现了一个让人忍不住好奇的漏洞。利用这个小技巧，我们尽情享受了一周的节目，直到漏洞被修复，CNVD 的那份证书让我倍感荣幸。时光流逝，我回顾起四年前的梦想，感慨万分。如今，安全领域的探索已不再是我的重心，但那份热爱和期待依然存在，或许，下一个 CVE 编号就在不远的将来。]]></description>
+            <link>m.ritsu.jiangxue.org//sec/iptv</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/iptv</guid>
+        </item>
+        <item>
+            <title><![CDATA[TOPCHOICE MEDICAL INVESMENT CO., INC]]></title>
+            <link>m.ritsu.jiangxue.org//sec/tcmedical</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/tcmedical</guid>
+        </item>
+        <item>
+            <title><![CDATA[Turing Robot Payment bypass]]></title>
+            <link>m.ritsu.jiangxue.org//sec/turing</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/turing</guid>
+        </item>
+        <item>
+            <title><![CDATA[HENAN YADU MEDICAL GROUP CORPORATION]]></title>
+            <link>m.ritsu.jiangxue.org//sec/yadugroup</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/yadugroup</guid>
+        </item>
+        <item>
+            <title><![CDATA[YICHANG HUMANWELL PHARMACEUTICAL CWE-89]]></title>
+            <description><![CDATA[从对安全的兴趣到学习第一个漏洞，我探索了 OWASP TOP 10，并发现了 Injection 漏洞，尤其是 SQL 注入。漏洞的发现让我认识到安全问题是系统设计和逻辑处理不当的结果。随着学习的深入，发现了更多类型的漏洞，而安全研究也不断拓展。安全领域的探索是一个持续学习和探索的过程，每个人都有自己的独特见解和关注点。]]></description>
+            <link>m.ritsu.jiangxue.org//sec/ycrenfu</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/ycrenfu</guid>
         </item>
     </channel>
 </rss>
