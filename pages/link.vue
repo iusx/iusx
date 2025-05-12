@@ -155,7 +155,7 @@ onMounted(() => {
 main {
   width: 25%;
   margin: 0 auto;
-  @media (max-width: 1440px) {
+  @media (max-width: 900px) {
     width: 60% !important;
   }
   margin-top: 10%;
