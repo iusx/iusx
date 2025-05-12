@@ -141,4 +141,19 @@ Canonical Combining Class Values-> +---->  0;
 U200E 是一个[从左到右的(格式控制字符)] 尽管自身并不显示
 ::
 
+::text-space
+---
+type: tip
+---
+数据文件 UnicodeData.txt 在每条记录中定义了多个属性值。
+当某个字段为空（即两个分号之间没有值）时，表示该属性使用该码点的默认值。<br><br>
+The data file UnicodeData.txt defines many property values in each record.
+When a field in a data line for a code point is empty, that indicates that the property takes the default value for that code point.
+For example:
+
+<code>0022;QUOTATION MARK;Po;0;ON;;;;;N;;;;;</code>
+::
+
+我知道你肯定会在意 `L;;;;;` 中为什么这么多 `;;;` 是不是有什么特殊含义？在 #44 中的 Empty Fields 部分说明了一些愿意，也就是说这些 `;;;` 空的字段默认值：
+
 ::
