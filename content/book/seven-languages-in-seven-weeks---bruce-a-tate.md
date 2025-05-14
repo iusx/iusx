@@ -946,6 +946,22 @@ range(1, 10).filter(even).sum()
 
 ---
 
+## REPL 2
+:text-title{t="REPL" type="2"}
+
+REPL(Read-Eval-Print Loop)，是一种交互式编程环境，可以一行一行地输入代码，立即看到结果，非常适合学习、测试和调试。每个单词都有其含义，很方便理解：
+
+| Name | Info | Exp |
+| --- | --- | --- |
+| Read | 读取输入的表达式 | 你输入一行 Code |
+| Eval | 计算表达式的结果 | 解释器执行这段 Code |
+| Print | 打印输出结果 | 将计算结果显示在终端上 |
+| Loop | 回到开头等待下一行输入 | 循环执行下一条命令 |
+
+这个我们都很熟悉，比如你可以输入 `node` 进入 node.js 的 REPL，输入 `python` 进入 python 的 REPL。当然我一般比较懒，在学习某个语言的时候，例如我不会用到的，例如 io lang、prolog 我会用在线的 REPL 环境，例如 [TIO.RUN](https://tio.run/#) 以及 Lang community 提供的在线 REPL 环境，例如 Scala 的 [scastie](https://scastie.scala-lang.org/)。
+
+---
+
 # Ruby 1
 
 :text-title{:t="01 Ruby"}
@@ -1471,36 +1487,6 @@ html = builder.ul(
 # 打印生成的 HTML
 print(html)
 ```
-
----
-
-## 并发 1
-
-| **特性**          | **描述**                                                                                                  |
-|--------------------|----------------------------------------------------------------------------------------------------------|
-| **协程（Coroutines）** | - 提供主动暂停与恢复的机制，类似拥有多个入口和出口的函数。<br>- 使用 `yield` 主动让出执行权以实现协作式多任务。         |
-| **Actor 模型**      | - 每个对象通过异步消息 (`@@`) 转变为 Actor。<br>- Actor 独立管理状态，通过队列通信，避免竞争条件（Race Condition）。 |
-| **Future（未来值）** | - 异步调用返回的结果对象，允许程序继续执行，结果可用时阻塞获取。<br>- 支持自动死锁检测，适合复杂并发场景。                |
-
-| **Io 的并发优势**       | **描述**                                                                                               |
-|-------------------------|-------------------------------------------------------------------------------------------------------|
-| **主动式多任务**         | - 与 Java/C 的抢占式不同，协程让程序在合理点主动暂停，减少资源竞争和调试难度。                                     |
-| **线程安全性**           | - Actor 模型通过受控队列管理状态，避免线程直接修改彼此状态的问题，消除了竞争条件的风险。                                |
-| **灵活性与易用性**       | - `@@` 语法简单易用，能快速将对象转变为 Actor，同时内置现代并发模型（协程、Actor、Future）。                     |
-| **性能优化**            | - 即使单线程性能一般，Io 的并发机制让多线程任务更易编写，并提供更高的执行效率，适合高并发需求的程序设计。                 |
-
-| **具体实现方式**                    | **代码示例**                                                                                 |
-|------------------------------------|---------------------------------------------------------------------------------------------|
-| **协程**                           | ```io<br>vizzini talk := method(<br>"message" println; yield)<br>vizzini @@talk```            |
-| **Actor 模型**                     | ```io<br>slower start := method(wait(2); println("slow"))<br>slower @@start```               |
-| **Future（未来值）**               | ```io<br>futureResult := URL with("http://google.com/") @fetch```                            |
-
-| **为什么 Io 的并发厉害**             | **描述**                                                                                     |
-|------------------------------------|---------------------------------------------------------------------------------------------|
-| **现代模型**                       | - 协程、Actor 和 Future 等现代并发技术内置，减少程序设计复杂性。                                         |
-| **更易测试与调试**                 | - 主动式多任务避免了抢占式多线程的不可预测性，程序行为更可预测。                                            |
-| **灵活且强大**                     | - 支持动态修改对象行为，甚至自定义语法，同时提供线程安全的并发模型。                                         |
-| **跨语言启发**                     | - Io 的 Actor 模型在 Scala、Erlang 等语言中有广泛应用，其并发设计影响深远。                                   |
 
 ---
 
@@ -2539,7 +2525,74 @@ Scala 明确区分了可变（mutable）对象和不可变（immutable）类，�
 | 数组       | `array`              | `arraybuffer`                         | `array` 不是集合框架成员，但常用 |
 | 特殊集合   | `range`, `emptyset`           |                                               | 用于构造或默认空集合值 |
 
-(真的是太多了，可能不是很全)
+(真的是太多了，可能不是很全，大致了解下)
+
+---
+
+## 并发 2
+:text-title{t="并发"}
+
+::text-space
+---
+type: tip
+---
+一个语言对可变性和不可变性的支持程度，直接影响它在并发编程中的优势与设计难度。
+::
+
+上面这句话基本上就可以衡量一个语言在并发上的优势。例如不可变结构在多线程共享、无锁共享数据结构使用场景。但在此之前，我可以借助 scala 了解下一些并发模型，这样可以更加理解并发，同时适应于其他语言(毕竟模型一样，只不过语法变了)。
+
+### Future / Promise 1
+:text-title{t="Future / Promise" type="2"}
+
+[Future / Promise](https://en.wikipedia.org/wiki/Futures_and_promises) 一般他们是同时出现的，中文直译就是 “未来与承诺”。但是在 CS 中，有很多关于并发的专业名字，例如：
+
+
+| Name | Desc | Chinese |
+| --- | --- | --- |
+| future | 值将在未来某时可用。通常由系统或框架执行任务并返回。| 未来 | 
+| promise| 手动控制 Future 的完成。开发者显式 resolve/reject | 承诺 |
+| delay |  尚未开始执行的任务（延迟计算），强调“推迟” | 延迟 |
+| deferred | 一种控制句柄，表示延迟+手动完成的组合 | 推迟 |
+
+在 Scala 文档的 [Concurrency](https://docs.scala-lang.org/scala3/book/concurrency.html) 部分中，介绍了 `scala.concurrent.Future` 并且也有社区写的文档，例如 [Future and Promise](https://docs.scala-lang.org/overviews/core/futures.html):
+
+```
+import scala.concurrent.{Future, Promise}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Success, Failure}
+import scala.concurrent.Await
+import scala.concurrent.duration._
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    // Future
+    val future = Future {
+      Thread.sleep(1000)
+      "Hello from Future!"
+    }
+    
+    future.onComplete {
+      case Success(msg) => println(msg)
+      case Failure(e) => println(s"Error: ${e.getMessage}")
+    }
+    
+    // Promise
+    val promise = Promise[String]()
+    val futureFromPromise = promise.future
+    
+    futureFromPromise.foreach(msg => println(msg))
+    
+    Future {
+      Thread.sleep(800)
+      promise.success("Hello from Promise!")
+    }
+ 
+    // 最多等待 3ms
+    Await.result(Future.sequence(Seq(future, futureFromPromise)), 3.seconds)
+    println("END")
+  }
+}
+```
 
 
 ::
