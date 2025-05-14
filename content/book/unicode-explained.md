@@ -23,7 +23,7 @@ panic!("\U+2067")
 # Trojan Source 1
 :text-title{t="Trojan Source"}
 
-所以我尝试 Google 了很多次，但都是搜索不到相关的，更多的是 rust 和 go 相关的结果。之后一位群友说这是 **utf-8的奇妙魔力**，我才详细的了解了 unicode。并且找到了一个非常有趣的 CVE 编号，即 [CVE-2021-42574](https://nvd.nist.gov/vuln/detail/CVE-2021-42574) 这种类似的缺陷叫作 ["Trojan Source"](https://en.wikipedia.org/wiki/Trojan_Source)，中文直译就是 **木马来源**，泛指 **不可见的漏洞**。
+所以我尝试 Google 了很多次，但都是搜索不到相关的，更多的是 rust 和 go 相关的结果。之后[灵云](https://github.com/liinyun)说这是 **UTF-8的奇妙魔力**，我才详细的了解了 unicode。并且找到了一个非常有趣的 CVE 编号，即 [CVE-2021-42574](https://nvd.nist.gov/vuln/detail/CVE-2021-42574) 这种类似的缺陷叫作 ["Trojan Source"](https://en.wikipedia.org/wiki/Trojan_Source)，中文直译就是 **木马来源**，泛指 **不可见的漏洞**。
 
 维基百科的解释是："它滥用 Unicode 的双向字符来显示源代码 ，而不是源代码的实际执行。**该漏洞利用了不同阅读方向的书写脚本在计算机上的显示和编码方式。**" 根据维基百科提供的详细信息，貌似可以快速入门 unicode。但我的计划是先阅读这本书，了解 unicode 做什么，有什么用在进一步学习。
 
