@@ -146,8 +146,9 @@ h6 {
   margin: 100px;
   border-color: #ffffff6b;
 }
-.dark-mode .markdown-content pre, .markdown-content code {
-    border: 1px solid #363636 !important;
+.dark-mode .markdown-content pre,
+.markdown-content code {
+  border: 1px solid #363636 !important;
 }
 
 .dark-mode .markdown-content img {
@@ -307,13 +308,34 @@ h6 {
 
   .MathJax {
     display: inline-block;
-    white-space: normal !important;
-    overflow-wrap: break-word;
+    max-width: 100%;
+    overflow-x: auto;
     word-wrap: break-word;
-    width: 100%;
+    white-space: normal;
+    box-sizing: border-box;
+  }
+  @media (max-width: 768px) {
+    table,
+    thead,
+    tbody,
+    tr,
+    td,
+    th {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      margin-bottom: 15px;
+      border: 1px solid #3d3d3d29;
+    }
   }
 }
 
 .dark-mode .markdown-content h1 {
   color: rgba(255, 255, 255, 0.588);
+}
+
+.dark-mode tr {
+  border: 1px solid #373737;
 }
