@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 14 May 2025 12:56:04 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 14 May 2025 14:59:51 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -45,11 +45,6 @@
             <title><![CDATA[Seven Languages in Seven Weeks]]></title>
             <link>m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</guid>
-        </item>
-        <item>
-            <title><![CDATA[Seven Languages in Seven Weeks]]></title>
-            <link>m.ritsu.jiangxue.org//book/test</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/test</guid>
         </item>
         <item>
             <title><![CDATA[Tools config]]></title>
