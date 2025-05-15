@@ -114,4 +114,24 @@ return {
   },
 }
 ```
+
+## Substitute 2
+:text-title{t="Substitute" type='2'}
+
+其实看 [Substitute](https://neovim.io/doc/user/change.html#%3Asubstitute) 原文就挺好的，但是我太懒了，English 很弱鸡。所以我的理解 `:s` 就是将这个用于全局替换。
+
+```
+:[range]s[ubstitute]/{pattern}/{string}/[flags] [count]
+```
+
+虽然有很多参数，但我常用的就两个：
+
+```
+:%s/foo/bar/g
+---
+:%g/foo/d
+```
+
+
+
 ::

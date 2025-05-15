@@ -2594,6 +2594,76 @@ object Main {
 }
 ```
 
+这个流程其实非常简单，主打一个 `Future / Promise`, 他的流程是这样的：
+
+```
+[主线程]
+  │
+  ├─ 创建Future → 后台线程执行计算 → 完成后触发回调
+  │
+  └─ 创建Promise → 获取关联Future → 设置回调
+        │
+        └─ 另一个线程完成Promise → 触发关联Future的回调
+```
+
+所以这个模型的核心思想是 **将结果的产生和消费解耦，让主线程不被阻塞。** 通过回调处理异步结果。想象一下这样的场景：
+
+```
+Future 就像你的外卖订单：
+你下单后(Future { ... })继续做自己的事
+设置回调(foreach)相当于告诉外卖员："送到后打电话给我"
+
+---
+
+Promise 就像餐厅的接单系统：
+餐厅收到订单创建了一个承诺(Promise)
+厨房工作完成后调用promise.success(餐品)
+与你关联的外卖订单(futureFromPromise)会自动更新状态
+
+---
+
+Delay 就是明确告诉你预计 30 分钟后取餐
+(Thread.sleep)
+
+---
+
+Deferred 就是给你个订单号，告诉你商家正在准备中…… 弄好了再告诉你
+
+import scala.concurrent.{Future, Promise}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Success, Failure}
+
+class Deferred[T] {
+  private val promise = Promise[T]()
+  val future: Future[T] = promise.future
+  
+  def complete(value: T): Unit = promise.success(value)
+  def fail(ex: Throwable): Unit = promise.failure(ex)
+}
+
+object DeferredDemo extends App {
+  // Deferred
+  val deferredResult = new Deferred[String]()
+  
+  println("哈哈外卖提醒您！商家正在备货中~")
+  
+  // 2. 回调
+  deferredResult.future.onComplete {
+    case Success(value) => println(s"收到结果: $value")
+    case Failure(ex)    => println(s"操作失败: ${ex.getMessage}")
+  }
+  
+  // 模拟异步操作完成后完成Deferred
+  Future {
+    Thread.sleep(2000) 
+    deferredResult.complete("完成啦！!")
+  }
+  
+  Thread.sleep(3000)
+  println("演示结束")
+}
+```
+
 
 ::
 
