@@ -38,16 +38,11 @@ onMounted(() => {
 
 <template>
   <main>
-    <Swiper
-      :modules="[SwiperAutoplay, SwiperEffectCreative]"
-      :slides-per-view="1"
-      :loop="true"
-      :effect="'creative'"
+    <Swiper :modules="[SwiperAutoplay, SwiperEffectCreative]" :slides-per-view="1" :loop="true" :effect="'creative'"
       :autoplay="{
         delay: 5000,
         disableOnInteraction: true,
-      }"
-      :creative-effect="{
+      }" :creative-effect="{
         prev: {
           shadow: false,
           translate: ['-20%', 0, -1],
@@ -55,16 +50,12 @@ onMounted(() => {
         next: {
           translate: ['100%', 0, 0],
         },
-      }"
-    >
+      }">
       <SwiperSlide v-for="(item, index) in images" :key="index">
         <div v-if="loading">
           <an-skeleton :loading="loading" ref="skeletonRef">
             <template #template>
-              <an-skeleton-item
-                variant="image"
-                style="width: 100vw; height: 80vh"
-              />
+              <an-skeleton-item variant="image" style="width: 100vw; height: 80vh" />
               <div style="padding: 14px">
                 <an-skeleton-item variant="h3" style="width: 50%" />
               </div>
@@ -88,9 +79,11 @@ onMounted(() => {
 img {
   width: 100%;
 }
+
 a:hover .tips {
   opacity: 0;
 }
+
 .tips {
   position: absolute;
   color: #ffffff;
@@ -101,16 +94,26 @@ a:hover .tips {
   padding: 10px;
   transition: opacity 0.3s ease;
 }
+
 .info {
   display: flex;
   margin-top: 0.4em;
+
   .info-title {
+    @media (max-width: 500px) {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+
     margin: 0;
     line-height: 1;
     font-size: 14px;
     color: #7f7f7f;
     padding-right: 3em;
   }
+
   img {
     width: 61px;
   }
