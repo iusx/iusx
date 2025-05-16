@@ -962,6 +962,70 @@ REPL(Read-Eval-Print Loop)，是一种交互式编程环境，可以一行一行
 
 ---
 
+## EDA 2
+:text-title{t="事件驱动架构" type=2}
+
+[事件驱动架构（EDA, Event-driven architecture)(https://en.wikipedia.org/wiki/Event-driven_architecture) 一句话概括就是以 **事件驱动的** 。要理解 EDA 很简单的方式就是了解事件。其核心思想是 **系统中的行为由“事件”的发生来驱动**，例如:
+
+```
+[User Clicks Button]
+      ↓
+[Event Producer: UI 层构造 ClickedEvent]
+      ↓
+[Event Channel: Kafka 传递事件]
+      ↓
+[Event Processor: Akka Actor 解析并调用服务]
+      ↓
+[Downstream: 更新订单系统，发送确认邮件]
+```
+
+1.事件发布者(Event producer)
+- 用户点击了按钮（UI事件）
+- 文件上传成功（系统事件）
+- 新订单创建（业务事件）
+- 接收到一条消息（网络事件）
+
+
+2.事件通道(Event producer)
+- 事件传递的媒介（如消息队列 Kafka、Akka EventStream）
+
+3.事件处理引擎（Event Processing Engine）
+- 负责识别事件、执行业务逻辑，触发下游动作。
+- 业务反应：更新库存、发送通知、调用微服务
+- 规则判断：结合业务规则系统进行复杂事件处理（CEP）
+
+4.下游事件驱动行为（Downstream Event-Driven Activity）
+- 事件处理结果带来的后续行为，可是自动的，也可能是通知型的。
+- 通知类操作：发送邮件、短信、推送消息
+- 状态更新：更新数据库、状态缓存
+- 触发新的事件：继续发出后续事件，形成事件链
+- 系统响应：响应用户 UI，改变页面内容
+
+这些“事件”被捕捉到之后，会通知相应的处理逻辑去做一些事。上面这四个逻辑叫 "Event flow layers(事件流层)":
+
+| 层级 | 名称                     | 功能描述 |
+|------|--------------------------|----------|
+| 1    | **Event Producer**       | 监听/感知事件，构造为事件结构。可为传感器、系统、服务。 |
+| 2    | **Event Channel**        | 事件传递通道。负责把事件从生产者发送到处理者（消息队列、TCP、日志等）。 |
+| 3    | **Event Processing Engine** | 核心业务逻辑。判断事件类型，做出反应、触发动作。 |
+| 4    | **Downstream Activity**  | 后续动作，如发送通知、更新数据库、触发下游服务等。 |
+
+
+预支相对应的还有很多类型的驱动，例如：
+
+| 驱动方式           | 核心触发点     | 特点/用途                          | 示例或代表技术         |
+|--------------------|----------------|-------------------------------------|-------------------------|
+| 事件驱动           | 系统中事件     | 解耦、并发好                       | Akka, Kafka, ZIO        |
+| 请求/命令驱动      | 明确调用       | 同步逻辑、明确流向                 | REST API, RPC, CQRS     |
+| 数据驱动           | 数据变化       | 数据核心、处理流程灵活             | ETL, Pandas, SQL Trigger|
+| 配置驱动           | 配置文件       | 灵活部署、低代码                   | Spring Boot, Kubernetes |
+| 时间驱动           | 时间点         | 定时任务、周期性处理               | Cron, Airflow, Spark    |
+| 状态驱动           | 状态转移       | 有限流程系统、自动机控制           | FSM, 工作流引擎         |
+| 用户驱动           | 用户输入       | 高交互性 UI 系统                   | React, Android, Game    |
+| 测试驱动开发       | 单元测试       | 代码质量好、文档即测试             | JUnit, ScalaTest        |
+
+---
+
 # Ruby 1
 
 :text-title{:t="01 Ruby"}
@@ -2664,6 +2728,99 @@ object DeferredDemo extends App {
 }
 ```
 
+
+---
+
+## Akka Actor 1
+:text-title{t="Akka Actor" type="2"}
+
+要理解 Akka Actor，首先要理解 [Actor Model](https://en.wikipedia.org/wiki/Actor_model)。在维基百科中，描述了 Actor 的一个理解：
+
+::text-space
+---
+type: tip
+---
+万物皆可 Actor<br>
+everything is an actor
+::
+
+类似于面向对象中的 “万物皆可对象”，Actor 应该是：“角色扮演”，例如你有一家快递公司：
+
+```
+[快递公司运作流程]
+  顾客 → 快递员 → 分拣中心 → 配送站 → 收件人
+```
+
+那么上面的流程中，每个角色都是一个 Actor，所以可以划分为：
+
+| 角色 | Actor | 特点 |
+| --- | --- | --- |
+| 快递员	 | 单个 Actor	 | 只负责自己片区，不知道其他快递员在干嘛 |
+| 快递包裹	 | 消息（Message）	 | 只有包裹里的信息（不能直接打电话问快递员"你在哪"） |
+| 快递柜	 | 邮箱（Mailbox）	 | 快递员只有送到柜子里的包裹才会处理 |
+| 片区经理	 | 父级 Supervisor	 | 快递员生病了（崩溃）由经理决定是否换人 |
+| 公司总部	 | Actor System	 | 整个快递网络的基础框架 |
+
+如果你要映射到 Code， 可以这么想，假设现在有100个包裹要配送：
+
+| 方式 | 传统多线程做法 | Actor mode | VS |
+| --- | --- | --- | --- | 
+| 资源分配 | 创建100个快递员（线程）	 | 固定10个快递员轮流处理	 | 线程太多会崩溃 |
+| 沟通方式 | 快递员互相打电话问路（共享内存）	 | 只通过包裹上的地址（消息传递）	 | 避免"堵车死锁" |
+| 错误处理	 | 一个快递员车祸导致整个系统瘫痪 | 该快递员路线由经理重新分配（监督策略）	 | 局部故障不影响整体 |
+| 状态管理	 | 所有快递员共享实时地图	 | 每个快递员有自己的笔记本记录	 | 避免地图被同时修改出错 |
+
+所以 Actor 有点像是反应式的设计思路，例如其核心就是：
+
+1. 绝不共享：就像快递员不会共用同一辆货车（每个Actor有自己的状态）
+2. 只认包裹：就像快递员只按包裹信息送货（只通过消息通信）
+3. 各司其职：就像快递员不会突然去帮客服接电话（单一职责）
+
+
+### Akka Actor 2
+:text-title{t="Akka Actor" type="2"}
+
+了解完了 Actor mode ，可以了解 akka，
+
+```
+import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
+import akka.actor.typed.scaladsl.Behaviors
+
+object Main {
+  // 消息协议
+  final case class Greet(whom: String, replyTo: ActorRef[Greeted])
+  final case class Greeted(whom: String, from: ActorRef[Greet])
+
+  // HelloWorld Actor
+  def helloWorld(): Behavior[Greet] = Behaviors.receive { (context, message) =>
+    println(s"Hello ${message.whom}!")
+    message.replyTo ! Greeted(message.whom, context.self)
+    Behaviors.same
+  }
+
+  // main Actor
+  def mainBehavior(): Behavior[Greeted] = Behaviors.setup { context =>
+    // create HelloWorld Actor
+    val greeter = context.spawn(helloWorld(), "helloWorld")
+    
+    // send
+    greeter ! Greet("Akka", context.self)
+
+    Behaviors.receiveMessage { message =>
+      println(s"${message.from.path.name} 已问候 ${message.whom}")
+      Behaviors.stopped
+    }
+  }
+
+  def main(args: Array[String]): Unit = {
+    // create Actor system
+    val system = ActorSystem(mainBehavior(), "DemoSystem")
+    
+    Thread.sleep(1000)
+    system.terminate()
+  }
+}
+```
 
 ::
 
