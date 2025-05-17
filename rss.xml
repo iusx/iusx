@@ -4,53 +4,8 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 17 May 2025 07:55:42 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 17 May 2025 12:39:19 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
-        <item>
-            <title><![CDATA[24 hour]]></title>
-            <link>m.ritsu.jiangxue.org//book/24-hour</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/24-hour</guid>
-        </item>
-        <item>
-            <title><![CDATA[Criminal Minds]]></title>
-            <link>m.ritsu.jiangxue.org//book/criminal_minds</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/criminal_minds</guid>
-        </item>
-        <item>
-            <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
-            <link>m.ritsu.jiangxue.org//book/attacking-network-protocols</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/attacking-network-protocols</guid>
-        </item>
-        <item>
-            <title><![CDATA[문재인의 운명]]></title>
-            <link>m.ritsu.jiangxue.org//book/fate-of-moon-jae-in</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/fate-of-moon-jae-in</guid>
-        </item>
-        <item>
-            <title><![CDATA[游戏]]></title>
-            <link>m.ritsu.jiangxue.org//book/game-life</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/game-life</guid>
-        </item>
-        <item>
-            <title><![CDATA[西游记]]></title>
-            <link>m.ritsu.jiangxue.org//book/journey-to-the-west</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/journey-to-the-west</guid>
-        </item>
-        <item>
-            <title><![CDATA[快捷键备忘录]]></title>
-            <link>m.ritsu.jiangxue.org//book/key-note</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/key-note</guid>
-        </item>
-        <item>
-            <title><![CDATA[Seven Languages in Seven Weeks]]></title>
-            <link>m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</guid>
-        </item>
-        <item>
-            <title><![CDATA[Unicode Explained]]></title>
-            <link>m.ritsu.jiangxue.org//book/unicode-explained</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/unicode-explained</guid>
-        </item>
         <item>
             <title><![CDATA[CRG FPS 電子競技]]></title>
             <link>m.ritsu.jiangxue.org//des/crg-fps</link>
@@ -169,6 +124,51 @@
             <description><![CDATA[从对安全的兴趣到学习第一个漏洞，我探索了 OWASP TOP 10，并发现了 Injection 漏洞，尤其是 SQL 注入。漏洞的发现让我认识到安全问题是系统设计和逻辑处理不当的结果。随着学习的深入，发现了更多类型的漏洞，而安全研究也不断拓展。安全领域的探索是一个持续学习和探索的过程，每个人都有自己的独特见解和关注点。]]></description>
             <link>m.ritsu.jiangxue.org//sec/ycrenfu</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/ycrenfu</guid>
+        </item>
+        <item>
+            <title><![CDATA[24 hour]]></title>
+            <link>m.ritsu.jiangxue.org//book/24-hour</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/24-hour</guid>
+        </item>
+        <item>
+            <title><![CDATA[Criminal Minds]]></title>
+            <link>m.ritsu.jiangxue.org//book/criminal_minds</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/criminal_minds</guid>
+        </item>
+        <item>
+            <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
+            <link>m.ritsu.jiangxue.org//book/attacking-network-protocols</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/attacking-network-protocols</guid>
+        </item>
+        <item>
+            <title><![CDATA[문재인의 운명]]></title>
+            <link>m.ritsu.jiangxue.org//book/fate-of-moon-jae-in</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/fate-of-moon-jae-in</guid>
+        </item>
+        <item>
+            <title><![CDATA[游戏]]></title>
+            <link>m.ritsu.jiangxue.org//book/game-life</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/game-life</guid>
+        </item>
+        <item>
+            <title><![CDATA[西游记]]></title>
+            <link>m.ritsu.jiangxue.org//book/journey-to-the-west</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/journey-to-the-west</guid>
+        </item>
+        <item>
+            <title><![CDATA[快捷键备忘录]]></title>
+            <link>m.ritsu.jiangxue.org//book/key-note</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/key-note</guid>
+        </item>
+        <item>
+            <title><![CDATA[Seven Languages in Seven Weeks]]></title>
+            <link>m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</guid>
+        </item>
+        <item>
+            <title><![CDATA[Unicode Explained]]></title>
+            <link>m.ritsu.jiangxue.org//book/unicode-explained</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/unicode-explained</guid>
         </item>
     </channel>
 </rss>
