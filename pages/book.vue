@@ -85,12 +85,12 @@ main {
 }
 
 .note-book {
-  display: flex;
   width: 100%;
-  flex: 2;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 300px;
+  margin-top: 30px;
 
   .note-book-box {
     width: 22vw;

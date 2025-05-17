@@ -3,7 +3,7 @@
 "director": "Bruce A. Tate"
 "time": "2025.01.08"
 img: "08/1.png"
-plan: "153,323"
+plan: "167,323"
 ---
 
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}
