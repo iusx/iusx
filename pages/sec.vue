@@ -26,7 +26,7 @@ const sortedData = computed(() => equalQuerySec.value);
       <div class="main-title">
         <p>My Vulnerability</p>
         <an-typing> Report </an-typing>
-        <span>SECURITY</span>
+        <span>SEC<br>URITY</span>
         <Icon class="red" name="RedIcon" />
       </div>
       <div class="content-layout">
@@ -193,8 +193,16 @@ main {
   justify-content: space-around;
 
   .main-title {
+    width: 80%;
+
     p {
       font-size: 60px;
+
+      @media (max-width: 400px) {
+        font-size: 30px;
+      }
+
+
       color: #ef0000;
       font-weight: 600;
       z-index: 10;
@@ -205,9 +213,24 @@ main {
     span {
       color: transparent;
       -webkit-text-stroke: 1px #dfdfdf;
+      font-family: tsing;
       font-size: 330px;
       position: absolute;
-      top: 0;
+
+      z-index: -10;
+      line-height: 141px;
+      top: 8%;
+
+      @media (max-height: 500px) {
+        font-size: 100px;
+      }
+
+      @media (max-width: 500px) {
+        font-size: 140px;
+        line-height: 60px;
+        top: 5%;
+      }
+
       z-index: 0;
     }
 

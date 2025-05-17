@@ -1,5 +1,6 @@
 <template>
-  <main></main>
+  <main>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -10,24 +11,10 @@ const props = defineProps({
   },
 });
 
-const hasUrl = ref(false);
-
 onMounted(() => {
-  if (props.url) {
-    hasUrl.value = true;
-    window.location.href = props.url;
-  } else {
-    history.back();
-  }
+  setTimeout(() => {
+    window.location.href = '/'
+  }, 1000);
 });
 
-watch(
-  () => props.url,
-  (newUrl) => {
-    if (newUrl && !hasUrl.value) {
-      hasUrl.value = true;
-      window.location.href = newUrl;
-    }
-  },
-);
 </script>

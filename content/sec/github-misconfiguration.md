@@ -4,7 +4,7 @@ description: "这是我第一次提交漏洞缺陷并且获得赏金等奖励，
 director: "ritsu"
 time: "2023.12.04"
 platform: "github"
-img: "02/1.png"
+img: "sec/02/1.png"
 info: "https://hackerone.com/iepn"
 types: "cc"
 client: "Github"
@@ -27,7 +27,7 @@ type: tip
 
 ::text-space
 ---
-img: 02/info/1.png
+img: sec/02/info/1.png
 info: Figure 1 | I was lucky enough to receive their physical stickers and pins 13 years after they were proposed.  Their designers are @KimEstoesta and @Cameron McEfee.
 ---
 ::

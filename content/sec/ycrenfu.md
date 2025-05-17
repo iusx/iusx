@@ -7,7 +7,7 @@ description: "从对安全的兴趣到学习第一个漏洞，我探索了 OWASP
 "info": "http://www.ycrenfu.com.cn/"
 types: "cc"
 client: "Guosen Technology"
-img: "05/1.png"
+img: "sec/05/1.png"
 ---
 
 ::main-content{:title="title" :client="client" :time="time" :img="img" :info="info" :types="types"}
@@ -20,7 +20,7 @@ img: "05/1.png"
 
 ::text-space
 ---
-img: 05/info/1.png
+img: sec/05/info/1.png
 type: flat
 info: 图源 1 | OWASP TOP TEN:Globally recognized by developers as the first step towards more secure coding.
 ---

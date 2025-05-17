@@ -4,7 +4,7 @@ description: "发现智能电视机顶盒的网络电视功能，开启了家人
 director: "ritsu"
 time: "2020.02.04"
 platform: "cnvd"
-img: "03/1.png"
+img: "sec/03/1.png"
 info: "https://www.cnvd.org.cn/flaw/show/1976603"
 types: "cc"
 client: "CHINA TELECOM"
@@ -33,7 +33,7 @@ type: tip
 
 ::text-space
 ---
-img: 03/info/1.png
+img: sec/03/info/1.png
 type: flat
 info: 图源 1 | 来自 vsupport@cert.org.cn 的邮件通知，用的可是国家互联网应急中心的域发的哦！！！
 ---

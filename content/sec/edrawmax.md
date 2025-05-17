@@ -5,7 +5,7 @@ description: "有时候在做流程图时需要一个好用的绘图软件。我
 "time": "2021.03.17"
 "platform": "cnvd"
 types: "cc"
-img: "04/1.png"
+img: "sec/04/1.png"
 info: "https://www.edrawsoft.com/"
 client: "Edraw Software"
 ---
@@ -27,7 +27,7 @@ client: "Edraw Software"
 
 ::text-space
 ---
-img: 04/info/1.png
+img: sec/04/info/1.png
 info: 图 2 ｜ 通过邮政发送的计算机软件著作权登记证书，说实话没有想象中的那么开心和愉悦，果然未曾得到的都在骚动。
 ---
 ::
