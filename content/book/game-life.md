@@ -2,7 +2,7 @@
 "title": "游戏"
 "director": "N/A"
 "time": "2025"
-img: "10/1.png"
+img: "game/1.png"
 plan: "100,100"
 ---
 

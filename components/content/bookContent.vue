@@ -93,13 +93,13 @@ const percentage = computed(() => {
       <div class="more" @click="showWorkPop">Directory</div>
     </div>
     <div class="book-info book-table" v-if="isWorkPopVisible">
-      <Icon name="DesClose" size="2.2vh" style="cursor: pointer" class="pop-close" @click="hideWorkPop" />
+      <p style="cursor: pointer" class="pop-close" @click="hideWorkPop">CLOSE</p>
       <div class="book-info-home-img">
         <div class="no-img" v-if="loading" style="width: 50% !important"></div>
         <img v-else :src="'/img/book/' + props.img" alt="book-home" />
         <div class="book-info-author">
-          <p>By James Forshaw</p>
-          <span>be reading 10%</span>
+          <p>By {{ by }}</p>
+          <span>be reading {{ percentage }}%</span>
         </div>
       </div>
       <div class="title">
@@ -158,10 +158,11 @@ const percentage = computed(() => {
 }
 
 .pop-close {
-  cursor: pointer;
-  width: 3vw;
-  height: 7vw;
+  font-family: 'tsing';
+  position: absolute;
   color: #000;
+  font-weight: bold;
+  right: 10px;
 }
 
 .dark-mode .pop-close {
@@ -170,6 +171,8 @@ const percentage = computed(() => {
 
 .more {
   color: white;
+  font-family: 'tsing';
+  cursor: pointer;
 }
 
 .an {
@@ -192,6 +195,7 @@ const percentage = computed(() => {
   height: 100vh;
   overflow: auto;
   padding-right: 1vw;
+  z-index: 99999999;
 
   img {
     width: 100%;
