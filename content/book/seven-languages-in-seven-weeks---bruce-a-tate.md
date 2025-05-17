@@ -2731,7 +2731,7 @@ object DeferredDemo extends App {
 
 ---
 
-## Akka Actor 1
+### Akka Actor 1
 :text-title{t="Akka Actor" type="2"}
 
 要理解 Akka Actor，首先要理解 [Actor Model](https://en.wikipedia.org/wiki/Actor_model)。在维基百科中，描述了 Actor 的一个理解：
@@ -2777,10 +2777,10 @@ everything is an actor
 3. 各司其职：就像快递员不会突然去帮客服接电话（单一职责）
 
 
-### Akka Actor 2
+#### Akka Actor 2
 :text-title{t="Akka Actor" type="2"}
 
-了解完了 Actor mode ，可以了解 akka，
+了解完了 Actor mode ，可以了解 [akka](https://en.wikipedia.org/wiki/Akka_(toolkit))，akka 是一个公司，也是一个包。最早实现于 2006 年，感觉这种并发一般会和分布式、微服务之类的架构建立联系，所以详情可以去看 [akka docs](https://doc.akka.io/libraries/akka-core/current/typed/actors.html) 写的还是很全的。在 Scala 中可以  `import akka.actor` 来使用 Akka actor
 
 ```
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
@@ -2821,6 +2821,42 @@ object Main {
   }
 }
 ```
+
+---
+
+### ZIO 2
+:text-title{t="ZIO" typo="2"}
+
+ZIO 是一个 **类型安全、可组合异步和并发编程** 的一个框架，其和新的是 ZIO 数据类型。分为了 R、E、A 三种，分别代表：
+
+| Type | Info | 
+| --- |--- |
+| R | 环境类型参数，表示需要的上下文值。|
+| E | 错误类型参数，表示可能出现的错误类型。 |
+| A | 成功值类型参数，表示成功结果的类型。 |
+
+当然还有很多类型别名啊，可以根据 [zio docs](https://zio.dev/overview/summary) 来进行学习，例如 `UIO[A]`、`URIO[R, A]` 什么的。也就是说啊：
+
+::text-space
+---
+type: tip
+---
+它需要一个环境类型参数 R，并产生一个失败的类型 E 或一个成功值的类型 A。<br>
+<b>这就很哲学，例如你做一个产品[R]，可能会赚到 money[A]，也可能没有赚到 money[E]</b>
+
+你还可以把一些类型别名带进去，例如 `IO[E, A]` 那就是 “这个项目可能因为 `E` 没有赚到 money，或者因为 `A` 而赚到 money”
+::
+
+ZIO 这个框架的核心还是很方便代入的，例如 `ZIO[R, E, A]`:
+
+| Type | Vs | Tech |
+| --- | --- | --- |
+| R | 你创业需要的初始资源（办公场地[R=Office]、启动资金[R=Capital]）	 | 执行所需的环境依赖（数据库连接、配置等） |
+| E | 可能遭遇的失败类型（资金断裂[E=Bankrupt]、政策风险[E=Regulation]）	 | 可能发生的错误类型（IOException、TimeoutException等） |
+| A | 最终获得的成功成果（上市[A=IPO]、盈利[A=Profit]）	 | 计算成功返回的结果（用户数据、交易ID等） |
+
+
+大致看了下文档，可惜在 scastie 上跑有些问题，自己又不想弄本地的 ZIO 环境，所以还是算了。以后用到的时候在仔细体验，但这个框架理解起来还是蛮简单的。
 
 ::
 
