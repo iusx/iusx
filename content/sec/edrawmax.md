@@ -42,7 +42,7 @@ info: 图 2 ｜ 通过邮政发送的计算机软件著作权登记证书，说�
 
 ::text-space
 ---
-img: 04/info/2.png
+img: sec/04/info/2.png
 info: 图 1 ｜ IETF RFC 上的流程图，通过简单的制表符表达出的一些流程信息，在 authors 中有明确的写作指南和风格。
 ---
 ::
