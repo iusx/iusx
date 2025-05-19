@@ -27,7 +27,8 @@ panic!("\U+2067")
 
 维基百科的解释是："它滥用 Unicode 的双向字符来显示源代码 ，而不是源代码的实际执行。**该漏洞利用了不同阅读方向的书写脚本在计算机上的显示和编码方式。**" 根据维基百科提供的详细信息，貌似可以快速入门 unicode。但我的计划是先阅读这本书，了解 unicode 做什么，有什么用在进一步学习。
 
-有趣的是，这一 CVE 影响了类似所有使用 Unicode 规范的环境，例如 Github。如果提交的信息包含 unicode code，那么会有一个警告：
+最近有了一个利用 unicode 进行供应链攻击的例子，攻击者利用 Unicode 字符插入不可见的数据，但在 Github 中看起来是和原来一样的，只是不可见。详情可以阅读 [GitHub now provides a warning about hidden Unicode text](https://github.blog/changelog/2025-05-01-github-now-provides-a-warning-about-hidden-unicode-text/)
+有趣的是，这一问题导致了 Github 所有使用 Unicode 特殊字符的提交被严格限制，如果提交的信息包含 unicode code，那么会有一个警告：
 
 ::text-tip{type="big"}
 This diff contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters. [Learn more about bidirectional Unicode characters](https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/)

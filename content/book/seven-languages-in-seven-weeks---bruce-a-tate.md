@@ -3,7 +3,7 @@
 "director": "Bruce A. Tate"
 "time": "2025.01.08"
 img: "08/1.png"
-plan: "167,323"
+plan: "181,323"
 ---
 
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}
@@ -685,6 +685,10 @@ cat.speak()  # 输出: Whiskers makes a sound.
 对象（Object）
 - 对象是具体的东西，是从类里“制造”出来的实例。
 - 动物类中的“狗狗”对象，名字是“Buddy”，种类是“狗”。
+
+方法 (Method）
+- 绑定到特定对象的行为
+- 定义在类中的函数，必须通过对象调用，例如 `speak` 
 
 如果没有面向对象，可复用性几乎为 0：
 
@@ -2181,6 +2185,35 @@ type: tip
 2025: 说的太对了
 ::
 
+例如 Scala 是 OOP × FP 混合的编程范式，所以有面向对象和函数式范式的应用:
+
+```
+case class 咖啡机(品牌: String) {
+  // OOP
+  def 制作咖啡(类型: String): String = 
+    // FP
+    val 配方 = 类型 match {
+      case "拿铁" => (咖啡量: Int) => s"${咖啡量}ml咖啡+200ml奶"
+      case _ => (咖啡量: Int) => s"${咖啡量}ml纯咖啡"
+    }
+    配方(30)
+}
+
+val 我的机器 = 咖啡机("Nespresso")
+println(我的机器.制作咖啡("拿铁")) // 30ml咖啡+200ml奶
+```
+
+::text-tip
+没想到用中文定义的对象和函数竟然可以输出
+::
+
+你可以理解为面向对象是将一个东西描述成对象，然后函数是具体的行为，例如：
+
+| OOP | FP |
+| --- | --- |
+| 杯子(300, "玻璃")	 | 水量 => 水量 * 2 |
+
+
 不过由于我看这本书是总结语言的学习思路，所以我不会再本机装 lang，基本上用在线环境来运行。这里我推荐使用 Scala 提供的在线环境 [Scastie](https://scastie.scala-lang.org/) 对于 Scala 给我的直接映像就是输出 Hello 有很多种方法，比如：
 
 ```
@@ -2857,6 +2890,192 @@ ZIO 这个框架的核心还是很方便代入的，例如 `ZIO[R, E, A]`:
 
 
 大致看了下文档，可惜在 scastie 上跑有些问题，自己又不想弄本地的 ZIO 环境，所以还是算了。以后用到的时候在仔细体验，但这个框架理解起来还是蛮简单的。
+
+---
+
+### 模式匹配 2
+:text-title{t="模式匹配" type="2"}
+
+[模式匹配(Pattern matching)](https://en.wikipedia.org/wiki/Pattern_matching)是函数式、并发的核心之一。有点像是 ADT，但又不是，毕竟 ADT 是类型的一种，不过有类型模式匹配。可能跟模式匹配比较像的就是 if/else(不完全是)，可以讲 if/else 和模式匹配比做成：
+
+IF/ELSE: 逐个拆箱检查内容物
+- *"如果是盒子A，打开看是不是红色物品；如果是盒子B，摇晃听声音..."*
+
+模式匹配: 用智能扫描仪直接识别包装特征
+- *"匹配‘红色立方体盒子’ → 送往区域X；匹配‘圆柱体包裹’ → 送往区域Y"*
+
+<br>
+
+```
+object PatternMatchingDemo extends App {
+  // 基础值
+  def explainNumber(num: Int): String = num match {
+    case 0 => "零"
+    case 1 => "壹"
+    case _ => "其他数字"  // default
+  }
+  println(explainNumber(1))  // 壹
+
+  // 结构匹配 
+  val nums = List(1, 2, 3)
+  nums match {
+    case head :: tail => println(s"头部: $head, 尾部: $tail")  // 头部: 1, 尾部: List(2, 3)
+    case Nil => println("空列表")
+  }
+
+  // 类型匹配
+  val any: Any = "hello"
+  any match {
+    case s: String => println(s"字符串长度: ${s.length}")  // 字符串长度: 5
+    case i: Int    => println(s"数字: $i")
+  }
+}
+```
+
+(感觉没 py 的那种写法简洁，不过 scala 对比 java 感觉 lang style 也挺不错的)
+
+---
+
+## Erlang 1
+:text-title{t="Erlang"}
+
+Erlang 我比较有印象，因为我了解过 [Elixir](https://en.wikipedia.org/wiki/Elixir_(programming_language)) 它是构建在 Erlang 之上的(我觉得 Elixir 的 Logo 比 Erlang 的好看) 不过这两个的特性都在于并发和分布式，所以我会了解和分布式相关的，看看和前面的 Scala 的并发有什么区别，是不是和 Scala 的静态类型和动态类型一样复杂。
+
+Erlang 是一个函数式、并发的语言，他的运行时就是为了**分布式、容错、高可用不间断、实时计算、热插拔**而设计的。因为为了这些而设计，所以 Erlang 具有不可变类型。
+
+---
+
+### 模块 1
+:text-title{t="模块"}
+
+由于我只是学习目的，所以我尝试在线的环境来学习 Erlang。体验了一翻 [Replit](https://replit.com/) 感觉还是很不错的。如果要在 Erlang 中输出 Hello,world，那么需要使用 [io:format](https://www.erlang.org/doc/system/seq_prog#writing-output-to-a-terminal)(有一说一官方文档写的还是很不错的，很方便学习和理解):
+
+```
+
+--- filename: main.ert
+-module(main).
+-export([start/0]).
+
+start() ->
+    io:format("Hello,world").
+```
+
+在 Erlang 中，文件相当于一个模块，也就是你看到的 `-module(main)` 之后需要导出 `-export([start/0, add/1])` 这里的 `0` 表示需要导出的是 0 个参数，如果需要导出，就是这样：
+
+```
+-module(main).
+-export([start/0, add/1]).
+start() ->
+  io:format("Hello,world").
+
+add(X) ->
+  2 * X.
+```
+
+如果是 ES6 或者 Python，那就是这样的：
+
+```
+--- ES6
+export function hello() { ... }
+export default function () { ... }
+
+// CommonJS
+module.exports = {
+  hello,
+  add
+}
+
+--- Python 3
+# Declare some variables
+app = 10
+ball = True
+cat = 'kitten'
+dog = 100.0
+
+# Define variables to be imported
+# when module is imported
+__all__ = ['app', 'ball']
+```
+
+如果要运行我们刚才写的 `add` 函数，可以通过进入 Erlang 的 REPL 执行：
+
+```
+> c(main).
+{ok,main}
+> main:add(10).
+20
+```
+
+如果要退出只需要输入 `halt().`，其中，输入的 `c` 表示编译，也就是 [BEAM,Bogdan's Erlang Abstract Machine](https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine))，这是 Erlang 的虚拟机，跟 Java 的 JVM 差不多，都是有虚拟机运行的。
+
+### 数据类型 2
+:text-title{t="数据类型" type="2"}
+
+| 类型       | 独特性说明                                                                 | 其他语言近似替代                     | 典型应用场景                     |
+|-----------------------|--------------------------------------------------------------------------|--------------------------------------|----------------------------------|
+| **Atom**              | 全局唯一不可变常量，小写开头，直接用于模式匹配                               | Ruby `Symbol`, Python `Enum`         | 状态标签、消息类型标识            |
+| **Pid**              | 轻量级进程的唯一标识符，支持跨节点通信 (`!` 操作符)                          | Akka `ActorRef` (库实现)             | 分布式进程寻址                   |
+| **Reference**        | 运行时生成的全局唯一引用 (`make_ref()`)                                      | Java `UUID` (需库)                   | 异步消息去重、RPC 回调标识        |
+| **Port Identifier**  | 与外部进程通信的句柄，内置跨语言支持                                        | Python `subprocess.Popen` (OS 依赖)  | 调用 C/Python 等外部程序          |
+| **Bit Strings**      | 原生位操作语法 (`<<1:3, 2:5>>`)，无需手动位移                               | C++ `std::bitset` (需手动处理)       | 协议解析、二进制数据压缩           |
+| **Sigil**           | 语法糖简化字符串/正则处理 (如 `~s(RAW)`)                                    | 无直接等价，需函数调用               | 模板生成、正则表达式构建           |
+| **Fun**             | 可序列化的不可变函数对象 (`fun(X) -> X*2 end`)                              | JavaScript 闭包 (但携带可变状态)      | 分布式传递计算逻辑                |
+| **Tuple**           | 定长异构集合，匹配时需完全一致 (`{ok, Value}` vs `{error, Reason}`)          | Python 元组 (但无模式匹配语义)        | 多返回值、结构化消息              |
+| **List**            | 链表结构，`[Head/Tail]` 解构，字符串即整数列表 (`[72,101]` → `"He"`)         | 大多数语言的链表 (但无自动字符转换)    | 递归处理、文本解析                |
+| **Map**             | 动态 K-V 存储 (类似字典)，但匹配时需完全匹配键                               | Java `HashMap`, Python `dict`        | 动态配置、JSON 交互               |
+
+#### pid 2
+:text-title{t="PID" type='2'}
+
+这里面有很多有趣的，例如 `pid`:
+
+```
+-module(main).
+-export([start/0]).
+
+start() ->
+  % 创建子进程并获取 Pid
+  ChildPid = spawn(fun() -> child_process() end),
+  io:format("ChildPid Pid: ~p~n", [ChildPid]),
+
+  % 展示当前进程的 Pid
+  SelfPid = self(),
+  io:format("SelfPid Pid: ~p~n", [SelfPid]),
+
+  % 监控子进程
+  MonitorRef = monitor(process, ChildPid),
+  io:format("MonitorRef~n"),
+
+  % 向子进程发送消息
+  ChildPid ! {hello, SelfPid},
+
+  % 等待响应
+  receive
+    {response, Message} ->
+      io:format("Over ChildPid message: ~ts~n", [Message]);
+    {'DOWN', MonitorRef, process, ChildPid, Reason} ->
+      io:format("ChildPid end: ~p~n", [Reason])
+  after 2000 ->
+    io:format("Long time~n")
+  end.
+
+child_process() ->
+  receive
+    {hello, ParentPid} ->
+      io:format("ChildPid(~p) receive SelfPid (~p) message~n", [self(), ParentPid]),
+      ParentPid ! {response, unicode:characters_to_binary("Hello!", utf8)},
+      exit(normal)
+  end.
+
+---
+ChildPid Pid: <0.79.0>
+SelfPid Pid: <0.9.0>
+MonitorRef
+ChildPid(<0.79.0>) receive SelfPid (<0.9.0>) message
+Over ChildPid message: Hello!
+```
+
+
 
 ::
 
