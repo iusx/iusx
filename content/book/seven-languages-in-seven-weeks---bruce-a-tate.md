@@ -3027,7 +3027,15 @@ __all__ = ['app', 'ball']
 #### pid 2
 :text-title{t="PID" type='2'}
 
-这里面有很多有趣的，例如 `pid`:
+这里面有很多有趣的，例如 `Pid`。你可能会有一个疑问，为什么 PID 是一个单独的数据类型，而不是某个库提供的方法？感觉其他的 Lang 的数据类型都很常见，什么 Tuple、String、Int、List 之类的，但 PID 可能作为一个数据类型单独拿出来。
+
+显然 PID 是一个专门为多线程操作设计的一个类型，其主要方便的一点是保证 **原子化**, 简单的来说就是给每个节点分配一个唯一的 ID（有点像是在学 spring cloud 的内容）总结来说 PID 类型在于：
+
+1. 原子性（atomicity）：每个 Pid 是唯一且不可变的，保证了进程间通信时不会混淆目标。
+2. 分布式唯一性：即便是在多节点（Node）之间通信，每个进程仍能通过 Pid 被唯一标识。
+3. 安全发送：Pid ! Message 是 Erlang 的基础通信语法，而你无法伪造一个 Pid 给系统发送消息。
+
+例如在创建新的进程或者两者之间需要收发消息的时候就需要用到 PID，可以参考 [Process Creation](https://www.erlang.org/doc/system/ref_man_processes#process-creation)
 
 ```
 -module(main).
@@ -3044,7 +3052,7 @@ start() ->
 
   % 监控子进程
   MonitorRef = monitor(process, ChildPid),
-  io:format("MonitorRef~n"),
+  io:format("MonitorRef~n", [ChildPid]),
 
   % 向子进程发送消息
   ChildPid ! {hello, SelfPid},
@@ -3070,7 +3078,7 @@ child_process() ->
 ---
 ChildPid Pid: <0.79.0>
 SelfPid Pid: <0.9.0>
-MonitorRef
+MonitorRef: <0.79.0>
 ChildPid(<0.79.0>) receive SelfPid (<0.9.0>) message
 Over ChildPid message: Hello!
 ```
