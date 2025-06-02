@@ -40,18 +40,10 @@ const plans = ref([
     id: "1",
     name: 'Pay Home',
     target: 13000,
-    current: 177,
+    current: 267.70,
     progress: 0,
     barClass: '',
-    subPlans: [
-      {
-        id: "2",
-        name: "TEST",
-        current: 100,
-        progress: 0,
-        barClass: ''
-      }
-    ]
+    subPlans: []
   },
 ])
 
@@ -92,6 +84,7 @@ onMounted(() => {
   calculateProgress()
 })
 </script>
+
 <style lang="scss" scoped>
 main {
   width: 50%;
