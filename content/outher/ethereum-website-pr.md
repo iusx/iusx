@@ -1,7 +1,7 @@
 ---
 "title": Ethereum website contribution
 "director": "ritsu"
-description: "有时候在做流程图时需要一个好用的绘图软件。我尝试过 Draw.io、Visio、Dia、Graphviz、Umbrello、ProcessOn 等。这些软件各有特色，主要比较的是用户体验和免费程度。Edraw 早期界面像 Visio，现在融入了 Figma 等产品的交互方式。使用时发现它支持复制粘贴 SVG 数据，方便导出无水印流程图。我喜欢支持 SVG 的软件，比如 Figma 和 Illustrator。最喜欢的流程图风格是 IETF RFC 文件中的，用制表符绘制的 ASCII-Art，简洁而美观。"
+description: "一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。"
 "time": "2025.02.19"
 types: "cc"
 img: "life/eth/1.png"
