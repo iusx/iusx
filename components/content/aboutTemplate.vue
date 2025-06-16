@@ -167,7 +167,7 @@ const contribution = [
     name: "Ethereum ORG",
     time: "2024",
     post: "UX contribution",
-    url: "https://ethereum.org/en/contributing/#contributors",
+    url: "/outher/ethereum-website-pr"
   },
   {
     name: "Xmatrix",
