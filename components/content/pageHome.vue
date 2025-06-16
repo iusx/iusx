@@ -81,7 +81,7 @@ onMounted(() => {
 const links = ref([
   { name: "Security", href: "/sec", separator: " + " },
   { name: "Design", href: "/des", separator: " ÷ " },
-  { name: "Life", href: "/book" },
+  { name: "Learn", href: "/book" },
 ]);
 </script>
 
