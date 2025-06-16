@@ -17,7 +17,7 @@ head:
 ---
 time: "2015 - Now Shenzhen"
 name: "Jiangxue analysis"
-title: "Software Engineering Intern"
+title: "Full-Stack Software Engineering Intern"
 desc: "Fringe Support And Analysis"
 about: "<p>My config</p><span>macOS system use neovim + kitty</span><p>Educational level</p><span>Illiterate</span>"
 ---
