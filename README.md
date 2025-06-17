@@ -1,4 +1,4 @@
+Computer networking,<br>
+Security, and Design Enthusiast.
 
-I'M UNDERACHIEVER \ LOSER \ FAILURE \ DUD \ WASHOUT
-
-[BLOG](https://member.acm.org/~Ritsu) - [SECURITY](https://hackerone.com/iepn) - [DESIGN](https://www.behance.net/1ui)
+[BLOG](https://member.acm.org/~Ritsu) - [SECURITY](jiangxue.org/~ritsu) - [DESIGN](https://www.behance.net/1ui) - [BILIBILI](https://space.bilibili.com/340481607)
