@@ -87,4 +87,52 @@ text: 图 2 | 在很多 blog 中很常见的看板娘
 ::
 
 当然还有类似的效果，例如 [看板娘](https://github.com/stevenjoezhang/live2d-widget) 放到 blog，角色的表情，目光跟随鼠标的效果。之前的我看到类似的效果只知道是如何实现的，而不知道是如何做的。经过这次 Spine 2D 的学习，我已经了解了这种效果是如何实现、如果做的。通过 Spine2d runtime 让 Ik 跟随鼠标，如果点击则播放 `blink` 动画。
+
+---
+
+### 动捕 2
+:text-title{t="bilibili 小电视动捕"}
+
+又是说一上面的那个交互效果就已经回本了，但是我还想要做什么 VTB（没准以后公司倒闭了吃不上饭了还能 VTB 乞讨）利用 spine 的 runtime 是可以实现的，所以需要一个动捕的 package，有很多哇，我选择了 Google 的 [mediapipe](https://mediapipe-studio.webapps.google.com/demo/face_landmarker)（因为有很多 examples
+
+
+::img-tip
+---
+url: 15/img/3.gif
+text: 图 3 | Apple Memoji（很掉帧，因为我压缩了<br>WSJ NEWS:Memoji:From Old Japan to a Custom Apple Innovation
+---
+::
+
+
+动捕技术已经非常的流水线了，普通的 project 依赖于大厂的 api 就可以完成很好的动作效果，而且已经常见于生活当中。例如 Apple 的 [Memoji](https://support.apple.com/zh-hk/111115) 很常见。还是要摸一下类似的 demo 方便我以后做 VTB 的时候自己弄这些，所以就拿 bilibili 小电视练手好了。
+
+
+::img-tip
+---
+url: 15/img/4.gif
+text: 图 4 | 就单个眨眼的效果（处于静态，就单独眨眼哇），可以看到 eyeBink 的数值的变动 SOURCE | MediaPipe Face Landmarker Task for web
+---
+::
+
+原理非常简单，还是 `look_main` skeleton 跟随鼠标移动，但利用的是 `window.electronAPI`，然后如果眨眼了就执行下 `blink` animationState。动捕方面，假设 `eyeBlinkLeft` 的数值正常是 `0.3` 那么如果是 `0.7` 那就是眨眼的动作，因此执行 `blink`。
+
+
+::text-space
+---
+type: tip
+---
+我看有些 vtb 眨眼的时候一个眼睛眨一个眼睛没眨, 估计判断的数值比较多，比如 `eyeBlinkLeft` and `eyeBlinkRight` 甚至还有很多 `eyeLook` 的参数。
+
+之所以还是面向鼠标，单纯是我懒得写算法，会比较复杂（不适合我这种做个 demo 了解下流程的），选 APi 的时候太快了，应该选择 [ Face Detection ](https://mediapipe-studio.webapps.google.com/studio/demo/face_detector), [ Face Landmark Detection ](https://mediapipe-studio.webapps.google.com/studio/demo/face_landmarker) 太多参数了（
+::
+
+::img-tip
+---
+url: 15/img/5.gif
+text: 图 5 | 最终的实现效果，利用 mediapipe + spine 2d runtime + electron
+---
+::
+
+在众多的跨平台框架中，我选择了 [electronjs](https://www.electronjs.org/)。不是因为我多喜欢，也不是我之前用过，而是我以前在 Linux 上看到过他们的 Logo。给我留下了深刻的印象。当时并不知道这是什么，只知道 website 和 logo 还挺特别的。多年后我才知道这个是做什么的，算是弥补了童年的遗憾。
+
 ::
