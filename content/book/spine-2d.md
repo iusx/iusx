@@ -93,7 +93,7 @@ text: 图 2 | 在很多 blog 中很常见的看板娘
 ### 动捕 2
 :text-title{t="bilibili 小电视动捕"}
 
-又是说一上面的那个交互效果就已经回本了，但是我还想要做什么 VTB（没准以后公司倒闭了吃不上饭了还能 VTB 乞讨）利用 spine 的 runtime 是可以实现的，所以需要一个动捕的 package，有很多哇，我选择了 Google 的 [mediapipe](https://mediapipe-studio.webapps.google.com/demo/face_landmarker)（因为有很多 examples
+有一说一上面的那个交互效果就已经回本了，但是我还想要做什么 VTB（没准以后公司倒闭了吃不上饭了还能 VTB 乞讨）利用 spine 的 runtime 是可以实现的，所以需要一个动捕的 package，有很多哇，我选择了 Google 的 [mediapipe](https://mediapipe-studio.webapps.google.com/demo/face_landmarker)（因为有很多 examples
 
 
 ::img-tip
