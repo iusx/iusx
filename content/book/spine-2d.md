@@ -110,7 +110,7 @@ text: 图 3 | Apple Memoji（很掉帧，因为我压缩了<br>WSJ NEWS:Memoji:F
 ::img-tip
 ---
 url: 15/img/4.gif
-text: 图 4 | 就单个眨眼的效果（处于静态，就单独眨眼哇），可以看到 eyeBink 的数值的变动 SOURCE | MediaPipe Face Landmarker Task for web
+text: 图 4 | 就单个眨眼的效果（处于静态，就单独眨眼哇），可以看到 eyeBink 的数值的变动 SOURCE | <a href="https://codepen.io/mediapipe-preview/pen/OJBVQJm">MediaPipe Face Landmarker Task for web</a> 
 ---
 ::
 
