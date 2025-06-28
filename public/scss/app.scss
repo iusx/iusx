@@ -368,7 +368,8 @@ h6 {
   line-height: 1.8;
   padding: 8px 0;
 }
-.ref ul, .ref li {
+.ref ul,
+.ref li {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -379,4 +380,13 @@ h6 {
   color: #2274a5;
   text-decoration: underline;
   display: inline;
+}
+
+.markdown-content {
+  .tip {
+    overflow: auto !important;
+    word-wrap: break-word !important;
+    display: block !important;
+    max-width: 100% !important;
+  }
 }
