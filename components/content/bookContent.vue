@@ -90,7 +90,7 @@ const percentage = computed(() => {
       </div>
     </div>
     <div class="an">
-      <div class="more" @click="showWorkPop">Directory</div>
+      <div class="more" @click="showWorkPop">MORE</div>
     </div>
     <div class="book-info book-table" v-if="isWorkPopVisible">
       <p style="cursor: pointer" class="pop-close" @click="hideWorkPop">CLOSE</p>
