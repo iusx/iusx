@@ -1028,6 +1028,84 @@ REPL(Read-Eval-Print Loop)，是一种交互式编程环境，可以一行一行
 | 用户驱动           | 用户输入       | 高交互性 UI 系统                   | React, Android, Game    |
 | 测试驱动开发       | 单元测试       | 代码质量好、文档即测试             | JUnit, ScalaTest        |
 
+
+---
+
+## 函数式核心 2
+:text-title{t="函数式编程的核心"}
+
+函数式编程的核心就是 **高阶函数** 和 **模式匹配**, 在此之前我只知道他们做什么，能实现出什么效果。而不知道它们叫什么（这就是没有系统性学习的弊端，上限低下限也低）：
+
+::text-space
+---
+type: tip
+---
+高阶函数是一个更高层的抽象，它的核心是 **把函数当作一种可传递、可组合的“工具”**，而不是单纯的数据。能够接收函数作为参数，或者返回函数作为结果的函数”
+
+| 高阶函数(HOF) | 普通函数 |
+| --- | --- | 
+| 允许你自己换榨汁模块（输入橙子+榨苹果模块→输出苹果汁）| 固定做橙汁（输入橙子→输出果汁）|
+::
+
+| NAME | INFO | 
+| --- | --- |
+| [lists:map/2](https://www.erlang.org/docs/23/man/lists#mapfoldl-3) | 对列表中的元素求和并同时对其进行双精度运算 |
+
+下面的 code 涵盖了高阶函数、匿名函数以及函数引用，类似于这样的效果：
+
+
+```
++----------------------+             +----------------------+          +----------------------+
+|    (lists:map/2)     <-----+       |   (fun(X) -> ...)    |          |   (fun Module:F/A)   |
+|         HOF          |     +-------|  anonymous function  |          |  function reference  |
++----------------------+             +----------------------+          +----------------------+
+           ^                                     ^                                 ^           
+Receive the function                 Provisional |                      Point to an existing   
+as a parameter                       definition  |                      function               
+           |                                     |                                 |           
+           |                                     |                                 |           
+           |                                     |                                 |           
+           |                                     |                                 |           
++----------------------+             +----------------------+          +----------------------+
+|     [1,2,3,4,5]      |             |     (X*2, X*X……)     |          |  (string:to_upper)   |
+|      data list       |             |  logical processing  |          | Reuse existing logic |
++----------------------+             +----------------------+          +----------------------+
+
+-module(main).
+-export([start/0]).
+
+start() ->
+    % 例子1: 将列表中的每个数字乘以2
+    Numbers = [1, 2, 3, 4, 5],
+    Doubled = lists:map(fun(X) -> X * 2 end, Numbers),
+    io:format("source: ~p~n", [Numbers]),
+    io:format("1 Doubled: ~p~n", [Doubled]),
+
+    % 例子2: 将字符串列表转换为大写
+    Words = ["hello", "world", "erlang"],
+    Uppercase = lists:map(fun string:to_upper/1, Words),
+    io:format("Source: ~p~n", [Words]),
+    io:format("2 Uppercase: ~p~n", [Uppercase]),
+
+    % 例子3: 计算每个数字的平方
+    Squares = lists:map(fun(X) -> X * X end, Numbers),
+    io:format("3 Squares: ~p~n", [Squares]),
+
+    % 例子4: 使用自定义函数
+    ProcessedList = lists:map(fun process_element/1, Numbers),
+    io:format("4 ProcessedList: ~p~n", [ProcessedList]),
+
+    % 例子5: 处理元组列表
+    People = [{tom, 25}, {alice, 30}, {bob, 35}],
+    Ages = lists:map(fun({_Name, Age}) -> Age end, People),
+    io:format("4 age: ~p~n", [Ages]).
+
+% 模式匹配
+process_element(X) when X > 3 ->
+    {big, X};
+process_element(X) ->
+    {small, X}.
+```
 ---
 
 # Ruby 1
@@ -3082,6 +3160,14 @@ MonitorRef: <0.79.0>
 ChildPid(<0.79.0>) receive SelfPid (<0.9.0>) message
 Over ChildPid message: Hello!
 ```
+
+---
+
+
+
+
+
+
 
 
 
