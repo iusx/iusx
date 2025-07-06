@@ -1,5 +1,7 @@
 <template>
-  <p><slot></slot><span>|</span></p>
+  <p>
+    <slot></slot><span>|</span>
+  </p>
 </template>
 
 <style lang="scss" scoped>
@@ -7,7 +9,7 @@ p {
   color: red;
   white-space: nowrap;
   overflow: hidden;
-  width: 30em;
+  width: 100%;
   animation: type 4s steps(60, end);
 }
 
@@ -29,9 +31,11 @@ span {
   0% {
     width: 0;
   }
+
   50% {
     width: 0;
   }
+
   100% {
     width: 100;
   }
