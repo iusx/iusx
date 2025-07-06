@@ -153,6 +153,11 @@ const links = ref([
       line-height: initial;
       padding: 0;
       margin: 0;
+  
+
+      @media (max-width: 600px) {
+        font-size: 19px;
+      }
 
       @media (max-width: 400px) {
         font-size: 14px;
