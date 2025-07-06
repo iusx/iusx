@@ -90,7 +90,7 @@ const links = ref([
     <div class="data" ref="force"></div>
     <div class="nav">
 
-      <a href="" style="text-decoration: none;width: 200px;max-width: 200px;">
+      <a href="/outher/new-blog-theme-plan" style="text-decoration: none;width: 200px;max-width: 200px;">
         <an-typing style="text-shadow: 0px 4px 2px rgba(255, 11, 0, 0.43);">* NEW BLOG THEME PLAN</an-typing>
       </a>
       <div class="title">
