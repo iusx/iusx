@@ -41,5 +41,54 @@ info: 图 2 ｜ 在 pinterest 上发现的 style，很个性，并且布局很�
 
 在这个过程中我可以学习到特别想学的特效。不过自己画难免会有很多问题，或许我会选择花个 1k 的预算约一个画师帮我画三视图，之后自己拆分下。总之可能需要很久才能开始这个 plan，要学的太多了，可能会在今年？明年？完成这个 PLAN？
 
+---
+
+最近学习到了一个新的词汇，叫 [CSS Hack](https://en.wikipedia.org/wiki/CSS_hack) 是水 AOSC 的时候在 group 上有一个大佬指出来的（很严谨，学到很多:
+
+```
+table {
+  margin: 1em 0;
++ display: block;
++ overflow-x: auto;
+}
+```
+
+其大概含义就是可能这么写不会生效，例如（Invalid or non-compliant CSS/Unsupported CSS）不过我 firefox 和 chrome 以及 safari 都看了一遍，确实解决了 overflow 的问题，所以我就没继续开 pr 去水（感觉老是水这种没什么意思，但又不敢水大的，一点一点水也很不错啦！毕竟 Linus 说过:
+
+::wise-info
+---
+topic: The mind behind Linux | Linus Torvalds | TED
+by: Linus Benedict Torvalds
+---
+
+Some of those people dont't do a lot<br>
+There's a lot of people who make small,small changes,
+::
+
+在视奸其他大佬之后发现有的大佬是向往无 CSS 、无 JavaScrip 这种追求的。很明显我不是，我想要的是最终效果达到且好看和设计时一样就好了。大概率是我还停留在应用，没有深入 V8,渲染、编译这一阶段。
+
+最近在玩 [《我在疗养院送人上西天》](https://store.steampowered.com/app/2585110/_/) 是一个推箱子玩法，据说是二消？根据我的游玩体验发现是需要用到 math 的。比如通过计算实现最小步数过关，而我没这个追求，我只想过关而已。
+
+
+::wise-info
+---
+topic: The mind behind Linux | Linus Torvalds | TED
+by: Linus Benedict Torvalds
+---
+
+But that's not everybody,<br>
+I care about the thechnology<br>
+There are people who care about the UI<br>
+I can't do UI to save my life.<br><br>
+I mean, if I was stranded on an island,<br>
+and the only way to get off that island was the make a pretty UI,<br>
+I'd die there.<br>
+::
+
+ (根据我视奸群u萌得出的一个暴论就是：前端可有可无，需要的时候直接拷打 AI)
+
+很明显我是 "There are people who care about the UI" 的那个人。但我又有那么一点点追求，你可以说我 code ,design, security 都是 🗑 但我都有那么一点点的小成就。这又回到了我初中时纠结的一点，是走 security 还是走 code，我选择的是后者。
+
+因为我当初梳理的结论是 code > security > ui 因为 security 和 ui 都是建立在 code 之下的。没有 code 怎么实现，没有实现怎么 security test。之所以没有 desing，是因为 desing 无处不在，code 也需要精心 design 否则就会难以维护。经过这次的经历和体验，感觉自己路子走偏了，只想着实现效果，而没有追根溯源是如何实现的。自己在很多方面需要提升，比如 lang 的基础，系统的基础。
 
 ::
