@@ -1,0 +1,1 @@
+import{_ as o}from"./ZMTZo3TP.js";import{z as t,A as s,F as a,Z as c,_ as n,O as _}from"./Zy9w3lSu.js";const d={},r=e=>(c("data-v-9bd2b96d"),e=e(),n(),e),p=r(()=>_("span",null,"|",-1));function l(e,u){return t(),s("p",null,[a(e.$slots,"default",{},void 0,!0),p])}const m=o(d,[["render",l],["__scopeId","data-v-9bd2b96d"]]);export{m as _};
