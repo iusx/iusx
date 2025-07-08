@@ -390,3 +390,15 @@ h6 {
     display: inline;
   }
 }
+
+.page-content .text {
+  hr {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.dark-mode .page-content .text hr {
+  border-color: #4d4d4d;
+}

@@ -89,6 +89,10 @@ I'd die there.<br>
 
 很明显我是 "There are people who care about the UI" 的那个人。但我又有那么一点点追求，你可以说我 code ,design, security 都是 🗑 但我都有那么一点点的小成就。这又回到了我初中时纠结的一点，是走 security 还是走 code，我选择的是后者。
 
-因为我当初梳理的结论是 code > security > ui 因为 security 和 ui 都是建立在 code 之下的。没有 code 怎么实现，没有实现怎么 security test。之所以没有 desing，是因为 desing 无处不在，code 也需要精心 design 否则就会难以维护。经过这次的经历和体验，感觉自己路子走偏了，只想着实现效果，而没有追根溯源是如何实现的。自己在很多方面需要提升，比如 lang 的基础，系统的基础。
+因为我当初梳理的结论是 design > code > security > ui 因为 security 和 ui 都是建立在 code 之下的。没有 code 怎么实现，没有实现怎么 security test。之所以没有 desing，是因为 desing 无处不在，code 也需要精心 design 否则就会难以维护。design 决定了 code 的上限与下限，同样也决定了前端的上限与下限。
+
+经过这次的经历和体验，感觉自己路子走偏了，只想着实现效果，而没有追根溯源是如何实现的。自己在很多方面需要提升，比如 lang 的基础，系统的基础。
+
+其实有时候在想。当一只井底之蛙没什么不好的，眼界高了，看的大佬们的作品之后难免会妄自菲薄？然后陷入学习循环，导致没有迈出去做的那一步，一直在学习，一直在吹毛求疵。但环境，家庭，运气和性格都是决定一个人走向的因素之一，每个人都是不同的（起码在基因上是这样）
 
 ::
