@@ -1106,6 +1106,9 @@ process_element(X) when X > 3 ->
 process_element(X) ->
     {small, X}.
 ```
+
+erlang 是用函数式风格（无状态、纯函数、高阶函数）处理数据，不过也可以通过 `Process` 写成类似面向对象的风格。如果是 OOP 风格，那么就会有封装的感觉。
+
 ---
 
 # Ruby 1

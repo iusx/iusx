@@ -72,17 +72,17 @@ There's a lot of people who make small,small changes,
 
 ::wise-info
 ---
-topic: The mind behind Linux | Linus Torvalds | TED
-by: Linus Benedict Torvalds
+topic: the mind behind linux | linus torvalds | ted
+by: linus benedict torvalds
 ---
 
-But that's not everybody,<br>
-I care about the thechnology<br>
-There are people who care about the UI<br>
-I can't do UI to save my life.<br><br>
-I mean, if I was stranded on an island,<br>
-and the only way to get off that island was the make a pretty UI,<br>
-I'd die there.<br>
+but that's not everybody,<br>
+i care about the thechnology<br>
+there are people who care about the ui<br>
+i can't do ui to save my life.<br><br>
+i mean, if i was stranded on an island,<br>
+and the only way to get off that island was the make a pretty ui,<br>
+i'd die there.<br>
 ::
 
  (根据我视奸群u萌得出的一个暴论就是：前端可有可无，需要的时候直接拷打 AI)
@@ -91,7 +91,42 @@ I'd die there.<br>
 
 因为我当初梳理的结论是 design > code > security > ui 因为 security 和 ui 都是建立在 code 之下的。没有 code 怎么实现，没有实现怎么 security test。之所以没有 desing，是因为 desing 无处不在，code 也需要精心 design 否则就会难以维护。design 决定了 code 的上限与下限，同样也决定了前端的上限与下限。
 
-经过这次的经历和体验，感觉自己路子走偏了，只想着实现效果，而没有追根溯源是如何实现的。自己在很多方面需要提升，比如 lang 的基础，系统的基础。
+
+::wise-info
+---
+topic: Frontend and backend
+by: Wikipedia
+---
+
+In software development, frontend refers to the presentation layer that users interact with, while backend involves the data management and processing behind the scenes, and full-stack development refers to mastering both. In the client–server model, the client is usually considered the frontend, handling user-facing tasks, and the server is the backend, managing data and logic. Some presentation tasks may also be performed by the server.
+::
+
+前端下限低上限高——比如你写 HTML/JS/CSS 也是前端，混进了 Node.js/W3C/TC39/LWJGL 也是前端，会套个 UI 组件库用个框架也是前端；从工具链来看，有人用记事本写 jQuery，有人参与构建 Babel/Webpack；从图形技术看，有人只会 CSS 画方块，有人用 WebGL/WebGPU 开发 3D 引擎；从标准化角度看，有人只会查 MDN，有人参与 W3C 标准制定。  
+
+同样的，design 也是下限低上限高——你 Figma 套个现成的也叫 UI design，拿了各种 IF、RED、IDEA、Core77 也叫 design；从交互设计看，有人拼凑现成组件，有人发明全新交互范式（如滑动解锁）；从设计系统看，有人用 Ant Design，有人打造 Material Design 这样的行业标准；从动态设计看，有人用 Canva 做动效，有人开发 Rive 这样的专业工具。  
+
+::text-space
+---
+type: tip
+---
+肯定会有人觉得我是从事前端、design 的既得利益者，很可惜我并不从事这些行业，我只是当个消磨时间的爱好罢了。
+::
+
+很讨厌那些 AI 魔怔人（不过有点背后蛐蛐人的意思，但还好以后都不会遇到了），什么都 AI，真希望 AI 早点淘汰掉这些人，希望他们公司 Leader 早点意识到让 AI 取代下他们工作，再原有的基础上加个 10% 倍 KPI，狠狠替代。
+
+~~一想到这些人会面临失业淘汰跑众包心里就舒服多了（可能有点阴暗角落老鼠思维，但好在没人看我 blog~~
+
+可能这个现象可以用 [Dunning–Kruger effect](https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect) 来解释，很爽。有时候在想，比我 niubbity 的自然会有比他 niubbity 的当球踢，比我 niubbity 没什么大不了的反正真正的大佬又不会在 Public Group 刷新，都是 LV2、LV3、LV4 的 NPC 再强不过 Top 10%,在弱不过 LV2。
+
+
+::wise-info
+---
+topic: Dunning–Kruger effect
+by: Wikipedia
+---
+
+The Dunning–Kruger effect is defined as the tendency of people with low ability in a specific area to give overly positive assessments of this ability
+::
 
 其实有时候在想。当一只井底之蛙没什么不好的，眼界高了，看的大佬们的作品之后难免会妄自菲薄？然后陷入学习循环，导致没有迈出去做的那一步，一直在学习，一直在吹毛求疵。但环境，家庭，运气和性格都是决定一个人走向的因素之一，每个人都是不同的（起码在基因上是这样）
 
