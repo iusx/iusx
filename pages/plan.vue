@@ -7,23 +7,36 @@
     <div class="layout-box">
       <div v-for="(plan, index) in plans" :key="index" class="layout">
         <div class="title">
-          <p>SAVE {{ formatNumber(plan.target) }} USD</p>
-          <span>NOW: {{ formatNumber(plan.current) }} USD</span>
+          <p>{{ formatDisplay(plan).target }}</p>
+          <span>{{ formatDisplay(plan).current }}</span>
         </div>
         <div class="plan-box">
-          <div class="progress-bar" :class="plan.barClass" :style="{ width: plan.progress + '%' }">
-            <p> {{ plan.progress }}%</p>
+          <div
+            class="progress-bar"
+            :class="plan.barClass"
+            :style="{ width: plan.progress + '%' }"
+          >
+            <p>{{ plan.progress }}%</p>
           </div>
         </div>
-
-        <div v-for="(subPlan, subIndex) in plan.subPlans" :key="subIndex" class="sub-plan">
+        <div
+          v-for="(subPlan, subIndex) in plan.subPlans"
+          :key="subIndex"
+          class="sub-plan"
+        >
           <div class="title">
-            <p>SAVE {{ formatNumber(plan.target) }} USD (Inherited from Parent)</p>
-            <span>NOW: {{ formatNumber(subPlan.current) }} USD</span>
+            <p>
+              {{ formatDisplay(subPlan, plan).target }} (Inherited from Parent)
+            </p>
+            <span>{{ formatDisplay(subPlan, plan).current }}</span>
           </div>
           <div class="plan-box">
-            <div class="progress-bar" :class="subPlan.barClass" :style="{ width: subPlan.progress + '%' }">
-              <p> {{ subPlan.progress }}%</p>
+            <div
+              class="progress-bar"
+              :class="subPlan.barClass"
+              :style="{ width: subPlan.progress + '%' }"
+            >
+              <p>{{ subPlan.progress }}%</p>
             </div>
           </div>
         </div>
@@ -33,56 +46,95 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
 const plans = ref([
   {
     id: "1",
-    name: 'Pay Home',
+    name: "Pay Home",
     target: 13000,
-    current: 267.70,
+    current: 0,
     progress: 0,
-    barClass: '',
-    subPlans: []
+    barClass: "",
+    displayType: "usd",
+    subPlans: [],
   },
-])
+  {
+    id: "2",
+    name: "New blog",
+    target: 100,
+    current: 5,
+    progress: 0,
+    barClass: "",
+    displayType: "percent",
+    subPlans: [],
+  },
+]);
 
 useSeoMeta({
   title: "PLAN",
 });
 
 const formatNumber = (value) => {
-  return value.toLocaleString()
-}
+  return value.toLocaleString();
+};
+
+const formatDisplay = (planOrSubPlan, parentPlan = null) => {
+  // 如果是 subPlan 且有父级，优先用父级的 displayType
+  const type = parentPlan ? parentPlan.displayType : planOrSubPlan.displayType;
+  if (type === "usd") {
+    return {
+      target: `SAVE ${formatNumber(planOrSubPlan.target)} USD`,
+      current: `NOW: ${formatNumber(planOrSubPlan.current)} USD`,
+    };
+  } else if (type === "percent") {
+    return {
+      target: `SAVE ${formatNumber(planOrSubPlan.target)}%`,
+      current: `NOW: ${formatNumber(planOrSubPlan.current)}%`,
+    };
+  }
+  // 默认
+  return {
+    target: `SAVE ${formatNumber(planOrSubPlan.target)}`,
+    current: `NOW: ${formatNumber(planOrSubPlan.current)}`,
+  };
+};
 
 const calculateProgress = () => {
-  plans.value.forEach(plan => {
+  plans.value.forEach((plan) => {
     let progress = ((plan.current / plan.target) * 100).toFixed(2);
     plan.progress = parseFloat(progress);
 
-    plan.barClass = plan.current < plan.target ? 'progress-positive' : 'progress-negative';
+    plan.barClass =
+      plan.current < plan.target ? "progress-positive" : "progress-negative";
 
-    plan.subPlans.forEach(subPlan => {
+    plan.subPlans.forEach((subPlan) => {
       let subProgress = 0;
 
       if (subPlan.current > plan.current) {
-        subProgress = (((subPlan.current - plan.current) / plan.current) * 100).toFixed(2);
+        subProgress = (
+          ((subPlan.current - plan.current) / plan.current) *
+          100
+        ).toFixed(2);
 
-        plan.barClass = 'progress-negative';
-        subPlan.barClass = 'progress-negative';
+        plan.barClass = "progress-negative";
+        subPlan.barClass = "progress-negative";
       } else {
         subProgress = ((subPlan.current / plan.target) * 100).toFixed(2);
-        subPlan.barClass = subPlan.current < plan.target ? 'progress-positive' : 'progress-negative';
+        subPlan.barClass =
+          subPlan.current < plan.target
+            ? "progress-positive"
+            : "progress-negative";
       }
 
-      subPlan.progress = Math.min(100, parseFloat(subProgress))
-    })
-  })
-}
+      subPlan.progress = Math.min(100, parseFloat(subProgress));
+    });
+  });
+};
 
 onMounted(() => {
-  calculateProgress()
-})
+  calculateProgress();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -101,7 +153,9 @@ main {
 
 @font-face {
   font-family: "Tsing";
-  src: url("/Tsing.woff2") format("woff2"), url("/Tsing.woff") format("woff"),
+  src:
+    url("/Tsing.woff2") format("woff2"),
+    url("/Tsing.woff") format("woff"),
     url("/Tsing.ttf") format("truetype");
 }
 
@@ -190,15 +244,15 @@ main {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(to right, #00E989, #81c784);
+  background: linear-gradient(to right, #00e989, #81c784);
   font-family: "Tsing";
-  stroke: #6FFFC4;
+  stroke: #6fffc4;
   text-align: right;
   padding-right: 8px;
   color: white;
   font-size: 19px;
   line-height: 27px;
-  box-shadow: 0px 4px 15px 3px #00E989;
+  box-shadow: 0px 4px 15px 3px #00e989;
   transition: width 0.5s ease-in-out;
 
   p {
@@ -208,7 +262,6 @@ main {
 }
 
 .dark-mode .copyright {
-
   p,
   .copy-link a {
     color: #6f6f6f;

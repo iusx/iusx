@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
-  buildInputs = [
+  buildInputs = [ 
     pkgs.nodejs_20
     pkgs.pnpm
   ];
