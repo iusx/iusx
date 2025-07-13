@@ -1,16 +1,14 @@
 <template>
-  <p>
-    <slot></slot><span>|</span>
-  </p>
+  <p><slot></slot><span>|</span></p>
 </template>
 
 <style lang="scss" scoped>
 p {
-  color: red;
   white-space: nowrap;
   overflow: hidden;
   width: 100%;
   animation: type 4s steps(60, end);
+  margin: 0;
 }
 
 p:nth-child(2) {

@@ -1,15 +1,18 @@
 <template>
   <main>
     <div class="hi">
-      <h1>PLAN</h1>
+      <h1><an-typing>PLAN</an-typing></h1>
       <span>MY money Pay plan</span>
     </div>
     <div class="layout-box">
       <div v-for="(plan, index) in plans" :key="index" class="layout">
-        <div class="title">
-          <p>{{ formatDisplay(plan).target }}</p>
-          <span>{{ formatDisplay(plan).current }}</span>
-        </div>
+        <a :href="plan.url" class="title-box">
+          <p class="title-box_name">{{ plan.name }}</p>
+          <div class="title">
+            <p>{{ formatDisplay(plan).target }}</p>
+            <span>{{ formatDisplay(plan).current }}</span>
+          </div>
+        </a>
         <div class="plan-box">
           <div
             class="progress-bar"
@@ -51,8 +54,9 @@ import { ref, onMounted } from "vue";
 const plans = ref([
   {
     id: "1",
-    name: "Pay Home",
+    name: "Pay Hongme style room",
     target: 13000,
+    url: "",
     current: 0,
     progress: 0,
     barClass: "",
@@ -63,6 +67,7 @@ const plans = ref([
     id: "2",
     name: "New blog",
     target: 100,
+    url: "/outher/new-blog-theme-plan",
     current: 5,
     progress: 0,
     barClass: "",
@@ -80,7 +85,6 @@ const formatNumber = (value) => {
 };
 
 const formatDisplay = (planOrSubPlan, parentPlan = null) => {
-  // 如果是 subPlan 且有父级，优先用父级的 displayType
   const type = parentPlan ? parentPlan.displayType : planOrSubPlan.displayType;
   if (type === "usd") {
     return {
@@ -93,7 +97,7 @@ const formatDisplay = (planOrSubPlan, parentPlan = null) => {
       current: `NOW: ${formatNumber(planOrSubPlan.current)}%`,
     };
   }
-  // 默认
+
   return {
     target: `SAVE ${formatNumber(planOrSubPlan.target)}`,
     current: `NOW: ${formatNumber(planOrSubPlan.current)}`,
@@ -199,7 +203,16 @@ main {
   display: flex;
   flex-direction: column;
 }
+.dark-mode .title-box_name {
+  color: #6f6f6f;
+}
 
+.layout {
+  transition: padding-left 0.3s ease;
+  &:hover {
+    padding-left: 10px;
+  }
+}
 .layout-box {
   gap: 60px;
   display: flex;
@@ -217,6 +230,24 @@ main {
     span {
       margin-top: 4px;
       font-size: 25px;
+    }
+  }
+  .title-box {
+    text-decoration: none;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+    @media (max-width: 600px) {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .title-box_name {
+      padding: 0;
+      margin: 0;
+      font-family: "Tsing";
     }
   }
 }
