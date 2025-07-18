@@ -3197,5 +3197,45 @@ let it crash
 | | 登山队 | 登山者用绳索相连，但一人坠落可能拖累全队。 |
 | Message Passing | 邮递、旗语|  旗语、邮差送信是异步的，发信后无需等待回复。 |
 
+---
+
+### Bohrbug and Heisenbug 2
+:text-title{t="Bohrbug and Heisenbug"}
+
+
+::text-space
+---
+type: tip
+---
+'Bohrbug' 和 'Heisenbug' 由 Jim Gray 于 1985 年创造（我建议您尽可能多地阅读 Jim Gray 的论文，它们几乎都很棒！）
+::
+
+虽然我没有兴趣看论文，但我在看 wikipedia 的时候找到了 Bohrbug 的参考文献即 ["catb.org"(
+Eric S. Raymond's Home Page)](http://catb.org/jargon/html/B/Bohr-bug.html) 很有趣。看了他的个人介绍发现也是一位很有故事的人：
+
+
+::wise-info
+---
+topic: Views on open source
+by: Eric S. Raymond
+---
+
+Given enough eyeballs, all bugs are shallow.<br>
+只要有足够多的眼睛，所有Bug都是浅显的
+::
+
+
+(好像很契合这一部分的章节) 突然对这本书很有兴趣，毕竟是 [《Jargon File》行话文件](https://en.wikipedia.org/wiki/Jargon_File) 以后和群u萌水群的时候也可以拽几句俚语和上古行话了（后仰。让我意外的是 [Bohrbug](http://catb.org/jargon/html/B/Bohr-bug.html) 竟然来自量子物理学，
+
+| Type | Desc | Jargon_File |
+| --- | --- | --- |
+| Bohrbug | 稳定可复现​​：在相同条件下必然复现 | 一种可重复出现的错误；在一组可能未知但定义明确的条件下可靠地出现 |
+| | 易于调试​​：可通过日志、断点或单元测试定位。 | |
+| Heisenbug | 难以复现​​：仅在特定条件下偶然出现（如高并发、特定硬件状态）。 | |
+| | 牵一发而动全身：尝试修复它们常导致更多意外行为 |  |
+| Mandelbug | 问题根源深藏于系统复杂交互中 | 一种底层原因极其复杂且晦涩的bug，其行为看似混沌甚至非确定性。该术语暗示说话者认为它是一个 ​​Bohr bug​​（稳定可复现的bug），而非 ​​Heisenbug​​ |
+| | 行为难以预测，但一旦复现则稳定存在 | |
+| Schroedinbug | 类比量子物理中的“薛定谔的猫”思想实验 | 程序中的设计或实现bug，平时潜伏不发作，直到有人阅读源代码或以非常规方式使用程序时，突然发现“这代码根本不该工作！”——随后程序立即对所有人失效，直到修复。|
+
 ::
 
