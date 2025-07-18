@@ -3120,64 +3120,82 @@ __all__ = ['app', 'ball']
 
 ```
 -module(main).
--export([start/0]).
+
+-export([start/0, ping/2, pong/0]).
+
+ping(0, Pong_PID) ->
+    Pong_PID ! finished,
+    io:format("ping finished~n", []);
+ping(N, Pong_PID) ->
+    Pong_PID ! {ping, self()},
+    receive
+        pong ->
+            io:format("Ping received pong~n", [])
+    end,
+    ping(N - 1, Pong_PID).
+
+pong() ->
+    receive
+        finished ->
+            io:format("Pong finished~n", []);
+        {ping, Ping_PID} ->
+            io:format("Pong received ping~n", []),
+            Ping_PID ! pong,
+            pong()
+    end.
 
 start() ->
-  % 创建子进程并获取 Pid
-  ChildPid = spawn(fun() -> child_process() end),
-  io:format("ChildPid Pid: ~p~n", [ChildPid]),
-
-  % 展示当前进程的 Pid
-  SelfPid = self(),
-  io:format("SelfPid Pid: ~p~n", [SelfPid]),
-
-  % 监控子进程
-  MonitorRef = monitor(process, ChildPid),
-  io:format("MonitorRef~n", [ChildPid]),
-
-  % 向子进程发送消息
-  ChildPid ! {hello, SelfPid},
-
-  % 等待响应
-  receive
-    {response, Message} ->
-      io:format("Over ChildPid message: ~ts~n", [Message]);
-    {'DOWN', MonitorRef, process, ChildPid, Reason} ->
-      io:format("ChildPid end: ~p~n", [Reason])
-  after 2000 ->
-    io:format("Long time~n")
-  end.
-
-child_process() ->
-  receive
-    {hello, ParentPid} ->
-      io:format("ChildPid(~p) receive SelfPid (~p) message~n", [self(), ParentPid]),
-      ParentPid ! {response, unicode:characters_to_binary("Hello!", utf8)},
-      exit(normal)
-  end.
+    Pong_PID = spawn(main, pong, []),
+    spawn(main, ping, [3, Pong_PID]).
 
 ---
-ChildPid Pid: <0.79.0>
-SelfPid Pid: <0.9.0>
-MonitorRef: <0.79.0>
-ChildPid(<0.79.0>) receive SelfPid (<0.9.0>) message
-Over ChildPid message: Hello!
+Pong received ping
+Ping received pong
+Pong received ping
+Ping received pong
+Pong received ping
+Ping received pong
+ping finished
+Pong finished
 ```
 
 ---
 
-### 并发的核心 2
-:text-title{t="Erlang 并发三要素"}
+### 并发与设计哲学 2
+:text-title{t="Erlang 核心操作与设计哲学"}
 
 ::wise-info
 ---
-topic: 
+topic: Concurrent Programming 
 by: Getting Started with Erlang
 ---
 使用 Erlang 而不是其他函数式语言的主要原因之一是 Erlang 处理并发和分布式编程的能力
 ::
 
-这句话很有底气。
+这句话很有底气。在 Erlang 中，有一个并发的三要素，也就是：
+
+1. `spawn`: 用于创建新进程;
+2. `!`: 消息传递；
+3. `receive`: 模式匹配处理消息:<br> 队列中的第一条消息将与 中的  `receive` 第一个模式进行匹配。如果匹配，则从队列中删除消息并执行与模式对应的作。
+
+::wise-info
+---
+topic: Programming Erlang
+by: Joe Armstrong
+---
+
+let it crash
+::
+
+毫无疑问的是，这一句话广为流传。有点像火箭中的 "Blow it up"。当然这不是我说的，对于这个设计哲学的讨论实在是太多了。我更倾向于 [The Zen of Erlang](https://ferd.ca/the-zen-of-erlang.html) 这一篇演讲。举了很多例子，比如：
+
+| Erlang | E.g |  | 
+| --- | --- | --- |
+| Let it Crash | 火箭科学（Blow it Up）​ | 火箭推进本质是控制爆炸（燃烧燃料），而非避免爆炸。|
+| | 森林防火 | 通过“受控燃烧”清除易燃物，防止更大火灾。 |
+| Processes | 蜜蜂群 | 蜂群中每只蜜蜂独立工作，死亡不影响整体。 |
+| | 登山队 | 登山者用绳索相连，但一人坠落可能拖累全队。 |
+| Message Passing | 邮递、旗语|  旗语、邮差送信是异步的，发信后无需等待回复。 |
 
 ::
 
