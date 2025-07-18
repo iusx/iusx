@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-
 import { defineProps, onMounted } from "vue";
 
 const colorMode = useColorMode();
@@ -22,7 +21,7 @@ defineProps(["by", "topic"]);
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap");
 
 .dark-mode p {
   background: #121212 !important;
@@ -33,6 +32,8 @@ defineProps(["by", "topic"]);
 }
 
 .wise-layout {
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
   border: 1px solid #e1e1e1;
   flex-direction: column;
@@ -71,7 +72,7 @@ defineProps(["by", "topic"]);
     color: #888888;
 
     &::before {
-      content: '';
+      content: "";
       width: 30px;
       height: 1px;
       background: #888888;
@@ -79,7 +80,6 @@ defineProps(["by", "topic"]);
     }
   }
 }
-
 
 .tip-quto {
   opacity: 0.1;
