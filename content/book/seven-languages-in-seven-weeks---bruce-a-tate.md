@@ -3237,5 +3237,55 @@ Given enough eyeballs, all bugs are shallow.<br>
 | | 行为难以预测，但一旦复现则稳定存在 | |
 | Schroedinbug | 类比量子物理中的“薛定谔的猫”思想实验 | 程序中的设计或实现bug，平时潜伏不发作，直到有人阅读源代码或以非常规方式使用程序时，突然发现“这代码根本不该工作！”——随后程序立即对所有人失效，直到修复。|
 
+---
+
+## Clojure 1
+:text-title{t="Clojure"}
+
+我对 Clojure 和 lisp 的映像就是 logo 很像 ☯  (阴阳) 除此之外没了。在本书中，作者强调了 Clojure 像是《星球大战》中的​​尤达大师​​——看似古怪（语法反直觉），实则蕴含深厚智慧（并发模型、JVM生态）。而 Lisp 的双重性比如 195 8年诞生，是第二古老的高级语言。同时又兼顾了 宏（macro）和代码即数据（homoiconicity）等特性,又现代了那么一点点。 
+
+
+要理解 Clojure 还需要先了解 LISt Processing 、Code as Data 这些 lisp 的核心特性。从输出 Hello,world 的方式来看，两者都是差不多的：
+
+```
+Common Lisp:
+(format t "Hello, World!")
+---
+
+Clojure
+(println "Hello, World!")
+```
+
+
+
+```
+--- Clojure
+
+;;    name   params         body
+;;    -----  ------  -------------------
+(defn greet [name]   (println (str "Hello, " name "!")))
+
+(greet "John")
+(greet "Alla")
+
+--- Common Lisp
+(defun fib (n)
+  "Return the nth Fibonacci number."
+  (if (< n 2)
+      n
+      (+ (fib (- n 1))
+         (fib (- n 2)))))
+
+(format t "Fibonacci of 30: ~D" (fib 30))
+```
+
+
+你别说你还真别说，Clojure 这个文档写的还是很通俗易懂的，很简洁，[Common Lisp](https://lisp-lang.org/) 的文档也很简洁，不过 Common Lisp 是上古时期 Lisp 的改良版，因此要体验原汁原味的历史厚重感，要通过 [The Medley Interlisp Project](https://interlisp.org/) 这个伟大的项目。
+
+虽然不是最原始的 lisp，是 [Interlisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)) 但这也在 lisp 历史时间线中靠前的，并发挥了重要的作用。有兴趣的话可以阅读下 [Interlisp Timeline](https://interlisp.org/history/timeline/) 记录了 1960 至今的时间线。
+
+### 宏 2
+:text-title{t="宏"}
+在此之前，作者阐述了语言的五个核心，其中在 “语言有哪些独特的核心特性” 里，并发支持、宏系统、虚拟机等成为主要的衡量因素。
 ::
 
