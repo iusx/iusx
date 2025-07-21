@@ -258,4 +258,14 @@ by: Eric S. Raymond
 Given enough eyeballs, all bugs are shallow.<br>
 只要有足够多的眼睛，所有Bug都是浅显的
 ::
+
+
+::wise-info
+---
+topic: Attacking Network Protocols
+by: James Forshaw
+---
+There is nothing new under the sun<br>
+太阳底下没有新鲜事
+::
 ::
