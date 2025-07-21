@@ -238,6 +238,7 @@ main {
     align-items: flex-end;
     flex-direction: row;
     justify-content: space-between;
+    color: #000;
     @media (max-width: 600px) {
       display: flex;
       align-items: flex-start;
