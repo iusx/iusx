@@ -1,1 +1,0 @@
-import{_ as r}from"./RyB-iPQe.js";import{z as o,A as t,F as s}from"./DlG613Vd.js";const n={};function c(e,a){return o(),t("th",null,[s(e.$slots,"default")])}const _=r(n,[["render",c]]);export{_ as default};
