@@ -3242,7 +3242,7 @@ Given enough eyeballs, all bugs are shallow.<br>
 ## Clojure 1
 :text-title{t="Clojure"}
 
-我对 Clojure 和 lisp 的映像就是 logo 很像 ☯  (阴阳) 除此之外没了。在本书中，作者强调了 Clojure 像是《星球大战》中的​​尤达大师​​——看似古怪（语法反直觉），实则蕴含深厚智慧（并发模型、JVM生态）。而 Lisp 的双重性比如 195 8年诞生，是第二古老的高级语言。同时又兼顾了 宏（macro）和代码即数据（homoiconicity）等特性,又现代了那么一点点。 
+我对 Clojure 的印象就是 lisp(LISt Processing) 的 logo 很像 ☯  (阴阳) 除此之外没了。在本书中，作者强调了 Clojure 像是《星球大战》中的​​尤达大师​​——看似古怪（语法反直觉），实则蕴含深厚智慧（并发模型、JVM生态）。而 Lisp 的双重性比如 195 8年诞生，是第二古老的高级语言。同时又兼顾了 宏（macro）和代码即数据（homoiconicity）等特性,又现代了那么一点点。 
 
 
 要理解 Clojure 还需要先了解 LISt Processing 、Code as Data 这些 lisp 的核心特性。从输出 Hello,world 的方式来看，两者都是差不多的：
@@ -3284,8 +3284,105 @@ Clojure
 
 虽然不是最原始的 lisp，是 [Interlisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)) 但这也在 lisp 历史时间线中靠前的，并发挥了重要的作用。有兴趣的话可以阅读下 [Interlisp Timeline](https://interlisp.org/history/timeline/) 记录了 1960 至今的时间线。
 
-### 宏 2
-:text-title{t="宏"}
-在此之前，作者阐述了语言的五个核心，其中在 “语言有哪些独特的核心特性” 里，并发支持、宏系统、虚拟机等成为主要的衡量因素。
+### Clojure Hosted 2
+:text-title{t="Clojure JVM"}
+这一章算是让我意外的，我看到了作者在 Scala 篇章中没有写的内容，比如 Scala 和 Clojure 都是 JVM 生态。他们都可以使用 Java 的生态构建项目(有一说一我还是挺喜欢 scala 的，Code 看起来确实比 `(` 好看多了)：
+
+```
+--- Scala
+
+import java.time.LocalDate
+
+def addWeek(date: LocalDate): LocalDate =
+  date.plusDays(7)
+
+def dayToStr(date: LocalDate): String =
+  s"${date.getMonth} ${date.getDayOfMonth}, ${date.getYear}"
+
+// Infinite lazy list of weekly dates from today
+val futureWeeks: LazyList[LocalDate] =
+  LazyList.iterate(LocalDate.now())(addWeek)
+
+// Take first 4 and print
+futureWeeks
+  .take(4)
+  .map(dayToStr)
+  .foreach(println)
+
+--- Clojure
+(import '[java.time LocalDate])
+
+(defn add-week ^LocalDate [^LocalDate date]
+  (.plusDays date 7))
+
+(defn day->str [^LocalDate date]
+  (format "%s %s, %s" (.getMonth date) (.getDayOfMonth date) (.getYear date)))
+
+;; infinite sequence of weekly dates, starting from today
+(def future-weeks (iterate add-week (LocalDate/now)))
+
+(doseq [s (map day->str (take 4 future-weeks))]
+  (println s))
+
+
+Output:
+JULY 21, 2025
+JULY 28, 2025
+AUGUST 4, 2025
+AUGUST 11, 2025
+```
+
+
+::text-space
+---
+type: tip
+---
+clojure-CLR（Common Language Runtime） 是 .NET 平台的核心运行时环境。不过我还没写过 .NET。给我的映像就是以前装什么软件会提示缺少 .NET Framework 3.x\4.x 环境什么的，一度认为是 .NET 域名有深厚联系。
+::
+
+不过作者成书的时候比较早，Clojure 目前将这个特性称之为 [Hosted](https://clojure.org/about/jvm_hosted) 除了 JVM 还有 [ClojureScript](https://clojurescript.org/)、[ClojureCLR](https://github.com/clojure/clojure-clr)
+
+### Homoiconicity 2
+:text-title{t="Homoiconicity"}
+
+Homoiconicity（同像性）同常被视作为 "代码视为数据" 但貌似并没有达成共识。因此我更倾向于在大多数语言中（比如 Python、Java、C），你写的代码和数据结构是两回事，代码是“语言语法”，而数据是运行时的值。
+
+
+::text-space
+---
+type: tip
+---
+这里的 “代码即数据” 并不严谨，更多的是方便理解，其真正的核心是 **同像性（homoiconicity来自希腊语单词，homo-意为相同，icon含义表像）** 这个单词组合：
+
+Homoiconicity 是代码和数据的表示形式高度统一，语言的基本数据结构也是代码的语法结构，而不仅仅是代码“可以”被当数据处理。
+::
+
+但在 Clojure（或 Lisp） 中，代码的结构本身 就是数据结构（一般是列表 list）。所以你可以像操作数据一样，读取、修改、构造、执行代码。
+
+
+
+#### Macros 2
+:text-title{t="Macros"}
+
+在此之前，作者阐述了语言的五个核心，其中在 “语言有哪些独特的核心特性” 里，并发支持、宏系统、虚拟机等成为主要的衡量因素。而上述的 Homoiconicity 体现之一，就是宏 (Macros) 宏实现了 Homoiconicity 中的 **代码即数据**。
+
+可以通过 `macroexpand` 函数来展开宏，例如 Clojure Docs 在 Macros 这一章给出的例子（可以丢进 [Try Clojure
+](https://www.tryclojure.com/) 这个在线的 REPL 上看看，不过最近一次更新已经是 10 years ago 了 ：
+
+```
+user=> (-> {} (assoc :a 1) (assoc :b 2))
+{:b 2, :a 1}
+
+user=> (macroexpand '(-> {} (assoc :a 1) (assoc :b 2)))
+(assoc (assoc {} :a 1) :b 2)
+
+---
+(list 'assoc
+      (list 'assoc {} :a 1)
+      :b 2)
+```
+
+这就是代码和数据的统一性（同源性），既是 代码，也是一个 列表数据结构。（可以像操作普通数据一样，操作这段代码），因此宏可以用代码来生成代码。
+
 ::
 
