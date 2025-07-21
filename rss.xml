@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 21 Jul 2025 13:49:05 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 21 Jul 2025 14:59:07 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -47,11 +47,6 @@
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/key-note</guid>
         </item>
         <item>
-            <title><![CDATA[WISE SAYING]]></title>
-            <link>m.ritsu.jiangxue.org//book/my-friend</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/my-friend</guid>
-        </item>
-        <item>
             <title><![CDATA[Seven Languages in Seven Weeks]]></title>
             <link>m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</guid>
@@ -70,6 +65,11 @@
             <title><![CDATA[Unicode Explained]]></title>
             <link>m.ritsu.jiangxue.org//book/unicode-explained</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/unicode-explained</guid>
+        </item>
+        <item>
+            <title><![CDATA[WISE SAYING]]></title>
+            <link>m.ritsu.jiangxue.org//book/wise-saying</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/wise-saying</guid>
         </item>
         <item>
             <title><![CDATA[CRG FPS 電子競技]]></title>
