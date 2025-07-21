@@ -42,9 +42,8 @@ defineProps(["by", "topic"]);
 
   p {
     background: #fafafa;
-
     margin: 0;
-
+    text-transform: capitalize;
     gap: 12px;
     align-items: flex-start;
     padding: 12px;
@@ -62,6 +61,7 @@ defineProps(["by", "topic"]);
   }
 
   .by {
+    text-transform: capitalize;
     padding: 0px 12px 12px 0px;
     font-family: "Noto Serif SC", serif;
     display: flex;
