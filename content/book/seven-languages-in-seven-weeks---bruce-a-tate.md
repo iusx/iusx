@@ -3384,5 +3384,50 @@ user=> (macroexpand '(-> {} (assoc :a 1) (assoc :b 2)))
 
 这就是代码和数据的统一性（同源性），既是 代码，也是一个 列表数据结构。（可以像操作普通数据一样，操作这段代码），因此宏可以用代码来生成代码。
 
+### Destructuring 1
+:text-title{t="Destructuring"}
+
+解构（Destructuring），我的理解就是匹配，严谨来说就是 **一种将名称简洁地绑定到数据结构内的值的方法**。例如 MDN 的 [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring) 例子非常的简洁明了，而 Clojure 给出的例子就很直观：
+
+```
+(def my-line [[5 10] [10 20]])
+
+(let [p1 (first my-line)
+      p2 (second my-line)
+      x1 (first p1)
+      y1 (second p1)
+      x2 (first p2)
+      y2 (second p2)]
+  (println "Line from (" x1 "," y1 ") to (" x2 ", " y2 ")"))
+;= "Line from ( 5 , 10 ) to ( 10 , 20 )"
+```
+
+Clojure 用的是显式(explicit)。同样是函数式的 py 则是 隐式(implicit)，就显得很简洁：
+
+```
+head, *middle, tail = [1, 2, 3, 4, 5]
+
+print(head)    # 1
+print(middle)  # [2, 3, 4]
+print(tail)    # 5
+```
+
+如果要了解 [Explicit Pattern and Implicit Pattern] 两种设计哲学，还是非常复杂的，虽然很多 lang 的 docs 中都有这个名词。但真正能介绍的很少，但我觉得可以看看 [Explicit and implicit methods](https://en.wikipedia.org/wiki/Explicit_and_implicit_methods) 的介绍，总的来说就是字面理解：
+
+- explicit：来自拉丁文 explicare，意为“展开、解释清楚”
+- implicit：来自拉丁文 implicare，意为“卷入、含而不露”
+
+不过在数学中，是反过来的，也就是正如下面两个式子一样。“显式”强调的是计算是“明确”的,而“隐式”是：你不知道下一步状态具体怎么求，需要解个方程。:
+
+```math
+explicit: {\displaystyle Y(t+\Delta t)=F(Y(t))\,}
+```
+
+```math
+implicit: {\displaystyle G{\Big (}Y(t),Y(t+\Delta t){\Big )}=0}
+```
+
+而在 lang 中则是，**显式写出（显式） vs 编译器自动推导（隐式）**
+
 ::
 
