@@ -3427,7 +3427,10 @@ explicit: {\displaystyle Y(t+\Delta t)=F(Y(t))\,}
 implicit: {\displaystyle G{\Big (}Y(t),Y(t+\Delta t){\Big )}=0}
 ```
 
-而在 lang 中则是，**显式写出（显式） vs 编译器自动推导（隐式）**
+而在 lang 中则是，**显式写出（显式） vs 编译器自动推导（隐式）**（突然理解了为什么 Haskell 会在 docs 上写推导了。
+
+> Kind inference checks the validity of type expressions in a similar way that type inference checks the validity of value expressions. However, unlike types, kinds are entirely implicit and are not a visible part of the language. Kind inference is discussed in Section 4.6.
+
 
 ::
 

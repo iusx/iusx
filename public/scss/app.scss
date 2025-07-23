@@ -201,6 +201,11 @@ h6 {
   width: 100%;
   max-width: 100%;
   display: block;
+
+  blockquote {
+    padding: 12px;
+    margin: 0;
+  }
   strong,
   b {
     color: #000;
