@@ -3438,7 +3438,7 @@ implicit: {\displaystyle G{\Big (}Y(t),Y(t+\Delta t){\Big )}=0}
 
 作者很有意思，会在每个章节的开头用影视剧的剧情来描述本章节可能带来的一些内容，比如本章节就以星球大战中的剧情为例子体现出 在 Clojure 中，​​序列（Sequences）​​、​​惰性求值（Lazy Evaluation）​​和​​宏（Macros）是原力的体现
 
-### Sequences 1
+### Sequences 2
 :text-title{t="Sequences"}
 
 ::text-space
@@ -3498,8 +3498,75 @@ f must be free of side-effects
 ```
 
 
+### ISeq 1
+:text-title{t="ISeq"}
+
+ISeq(Interface for Sequence, Sequences)，在这一章节中，ISeq 和 Seq 的区别在于，所有 Interface 都必须满足两个条件，即​​不可变（Immutable）、持久化（Persistent） 。`for`、`while` 这些循环获取数据的，叫 **迭代器（Iterator）**
+
+使用 ISeq 不仅原生支持 [lazy-seq](https://clojure.github.io/clojure/clojure.core-api.html#clojure.core/lazy-seq)，同时还用有不可变不可变性（Immutability）增加了线程安全性, BTW 有一说一，Clojure docs 还挺全的。比如上面我们演示 斐波那契数列所使用的 [iterate](https://github.com/clojure/clojure/blob/clojure-1.11.1/src/clj/clojure/core.clj#L3030) 函数算是隐式依赖 ISeq 接口：
+
+```
+Give me some Clojure:
+> (instance? clojure.lang.ISeq s)
+true
+```
+
+::text-space
+---
+type: tip
+---
+不可变性看似线程安全很小众，实则避免了传统语言中 90% 的并发的 Bug（如竞态条件、死锁）
+::
+
+#### 声明式 2
+:text-title{t="声明式编程" type="2"}
+
+::text-space
+---
+type: tip
+---
+声明式编程是一个总称， 包括许多更知名的编程范例 。
+::
 
 
+
+[​​声明式编程​​	(Declarative Programming)](https://en.wikipedia.org/wiki/Declarative_programming) 有一说一我还挺喜欢这个范式的，不过他竟然还有个子范式，大名鼎鼎的 Functional programming  函数式编程 没想到也是在这个范式里面的。总的来说声明式的特点是 **关注“做什么”（What）**:
+
+
+```
+┌───────────────────────┐                                                        
+│    Clojure vs Java    │                                                        
+└───────────────────────┤                                                        
+                        │                                                        
+> (->> [1 2 3 4 5 6]    │   import java.util.*;                                  
+     (filter even?)     │                                                        
+     (map #(* % %))     │   public class Main {                                  
+     (reduce +))        │     public static void main(String[] args) {           
+56                      │       int sum = 0;                                     
+                        │       for (int num : Arrays.asList(1, 2, 3, 4, 5, 6)) {
+                        │         if (num % 2 == 0) {                            
+                        │           System.out.println(sum += num * num);        
+                        │         }                                              
+                        │       }                                                
+                        │     }                                                  
+                        │   }                                                    
+                        │                                                        
+```
+
+数据像流水线一样通过转换规则，​​无需关心中间步骤如何实现​​。而命令式则是需自行实现迭代、过滤、计算和累加，​​每一步都暴露细节​​。BTW, THIS Thread safety
+
+
+
+#### 命令式 2
+:text-title{t="命令式编程" type="2"}
+[​​命令式编程​​	(Imperative Programming	)](https://en.wikipedia.org/wiki/Imperative_programming) 正如维基百科所介绍的 **“命令式编程侧重于描述程序如何逐步运行”** 我觉得这句话很精髓，也就是关注 **如何做”（How）**，不过有一说一两种方式跟思维习惯有很大的关系。两者的区别是 **过程导向​​ or 目标导向​**。酱紫好像声明式更适合我，但命令式貌似上限更高？命令式更接近底层​的感觉，比如直接操作内存、寄存器、指针\手动实现循环展开、内存预分配
+
+就像是选择系统时，是想选择 Windows 还是 Linux 甚至是 macOS 的感觉一样。如果选择了 Linux，那就会接触到各种各样的技术栈，比如打包、构建、包管理、桌面管理将时间花在自定义和 Linux 生态上，每次更新都能遇到一大堆 warning 甚至是引导错误，随处可见的 Bug 等着你的 PR。
+
+
+macOS 则偏向“开箱即用”（Out-of-the-Box Experience），大多数功能都已经封装得很好，适合直接“做事”而不是“折腾”。虽然可自定义性有限，但开发者可以在其封闭但统一的环境中获得一致性体验（Consistent Developer Environment）。当然，如果你乐于突破沙箱限制，说不定还能邂逅一个 0day CVE（笑）。
+
+Windows 则更像是一个多元宇宙。无论是进行商业软件开发、跑各种奇怪的 GUI 工具，还是畅玩 3A 大作，它都能胜任。这个系统更倾向于广度而非深度，提供了一个丰富而包容的生态，适合“想怎么玩就怎么玩”。
 
 ::
 
