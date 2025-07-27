@@ -3,7 +3,7 @@
 "director": "Bruce A. Tate"
 "time": "2025.01.08"
 img: "08/1.png"
-plan: "243,323"
+plan: "268,323"
 ---
 
 ::book-content{:title="title" :img="img" :by="director" :plan="plan"}
@@ -3567,6 +3567,119 @@ type: tip
 macOS 则偏向“开箱即用”（Out-of-the-Box Experience），大多数功能都已经封装得很好，适合直接“做事”而不是“折腾”。虽然可自定义性有限，但开发者可以在其封闭但统一的环境中获得一致性体验（Consistent Developer Environment）。当然，如果你乐于突破沙箱限制，说不定还能邂逅一个 0day CVE（笑）。
 
 Windows 则更像是一个多元宇宙。无论是进行商业软件开发、跑各种奇怪的 GUI 工具，还是畅玩 3A 大作，它都能胜任。这个系统更倾向于广度而非深度，提供了一个丰富而包容的生态，适合“想怎么玩就怎么玩”。
+
+---
+
+## Protocols 2
+:text-title{t="Protocols"}
+
+有一说一这个 Protocols 一眼让我联想到了 [Internet protocol suite](https://en.wikipedia.org/wiki/Internet_protocol_suite)。还想着 Clojure 竟然还能写协议？不过仔细看了下 [Clojure Protocols](https://clojure.org/reference/protocols) 章节发现只能是 **定义“什么能做什么”（如 Movable 协议要求实现 move 方法）。而隔壁的 [​​Rust protocol crate](https://docs.rs/protocol/latest/protocol/) 则是实打实的 Protocols**:
+
+| Code | Info |
+| --- | --- | 
+| (defprotocol Greet) | 定义“打招呼”的标准（如挥手、微笑、说“Hi”）。 |
+| (defrecord Person)  | 人类实现：用语言打招呼。 |
+| (defrecord Robot)  | 机器人实现：用电子音打招呼。 |
+| (extend-type String) | 让纸条（String）也能“打招呼”（打印文字）。 |
+
+```
+Protocol  │ (defprotocol Greet                                           
+          │   (say-hi [this]))                                           
+                                                                         
+                                                                         
+Defrecord │ (defrecord Person [name]                                     
+          │   Greet                                                      
+          │   (say-hi [this] (println (str "Hi, I'm " (:name this)))))   
+          │                                                              
+          │ (defrecord Robot [id]                                        
+          │   Greet                                                      
+          │   (say-hi [this] (println (str "Beep " (:id this)))))        
+                                                                         
+                                                                         
+            (def alice (->Person "Alice"))                               
+            (def bot (->Robot 42))                                       
+                                                                         
+            (say-hi alice)  ;"Hi, I'm Alice"                             
+            (say-hi bot)    ;Beep 42"                                    
+                                                                         
+                                                                         
+extend-ty │ (extend-type String                                          
+pe        │   Greet                                                      
+          │   (say-hi [this] (println (str "Hello from string: " this))))
+          │                                                              
+          │ (say-hi "Clojure") ;"Hello from string: Clojure"             
+```
+
+
+---
+
+## STM 2
+:text-title{t="STM"}
+[STM(software transactional memory, 软件事务内存)](https://en.wikipedia.org/wiki/Software_transactional_memory) 在最后一个章节中，作者讲述的是 Clojure 的并发控制。以体现出与 Io、Scala、Erlang 的不同之处。上述大多是采用 Actor，而 Clojure 则内建了 STM。（有一说一真的很像是学 spring cloud 时候的感觉 
+
+
+::text-space
+---
+type: tip
+---
+`Var` 通过线程隔离确保安全使用可变存储位置，而事务引用 （`Refs`） 确保通过软件事务内存 （STM） 系统安全共享可变存储位置。
+::
+
+| NAME | DESC | TIP |
+| --- | --- | --- |
+| alter | 标准修改，基于当前值 | STM 提供的三种方式 |
+| commute | 可交换（commutative）操作，适合并发较高场景 | |
+| ref-set | 直接替换整个值 | |
+| ensure |  用于读取但不修改的 Ref，它的值不能被其他事务修改，否则当前事务失败 | |
+| nvecs | 有多少个向量（Ref）| `run [nvecs nitems nthreads niters]` |
+| nitems | 每个向量有多少个元素 | |
+| nthreads | 启动多少线程 | |
+| niters | 每个线程执行多少次交换操作 | |
+| 有序 | 元素有固定的顺序，按插入顺序排列 | 向量（Vector） |
+| 可索引 | 可以通过索引访问某个位置的元素（和数组类似） | |
+| 不可变 | 向量一旦创建，原始值不会被修改（更新会返回一个新的向量） | |
+| 高效结构共享 | 修改后的向量共享结构，效率高，适合并发和持久化操作 | |
+
+多说无益，Clojure Docs 给了一个很好的例子诠释其哲学：
+
+```
+; 
+(defn run [nvecs nitems nthreads niters]
+  (let [vec-refs (vec (map (comp ref vec)
+                           (partition nitems (range (* nvecs nitems)))))
+        swap #(let [v1 (rand-int nvecs)
+                    v2 (rand-int nvecs)
+                    i1 (rand-int nitems)
+                    i2 (rand-int nitems)]
+                (dosync
+                 (let [temp (nth @(vec-refs v1) i1)]
+                   (alter (vec-refs v1) assoc i1 (nth @(vec-refs v2) i2))
+                   (alter (vec-refs v2) assoc i2 temp))))
+        report #(do
+                 (prn (map deref vec-refs))
+                 (println "Distinct:"
+                          (count (distinct (apply concat (map deref vec-refs))))))]
+    (report)
+    (dorun (apply pcalls (repeat nthreads #(dotimes [_ niters] (swap)))))
+    (report)))
+    (run 100 10 10 100000)
+---
+([0 1 2 3 4 5 6 7 8 9] [10 11 12 13 14 15 16 17 18 19] ...
+ [990 991 992 993 994 995 996 997 998 999])
+Distinct: 1000
+```
+
+> 你有很多盒子，每个盒子里装着不重复的数字（连续编号）<br>
+你派出好多工人（线程），每个人不停地随机去两个盒子里拿数字换来换去<br>
+这个换数字的过程用了一套“事务系统”保证不会打架（线程安全）<br>
+换来换去之后，数字的总数和唯一性不会丢失（不会丢数字，也不会重复数字）<br>
+最终打印开始和结束时盒子里的数字，证明所有数字依旧完整且没错乱。 <br>
+
+你有一排盒子，每个盒子里装着一组连续的数字。所有盒子按顺序排列成一个大箱子。然后随机找两个盒子，从每个盒子里随机拿出一个数字，把这两个数字交换。整个交换过程是原子的，不会被其他线程打断，最后打印当前所有盒子里的数字状态，然后检查有没有数字丢失或者重复。
+
+
+
+
 
 ::
 
