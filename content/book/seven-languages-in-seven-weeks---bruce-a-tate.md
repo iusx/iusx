@@ -3699,7 +3699,6 @@ by: Wikipedia
 
 要想了解一个 Programming Language，很多时候会敲一个 `Hello,world!`。而可以与前者相提并论的就是斐波那契数列，在 Haskell wiki 中写到：
 
-
 ::wise-info
 ---
 topic: The Fibonacci sequence
@@ -3708,6 +3707,25 @@ by: Haskell wiki
 Implementing the Fibonacci sequence is considered the "Hello, world!" of Haskell programming.<br>
 斐波那契数列被认为是 Haskell 编程的“你好，世界！
 ::
+
+```
+fib 0 = 0
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2)
+
+main = do
+    let n = 10
+    print [fib i | i <- [0..n-1]]
+
+--- Output:
+[0,1,1,2,3,5,8,13,21,34]
+
+```
+
+在这一章中 wiki 给了很多中实现 fib 的方式，而我选择最基础的普通递归（naive recursion）。直接实现了斐波那契数列的定义，没有做任何优化。但我知道有更好的实现，例如尾递归、动态规划、矩阵幂。这就跟推箱子游戏一样，无论如何都可以通关，一开始大家追求的只是通关，而慢慢的就开始追求最小步数、更快的通关方式。
+
+可能这就是我与那些大佬之间的区别，没有对一件事情的极致追求以及偏执。就跟魂类游戏一样，有的人享受即使挂了很多次也可以重新开始拿起武器挥舞。而我可能会选择关闭不玩，转而去看电视。
+
 
 ## Guards 2
 :text-title{t="Guards" type="2"}
