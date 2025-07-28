@@ -24,9 +24,6 @@ plan: "268,323"
 
 之所以看这本书。首先是我觉得自己 Code 方面还是比较有问题，写 Code 总是很磨叽，和那种一写 code 就是写一天的有很大的差距。其次是我承认是被这本书的标题所吸引，作者懂不懂语言不重要，但他一定懂营销。我还不知道这本书有没有被 Percipio 收入，反正我 ACM 会员资格是到期了。这里我想吐槽下 ACM 的续费规则，我有钱的时候是想提前续费的，但 ACM 只能是快过期的时候才能续费。等真快过期的时候，我反而没钱续费了。
 
-无奈只能找盗版 PDF 来看。这里强烈推荐 [Skip](https://skim-app.sourceforge.io/) 我觉得作为一款 PDF 阅读器来说，做到了快、文字能复制、复制的文字和 PDF 内容是一样的这种难度比较高的水准。甚至还是开源的，简直真的是太伟大了。我用过比较多的 PDF 阅读器，比如 Adobe Acrobat、PDF Expert。甚至是 福昕 PDF ，WPS PDF，给我的感觉都是卡顿还有比较大的复制问题，就是复制的文字和 PDF 里面的文字不一样。
-
-和 Chrome 等浏览器自带的 PDF 阅读器比我认为无非是多了个签名和画线、笔记类的扩充。忘记了阅读的这第一要素，特别是像我这种 English 比较差需要 Copy 文字翻译的，比较不由好。所以对于 Skip 我是强烈推荐的。
 
 ---
 
@@ -298,7 +295,7 @@ Lisp、Clojure、Scheme 等语言通过其 S-expression 和宏系统提供强大
 :text-title{:t="Haskell: 纯函数语言" type="2"}
 
 
-还还还有 [Haskell community](https://en.wikipedia.org/wiki/Haskell)，Haskell 专为教学、研究和工业应用而设计。以逻辑学家[哈斯克尔・柯里 (Haskell Curry) ](https://en.wikipedia.org/wiki/Haskell_Curry) 的名字命名，他的 [Lambda 演算（Lambda Calculus）](https://en.wikipedia.org/wiki/Lambda_calculus) 是函数式编程的基础，以及他对 [Currying](https://en.wikipedia.org/wiki/Currying) 的贡献。
+还还还有 [Haskell community](https://en.wikipedia.org/wiki/Haskell)，Haskell 专为教学、研究和工业应用而设计。以逻辑学家[哈斯克尔・柯里 (Haskell Curry) ](https://en.wikipedia.org/wiki/Haskell_Curry) 的名字命名，他的研究之一 [Lambda 演算（Lambda Calculus）](https://en.wikipedia.org/wiki/Lambda_calculus) 是函数式编程的基础，同时他还是 [Currying](https://en.wikipedia.org/wiki/Currying) 的贡献者之一。
 
 	•	在 Haskell 诞生之前，函数式编程语言如 Lisp、ML 等已经存在，但它们没有完全基于纯函数式的理念。
 	•	Haskell 作为一门“纯函数式编程语言”，其命名体现了其与数学逻辑和 Lambda 演算的深厚联系。
@@ -472,13 +469,16 @@ ming is all about.
 ## 我那一事无成且一直在学习的一生 2
 :text-title{:t="我那一事无成且一直在学习的一生"}
 
-让我意外的是，这本书的前言竟然不是作者自己写的。而是 Erlang 的创建者 Joe Armstrong。我认为结尾处是比较具有讽刺意味的，如果一直学习，那么就会感觉自己超级菜，从而缺少了勇气去创建、编写一个项目，甚至是与人分享的喜悦。但在 2022 年，这个现象可以解决了，因为 ChatGPT 出来了。
+让我意外的是，这本书的前言竟然不是作者自己写的。而是 Erlang 的创建者 Joe Armstrong。我认为结尾处是比较具有讽刺意味的，如果一直学习，那么就会感觉自己超级菜，从而缺少了勇气去创建、编写一个项目，甚至是与人分享的喜悦。
 
-如果你将自己的项目分享到某个群组，那个群组的人可能觉得你打广告，或者说炫耀？于是 Code 警察开始出动，不断的给你批斗拉踩甚至是网暴。如果你的抗压能力不是很强，或许就开始退群退网、Github 设置为隐私三件套走起。
+如果你将自己的项目分享到某个群组，那个群组的人可能觉得你打广告，或者说炫耀？于是 Code 警察开始出动，不断的给你批斗拉踩甚至是网暴。跟你诉说你所做的无非是重复造轮子，毫无意义的事情。如果你的抗压能力不是很强，或许就开始退群退网、Github 设置为隐私三件套走起。
 
-但你如果与 ChatGPT 分享一个项目、一个思路。TA 会先肯定你，然后提出可以优化的建议。虽然整个流程看起来很正常，属于非常理智的。但如果是几十人、几百人的群组，理智往往是那么的珍贵和稀缺，大改只有立场先行和整活、玩梗的存在。
+但你如果与 ChatGPT 分享一个项目、一个思路。TA 会先肯定你，然后提出可以优化的建议。虽然整个流程看起来很正常，属于非常理智的。但如果是几十人、几百人的群组，理智往往是那么的珍贵和稀缺，大概只有立场先行和整活、玩梗的存在。
 
-::text-tip
+::text-space
+---
+type: tip
+---
 A Zen master might tell you that to be better at mathematics you’d
 better study Latin. Thus it is with programming. To better understand
 the essence of OO programming, you should study logic or functional
@@ -3678,7 +3678,57 @@ Distinct: 1000
 你有一排盒子，每个盒子里装着一组连续的数字。所有盒子按顺序排列成一个大箱子。然后随机找两个盒子，从每个盒子里随机拿出一个数字，把这两个数字交换。整个交换过程是原子的，不会被其他线程打断，最后打印当前所有盒子里的数字状态，然后检查有没有数字丢失或者重复。
 
 
+---
 
+# Haskell 1
+:text-title{t="Haskell"}
+
+::wise-info
+---
+topic: Haskell History
+by: Wikipedia
+---
+1985 年 Research Software Ltd. 发布 Miranda 后，人们对惰性函数式语言的兴趣与日俱增。
+
+到 1987 年，已经存在了十几种非严格的、纯函数式编程语言。Miranda 是使用最广泛的，但它是专有软件 。
+
+**在俄勒冈州波特兰市举行的函数式编程语言和计算机体系结构 （FPCA '87） 会议上，人们达成了强烈共识，即成立一个委员会来定义此类语言的开放标准 。**
+
+该委员会的目的是将现有的函数式语言整合为通用语言，作为未来函数式语言设计研究的基础。
+::
+
+
+## Guards 2
+:text-title{t="Guards" type="2"}
+作为一个将 `λ` 体现在 Logo 上的 Language 来说，我认为学术风格必然会占很大的比例（从文档上也能直接看出是很纯粹的 tech style）。感觉第一章的内容和 Haskell website 上的那个 “Try it!” 很像，内容相近。不过最让我好奇的是 `Guards`(pattern guard) 的条件表达式，类比于其他语言中的 `if-else` or `switch-case`:
+
+```
+f x
+  | pat <- exp
+  , condition
+  = result
+
+--- Exp
+
+addMaybe :: Maybe Int -> Maybe Int -> Int
+addMaybe x y
+  | Just a <- x
+  , Just b <- y
+  = a + b
+addMaybe _ _ = 0 
+
+main = do
+  print (addMaybe (Just 1) (Just 1)) 
+  print (addMaybe (Just 1) Nothing)
+  print (addMaybe Nothing (Just 1))
+
+---> Output
+2
+0
+0
+```
+
+例如上述的 `pat <- exp` 就相当于一个模式守卫(pattern guards)，如果 `x` 和 `y` 都是 `Just`。比较有趣的是，Haskell 貌似有点语义化？比如 `Maybe` 类型和他的 `Just` 构造函数，都是能从字面意义上理解的。对于这两个的理解我还挺喜欢这篇  [What does the "Just" syntax mean in Haskell?](https://stackoverflow.com/questions/18808258/what-does-the-just-syntax-mean-in-haskell) 回答的。 
 
 
 ::

@@ -19,7 +19,7 @@ time: "2015 - Now Shenzhen"
 name: "Jiangxue analysis"
 title: "Full-Stack Software Engineering Intern"
 desc: "Fringe Support And Analysis"
-about: "<p>My config</p><span>macOS system use neovim + ghostty</span><p>Educational level</p><span>Illiterate</span>"
+about: "<p>Educational level</p><span>Illiterate</span>"
 ---
 
 #contributiondes
