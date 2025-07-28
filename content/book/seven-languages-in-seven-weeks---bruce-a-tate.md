@@ -3697,6 +3697,17 @@ by: Wikipedia
 该委员会的目的是将现有的函数式语言整合为通用语言，作为未来函数式语言设计研究的基础。
 ::
 
+要想了解一个 Programming Language，很多时候会敲一个 `Hello,world!`。而可以与前者相提并论的就是斐波那契数列，在 Haskell wiki 中写到：
+
+
+::wise-info
+---
+topic: The Fibonacci sequence
+by: Haskell wiki
+---
+Implementing the Fibonacci sequence is considered the "Hello, world!" of Haskell programming.<br>
+斐波那契数列被认为是 Haskell 编程的“你好，世界！
+::
 
 ## Guards 2
 :text-title{t="Guards" type="2"}
@@ -3728,7 +3739,7 @@ main = do
 0
 ```
 
-例如上述的 `pat <- exp` 就相当于一个模式守卫(pattern guards)，如果 `x` 和 `y` 都是 `Just`。比较有趣的是，Haskell 貌似有点语义化？比如 `Maybe` 类型和他的 `Just` 构造函数，都是能从字面意义上理解的。对于这两个的理解我还挺喜欢这篇  [What does the "Just" syntax mean in Haskell?](https://stackoverflow.com/questions/18808258/what-does-the-just-syntax-mean-in-haskell) 回答的。 
+例如上述的 `pat <- exp` 就相当于一个模式守卫(pattern guards)，如果 `x` 和 `y` 都是 `Just`。比较有趣的是，Haskell 貌似有点语义化？比如 `Maybe` 类型和他的 `Just` 构造函数，都是能从字面意义上理解的。对于这两个的理解我还挺喜欢这篇  [What does the "Just" syntax mean in Haskell?](https://stackoverflow.com/questions/18808258/what-does-the-just-syntax-mean-in-haskell) 回答的内容。 
 
 
 ::
