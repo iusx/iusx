@@ -69,7 +69,13 @@ onMounted(() => {
           </div>
           <div class="work-pop-des">
             <div class="work-pop-des-box" v-for="des in sortedData">
-              <div class="no-img"></div>
+              <div v-if="loading" class="no-img"></div>
+              <nuxt-link :to="des.url" target="_blank" v-else>
+                <img :src="des.img" :alt="des.title" />
+                <div class="work-desc-box">
+                  <p>{{ des.title }}</p>
+                </div>
+              </nuxt-link>
             </div>
           </div>
         </div>
