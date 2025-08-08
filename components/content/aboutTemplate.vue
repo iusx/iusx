@@ -195,7 +195,7 @@ const contribution = [
     <div class="hello">
       <div class="tip">
         <p class="about">
-          <a href="/"><small>Home /</small> </a>ABOUT
+          <this-page>about</this-page>
         </p>
         <div class="tip-title">
           <p>interest://</p>
