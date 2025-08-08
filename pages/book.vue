@@ -22,14 +22,15 @@ const sortedData = computed(() => equalQueryBook.value);
 <template>
   <main>
     <div class="note-layout">
-      <div class="note-book"><sk-book-img :sorted-data="sortedData" /></div>
+      <div class="note-book">
+        <sk-book-img :sorted-data="sortedData" />
+      </div>
     </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
 @keyframes loading {
-
   0%,
   100% {
     opacity: 1;

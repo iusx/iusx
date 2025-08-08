@@ -24,9 +24,8 @@ const sortedData = computed(() => equalQuerySec.value);
   <main>
     <div class="main">
       <div class="main-title">
-        <p>My Vulnerability</p>
+        <this-page> <p>My Vulnerability</p> </this-page>
         <an-typing> Report </an-typing>
-        <span>SEC<br>URITY</span>
         <Icon class="red" name="RedIcon" />
       </div>
       <div class="content-layout">
@@ -38,9 +37,11 @@ const sortedData = computed(() => equalQuerySec.value);
         <swiper :slides-per-view="'auto'">
           <swiper-slide v-for="sec in sortedData" class="content-box">
             <nuxt-link style="display: contents" :to="sec._path">
-              <div class="content-time" style="height: 100%;">
-                <img :src="'/img/page/' + sec.platform + '.png'" alt="report-platform" /><span>{{ sec.time.slice(0, 4)
-                  }}</span>
+              <div class="content-time" style="height: 100%">
+                <img
+                  :src="'/img/page/' + sec.platform + '.png'"
+                  alt="report-platform"
+                /><span>{{ sec.time.slice(0, 4) }}</span>
               </div>
               <p class="box-title">{{ sec.title }}</p>
             </nuxt-link>
@@ -121,7 +122,8 @@ main {
         }
       }
 
-      .box-title {}
+      .box-title {
+      }
 
       img {
         filter: brightness(14);
@@ -201,7 +203,6 @@ main {
       @media (max-width: 400px) {
         font-size: 30px;
       }
-
 
       color: #ef0000;
       font-weight: 600;
