@@ -11,6 +11,10 @@ defineProps(["page"]);
 </script>
 
 <style lang="scss" scoped>
+a {
+  text-decoration: none;
+}
+
 .about {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -30,6 +34,9 @@ defineProps(["page"]);
     transition:
       opacity 0.3s ease,
       transform 0.3s ease;
+  }
+  a {
+    color: #38e7cd;
   }
 
   &:hover::after {

@@ -69,13 +69,7 @@ onMounted(() => {
           </div>
           <div class="work-pop-des">
             <div class="work-pop-des-box" v-for="des in sortedData">
-              <div v-if="loading" class="no-img"></div>
-              <nuxt-link :to="des.url" target="_blank" v-else>
-                <img :src="des.img" :alt="des.title" />
-                <div class="work-desc-box">
-                  <p>{{ des.title }}</p>
-                </div>
-              </nuxt-link>
+              <div class="no-img"></div>
             </div>
           </div>
         </div>
@@ -101,7 +95,6 @@ onMounted(() => {
   height: 100%;
   width: 100%;
   border: 1px soldi red;
-  position: absolute;
 }
 .dark-mode .no-img {
   background-color: rgb(29, 29, 29);
@@ -109,9 +102,9 @@ onMounted(() => {
 
 a {
   color: rgb(0, 0, 0);
+  text-decoration: none;
 }
 .work-pop {
-  position: absolute;
   background: rgb(255, 255, 255);
   box-shadow: 0px 4px 45.8px 49px rgba(166, 166, 166, 0.25);
   .work-pop-title {
