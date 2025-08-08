@@ -276,15 +276,15 @@ main {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(to right, #00e989, #81c784);
+  background: linear-gradient(to right, #38E7CD, #38E7CD);
   font-family: "Tsing";
-  stroke: #6fffc4;
+  stroke: #38E7CD;
   text-align: right;
   padding-right: 8px;
   color: white;
   font-size: 19px;
   line-height: 27px;
-  box-shadow: 0px 4px 15px 3px #00e989;
+  box-shadow: 0px 4px 15px 3px #38E7CD;
   transition: width 0.5s ease-in-out;
 
   p {

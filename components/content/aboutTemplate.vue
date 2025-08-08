@@ -167,7 +167,7 @@ const contribution = [
     name: "Ethereum ORG",
     time: "2024",
     post: "UX contribution",
-    url: "/outher/ethereum-website-pr"
+    url: "/outher/ethereum-website-pr",
   },
   {
     name: "Xmatrix",
@@ -185,7 +185,7 @@ const contribution = [
     name: "Scala AST-explorer",
     time: "2025",
     post: "Contributor",
-    url: "https://scalameta.org/ast-explorer/"
+    url: "https://scalameta.org/ast-explorer/",
   },
 ];
 </script>
@@ -198,14 +198,17 @@ const contribution = [
           <a href="/"><small>Home /</small> </a>ABOUT
         </p>
         <div class="tip-title">
-          <p>TAG://</p>
-          <an-font class="me-tip" :text="[
-            'Software development',
-            'Security amateur',
-            'Designer',
-            'Full stack development',
-            'Enthusiast.'
-          ]" />
+          <p>interest://</p>
+          <an-font
+            class="me-tip"
+            :text="[
+              'Exploring Cybersecurity', 
+              'Designing for Fun', 
+              'Making Animations', 
+              'Creating Technical Art', 
+              'Building Full Stack Projects', 
+            ]"
+          />
         </div>
         <div class="desc">
           <div class="desc-layout">
@@ -253,7 +256,6 @@ const contribution = [
   }
 
   .desc-layout {
-
     color: #cbcbcb;
     font-size: 15px;
 
@@ -336,7 +338,6 @@ const contribution = [
         font-size: initial;
         font-weight: bold;
       }
-
     }
   }
 
@@ -411,14 +412,13 @@ const contribution = [
         .desc-layout {
           text-align: justify;
 
-          p:nth-child(n+2) {
+          p:nth-child(n + 2) {
             margin-top: 20px;
           }
 
           @media (max-width: 1024px) {
             column-count: 1;
           }
-
         }
       }
     }
@@ -426,7 +426,7 @@ const contribution = [
 
   .about {
     font-size: x-large;
-    color: #00dd82 !important;
+    color: #38E7CD !important;
     text-transform: uppercase;
 
     small {

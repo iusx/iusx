@@ -181,7 +181,7 @@ const percentage = computed(() => {
   @media (max-width: 1024px) {
     display: block;
     position: fixed;
-    background: #00dd82;
+    background: #38E7CD;
     padding: 8px;
     font-size: 1.3vh;
     z-index: 9999;

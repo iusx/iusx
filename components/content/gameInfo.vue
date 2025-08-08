@@ -134,7 +134,7 @@ main {
     .star {
       margin-right: 4px;
       transition: transform 0.2s ease;
-      text-shadow: 0px 4px 4px #00DD82;
+      text-shadow: 0px 4px 4px #38E7CD;
     }
 
     .star.filled {

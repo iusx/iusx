@@ -41,7 +41,7 @@ onMounted(() => {
     .enter()
     .append("circle")
     .attr("r", 5)
-    .attr("fill", "#00dd82");
+    .attr("fill", "#38E7CD");
 
   simulation = d3
     .forceSimulation(nodes)

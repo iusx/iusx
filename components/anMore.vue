@@ -1,6 +1,14 @@
 <template>
-  <main ref="el" :style="style" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-    <a href="/" :class="{ active: currentPage === '/' || currentPage === '/about' }">
+  <main
+    ref="el"
+    :style="style"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+  >
+    <a
+      href="/"
+      :class="{ active: currentPage === '/' || currentPage === '/about' }"
+    >
       <Icon name="RhymeIcon" size="30px" />
     </a>
     <a href="/des" :class="{ active: currentPage.startsWith('/des') }">
@@ -50,13 +58,13 @@ main {
   z-index: 11;
   width: fit-content;
   right: 0;
-border-left: 3px solid rgb(0 255 72);;
-  box-shadow: -1px 0px 0px 0px rgb(0 255 72);
+  border-left: 3px solid #38E7CD;
+  box-shadow: -1px 0px 0px 0px #38E7CD;
   background-repeat: no-repeat;
   background-image: url(/img/page/drag.png);
   background: #000;
-  right: -40px;
 }
+
 
 a {
   display: block;

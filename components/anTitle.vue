@@ -43,7 +43,7 @@ a::before {
   display: block;
   height: 1vh;
   width: 1vh;
-  background: #00dd82;
+  background: #38E7CD;
   border-radius: 120px;
   animation: fade 2s linear infinite;
   margin-top: 14px;

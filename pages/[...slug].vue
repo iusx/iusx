@@ -19,7 +19,7 @@ p a {
   transition: color 0.3s ease;
 
   &:hover {
-    color: #00dd82;
+    color: #38E7CD;
   }
 }
 </style>
