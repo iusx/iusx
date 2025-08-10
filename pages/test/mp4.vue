@@ -1,11 +1,7 @@
 <template>
   <div class="test">
     <h1>Mp4 test 11</h1>
-    <div v-if="!started" class="poster" @click="startVideo">
-      <img src="/test/poster.jpg" alt="poster" />
-      <div class="play-btn">▶</div>
-    </div>
-    <video v-show="started" id="video" muted playsinline webkit-playsinline autoplay></video>
+    <video id="video" poster="/test/poster.jpg" muted playsinline webkit-playsinline autoplay></video>
     <pre>{{ playerInfo }}</pre>
   </div>
 </template>
@@ -15,22 +11,6 @@ import Hls from "hls.js";
 import { onMounted, ref } from "vue";
 
 const playerInfo = ref({});
-const started = ref(false);
-
-function startVideo() {
-  started.value = true;
-  const video = document.getElementById("video");
-
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource("/test/playlist.m3u8");
-    hls.attachMedia(video);
-    video.play();
-  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-    video.src = "/test/playlist.m3u8";
-    video.play();
-  }
-}
 
 function detectPlayerSupport() {
   const video = document.createElement("video");
@@ -65,12 +45,13 @@ function detectPlayerSupport() {
 }
 
 onMounted(() => {
+  const video = document.getElementById("video");
+  const hls = new Hls();
+  hls.loadSource("/test/playlist.m3u8");
+  hls.attachMedia(video);
+
   playerInfo.value = detectPlayerSupport();
 });
-
-setTimeout(() => {
-  video.play().catch(() => {});
-}, 500);
 </script>
 
 <style lang="scss">
