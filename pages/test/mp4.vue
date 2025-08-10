@@ -16,11 +16,20 @@
   <div class="test">
     <p>Mp4 test</p>
     <video
+      class="video"
       muted=""
       playsinline=""
+      data-inline-media=""
+      preload="none"
+      role="img"
+      data-inline-media-load-keyframe='{"start": "t - 150vh", "end": "b + 200vh"}'
+      data-inline-media-play-keyframe='{"start": "t - 98vh", "end": "b"}'
+      data-inline-media-basepath="/105/media/cn/macbook-air/2025/0833fe28-c438-4dc4-8edc-e39ef30df5f9/anim/design-hero/"
+      data-inline-media-plugins="DisableOnBreakpointChange, AnimLoad, ViewportSource, LoadTimeout, AnimPlay"
+      data-inline-media-reset-on-exit="true"
+      data-inline-media-pause-on-exit="false"
+      aria-label="动画演示向上升起的 13 英寸和 15 英寸 MacBook Air，一个屏幕显示正在处理的设计作品，另一个屏幕显示邮件和电子表格之间的多任务处理"
       src="/test/test.mp4"
-      controlslist="nodownload"
-      controls
     ></video>
   </div>
 </template>
