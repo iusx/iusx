@@ -1,26 +1,20 @@
-
 <template>
   <div class="test">
-    <p>Mp4 test 11</p>
+    <h1>Mp4 test 11</h1>
     <div v-if="!started" class="poster" @click="startVideo">
       <img src="/test/poster.jpg" alt="poster" />
       <div class="play-btn">▶</div>
     </div>
-    <video
-      v-show="started"
-      id="video"
-      muted
-      playsinline
-      webkit-playsinline
-      loop
-    ></video>
+    <video v-show="started" id="video" muted playsinline webkit-playsinline autoplay></video>
+    <pre>{{ playerInfo }}</pre>
   </div>
 </template>
 
 <script setup>
 import Hls from "hls.js";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
+const playerInfo = ref({});
 const started = ref(false);
 
 function startVideo() {
@@ -37,34 +31,59 @@ function startVideo() {
     video.play();
   }
 }
+
+function detectPlayerSupport() {
+  const video = document.createElement("video");
+
+  const support = {
+    userAgent: navigator.userAgent,
+    hlsNative: video.canPlayType("application/vnd.apple.mpegurl") !== "",
+    mp4: video.canPlayType("video/mp4") !== "",
+    webm: video.canPlayType("video/webm") !== "",
+    ogg: video.canPlayType("video/ogg") !== "",
+    hlsJsSupport: Hls.isSupported(),
+    autoplayInline: false,
+    playsinline: "playsInline" in video,
+    mutedAutoplay: false,
+  };
+
+  video.muted = true;
+  const playPromise = video.play();
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        support.autoplayInline = true;
+        support.mutedAutoplay = true;
+      })
+      .catch(() => {
+        support.autoplayInline = false;
+        support.mutedAutoplay = false;
+      });
+  }
+
+  return support;
+}
+
+onMounted(() => {
+  playerInfo.value = detectPlayerSupport();
+});
+
+setTimeout(() => {
+  video.play().catch(() => {});
+}, 500);
 </script>
 
 <style lang="scss">
 .test {
   height: 300vh;
   width: 100%;
-
-  .poster {
-    position: relative;
-    width: 100%;
-    img {
-      width: 100%;
-      display: block;
-    }
-    .play-btn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 40px;
-      color: white;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      padding: 10px;
-    }
-  }
-
   video {
+    &::-webkit-media-controls {
+      display: none !important;
+    }
+    &::-webkit-media-controls-enclosure {
+      display: none !important;
+    }
     width: 100%;
   }
 }
