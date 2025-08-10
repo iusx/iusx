@@ -1,0 +1,1 @@
+import{p as t,_ as e}from"./4gx-DtrS.js";import{A as o,z as c,Y as n,O as s}from"./D24rYw6M.js";const r=t("/test/test.mp4"),a={},_=s("p",null,"Mp4 test 3",-1),p=s("div",{class:"test"},[s("video",{muted:"",playsinline:"",src:r})],-1);function i(l,m){return c(),o(n,null,[_,p],64)}const u=e(a,[["render",i]]);export{u as default};
