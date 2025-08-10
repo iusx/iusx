@@ -1,0 +1,1 @@
+import{a,N as n,A as c,O as s,z as l}from"./D24rYw6M.js";const r={class:"test"},_=s("p",null,"Mp4 test",-1),i={__name:"mp4",setup(p){const e=a(null);return n(()=>{const t="/test/test.mp4?token="+btoa("test/test.mp4"+Date.now());e.value.src=t}),(o,t)=>(l(),c("div",r,[_,s("video",{muted:"",playsinline:"",ref_key:"videoRef",ref:e},null,512)]))}};export{i as default};
