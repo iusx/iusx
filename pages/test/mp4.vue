@@ -15,7 +15,13 @@
   </button>
   <div class="test">
     <p>Mp4 test</p>
-    <video muted="" playsinline="" src="/test/test.mp4"></video>
+    <video
+      muted=""
+      playsinline=""
+      src="/test/test.mp4"
+      controlslist="nodownload"
+      controls
+    ></video>
   </div>
 </template>
 
