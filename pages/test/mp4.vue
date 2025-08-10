@@ -1,19 +1,19 @@
 <template>
   <div class="test">
     <p>Mp4 test</p>
-    <video muted playsinline ref="videoRef"></video>
+
+    <video id="video" muted="" playsinline=""></video>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-
-const videoRef = ref(null)
+import Hls from 'hls.js'
 
 onMounted(() => {
-  const key = btoa('test/test.mp4' + Date.now())
-  const realPath = '/test/test.mp4?token=' + key
-  videoRef.value.src = realPath
+  const video = document.getElementById('video')
+  const hls = new Hls()
+  hls.loadSource('/test/playlist.m3u8')
+  hls.attachMedia(video)
 })
 </script>
 
