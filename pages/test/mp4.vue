@@ -1,6 +1,7 @@
 <template>
   <div class="test">
     <h1>Mp4 test 15</h1>
+
     <video
       id="video"
       muted
@@ -28,6 +29,7 @@ onMounted(async () => {
     online: navigator.onLine,
     cookieEnabled: navigator.cookieEnabled,
   };
+
   playerInfo.value.page = {
     url: location.href,
     protocol: location.protocol,
@@ -106,14 +108,16 @@ onMounted(async () => {
 .test {
   height: 300vh;
   width: 100%;
+
   video {
+    all: unset;             
+
     &::-webkit-media-controls {
       display: none !important;
     }
     &::-webkit-media-controls-enclosure {
       display: none !important;
     }
-    width: 100%;
   }
 }
 </style>
