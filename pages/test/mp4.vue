@@ -1,6 +1,6 @@
 <template>
   <div class="test">
-    <h1>Mp4 test 14</h1>
+    <h1>Mp4 test 15</h1>
     <video
       id="video"
       muted
@@ -14,12 +14,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
-const playerInfo = ref({})
+const playerInfo = ref({});
 
 onMounted(async () => {
-  const video = document.getElementById('video')
+  const video = document.getElementById("video");
 
   playerInfo.value.browser = {
     userAgent: navigator.userAgent,
@@ -27,23 +27,23 @@ onMounted(async () => {
     language: navigator.language,
     online: navigator.onLine,
     cookieEnabled: navigator.cookieEnabled,
-  }
+  };
   playerInfo.value.page = {
     url: location.href,
     protocol: location.protocol,
     referrer: document.referrer,
-  }
+  };
 
   playerInfo.value.videoSupport = {
-    mp4: video.canPlayType('video/mp4'),
-    webm: video.canPlayType('video/webm'),
-    ogg: video.canPlayType('video/ogg'),
-  }
+    mp4: video.canPlayType("video/mp4"),
+    webm: video.canPlayType("video/webm"),
+    ogg: video.canPlayType("video/ogg"),
+  };
 
   const updateVideoStatus = () => {
     playerInfo.value.videoState = {
-      networkState: video.networkState, 
-      readyState: video.readyState, 
+      networkState: video.networkState,
+      readyState: video.readyState,
       paused: video.paused,
       ended: video.ended,
       muted: video.muted,
@@ -51,45 +51,55 @@ onMounted(async () => {
       duration: video.duration,
       buffered: video.buffered.length
         ? `${video.buffered.start(0).toFixed(2)}-${video.buffered.end(0).toFixed(2)}`
-        : 'none',
-    }
-  }
+        : "none",
+    };
+  };
 
   const events = [
-    'loadstart',
-    'loadedmetadata',
-    'loadeddata',
-    'canplay',
-    'canplaythrough',
-    'play',
-    'playing',
-    'pause',
-    'ended',
-    'error',
-    'waiting',
-    'stalled',
-    'suspend',
-    'timeupdate',
-  ]
-  events.forEach(evt => {
+    "loadstart",
+    "loadedmetadata",
+    "loadeddata",
+    "canplay",
+    "canplaythrough",
+    "play",
+    "playing",
+    "pause",
+    "ended",
+    "error",
+    "waiting",
+    "stalled",
+    "suspend",
+    "timeupdate",
+  ];
+  events.forEach((evt) => {
     video.addEventListener(evt, () => {
-      updateVideoStatus()
-      playerInfo.value.lastEvent = evt
-    })
-  })
+      updateVideoStatus();
+      playerInfo.value.lastEvent = evt;
+    });
+  });
 
-  updateVideoStatus()
+  updateVideoStatus();
 
   try {
-    const resp = await fetch(video.src, { method: 'HEAD' })
-    playerInfo.value.videoHeaders = {}
+    const resp = await fetch(video.src, { method: "HEAD" });
+    playerInfo.value.videoHeaders = {};
     for (const [key, value] of resp.headers.entries()) {
-      playerInfo.value.videoHeaders[key] = value
+      playerInfo.value.videoHeaders[key] = value;
     }
   } catch (e) {
-    playerInfo.value.videoHeaders = { error: e.message }
+    playerInfo.value.videoHeaders = { error: e.message };
   }
-})
+
+  const isQuark = navigator.userAgent.includes("Quark");
+  if (isQuark) {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      #video::-webkit-media-controls { display: none !important; }
+      #video::-webkit-media-controls-enclosure { display: none !important; }
+    `;
+    document.head.appendChild(style);
+  }
+});
 </script>
 
 <style lang="scss">
