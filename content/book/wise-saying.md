@@ -280,4 +280,14 @@ by: James Forshaw
 There is nothing new under the sun<br>
 太阳底下没有新鲜事
 ::
+
+## Life 2
+::wise-info
+---
+topic: 漆器工艺专著
+by: 髹饰录
+---
+可巧手以继拙作，不可庸工以当精制
+::
+
 ::
