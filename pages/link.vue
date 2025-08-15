@@ -65,8 +65,10 @@ onMounted(() => {
           >
             <div class="links-con-img">
               <div v-if="loading" class="no-img"></div>
-              <img class="img" v-else :src="link.img" :alt="link.name" />
-              <img class="text" src="/img/page/link/text.webp" />
+              <template v-else>
+                <img class="img" :src="link.img" :alt="link.name" />
+                <img class="text" src="/img/page/link/text.webp" />
+              </template>
             </div>
             <p>{{ link.name }}</p>
           </a>
