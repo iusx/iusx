@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="hi">
-      <h1><an-typing>PLAN</an-typing></h1>
+      <h1><this-page></this-page> <an-typing>PLAN</an-typing></h1>
       <span>MY money Pay plan</span>
     </div>
     <div class="layout-box">
@@ -276,15 +276,15 @@ main {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(to right, #38E7CD, #38E7CD);
+  background: linear-gradient(to right, #38e7cd, #38e7cd);
   font-family: "Tsing";
-  stroke: #38E7CD;
+  stroke: #38e7cd;
   text-align: right;
   padding-right: 8px;
   color: white;
   font-size: 19px;
   line-height: 27px;
-  box-shadow: 0px 4px 15px 3px #38E7CD;
+  box-shadow: 0px 4px 15px 3px #38e7cd;
   transition: width 0.5s ease-in-out;
 
   p {
