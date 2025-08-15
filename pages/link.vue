@@ -27,7 +27,6 @@ const images = ref([]);
 const loading = ref(true);
 const imagesLoadedCount = ref(0);
 
-console.log("fuck", firstImg);
 onMounted(() => {
   sortedData.value.forEach((item) => {
     const formattedPath = item.img;
@@ -52,19 +51,26 @@ onMounted(() => {
 
 <template>
   <main>
-    <div class="title">
-      <a href="/">
-        <Icon name="BackIcon" size="20px" />
-        <p>友情链接</p>
-      </a>
-    </div>
     <div class="main-layout">
-      <div class="main-box" v-for="link in sortedData">
-        <a :href="link.url" target="_blank">
-          <div v-if="loading" class="no-img"></div>
-          <img v-else :src="link.img" :alt="link.name" />
-        </a>
-        <div class="main-box-title">{{ link.name }}</div>
+      <div class="main-box">
+        <div class="title">
+          <this-page>友情链接 </this-page>
+        </div>
+        <div class="links-container">
+          <a
+            :href="link.url"
+            target="_blank"
+            class="background"
+            v-for="link in sortedData"
+          >
+            <div class="links-con-img">
+              <div v-if="loading" class="no-img"></div>
+              <img class="img" v-else :src="link.img" :alt="link.name" />
+              <img class="text" src="/img/page/link/text.webp" />
+            </div>
+            <p>{{ link.name }}</p>
+          </a>
+        </div>
       </div>
     </div>
   </main>
@@ -72,7 +78,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @keyframes loading {
-
   0%,
   100% {
     opacity: 1;
@@ -82,100 +87,88 @@ onMounted(() => {
     opacity: 0.5;
   }
 }
-
-.no-img {
-  background-color: #f2f2f2;
-  animation: loading 1.5s infinite;
-  display: block;
-  height: 414px;
-  width: 100%;
-  aspect-ratio: 54 / 71;
-}
-
-.dark-mode .no-img {
-  background-color: rgb(29, 29, 29);
-}
-
-.main-layout {
-  margin-top: 2vw;
-}
-
-.dark-mode .main-box {
-  background: #ffffff17;
-  box-shadow: 0px 4px 64.5px 11px rgb(255 255 255 / 12%);
-}
-
-.dark-mode .main-box img {
-  filter: brightness(0.5);
-}
-
-.main-box a {
-  text-decoration: none;
-}
-
-.main-box {
-  background: transparentize;
-  padding: 1vw;
-  box-shadow: 0px 4px 64.5px 11px rgb(0 0 0 / 12%);
-  cursor: pointer;
-  transition:
-    filter 01.3s ease,
-    opacity 0.3s ease;
-  margin-bottom: 5vw;
-
-  img {
-    width: 100%;
-    border-right: 3px;
-  }
-
-  .main-box-title {
-    margin-top: 12px;
-    font-size: 22px;
-    color: #424242;
-
-
-    @media (max-width: 1440px) {
-      font-size: 16px;
-      padding: 4px;
-    }
-  }
-
-  &:hover {
-    opacity: 0.5;
-  }
-}
-
-.title a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #000;
-  margin-bottom: 20px;
-
-  p {
-    padding: a;
-    margin: 0;
-    font-weight: bold;
-    font-size: 20px;
-
-    @media (max-width: 1440px) {
-      font-size: 2vw;
-    }
-  }
-}
-
-.dark-mode a {
-  color: #8b8b8b;
-}
-
 main {
-  width: 25%;
-  margin: 0 auto;
+  background: #616161;
+  width: 100%;
+  height: 100vh;
 
-  @media (max-width: 900px) {
-    width: 60% !important;
+  .main-layout {
+    background: #616161;
+    margin: 0 auto;
+    padding: 20px;
+
+    .title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .links-container {
+      display: grid;
+      justify-items: center;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .background {
+      width: 200px;
+      height: 280px;
+      text-decoration: none;
+      background: url("/img/page/link/back.webp") no-repeat center center;
+      background-size: contain;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+      .links-con-img {
+        display: grid;
+        align-items: end;
+        justify-items: start;
+        .img {
+          width: 110px;
+          height: 110px;
+          object-fit: cover;
+          margin-bottom: 10px;
+          grid-row: 1 / 2;
+          grid-column: 1 / 2;
+          z-index: 2;
+        }
+
+        .text {
+          width: 110px;
+          height: 110px;
+          object-fit: cover;
+          margin-bottom: 10px;
+          grid-row: 1 / 2;
+          grid-column: 1 / 2;
+          z-index: 2;
+        }
+      }
+
+      p {
+        color: #df5957;
+        font-size: 14px;
+        text-align: center;
+        margin: 0;
+        line-height: 1.2;
+      }
+    }
   }
-
-  margin-top: 10%;
+  .no-img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    background-color: #f2f2f2;
+    animation: loading 1.5s infinite;
+  }
 }
 </style>

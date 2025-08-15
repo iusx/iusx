@@ -281,6 +281,9 @@ There is nothing new under the sun<br>
 太阳底下没有新鲜事
 ::
 
+
+:text-title{t="Life"}
+
 ## Life 2
 ::wise-info
 ---
