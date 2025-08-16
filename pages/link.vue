@@ -54,7 +54,7 @@ onMounted(() => {
     <div class="main-layout">
       <div class="main-box">
         <div class="title">
-          <this-page>友情链接 </this-page>
+          <this-page :color="{ light: '#fff', dark: '#fff' }">友情链接 </this-page>
         </div>
         <div class="links-container">
           <a

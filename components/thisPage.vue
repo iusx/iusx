@@ -1,20 +1,37 @@
 <template>
   <p class="about">
-    <a href="/"
+    <a href="/" :style="{ color: linkColor }"
       ><small>Home /</small><span><slot /></span
     ></a>
   </p>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, computed } from "vue";
 const colorMode = useColorMode();
-defineProps(["page"]);
+
+const props = defineProps({
+  page: String,
+  color: {
+    type: Object,
+    default: () => ({
+      light: "#000000", 
+      dark: "#ffffff",  
+    }),
+  },
+});
+
+const linkColor = computed(() =>
+  colorMode.value === "dark" ? props.color.dark : props.color.light
+);
 </script>
 
 <style lang="scss" scoped>
 a {
   text-decoration: none;
+  &:visited {
+    color: inherit;
+  }
 }
 
 .dark-mode span {
