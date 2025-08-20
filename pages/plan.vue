@@ -293,7 +293,7 @@ main {
     p {
       padding: 0;
       margin: 0;
-      color: #c2c2c2;
+      color: #5b5b5b;
     }
 
     span {
