@@ -5,12 +5,7 @@
       <span>MY plan</span>
     </div>
     <div class="layout-box">
-      <a
-        :href="plan._path"
-        v-for="(plan, index) in sortedData"
-        :key="index"
-        class="layout"
-      >
+      <div v-for="(plan, index) in sortedData" :key="index" class="layout">
         <div class="title-box">
           <p class="title-box_name">{{ plan.title }}</p>
           <div class="title">
@@ -27,14 +22,15 @@
             <p>{{ plan.progress }}%</p>
           </div>
         </div>
-        <div
+        <a
+          :href="subPlan._path"
           v-for="(subPlan, subIndex) in plan.subPlans"
           :key="subIndex"
           class="sub-plan"
         >
           <div class="title">
             <p>
-              {{ formatDisplay(subPlan, plan).target }} (Inherited from Parent)
+              {{ formatDisplay(subPlan, plan).target }} - {{ subPlan.title }}
             </p>
             <span>{{ formatDisplay(subPlan, plan).current }}</span>
           </div>
@@ -47,37 +43,22 @@
               <p>{{ subPlan.progress }}%</p>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { computed, onMounted, watch } from "vue";
 
-useSeoMeta({
-  title: "PLAN",
-});
+useSeoMeta({ title: "PLAN" });
 
 const { data: equalQueryLink } = await useAsyncData("equalLink", () => {
   return queryContent("plan/").find();
 });
 
-if (equalQueryLink.value) {
-  equalQueryLink.value.sort((a, b) => {
-    const dateA = new Date(a.time).getTime();
-    const dateB = new Date(b.time).getTime();
-    return dateB - dateA;
-  });
-}
-const sortedData = computed(() => equalQueryLink.value);
-
-console.log('fuck', sortedData)
-
-const formatNumber = (value) => {
-  return value.toLocaleString();
-};
+const formatNumber = (value) => value.toLocaleString();
 
 const formatDisplay = (planOrSubPlan, parentPlan = null) => {
   const type = parentPlan ? parentPlan.displayType : planOrSubPlan.displayType;
@@ -92,44 +73,137 @@ const formatDisplay = (planOrSubPlan, parentPlan = null) => {
       current: `NOW: ${formatNumber(planOrSubPlan.current)}%`,
     };
   }
-
   return {
     target: `SAVE ${formatNumber(planOrSubPlan.target)}`,
     current: `NOW: ${formatNumber(planOrSubPlan.current)}`,
   };
 };
 
-const calculateProgress = () => {
-  plans.value.forEach((plan) => {
-    let progress = ((plan.current / plan.target) * 100).toFixed(2);
-    plan.progress = parseFloat(progress);
+const groupedData = computed(() => {
+  const raw = equalQueryLink.value || [];
+  const map = new Map();
 
+  raw.forEach((item) => {
+
+    const seg = String(item._path || "")
+      .split("/")
+      .filter(Boolean);
+    if (seg.length < 2) return;
+
+    const parentPath = "/" + seg.slice(0, 2).join("/"); 
+
+    if (seg.length === 2) {
+
+      map.set(parentPath, { ...item, _path: parentPath, subPlans: [] });
+    } else {
+
+      if (!map.has(parentPath)) {
+
+        const folderName = seg[1];
+        const humanTitle = folderName
+          .replace(/[-_]/g, " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+        map.set(parentPath, {
+          title: humanTitle,
+          _path: parentPath,
+          target: 0,
+          current: 0,
+          progress: 0,
+          barClass: "",
+          displayType: item.displayType || "percent",
+          time: null,
+          subPlans: [],
+        });
+      }
+      map.get(parentPath).subPlans.push({ ...item });
+    }
+  });
+
+  for (const parent of map.values()) {
+    if ((!parent.target || parent.target === 0) && parent.subPlans.length) {
+      parent.target = parent.subPlans.reduce(
+        (s, sp) => s + (Number(sp.target) || 0),
+        0,
+      );
+    }
+
+    parent.current = parent.current
+      ? Number(parent.current)
+      : parent.subPlans.reduce((s, sp) => s + (Number(sp.current) || 0), 0);
+
+    if (!parent.displayType && parent.subPlans.length) {
+      parent.displayType = parent.subPlans[0].displayType || "percent";
+    }
+
+    if (!parent.time && parent.subPlans.length) {
+
+      let latest = 0;
+      parent.subPlans.forEach((sp) => {
+        const t = new Date(sp.time).getTime();
+        if (!isNaN(t) && t > latest) latest = t;
+      });
+      parent.time = latest ? new Date(latest).toISOString() : null;
+    }
+  }
+
+  const arr = Array.from(map.values());
+  arr.sort((a, b) => {
+    const ta = a.time ? new Date(a.time).getTime() : 0;
+    const tb = b.time ? new Date(b.time).getTime() : 0;
+    return tb - ta;
+  });
+
+  return arr;
+});
+
+const sortedData = groupedData;
+
+const calculateProgress = () => {
+  (groupedData.value || []).forEach((plan) => {
+    plan.target = Number(plan.target) || 0;
+    plan.current = Number(plan.current) || 0;
+
+    const p = plan.target === 0 ? 0 : (plan.current / plan.target) * 100;
+    plan.progress = parseFloat(p.toFixed(2));
     plan.barClass =
       plan.current < plan.target ? "progress-positive" : "progress-negative";
 
-    plan.subPlans.forEach((subPlan) => {
+    (plan.subPlans || []).forEach((subPlan) => {
+      subPlan.target = Number(subPlan.target) || 0;
+      subPlan.current = Number(subPlan.current) || 0;
+
       let subProgress = 0;
 
-      if (subPlan.current > plan.current) {
-        subProgress = (
-          ((subPlan.current - plan.current) / plan.current) *
-          100
-        ).toFixed(2);
-
+      if (plan.current === 0 || plan.target === 0) {
+        subProgress =
+          plan.target === 0 ? 0 : (subPlan.current / plan.target) * 100;
+      } else if (subPlan.current > plan.current) {
+        subProgress = ((subPlan.current - plan.current) / plan.current) * 100;
         plan.barClass = "progress-negative";
         subPlan.barClass = "progress-negative";
       } else {
-        subProgress = ((subPlan.current / plan.target) * 100).toFixed(2);
+        subProgress = (subPlan.current / plan.target) * 100;
         subPlan.barClass =
           subPlan.current < plan.target
             ? "progress-positive"
             : "progress-negative";
       }
 
-      subPlan.progress = Math.min(100, parseFloat(subProgress));
+      subPlan.progress = Math.min(
+        100,
+        parseFloat((Number.isFinite(subProgress) ? subProgress : 0).toFixed(2)),
+      );
     });
   });
 };
+
+watch(
+  groupedData,
+  () => {
+    calculateProgress();
+  },
+  { immediate: true, deep: true },
+);
 
 onMounted(() => {
   calculateProgress();
@@ -183,7 +257,7 @@ main {
 }
 
 .dark-mode .layout-box .title span {
-  color: #1de188;
+  color: #38E7CD;
 }
 
 .dark-mode .layout-box .title p {
@@ -297,6 +371,7 @@ main {
 a {
   text-decoration: none;
 }
+
 .copyright {
   margin-top: 60px;
   color: #e0e0e0;
@@ -333,5 +408,6 @@ a {
 .sub-plan {
   margin-top: 40px;
   padding-left: 30px;
+  color: #000;
 }
 </style>
