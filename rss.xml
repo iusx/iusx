@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 20 Aug 2025 08:25:30 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 20 Aug 2025 10:14:29 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -197,8 +197,8 @@
             <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/ycrenfu</guid>
         </item>
         <item>
-            <title><![CDATA[Pay hongkong style room]]></title>
-            <description><![CDATA[回顾了 Blog 的设计历程，从最初简单的布局到使用 D3.js 实现动态效果，再到探索 Spine 动画技术的可能性。作者反思了过去的“自嗨”心态，意识到技术能力的不足，但也找到了新的方向——借鉴 Pinterest 上的风格，结合手绘或约稿，利用 Spine 实现更专业的交互效果。虽然计划可能耗时较长（甚至跨年），但希望通过学习提升，最终打造一个兼具科技感和美术风格的博客，以此增强自信并摆脱“loser”心态。]]></description>
+            <title><![CDATA[Hongkong style room]]></title>
+            <description><![CDATA[作者2023年逃离深圳到惠州，住父母养老房。两年间主要靠不定期的大佬项目救济，年收入约410851.49日元。这一年远程工作后日子渐好，解决了吃饭问题。作者意识到自身不足，想攒钱买房，预算10万左右，还总结出捞钱所需因素，但自认有所欠缺。]]></description>
             <link>m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</guid>
         </item>
