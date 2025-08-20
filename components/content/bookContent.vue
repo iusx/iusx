@@ -56,8 +56,7 @@ onMounted(() => {
 });
 
 const percentage = computed(() => {
-
-  const [current, total] = props.plan.split(',').map(Number);
+  const [current, total] = props.plan.split(",").map(Number);
 
   if (isNaN(current) || isNaN(total) || total === 0) {
     return props.plan;
@@ -89,11 +88,13 @@ const percentage = computed(() => {
         <TableOfContents />
       </div>
     </div>
-    <div class="an">
-      <div class="more" @click="showWorkPop">MORE</div>
+    <div class="an" @click="showWorkPop">
+      <div class="more">MORE</div>
     </div>
     <div class="book-info book-table" v-if="isWorkPopVisible">
-      <p style="cursor: pointer" class="pop-close" @click="hideWorkPop">CLOSE</p>
+      <p style="cursor: pointer" class="pop-close" @click="hideWorkPop">
+        CLOSE
+      </p>
       <div class="book-info-home-img">
         <div class="no-img" v-if="loading" style="width: 50% !important"></div>
         <img v-else :src="'/img/book/' + props.img" alt="book-home" />
@@ -130,7 +131,6 @@ const percentage = computed(() => {
 }
 
 @keyframes loading {
-
   0%,
   100% {
     opacity: 1;
@@ -158,7 +158,7 @@ const percentage = computed(() => {
 }
 
 .pop-close {
-  font-family: 'tsing';
+  font-family: "tsing";
   position: absolute;
   color: #000;
   font-weight: bold;
@@ -170,9 +170,14 @@ const percentage = computed(() => {
 }
 
 .more {
-  color: white;
-  font-family: 'tsing';
+  color: #999999;
+  font-family: "tsing";
   cursor: pointer;
+  transform: rotate(90deg);
+}
+
+.dark-mode .an {
+  background: #ffffff1f;
 }
 
 .an {
@@ -181,11 +186,14 @@ const percentage = computed(() => {
   @media (max-width: 1024px) {
     display: block;
     position: fixed;
-    background: #38E7CD;
+    background: #f0f0f0;
     padding: 8px;
     font-size: 1.3vh;
     z-index: 9999;
     font-weight: bold;
+    left: 0;
+    width: 10px;
+    height: 100%;
   }
 }
 
@@ -258,7 +266,6 @@ const percentage = computed(() => {
 .dark-mode .book-info img {
   opacity: 0.7;
 }
-
 
 .dark-mode .book-info .dir-layout .title {
   border: 1px solid #ffffff;
