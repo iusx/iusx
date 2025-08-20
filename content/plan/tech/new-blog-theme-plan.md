@@ -7,6 +7,13 @@ types: "cc"
 img: "life/new-blog/1.png"
 info: "封面：构造 SMTP 协议发送信息"
 client: "My"
+target: 100
+current: 5
+progress: 0
+barClass: ""
+displayType: "percent"
+"group": "technology"
+"isParent": false
 ---
 
 ::main-content{:title="title" :client="client" :time="time" :img="img" :info="info" :types="types"}

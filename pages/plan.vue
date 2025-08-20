@@ -2,17 +2,22 @@
   <main>
     <div class="hi">
       <h1><this-page></this-page> <an-typing>PLAN</an-typing></h1>
-      <span>MY money Pay plan</span>
+      <span>MY plan</span>
     </div>
     <div class="layout-box">
-      <div v-for="(plan, index) in plans" :key="index" class="layout">
-        <a :href="plan.url" class="title-box">
-          <p class="title-box_name">{{ plan.name }}</p>
+      <a
+        :href="plan._path"
+        v-for="(plan, index) in sortedData"
+        :key="index"
+        class="layout"
+      >
+        <div class="title-box">
+          <p class="title-box_name">{{ plan.title }}</p>
           <div class="title">
             <p>{{ formatDisplay(plan).target }}</p>
             <span>{{ formatDisplay(plan).current }}</span>
           </div>
-        </a>
+        </div>
         <div class="plan-box">
           <div
             class="progress-bar"
@@ -43,7 +48,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </main>
 </template>
@@ -51,34 +56,24 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-const plans = ref([
-  {
-    id: "1",
-    name: "Pay Hongme style room",
-    target: 13000,
-    url: "",
-    current: 0,
-    progress: 0,
-    barClass: "",
-    displayType: "usd",
-    subPlans: [],
-  },
-  {
-    id: "2",
-    name: "New blog",
-    target: 100,
-    url: "/outher/new-blog-theme-plan",
-    current: 5,
-    progress: 0,
-    barClass: "",
-    displayType: "percent",
-    subPlans: [],
-  },
-]);
-
 useSeoMeta({
   title: "PLAN",
 });
+
+const { data: equalQueryLink } = await useAsyncData("equalLink", () => {
+  return queryContent("plan/").find();
+});
+
+if (equalQueryLink.value) {
+  equalQueryLink.value.sort((a, b) => {
+    const dateA = new Date(a.time).getTime();
+    const dateB = new Date(b.time).getTime();
+    return dateB - dateA;
+  });
+}
+const sortedData = computed(() => equalQueryLink.value);
+
+console.log('fuck', sortedData)
 
 const formatNumber = (value) => {
   return value.toLocaleString();
@@ -299,7 +294,9 @@ main {
     color: #6f6f6f;
   }
 }
-
+a {
+  text-decoration: none;
+}
 .copyright {
   margin-top: 60px;
   color: #e0e0e0;

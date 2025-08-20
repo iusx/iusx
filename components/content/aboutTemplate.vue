@@ -66,7 +66,7 @@ const contribution = [
   {
     name: "HONKER UNION OF CHINA GROUP CO., LIMITED",
     time: "2021",
-    post: "Placement",
+    post: "Intern",
     url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
   },
   {
@@ -202,11 +202,11 @@ const contribution = [
           <an-font
             class="me-tip"
             :text="[
-              'Exploring Cybersecurity', 
-              'Designing for Fun', 
-              'Making Animations', 
-              'Creating Technical Art', 
-              'Building Full Stack Projects', 
+              'Exploring Cybersecurity',
+              'Designing for Fun',
+              'Making Animations',
+              'Creating Technical Art',
+              'Building Full Stack Projects',
             ]"
           />
         </div>
@@ -426,7 +426,7 @@ const contribution = [
 
   .about {
     font-size: x-large;
-    color: #38E7CD !important;
+    color: #38e7cd !important;
     text-transform: uppercase;
 
     small {
