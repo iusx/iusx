@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 20 Aug 2025 07:08:29 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 20 Aug 2025 08:02:13 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -156,12 +156,6 @@
             <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
             <link>m.ritsu.jiangxue.org//outher/ethereum-website-pr</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//outher/ethereum-website-pr</guid>
-        </item>
-        <item>
-            <title><![CDATA[NEW BLOG THEME PLAN]]></title>
-            <description><![CDATA[回顾了 Blog 的设计历程，从最初简单的布局到使用 D3.js 实现动态效果，再到探索 Spine 动画技术的可能性。作者反思了过去的“自嗨”心态，意识到技术能力的不足，但也找到了新的方向——借鉴 Pinterest 上的风格，结合手绘或约稿，利用 Spine 实现更专业的交互效果。虽然计划可能耗时较长（甚至跨年），但希望通过学习提升，最终打造一个兼具科技感和美术风格的博客，以此增强自信并摆脱“loser”心态。]]></description>
-            <link>m.ritsu.jiangxue.org//outher/new-blog-theme-plan</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//outher/new-blog-theme-plan</guid>
         </item>
         <item>
             <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
