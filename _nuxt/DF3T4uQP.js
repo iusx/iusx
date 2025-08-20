@@ -1,0 +1,1 @@
+import{_ as r}from"./pnMpL7_c.js";import{z as o,A as t,F as s}from"./Dh2Oq3Os.js";const n={};function c(e,a){return o(),t("th",null,[s(e.$slots,"default")])}const _=r(n,[["render",c]]);export{_ as default};
