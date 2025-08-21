@@ -23,7 +23,7 @@
           <div
             class="progress-bar"
             :class="plan.barClass"
-            :style="{ width: plan.progress + '%' }"
+            :style="{ width: plan._progressForWidth + '%' }"
           >
             <p>{{ formatPercent(plan.progress) }}</p>
           </div>
@@ -50,7 +50,7 @@
             <div
               class="progress-bar"
               :class="subPlan.barClass"
-              :style="{ width: subPlan.progress + '%' }"
+              :style="{ width: subPlan._progressForWidth + '%' }"
             >
               <p>{{ formatPercent(subPlan.progress) }}</p>
             </div>
@@ -73,11 +73,7 @@ const formatNumber = (value) => value.toLocaleString();
 const formatPercent = (value) => (value < 0 ? "-" : "") + Math.abs(value) + "%";
 
 function getBarClass(current, target) {
-  current = Number(current) || 0;
-  target = Number(target) || 0;
   if (current < 0) return "progress-negative";
-  if (current < target) return "progress-positive";
-  return "progress-negative";
 }
 
 const groupedData = computed(() => {
@@ -144,6 +140,7 @@ const groupedData = computed(() => {
     let p = parent.target > 0 ? (parent.current / parent.target) * 100 : 0;
     if (parent.displayType === "percent" && p > 100) p = 100;
     parent.progress = parseFloat(p.toFixed(2));
+    parent._progressForWidth = Math.max(0, parent.progress);
     parent.barClass = getBarClass(parent.current, parent.target);
 
     (parent.subPlans || []).forEach((subPlan) => {
@@ -152,6 +149,8 @@ const groupedData = computed(() => {
       let subProgress =
         subPlan.target > 0 ? (subPlan.current / subPlan.target) * 100 : 0;
       subPlan.progress = parseFloat(subProgress.toFixed(2));
+      subPlan._progressForWidth = Math.max(0, subPlan.progress);
+
       subPlan.barClass = getBarClass(subPlan.current, subPlan.target);
     });
   }
