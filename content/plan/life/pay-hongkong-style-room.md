@@ -7,11 +7,9 @@ types: "cc"
 img: "life/plan/room/1.jpg"
 info: "封面：正在安装 Arch linux"
 client: "My"
-target: 100
-current: 0
-progress: 0
-barClass: ""
-displayType: "percent"
+target: 13926.80
+current: -529.22
+displayType: "usd"
 ---
 
 ::main-content{:title="title" :client="client" :time="time" :img="img" :info="info" :types="types"}

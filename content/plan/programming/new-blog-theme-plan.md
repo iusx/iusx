@@ -9,8 +9,6 @@ info: "封面：构造 SMTP 协议发送信息"
 client: "My"
 target: 100
 current: 5
-progress: 0
-barClass: ""
 displayType: "percent"
 ---
 
