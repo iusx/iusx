@@ -214,7 +214,6 @@ onMounted(() => {
 main {
   width: 50%;
   border-left: 1px solid #f2f2f2;
-  margin-top: 90px !important;
   padding-left: 30px;
   margin: 0 auto;
 }
@@ -267,6 +266,9 @@ main {
 .layout {
   &:first-child {
     margin-top: 100px;
+  }
+  &:last-child {
+    margin-bottom: 100px;
   }
 
   display: flex;

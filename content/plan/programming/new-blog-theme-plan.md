@@ -12,8 +12,6 @@ current: 5
 progress: 0
 barClass: ""
 displayType: "percent"
-"group": "technology"
-"isParent": false
 ---
 
 ::main-content{:title="title" :client="client" :time="time" :img="img" :info="info" :types="types"}
