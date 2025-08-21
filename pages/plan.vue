@@ -73,7 +73,11 @@ const formatNumber = (value) => value.toLocaleString();
 const formatPercent = (value) => (value < 0 ? "-" : "") + Math.abs(value) + "%";
 
 function getBarClass(current, target) {
+  current = Number(current) || 0;
+  target = Number(target) || 0;
   if (current < 0) return "progress-negative";
+  if (current < target) return "progress-positive";
+  return "progress-negative";
 }
 
 const groupedData = computed(() => {
