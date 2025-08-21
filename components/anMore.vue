@@ -32,6 +32,12 @@ const currentPage = ref<string>("");
 
 onMounted(() => {
   currentPage.value = window.location.pathname;
+  setTimeout(() => {
+    if (el.value) {
+      el.value.style.transition = "right 0.3s ease-in-out";
+      el.value.style.right = "-40px";
+    }
+  }, 3000);
 });
 
 const { x, y, style } = useDraggable(el, {
@@ -58,13 +64,12 @@ main {
   z-index: 11;
   width: fit-content;
   right: 0;
-  border-left: 3px solid #38E7CD;
-  box-shadow: -1px 0px 0px 0px #38E7CD;
+  border-left: 3px solid #38e7cd;
+  box-shadow: -1px 0px 0px 0px #38e7cd;
   background-repeat: no-repeat;
   background-image: url(/img/page/drag.png);
   background: #000;
 }
-
 
 a {
   display: block;
@@ -73,7 +78,9 @@ a {
   margin: 10px;
   font-size: small;
   opacity: 0.5;
-  transition: filter 0.3s ease, opacity 0.3s ease;
+  transition:
+    filter 0.3s ease,
+    opacity 0.3s ease;
   filter: grayscale(100%);
 
   &:hover {

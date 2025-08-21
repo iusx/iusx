@@ -15,6 +15,7 @@ displayType: "percent"
 
 ::main-content{:title="title" :client="client" :time="time" :img="img" :info="info" :types="types"}
 
+
 :git-info{url="https://github.com/jiangxue-analysis/vscode-comment-hide"}
 
 ::
