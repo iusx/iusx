@@ -154,7 +154,7 @@ h6 {
 .dark-mode .markdown-content pre,
 .markdown-content code,
 .dark-mode .text-layout .text pre,
-.text-layout .text code{
+.text-layout .text code {
   border: 1px solid #363636 !important;
 }
 
@@ -211,7 +211,8 @@ h6 {
   }
 }
 
-.markdown-content, .text-layout .text{
+.markdown-content,
+.text-layout .text {
   width: 100%;
   max-width: 100%;
   display: block;
@@ -430,7 +431,10 @@ h6 {
   }
 }
 
-.dark-mode .page-content .text hr {
-  border-color: #4d4d4d;
+.page-content .text hr {
+  border-color: #f5f5f5;
 }
 
+.dark-mode .page-content .text hr {
+  border-color: #6d6d6d80;
+}
