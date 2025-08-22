@@ -32,7 +32,13 @@ displayType: "percent"
 
 因此我觉得如果要公开的话，或者说每个人都能看到的话，我更希望将注释删掉。这样就可以装作很腻害的样子，注释只能自己看到。不过经历了我自己的长期使用，如果遇到类似 vue 这种一个文件有 html、css、js 的，只能处理简单的注释，比如如果在 `<template></template>` 中出现了 `<p>//</p>` 就也会被认定是注释去除。
 
+要解决这个问题的话可能需要重构逻辑，例如对这种文件进行单独匹配，比如 vue 就需要单独调用 `js\html\css` 三个注释逻辑，而不是目前的这种：
 
+```
+vue = { multi_patterns.html, single_patterns.slash, multi_patterns.c },
+```
+
+也就是说需要 `<script>` 用 js 的注释, `<template>` 用 `html` 的注释，`style` 用 `css` 的注释
 
 
 ::

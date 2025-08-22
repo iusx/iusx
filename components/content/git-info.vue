@@ -146,7 +146,7 @@ onMounted(async () => {
                 ></path>
               </svg>
               <div>
-                <strong>{{ repoInfo.tags }}</strong>
+                <span>{{ repoInfo.tags }}</span>
                 <span> Tags</span>
               </div>
             </a>
