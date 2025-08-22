@@ -266,6 +266,9 @@ main {
   border: 1px solid #e1e1e1;
   transition: border-left 0.3s ease;
   .git-title {
+    img {
+      border-radius: 100%;
+    }
     padding: 12px;
     display: flex;
     align-items: center;

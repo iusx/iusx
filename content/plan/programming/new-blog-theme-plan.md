@@ -4,7 +4,7 @@
 description: "回顾了 Blog 的设计历程，从最初简单的布局到使用 D3.js 实现动态效果，再到探索 Spine 动画技术的可能性。作者反思了过去的“自嗨”心态，意识到技术能力的不足，但也找到了新的方向——借鉴 Pinterest 上的风格，结合手绘或约稿，利用 Spine 实现更专业的交互效果。虽然计划可能耗时较长（甚至跨年），但希望通过学习提升，最终打造一个兼具科技感和美术风格的博客，以此增强自信并摆脱“loser”心态。"
 "time": "2025.07.06"
 types: "cc"
-img: "life/new-blog/1.png"
+img: "life/plan/new-blog/1.png"
 info: "封面：构造 SMTP 协议发送信息"
 client: "My"
 target: 100
@@ -21,7 +21,7 @@ displayType: "percent"
 
 ::text-space
 ---
-img: life/new-blog/2.png
+img: life/plan/new-blog/2.png
 info: 图 1 ｜ 第一版和第二版的 BLOG 设计（感觉第一版还挺好看的，第二版就显得沉默寡闻了
 ---
 ::
@@ -35,7 +35,7 @@ spine 给我带来了一个无限可能。我可以利用 spine runtime 来实�
 
 ::text-space
 ---
-img: life/new-blog/3.png
+img: life/plan/new-blog/3.png
 info: 图 2 ｜ 在 pinterest 上发现的 style，很个性，并且布局很合理。是我喜欢的类型，有 tech 的感觉。
 ---
 ::

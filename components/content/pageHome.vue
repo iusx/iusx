@@ -20,7 +20,6 @@
         <div class="copy-link">
           <a href="/about">about</a>
           <a href="/link">Friendly link</a>
-          <a href="/plan">Plan</a>
           <a href="/rss.xml">Rss</a>
           <a href="/sitemap.xml">Sitemap</a>
         </div>
@@ -42,6 +41,7 @@ const colorMode = useColorMode();
 const links = ref([
   { name: "Security", href: "/sec", separator: " + " },
   { name: "Design", href: "/des", separator: " ÷ " },
+  { name: "Plan", href: "/plan", separator: " + " },
   { name: "Learn", href: "/book" },
 ]);
 
@@ -283,7 +283,7 @@ onUnmounted(() => {
   z-index: 0;
   display: block;
 
-  min-height: 100vh;
+  max-height: 100vh;
   max-width: 100vw;
   overflow: hidden;
 }
@@ -295,16 +295,13 @@ onUnmounted(() => {
 }
 
 .nav {
-  position: absolute;
-  top: 5vh;
-  bottom: 0;
-  left: 5vw;
+  margin-left: 5vw;
   z-index: 10;
   font-family: "Source Code Pro", monospace;
 
   .title {
     line-height: 3;
-    transform: translateY(30vh);
+    transform: translateY(35vh);
 
     .title-text {
       display: block;
@@ -343,6 +340,9 @@ onUnmounted(() => {
       padding-right: 3px;
       transition: color 0.3s ease;
 
+      @media (max-width: 400px) {
+        font-size: 11px;
+      }
       &:hover {
         color: #1c0000;
         text-transform: none;
@@ -365,6 +365,9 @@ onUnmounted(() => {
   text-transform: uppercase;
   z-index: 10;
 
+  @media (max-width: 400px) {
+    font-size: 11px;
+  }
   .copy-link {
     a {
       text-decoration: none;
