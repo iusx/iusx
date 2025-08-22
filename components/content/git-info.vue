@@ -10,7 +10,6 @@ const props = defineProps({
 
 const repoInfo = ref(null);
 
-// 从传入的 url 中解析出 owner 和 repo
 const parseRepo = (url) => {
   const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
   if (match) {
@@ -25,11 +24,9 @@ onMounted(async () => {
 
   const { owner, repo } = parsed;
   try {
-    // 获取仓库信息
     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
     const data = await res.json();
 
-    // 获取 tags
     const tagsRes = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/tags`,
     );
@@ -42,6 +39,7 @@ onMounted(async () => {
       forks: data.forks_count,
       avatar: data.owner.avatar_url,
       tags: tags.length,
+      issues: data.open_issues_count,
       html_url: data.html_url,
     };
   } catch (e) {
@@ -66,8 +64,10 @@ onMounted(async () => {
           </div>
           <div class="git-num">
             <a
+              v-if="repoInfo.stars > 0"
               role="listitem"
-              href="/jiangxue-analysis/nvim.comment-hide/stargazers"
+              target="_blank"
+              :href="repoInfo.html_url + '/stargazers'"
             >
               <svg
                 aria-hidden="true"
@@ -83,12 +83,14 @@ onMounted(async () => {
                 ></path>
               </svg>
               <div>
-                <span>{{ repoInfo.stars }}</span> stars
+                <span>{{ repoInfo.stars }}</span> Stars
               </div>
             </a>
             <a
+              v-if="repoInfo.forks > 0"
               role="listitem"
-              href="/jiangxue-analysis/nvim.comment-hide/forks"
+              target="_blank"
+              :href="repoInfo.html_url + '/forks'"
             >
               <svg
                 aria-hidden="true"
@@ -105,10 +107,15 @@ onMounted(async () => {
               </svg>
               <div>
                 <span>{{ repoInfo.forks }}</span>
-                fork
+                Fork
               </div>
             </a>
-            <a role="listitem" href="/jiangxue-analysis/nvim.comment-hide/tags">
+            <a
+              v-if="repoInfo.tags > 0"
+              target="_blank"
+              role="listitem"
+              :href="repoInfo.html_url + '/tags'"
+            >
               <svg
                 fill="currentColor"
                 aria-hidden="true"
@@ -124,7 +131,32 @@ onMounted(async () => {
               </svg>
               <div>
                 <strong>{{ repoInfo.tags }}</strong>
-                <span>Tags</span>
+                <span> Tags</span>
+              </div>
+            </a>
+            <a
+              v-if="repoInfo.issues > 0"
+              role="listitem"
+              target="_blank"
+              :href="repoInfo.html_url + '/issues'"
+            >
+              <svg
+                aria-hidden="true"
+                height="16"
+                viewBox="0 0 16 16"
+                version="1.1"
+                width="16"
+                data-view-component="true"
+                fill="currentColor"
+              >
+                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+                <path
+                  d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"
+                ></path>
+              </svg>
+              <div>
+                <span>{{ repoInfo.issues }}</span>
+                Issues
               </div>
             </a>
           </div>
@@ -143,7 +175,7 @@ onMounted(async () => {
 }
 
 main {
-  margin-top: 20px!important;
+  margin-top: 20px !important;
   margin-bottom: 12px !important;
 }
 .lay {
@@ -152,7 +184,11 @@ main {
   color: #868686;
 }
 .git-info {
+  &:hover {
+    border-left: 5px solid #38e7cd;
+  }
   border: 1px solid #e1e1e1;
+  transition: border-left 0.3s ease;
   .git-title {
     padding: 12px;
     display: flex;
