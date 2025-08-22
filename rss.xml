@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 22 Aug 2025 12:31:10 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 22 Aug 2025 13:39:03 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[24 hour]]></title>
@@ -196,6 +196,11 @@
             <description><![CDATA[作者2023年逃离深圳到惠州，住父母养老房。两年间主要靠不定期的大佬项目救济，年收入约410851.49日元。这一年远程工作后日子渐好，解决了吃饭问题。作者意识到自身不足，想攒钱买房，预算10万左右，还总结出捞钱所需因素，但自认有所欠缺。]]></description>
             <link>m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</guid>
+        </item>
+        <item>
+            <title><![CDATA[cds]]></title>
+            <link>m.ritsu.jiangxue.org//plan/programming/cds</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/programming/cds</guid>
         </item>
         <item>
             <title><![CDATA[command-hide]]></title>
