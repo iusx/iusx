@@ -6,9 +6,14 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+  },
 });
 
 const repoInfo = ref(null);
+const openIssues = ref([]);
+const closedIssues = ref([]);
 
 const parseRepo = (url) => {
   const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
@@ -42,6 +47,17 @@ onMounted(async () => {
       issues: data.open_issues_count,
       html_url: data.html_url,
     };
+    if (props.type === "iss") {
+      const openRes = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/issues?state=open&per_page=5`,
+      );
+      openIssues.value = await openRes.json();
+
+      const closedRes = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/issues?state=closed&per_page=5`,
+      );
+      closedIssues.value = await closedRes.json();
+    }
   } catch (e) {
     console.error("GitHub API error:", e);
   }
@@ -160,6 +176,62 @@ onMounted(async () => {
               </div>
             </a>
           </div>
+          <div class="git-issues" v-if="props.type === 'iss'">
+            <a
+              v-for="issue in openIssues"
+              role="listitem"
+              :key="issue.id"
+              target="_blank"
+              :href="issue.html_url"
+            >
+              <svg
+                aria-hidden="true"
+                height="16"
+                viewBox="0 0 16 16"
+                version="1.1"
+                width="16"
+                data-view-component="true"
+                fill="currentColor"
+              >
+                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+                <path
+                  d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"
+                ></path>
+              </svg>
+              <div>
+                <span>{{ issue.title }}</span>
+                #{{ issue.number }}
+              </div>
+            </a>
+
+            <a
+              v-for="issue in closedIssues"
+              role="listitem"
+              :key="issue.id"
+              target="_blank"
+              class="close"
+              :href="issue.html_url"
+            >
+              <svg
+                aria-hidden="true"
+                height="16"
+                viewBox="0 0 16 16"
+                version="1.1"
+                width="16"
+                data-view-component="true"
+                fill="currentColor"
+              >
+                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+                <path
+                  d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"
+                ></path>
+              </svg>
+              <div>
+                <span>{{ issue.title }}</span>
+                #{{ issue.number }}
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </a>
@@ -171,7 +243,11 @@ onMounted(async () => {
   border: 1px solid #505050;
 }
 .dark-mode .git-info .git-title {
-  border: 1px solid #505050;
+  border-bottom: 1px solid #505050;
+}
+
+.dark-mode .git-info .git-state .git-issues {
+  border-top: 1px solid #505050;
 }
 
 main {
@@ -212,6 +288,30 @@ main {
         display: flex;
         gap: 3px;
         align-items: center;
+        color: #868686;
+      }
+    }
+    .git-issues {
+      border-top: 1px solid #e1e1e1;
+      padding-top: 12px;
+      gap: 12px;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 12px;
+      .close {
+        svg {
+          color: #8957e5;
+        }
+      }
+      a {
+        text-decoration: none;
+        display: flex;
+        gap: 3px;
+        align-items: center;
+        svg {
+          color: #1f883d;
+        }
         color: #868686;
       }
     }
