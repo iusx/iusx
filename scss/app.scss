@@ -239,6 +239,7 @@ h6 {
 
   pre,
   code {
+    text-transform: none;
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -272,6 +273,7 @@ h6 {
     display: contents;
     padding-left: 2px;
     padding-right: 2px;
+    text-transform: none;
   }
 }
 
