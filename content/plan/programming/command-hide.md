@@ -20,6 +20,13 @@ displayType: "percent"
 
 我写了差不多一篇小软文，题目为 [VSCode plugin comment-hide: Dare to write comments!](https://dev.to/brights/why-doesnt-anyone-want-to-write-code-comments-anymore-40jf) 这篇文章打算投稿到 chokcoco 的 icss 前端趣闻的，但貌似大佬比较忙没时间审稿了（确信！）只好翻译成 English 发到 dev.to 上。如你所见我写了两个版本，一个是 VScode 另一个是 Neovim plugin。
 
+::text-space
+---
+type: tip
+---
+之所以发 dev.to 很大程度上是一个账号可以刷 10 个赞，且一个 gmail 可以注册三次 DEV。风控并不是很严重，基本上很容易刷到 50 赞到社区首页。之后就会有一大堆 bot 搬到国内的内容农场（很有意思就对了）不过转化率很低，没 reddit 那么高。
+::
+
 
 之所以有两个版本是我中途切换到 neovim 了。因为在项目中 VScode 经常崩溃，甚至是闪退？Lsp 动不动就不起作用。只好换成了 neovim，前期用的是 Lazyvim。但用的时候发现动不动就给我报错，fzf 也一些子就各种 warnning 很烦。于是只好把 Lazyvim 删了换成了 [lazy.nvim](https://github.com/folke/lazy.nvim)。
 
