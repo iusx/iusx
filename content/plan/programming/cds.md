@@ -29,5 +29,13 @@ type: tip
 
 也就是说这个工具可以帮我记录每次 cd 的目录，以及每次进到目录执行什么命令。我的想法是可以设置成自动的，也可以设置成手动的。并且配置文件放到 `~/.cds` 中。
 
+
+:text-title{t="为什么用 nim?" type="2"}
+
+:git-info{url="https://github.com/adambard/learnxinyminutes-docs/pull/5380" type="pr"}
+
+我对 nim 的印象完全是他的 logo 是 👑。也不算是特别小众，毕竟我看第三方的安利文竟然还提供了 Chinese（[Y分钟速成X](https://learnxinyminutes.com/zh-cn/nim/)) 比较意外的是在随便逛逛的途中还水了一个 pr（但感觉合的概率不是很大？毕竟我看 en page 被作者标注了 `or [up-to-date community version]` 也顺便借此机会给我的 blog 加了一个 git-pr 的信息展示。（感觉现在的还是太麻烦，以后打算加一个 type="pr-user" 的，直接列举我开的 pr)
+
+
 ::
 

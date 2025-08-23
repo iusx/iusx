@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, onMounted, computed } from "vue";
+import { defineProps, ref, onMounted } from "vue";
 
 const props = defineProps({
   url: {
@@ -14,6 +14,7 @@ const props = defineProps({
 const repoInfo = ref(null);
 const openIssues = ref([]);
 const closedIssues = ref([]);
+const prInfo = ref(null);
 
 const parseRepo = (url) => {
   const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
@@ -23,19 +24,19 @@ const parseRepo = (url) => {
   return null;
 };
 
+const parsePrNumber = (url) => {
+  const match = url.match(/\/pull\/(\d+)/);
+  return match ? match[1] : null;
+};
+
 onMounted(async () => {
   const parsed = parseRepo(props.url);
   if (!parsed) return;
-
   const { owner, repo } = parsed;
+
   try {
     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
     const data = await res.json();
-
-    const tagsRes = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/tags`,
-    );
-    const tags = await tagsRes.json();
 
     repoInfo.value = {
       name: data.full_name,
@@ -43,10 +44,10 @@ onMounted(async () => {
       stars: data.stargazers_count,
       forks: data.forks_count,
       avatar: data.owner.avatar_url,
-      tags: tags.length,
       issues: data.open_issues_count,
       html_url: data.html_url,
     };
+
     if (props.type === "iss") {
       const openRes = await fetch(
         `https://api.github.com/repos/${owner}/${repo}/issues?state=open&per_page=5`,
@@ -58,12 +59,29 @@ onMounted(async () => {
       );
       closedIssues.value = await closedRes.json();
     }
+
+    if (props.type === "pr") {
+      const prNumber = parsePrNumber(props.url);
+      if (prNumber) {
+        const prRes = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}`,
+        );
+        const prData = await prRes.json();
+
+        prInfo.value = {
+          title: prData.title,
+          number: prData.number,
+          state: prData.state, // "open" / "closed"
+          merged: prData.merged_at !== null,
+          url: prData.html_url,
+        };
+      }
+    }
   } catch (e) {
     console.error("GitHub API error:", e);
   }
 });
 </script>
-
 <template>
   <main>
     <a v-if="repoInfo" :href="repoInfo.html_url" target="_blank" class="lay">
@@ -232,6 +250,37 @@ onMounted(async () => {
               </div>
             </a>
           </div>
+          <div class="git-pr" v-if="props.type === 'pr' && prInfo">
+            <a
+              role="listitem"
+              target="_blank"
+              :class="
+                prInfo.merged
+                  ? 'Merged'
+                  : prInfo.state === 'open'
+                    ? 'Open'
+                    : 'Close'
+              "
+              :href="prInfo.url"
+            >
+              <svg
+                height="16"
+                viewBox="0 0 16 16"
+                version="1.1"
+                width="16"
+                aria-hidden="true"
+                fill="currentColor"
+              >
+                <path
+                  d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"
+                ></path>
+              </svg>
+              <span style="text-transform: uppercase">
+                {{ prInfo.merged ? "Merged" : prInfo.state }} -
+              </span>
+              <span>{{ prInfo.title }} #{{ prInfo.number }}</span>
+            </a>
+          </div>
         </div>
       </div>
     </a>
@@ -247,6 +296,10 @@ onMounted(async () => {
 }
 
 .dark-mode .git-info .git-state .git-issues {
+  border-top: 1px solid #505050;
+}
+
+.dark-mode .git-info .git-state .git-pr {
   border-top: 1px solid #505050;
 }
 
@@ -315,6 +368,34 @@ main {
         svg {
           color: #1f883d;
         }
+        color: #868686;
+      }
+    }
+    .git-pr {
+      border-top: 1px solid #e1e1e1;
+      padding-top: 12px;
+      gap: 12px;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 12px;
+
+      .Open svg {
+        color: #1f883d;
+      }
+      .Close svg {
+        color: #cf222e;
+      }
+      .Merged svg {
+        color: #8250df;
+      }
+
+      a {
+        text-decoration: none;
+        display: flex;
+        gap: 3px;
+        align-items: center;
+
         color: #868686;
       }
     }

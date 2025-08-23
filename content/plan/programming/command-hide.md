@@ -32,7 +32,6 @@ type: tip
 
 需要什么我自己配什么，有一说一和搭积木一样，仿佛时间过得很快。参考了 [dragove/nvim/.config/nvim](https://github.com/dragove/dotfiles/tree/master/nvim/.config/nvim) 的结构，看起来就很专业，自己配的话确实很舒服，完全按照自己的需求来搭配。解决了很多 Lazyvim 会遇到的问题，如果遇到了问题还可以调试下是那个 plugin 出现的，来进行点对点的解决，不会手忙脚乱。
 
-
 ---
 
 由于我自己长时间用的都是 neovim，所以 vscode 的版本被我 archive 掉了。基本上逻辑用的都是正则来进行匹配，因此移植到 neovim 上比较简单。至于为什么写这个插件，可能是抱着长时间接触 Code 做准备吧。因为 code 有注释确实能方便阅读并理解。但如果作为公开的话，雀实会发生一些问题，例如：“怎么这么简单的逻辑还要写注释！”
