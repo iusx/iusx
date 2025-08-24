@@ -207,7 +207,7 @@ const formatDisplay = (planOrSubPlan, parentPlan = null) => {
       planOrSubPlan.subPlans.length > 0
     ) {
       return {
-        target: `SAVE ${formatNumber(target)}%`,
+        target: `PLAN ${formatNumber(target)}%`,
         current: `NOW: ${formatNumber(current)}%`,
       };
     }
