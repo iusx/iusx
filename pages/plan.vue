@@ -10,11 +10,7 @@
           <p class="title-box_name">{{ plan.title }}</p>
           <div class="title">
             <p>{{ formatDisplay(plan).target }}</p>
-            <span
-              :class="{
-                'negative-color': plan.barClass === 'progress-negative',
-              }"
-            >
+            <span :class="{ 'negative-color': plan.barClass === 'progress-negative' }">
               {{ formatDisplay(plan).current }}
             </span>
           </div>
@@ -71,10 +67,7 @@ const { data: equalQueryLink } = await useAsyncData("equalLink", () => {
 
 const formatNumber = (value) => value.toLocaleString();
 const formatPercent = (value) => (value < 0 ? "-" : "") + Math.abs(value) + "%";
-
-function getBarClass(current, target) {
-  if (current < 0) return "progress-negative";
-}
+const getBarClass = (current, target) => (current < 0 ? "progress-negative" : "");
 
 const groupedData = computed(() => {
   const raw = equalQueryLink.value || [];
@@ -85,11 +78,23 @@ const groupedData = computed(() => {
       .split("/")
       .filter(Boolean);
     if (seg.length < 2) return;
+
     const parentPath = "/" + seg.slice(0, 2).join("/");
 
     if (seg.length === 2) {
-      map.set(parentPath, { ...item, _path: parentPath, subPlans: [] });
+
+      if (!map.has(parentPath)) {
+        map.set(parentPath, { 
+          ...item, 
+          _path: parentPath, 
+          subPlans: [],
+          target: item.target || 100, 
+          current: item.current || 0,
+          displayType: item.displayType || "percent"
+        });
+      }
     } else {
+
       if (!map.has(parentPath)) {
         const folderName = seg[1];
         const humanTitle = folderName
@@ -98,97 +103,103 @@ const groupedData = computed(() => {
         map.set(parentPath, {
           title: humanTitle,
           _path: parentPath,
-          target: 0,
+          target: 100, 
           current: 0,
           progress: 0,
           barClass: "",
-          displayType: item.displayType || "percent",
+          displayType: "percent",
           time: null,
           subPlans: [],
         });
       }
-      map.get(parentPath).subPlans.push({ ...item });
+      const parent = map.get(parentPath);
+      const subPlanPath = "/" + seg.slice(0, 3).join("/");
+
+      const subPlan = {
+        ...item,
+        _path: subPlanPath,
+        target: Number(item.target) || 100, 
+        current: Number(item.current) || 0,
+        displayType: item.displayType || parent.displayType
+      };
+
+      parent.subPlans.push(subPlan);
     }
   });
 
   for (const parent of map.values()) {
-    if ((!parent.target || parent.target === 0) && parent.subPlans.length) {
-      parent.target = parent.subPlans.reduce(
-        (s, sp) => s + (Number(sp.target) || 0),
-        0,
-      );
-    }
-    parent.current = parent.current
-      ? Number(parent.current)
-      : parent.subPlans.reduce((s, sp) => s + (Number(sp.current) || 0), 0);
 
-    if (!parent.displayType && parent.subPlans.length) {
-      parent.displayType = parent.subPlans[0].displayType || "percent";
-    }
-
-    if (!parent.time && parent.subPlans.length) {
-      let latest = 0;
-      parent.subPlans.forEach((sp) => {
-        const t = new Date(sp.time).getTime();
-        if (!isNaN(t) && t > latest) latest = t;
-      });
-      parent.time = latest ? new Date(latest).toISOString() : null;
-    }
-
-    parent.target = Number(parent.target) || 0;
-    parent.current = Number(parent.current) || 0;
-    let p = parent.target > 0 ? (parent.current / parent.target) * 100 : 0;
-    if (parent.displayType === "percent" && p > 100) p = 100;
-    parent.progress = parseFloat(p.toFixed(2));
-    parent._progressForWidth = Math.max(0, parent.progress);
-    parent.barClass = getBarClass(parent.current, parent.target);
-
-    (parent.subPlans || []).forEach((subPlan) => {
-      subPlan.target = Number(subPlan.target) || 0;
-      subPlan.current = Number(subPlan.current) || 0;
-      let subProgress =
-        subPlan.target > 0 ? (subPlan.current / subPlan.target) * 100 : 0;
-      subPlan.progress = parseFloat(subProgress.toFixed(2));
-      subPlan._progressForWidth = Math.max(0, subPlan.progress);
-
-      subPlan.barClass = getBarClass(subPlan.current, subPlan.target);
+    parent.subPlans.forEach((subPlan) => {
+      processPlanItem(subPlan);
     });
+
+    if (parent.subPlans.length > 0) {
+      const totalProgress = parent.subPlans.reduce((sum, sp) => sum + sp.progress, 0);
+      parent.current = totalProgress / parent.subPlans.length;
+      parent.progress = parseFloat(parent.current.toFixed(2));
+    } else {
+
+      processPlanItem(parent);
+    }
+
+    parent._progressForWidth = Math.max(0, Math.min(parent.progress, 100));
+    parent.barClass = getBarClass(parent.current, parent.target);
   }
 
-  const arr = Array.from(map.values());
-  arr.sort((a, b) => {
+  return Array.from(map.values()).sort((a, b) => {
     const ta = a.time ? new Date(a.time).getTime() : 0;
     const tb = b.time ? new Date(b.time).getTime() : 0;
     return tb - ta;
   });
-
-  return arr;
 });
+
+function processPlanItem(item) {
+  item.target = Number(item.target) || 100;
+  item.current = Number(item.current) || 0;
+
+  let progress = 0;
+  if (item.target > 0) {
+    progress = (item.current / item.target) * 100;
+
+    if (item.displayType === "percent") {
+      progress = Math.min(progress, 100);
+    }
+  }
+
+  item.progress = parseFloat(progress.toFixed(2));
+  item._progressForWidth = Math.max(0, Math.min(item.progress, 100));
+  item.barClass = getBarClass(item.current, item.target);
+}
 
 const sortedData = groupedData;
 
 const formatDisplay = (planOrSubPlan, parentPlan = null) => {
   const type = parentPlan ? parentPlan.displayType : planOrSubPlan.displayType;
+  const target = planOrSubPlan.target;
+  const current = planOrSubPlan.current;
 
-  if (!parentPlan && type === "percent") {
+  if (type === "usd") {
     return {
-      target: `SAVE ${Math.min(100, planOrSubPlan.target)}%`,
-      current: `NOW: ${Math.min(100, planOrSubPlan.current)}%`,
-    };
-  } else if (type === "usd") {
-    return {
-      target: `SAVE ${formatNumber(planOrSubPlan.target)} USD`,
-      current: `NOW: ${formatNumber(planOrSubPlan.current)} USD`,
+      target: `SAVE ${formatNumber(target)} USD`,
+      current: `NOW: ${formatNumber(current)} USD`,
     };
   } else if (type === "percent") {
+
+    if (!parentPlan && planOrSubPlan.subPlans && planOrSubPlan.subPlans.length > 0) {
+      return {
+        target: `SAVE ${formatNumber(target)}%`,
+        current: `NOW: ${formatNumber(current)}%`,
+      };
+    }
     return {
-      target: `SAVE ${formatNumber(planOrSubPlan.target)}%`,
-      current: `NOW: ${formatNumber(planOrSubPlan.current)}%`,
+      target: `SAVE ${formatNumber(target)}%`,
+      current: `NOW: ${formatNumber(current)}%`,
     };
   }
+
   return {
-    target: `SAVE ${formatNumber(planOrSubPlan.target)}`,
-    current: `NOW: ${formatNumber(planOrSubPlan.current)}`,
+    target: `SAVE ${formatNumber(target)}`,
+    current: `NOW: ${formatNumber(current)}`,
   };
 };
 </script>
