@@ -193,7 +193,8 @@ const percentage = computed(() => {
     font-weight: bold;
     left: 0;
     width: 10px;
-    height: 100%;
+    height: 60px;
+    cursor: pointer;
   }
 }
 
