@@ -11,7 +11,7 @@
         </div>
         <div class="link">
           <span v-for="item in links" :key="item.href">
-            <a :href="item.href" target="_blank">{{ item.name }}</a>
+            <a :href="item.href">{{ item.name }}</a>
             {{ item.separator }}
           </span>
         </div>
