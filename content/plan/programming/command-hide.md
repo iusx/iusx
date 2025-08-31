@@ -44,7 +44,6 @@ type: tip
 vue = { multi_patterns.html, single_patterns.slash, multi_patterns.c },
 ```
 
-也就是说需要 `<script>` 用 js 的注释, `<template>` 用 `html` 的注释，`style` 用 `css` 的注释，不过我目前就只遇到过一次，如果遇到四五次的话，可能会修复这个问题（毕竟改动貌似挺大的（
-
+也就是说需要 `<script>` 用 js 的注释, `<template>` 用 `html` 的注释，`style` 用 `css` 的注释，不过我目前就只遇到过一次，如果遇到四五次的话，可能会修复这个问题（毕竟改动貌似挺大的（可能我成为不了一位优秀的 Coder 是有原因的，很大一部分原因是因为我懒。
 
 ::

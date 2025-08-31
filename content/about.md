@@ -15,18 +15,21 @@ head:
 
 ::about-template
 ---
-time: "2015 - Now Shenzhen"
-name: "Jiangxue analysis"
-title: "Full-Stack Software Engineering Intern"
-desc: "Fringe Support And Analysis"
+works:
+  - time: "2015 - Now"
+    name: "Jiangxue analysis"
+    title: "Full-Stack Software Engineer"
+    desc: "Fringe Support And Analysis"
 about: "<p>Educational level</p><span>Illiterate</span>"
 ---
 
+Has considerable interest in security, design, technical art, and software development, but only as a hobby rather than with professional rigor. Focused on implementing functionality, achieving desired effects, or accomplishing specific goals, rather than pursuing perfection.
+
 #contributiondes
-\*I'm well aware that my understanding of design, development, and security is not yet sufficient.
+"Some of those people dont't do a lot<br>
+There's a lot of people who make small,small changes,"
 
-Therefore, all experiences before 2024 are flawed to some extent, and I plan to address these shortcomings as I continue to learn and grow.
-
+— Linus Torvalds
 #end
 
 ::

@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps } from "vue";
 const colorMode = useColorMode();
-defineProps(["title", "desc", "time", "name", "about"]);
+defineProps(["works", "about"]);
 
 useSeoMeta({
   title: "About",
@@ -213,6 +213,7 @@ const contribution = [
         <div class="desc">
           <div class="desc-layout">
             <div v-html="about"></div>
+            <slot></slot>
           </div>
         </div>
       </div>
@@ -233,12 +234,14 @@ const contribution = [
         <div class="work-info">
           <p>Work Experience</p>
         </div>
-        <div class="work-layout">
-          <div class="job">
-            <span class="job-time">{{ time }}</span>
-            <p class="job-name">{{ name }}</p>
-            <span class="title">{{ title }}</span>
-            <small>"{{ desc }}"</small>
+        <div class="work-layout flex">
+          <div class="job-layout">
+            <div class="job" v-for="(work, index) in works" :key="index">
+              <span class="job-time">{{ work.time }}</span>
+              <p class="job-name">{{ work.name }}</p>
+              <span class="title">{{ work.title }}</span>
+              <small>"{{ work.desc }}"</small>
+            </div>
           </div>
         </div>
       </div>
@@ -251,6 +254,12 @@ const contribution = [
 
 <style lang="scss">
 .about-page {
+  .job-layout {
+    display: flex;
+    gap: 60px;
+    flex-direction: column;
+    width: 100%;
+  }
   a {
     text-decoration: none;
   }
