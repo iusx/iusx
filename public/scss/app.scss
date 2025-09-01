@@ -433,6 +433,10 @@ h6 {
   }
 }
 
+.dark-mode input[type=checkbox][disabled] {
+  opacity: 0.4 !important;
+}
+
 .page-content .text hr {
   border-color: #f5f5f5;
 }
