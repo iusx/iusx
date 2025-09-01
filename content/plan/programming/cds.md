@@ -67,6 +67,36 @@ My/iusx [                                                                       
 
 要做到上述功能需要配合 shell 环境，不过在此之前我希望将 TODO 2~3 完成后打包到 Homebrew，这样就可以通过 `brew install cds` 来进行安装了（貌似应该写一个安装脚本？，。
 
+有时候就是这样，只有自己亲身体验才能体会一些奇妙的感觉。也就是踩坑，而不是照着答案去答题。最近看的 《心灵捕手》和 《萨利机长》刚好有这个情景，印象深刻的是《心灵捕手》中的一段对话：
+
+
+::wise-info
+---
+topic: 知识与体验的区别
+by: 心灵捕手
+---
+You've never been out of Boston.
+
+> Nope
+
+So if l asked you about art, you'd probably give me..
+the skinny on every art book ever written
+
+Michelangelo. You kno a lot about him.
+Life's work. Political aspirations. Him and the pope.
+
+Sexual orientation. the whole works, right?
+
+I bet you can't tell me what it smells like
+in the Sistione Chapel
+
+You never actually stood there
+looked up ar that beautiful ceiling.
+
+Seen that
+::
+
+有的时候就是这样，例如将 Linus 作为主系统自然就会学习到很多与其相关的知识。游玩 Minecraft 之后自然会想要知道光影、Mode、材质是怎么制作的，甚至与好友公共游玩他人服务器的时候脑海中也会浮现出：“我也想开一个服务器” 的这种想法，自然而然的就能接触到 Linux、Windows server，甚至是 Java。
 
 ::
 

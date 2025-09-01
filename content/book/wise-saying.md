@@ -301,4 +301,37 @@ by: 髹饰录
 可巧手以继拙作，不可庸工以当精制
 ::
 
+---
+
+## Audiovisual 1
+:text-title{t="Audiovisual"}
+
+
+::wise-info
+---
+topic: 知识与体验的区别
+by: 心灵捕手
+---
+You've never been out of Boston.
+
+> Nope
+
+So if l asked you about art, you'd probably give me..
+the skinny on every art book ever written
+
+Michelangelo. You kno a lot about him.
+Life's work. Political aspirations. Him and the pope.
+
+Sexual orientation. the whole works, right?
+
+I bet you can't tell me what it smells like
+in the Sistione Chapel
+
+You never actually stood there
+looked up ar that beautiful ceiling.
+
+Seen that
+::
+
+
 ::
