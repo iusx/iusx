@@ -213,6 +213,7 @@ const contribution = [
         <div class="desc">
           <div class="desc-layout">
             <div v-html="about"></div>
+            <an-pupus style="display: none;"></an-pupus>
             <slot></slot>
           </div>
         </div>
