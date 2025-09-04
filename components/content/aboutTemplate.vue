@@ -1,193 +1,48 @@
-<script setup>
-import { defineProps } from "vue";
-const colorMode = useColorMode();
-defineProps(["works", "about"]);
+<script setup lang="ts">
+import { ref } from "vue";
 
-useSeoMeta({
-  title: "About",
-  description: "Computer networking,Security, and Design Enthusiast.",
-});
+interface TagItem {
+  label: string;
+  value: string;
+}
 
-const contribution = [
-  {
-    name: "darkworl analysis",
-    time: "2015",
-    post: "software engineer",
-    url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
-  },
-  {
-    name: "Miji Innovation",
-    time: "2018",
-    post: "Java GUI engineer",
-    url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
-  },
-  {
-    name: "Mini fridge ",
-    time: "2018",
-    post: "presented by",
-    url: "https://music.163.com/song?id=1382535015&userid=1548171212",
-  },
-  {
-    name: "Yichang Humanwell Pharmaceutical Co., Ltd",
-    time: "2019",
-    post: "Vulnerability Report",
-    url: "http://www.ycrenfu.com.cn/",
-  },
-  {
-    name: "China Telecom Group Guangdong Corporation",
-    time: "2020",
-    post: "Vulnerability Report",
-    url: "https://www.cnvd.org.cn/flaw/show/1976603",
-  },
-  {
-    name: "Henan Yadu Medical Group Corporation",
-    time: "2020",
-    post: "Vulnerability Report",
-    url: "https://www.yadugroup.com/",
-  },
-  {
-    name: "Topchoice Medical Invesment Co., Inc",
-    time: "2020",
-    post: "Vulnerability Report",
-    url: "http://www.tcmedical.com.cn/",
-  },
-  {
-    name: "Turing Robot",
-    time: "2020",
-    post: "Vulnerability Report",
-    url: "https://www.turingapi.com/",
-  },
-  {
-    name: "expressjs",
-    time: "2021",
-    post: "translate contribution",
-    url: "https://expressjs.com/",
-  },
-  {
-    name: "HONKER UNION OF CHINA GROUP CO., LIMITED",
-    time: "2021",
-    post: "Intern",
-    url: "https://www.behance.net/gallery/185829735/Junior-high-school-works-(part)",
-  },
-  {
-    name: "Shenzhen Edraw Software CO.,LTD.",
-    time: "2021",
-    post: "Vulnerability Report",
-    url: "https://www.cnvd.org.cn/flaw/show/3173261",
-  },
-  {
-    name: "Cloud Competition Epoch co., ltd.",
-    time: "2022",
-    post: "Full stack",
-    url: "https://www.behance.net/gallery/186318467/Blockchain-screening-platform",
-  },
-  {
-    name: "Programmer Community",
-    time: "2022",
-    post: "design",
-    url: "https://www.behance.net/gallery/196951137/Programmer-Community",
-  },
-  {
-    name: "CRG",
-    time: "2022",
-    post: "design",
-    url: "https://www.behance.net/gallery/157417815/CRG-FPS-",
-  },
-  {
-    name: "vulnerability find infinite co., ltd.",
-    time: "2022",
-    post: "design",
-    url: "https://www.behance.net/gallery/196951973/vulnerability-find-infinite",
-  },
-  {
-    name: "Lunar art co., ltd.",
-    time: "2022",
-    post: "front-end",
-    url: "https://www.zcool.com.cn/work/ZNjE4MDAxMjg=.html",
-  },
-  {
-    name: "SETI@Home",
-    time: "2023",
-    post: "UI",
-    url: "https://www.behance.net/gallery/185824095/SETIHOME-SSITE",
-  },
-  {
-    name: "WEB3IN TECH-LAB",
-    time: "2023",
-    post: "UI",
-    url: "https://www.behance.net/gallery/186608845/Asteroid-Web-APP",
-  },
-  {
-    name: "astro",
-    time: "2023",
-    post: "translate contribution",
-    url: "https://astro.build/",
-  },
-  {
-    name: "Mini fridge ",
-    time: "2023",
-    post: "CD cover design",
-    url: "https://music.163.com/song?id=2075128378&userid=1548171212",
-  },
-  {
-    name: "China Sciences Anxin co., ltd.",
-    time: "2023",
-    post: "design",
-    url: "https://www.behance.net/gallery/185824781/-Logo",
-  },
-  {
-    name: "Kong translate co., ltd.",
-    time: "2023",
-    post: "UX",
-  },
-  {
-    name: "Splash co., ltd.",
-    time: "2023",
-    post: "design",
-    url: "https://www.behance.net/gallery/185824545/Spline-logo-Web",
-  },
-  {
-    name: "NPO.NETWORK",
-    time: "2023",
-    post: "design",
-    url: "https://www.behance.net/gallery/185829509/NPONETWORK-Logo-Web",
-  },
-  {
-    name: "acglabs",
-    time: "2023",
-    post: "design",
-  },
-  {
-    name: "GitHub",
-    time: "2023",
-    post: "Vulnerability Report",
-    url: "https://hackerone.com/iepn",
-  },
-  {
-    name: "Ethereum ORG",
-    time: "2024",
-    post: "UX contribution",
-    url: "/outher/ethereum-website-pr",
-  },
-  {
-    name: "Xmatrix",
-    time: "2024",
-    post: "UX&Dev",
-    url: "",
-  },
-  {
-    name: "Fail Better",
-    time: "2025",
-    post: "Music plan",
-    url: "https://music.163.com/album?id=269753280&uct2=U2FsdGVkX18HYVDgqixHSCRrizD9UnRXY4cZjvOxTVY=",
-  },
-  {
-    name: "Scala AST-explorer",
-    time: "2025",
-    post: "Contributor",
-    url: "https://scalameta.org/ast-explorer/",
-  },
-];
+interface PupusPlan {
+  name: string;
+  code: string;
+  desc: string;
+}
+
+interface PupusData {
+  title: string;
+  subtitle: string;
+  plans: PupusPlan[];
+}
+
+interface ContributionItem {
+  name: string;
+  time: string;
+  post: string;
+  url: string;
+}
+
+const props = defineProps<{
+  tag: TagItem[];
+  pupus: PupusData[];
+  contribution: ContributionItem[];
+}>();
+
+const activePupus = ref<number | null>(null);
+
+function openPupus(index: number) {
+  if (props.pupus && props.pupus[index]) {
+    activePupus.value = index;
+  }
+}
+
+function closePupus() {
+  activePupus.value = null;
+}
+
 </script>
 
 <template>
@@ -212,8 +67,24 @@ const contribution = [
         </div>
         <div class="desc">
           <div class="desc-layout">
-            <div v-html="about"></div>
-            <an-pupus style="display: none;"></an-pupus>
+            <div class="desc-tag">
+              <div
+                class="desc-c_t"
+                v-for="(item, index) in tag"
+                :key="index"
+                @click="openPupus(index)"
+              >
+                <p>{{ item.label }}</p>
+                <span>{{ item.value }}</span>
+              </div>
+            </div>
+            <transition name="pop" @after-leave="afterLeave">
+              <an-pupus
+                v-if="activePupus !== null"
+                :pupus-data="pupus[activePupus]"
+                @close="closePupus"
+              />
+            </transition>
             <slot></slot>
           </div>
         </div>
@@ -270,7 +141,18 @@ const contribution = [
     font-size: 15px;
 
     margin-top: 30px;
-
+    .desc-tag {
+      .desc-c_t {
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
     p {
       margin: 0px;
       margin-bottom: 0px;
@@ -453,5 +335,22 @@ const contribution = [
 
 .dark-mode .work-info p {
   color: #ffffff;
+}
+
+.pop-enter-active,
+.pop-leave-active {
+  transition: all 0.3s ease;
+}
+
+.pop-enter-from,
+.pop-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.pop-enter-to,
+.pop-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

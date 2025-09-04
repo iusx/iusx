@@ -1,9 +1,11 @@
 <template>
   <mian>
-    <div class="pop-lay">
+    <div class="pop-lay" @click.self="close">
       <div class="pop-box">
         <div class="pop-title">
           <svg
+            style="cursor: pointer"
+            @click="close"
             width="14"
             height="14"
             viewBox="0 0 14 14"
@@ -26,35 +28,22 @@
             />
           </svg>
           <div class="left">
-            <p>The person I aspire to be</p>
-            <span>The path/goal I am pursuing or working toward</span>
+            <p>{{ pupusData.title }}</p>
+            <span>{{ pupusData.subtitle }}</span>
           </div>
         </div>
         <div class="pop-content">
-          <div class="pop-c_box">
+          <div
+            v-for="(plan, index) in pupusData.plans"
+            :key="index"
+            class="pop-c_box"
+          >
             <div class="pop-c_b_t">
-              <p>独立安全研究</p>
-              <span>PLAN-1</span>
+              <p>{{ plan.name }}</p>
+              <span>{{ plan.code }}</span>
             </div>
             <div class="pop-c_c">
-              <p>
-                很小的时候，我就觉得安全很酷，特别是什么漏洞、报告、威胁情报、预警之类的名词听起来就很帅,仿佛那种保护世界的感觉一样。
-              </p>
-            </div>
-          </div>
-          <div class="pop-c_box">
-            <div class="pop-c_b_t">
-              <p>前后端开发</p>
-              <span>PLAN-2</span>
-            </div>
-            <div class="pop-c_c">
-              <p>
-                这是我入门 Code
-                的起点。虽然大家都觉得前端和后端很简单，但却是一个上限很高的领域。例如你写个
-                html/css 也是前端，做一个类似 React JavaScript library
-                也是前端。对于后端，你写一个 CURD
-                也是后端，规划一个分布式架构，也是后端。
-              </p>
+              <p v-html="plan.desc"></p>
             </div>
           </div>
         </div>
@@ -66,8 +55,22 @@
 <script setup>
 import { defineProps } from "vue";
 const colorMode = useColorMode();
+const props = defineProps({
+  pupusData: {
+    type: Object,
+    required: true,
+    default: () => ({
+      title: "",
+      subtitle: "",
+      plans: [],
+    }),
+  },
+});
+const emit = defineEmits(["close"]);
 
-defineProps(["table"]);
+const close = () => {
+  emit("close");
+};
 </script>
 
 <style lang="scss" scoped>
@@ -76,9 +79,9 @@ defineProps(["table"]);
   inset: 0;
   background: rgb(240 240 240 / 81%);
   display: flex;
+  transition: opacity 0.3s ease;
   justify-content: center;
   align-items: center;
-
   .pop-box {
     .pop-content {
       padding: 20px;
@@ -94,7 +97,7 @@ defineProps(["table"]);
           justify-content: space-between;
           flex-direction: column-reverse;
           p {
-            font-size: 16px;
+            font-size: 17px;
           }
           span {
             font-size: 10px;
@@ -131,6 +134,10 @@ defineProps(["table"]);
     }
 
     .pop-title {
+      position: sticky;
+      top: 0;
+      background: inherit;
+      z-index: 10;
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -172,5 +179,44 @@ defineProps(["table"]);
     border: 1px solid #99999957;
     color: #99999957;
   }
+}
+
+.dark-mode .pop-box {
+  background: #1e1e1e;
+  border-color: #444;
+  color: #ddd;
+}
+
+.dark-mode .pop-box::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.dark-mode .pop-box::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+.dark-mode .pop-box::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 5px;
+}
+
+.dark-mode .pop-box::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+.dark-mode .pop-box {
+  scrollbar-width: thin;
+  scrollbar-color: #555 #2a2a2a;
+}
+
+.pop-enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pop-leave {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 </style>
