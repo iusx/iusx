@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis"; 
+import 'lenis/dist/lenis.css';
+
 const colorMode = useColorMode()
 
 useHead({
@@ -10,16 +12,22 @@ useHead({
 })
 
 onMounted(() => {
-  const lenis: Lenis = new Lenis();
-  if (typeof window !== "undefined") {
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+
+  const lenis = new Lenis({
+
+    smooth: true,   
+    lerp: 0.1,      
+    duration: 1.2,  
+    autoRaf: false, 
+    allowNestedScroll: true,
+  });
+
+  function raf(time: number) {
+    lenis.raf(time);
     requestAnimationFrame(raf);
   }
+  requestAnimationFrame(raf);
 });
-
 </script>
 
 <template>
@@ -33,7 +41,6 @@ onMounted(() => {
 
 <style lang="scss">
 @import "/public/scss/app.scss";
-
 
 @font-face {
   font-family: "Tsing";
