@@ -1,1 +1,0 @@
-import{_ as r}from"./Chta7x5o.js";import{z as o,A as t,F as s}from"./CLBYDrZ2.js";const n={};function c(e,a){return o(),t("tr",null,[s(e.$slots,"default")])}const _=r(n,[["render",c]]);export{_ as default};
