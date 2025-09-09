@@ -65,7 +65,16 @@ My/iusx [                                                                       
 - [ ] 通过 `c c iusx` 进入到目录之后自动执行记录在 `~/.cds_config.json` 中的脚本命令
 - [ ] Auto: 可以自动记录，例如 `/Users/uwu/Code/My/iusx` 的时候自动记录 `iusx: /Users/uwu/Code/My/iusx` 
 
-要做到上述功能需要配合 shell 环境，不过在此之前我希望将 TODO 2~3 完成后打包到 Homebrew，这样就可以通过 `brew install cds` 来进行安装了（貌似应该写一个安装脚本？，。
+要做到上述功能需要配合 shell 环境，不过在此之前我希望将 TODO 2~3 完成后打包到 Homebrew，这样就可以通过 `brew install cds` 来进行安装了（貌似应该写一个安装脚本？。
+
+其实依赖 shell 环境也没什么的，毕竟连 Nim-lang 的 [choosenim](https://github.com/nim-lang/choosenim) 在安装完后也需要手动设置不是吗？
+
+```
+choosenim-init: ChooseNim installed in /Users/uwu/.nimble/bin
+choosenim-init: You must now ensure that the Nimble bin dir is in your PATH.
+choosenim-init: Place the following line in the ~/.profile or ~/.bashrc file.
+choosenim-init:     export PATH=/Users/uwu/.nimble/bin:$PATH
+```
 
 有时候就是这样，只有自己亲身体验才能体会一些奇妙的感觉。也就是踩坑，而不是照着答案去答题。最近看的 《心灵捕手》和 《萨利机长》刚好有这个情景，印象深刻的是《心灵捕手》中的一段对话：
 

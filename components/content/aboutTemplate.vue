@@ -25,10 +25,19 @@ interface ContributionItem {
   url: string;
 }
 
+
+interface WorkCon {
+  time: string;
+  name: string;
+  title: string;
+  desc: string;
+}
+
 const props = defineProps<{
   tag: TagItem[];
   pupus: PupusData[];
   contribution: ContributionItem[];
+  works: WorkCon[];
 }>();
 
 const activePupus = ref<number | null>(null);
