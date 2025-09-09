@@ -23,9 +23,15 @@
           <a href="/rss.xml">Rss</a>
           <a href="/sitemap.xml">Sitemap</a>
         </div>
-        <p>
-          Creative Commons Attribution 4.0 International License (CC BY 4.0) and
-          the MIT License
+        <p class="copy-link">
+          <a href="https://github.com/iusx">Github</a>
+          <a href="https://be.net/1ui">Be</a>
+          <a href="https://steamcommunity.com/profiles/76561199761586064/"
+            >Steam</a
+          >
+          <a href="https://hackerone.com/iepn"
+            >hackerone</a
+          >
         </p>
       </div>
     </div>
