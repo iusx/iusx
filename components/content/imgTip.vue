@@ -1,27 +1,27 @@
 <template>
   <main>
     <img :src="imagePath" :alt="altText" />
-    <p v-html="text">
-
-    </p>
+    <p v-html="text"></p>
   </main>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed } from "vue";
 const props = defineProps({
   url: {
     type: String,
-    default: '',
+    default: "",
   },
   text: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 const imagePath = computed(() => `/img/book/${props.url}`);
 
-const altText = computed(() => (props.url ? `Book image for ${props.url}` : 'Default book image'));
+const altText = computed(() =>
+  props.url ? `Book image for ${props.url}` : "Default book image",
+);
 </script>
 
 <style lang="scss" scoped>
@@ -30,6 +30,7 @@ main {
   flex-direction: row-reverse;
   gap: 12px;
 
+  align-items: flex-start;
   margin-top: 15px;
   margin-bottom: 15px;
 
@@ -41,6 +42,23 @@ main {
 
   p {
     max-width: 50%;
+  }
+}
+
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column; 
+    align-items: center; 
+    position: relative;
+  }
+
+  main img {
+    position: relative;
+    min-width: 100%;
+  }
+
+  main p {
+    max-width: 100%; 
   }
 }
 </style>
