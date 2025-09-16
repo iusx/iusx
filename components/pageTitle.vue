@@ -33,11 +33,9 @@ const formattedTime = computed(() => {
     const parts = props.time.split(".").map(Number);
     const date = new Date(parts[0], parts[1] - 1, parts[2]);
 
-    // 获取月份名称和年份
     const monthName = monthNames[date.getMonth()];
     const year = date.getFullYear();
 
-    // 处理日期序数词后缀
     const dayOfMonth = date.getDate();
     let suffix = "th";
     if (dayOfMonth === 1 || dayOfMonth === 21 || dayOfMonth === 31) {
@@ -48,7 +46,6 @@ const formattedTime = computed(() => {
       suffix = "rd";
     }
 
-    // 返回格式化的日期字符串
     return `${monthName} ${dayOfMonth}${suffix} ${year}`;
   }
   return "";
