@@ -40,6 +40,9 @@ type: tip
 
 ---
 
+
+:git-info{url="https://github.com/ajeetdsouza/zoxide"}
+
 基本的功能实现的差不多了，学到了很多有用的知识，体验了很多。不过貌似基础的功能 [zoxide](https://github.com/ajeetdsouza/zoxide) 已经实现了。（这就是作为井底之蛙的好处，如果我知道了 zoxide 已经能实现我想要的了，我就不会自己去写，自己去体验）不过 zoxide 雀实很不错，例如他有 Tui，而我还是傻傻停留在字符串输出的表现形式。
 
 ```
@@ -61,9 +64,9 @@ My/iusx [                                                                       
 
 尽管如此，zoxide 的确很出色，例如它提供了 TUI 界面，而我目前仍停留在仅通过字符串输出展示信息的方式。所以，我也希望在未来对项目进行如下优化：
 
-- [ ] TUI：例如 `c list` 时候可以检索快捷方式
-- [ ] 通过 `c c iusx` 进入到目录之后自动执行记录在 `~/.cds_config.json` 中的脚本命令
-- [ ] Auto: 可以自动记录，例如 `/Users/uwu/Code/My/iusx` 的时候自动记录 `iusx: /Users/uwu/Code/My/iusx` 
+- [ ] 1. TUI：例如 `c list` 时候可以检索快捷方式
+- [x] 2. 通过 `c c iusx` 进入到目录之后自动执行记录在 `~/.cds_config.json` 中的脚本命令
+- [x] 3. Auto: 可以自动记录，例如 `/Users/uwu/Code/My/iusx` 的时候自动记录 `iusx: /Users/uwu/Code/My/iusx` 
 
 要做到上述功能需要配合 shell 环境，不过在此之前我希望将 TODO 2~3 完成后打包到 Homebrew，这样就可以通过 `brew install cds` 来进行安装了（貌似应该写一个安装脚本？。
 
@@ -106,6 +109,121 @@ Seen that
 ::
 
 有的时候就是这样，例如将 Linus 作为主系统自然就会学习到很多与其相关的知识。游玩 Minecraft 之后自然会想要知道光影、Mode、材质是怎么制作的，甚至与好友公共游玩他人服务器的时候脑海中也会浮现出：“我也想开一个服务器” 的这种想法，自然而然的就能接触到 Linux、Windows server，甚至是 Java。
+
+
+
+:text-title{t="实现自动记录" type="2"}
+要实现这个功能，需要使用到 `dirs`，算是内置命令。例如在 [zsh](https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#Directory-Stack) 和 [bash](https://www.gnu.org/software/bash/manual/html_node/Directory-Stack-Builtins.html) 中均有记载，效果还是很不错的：
+
+```
+macOS My/iusx ‹main*› » dirs
+~/Code/My/iusx
+macOS My/iusx ‹main*› » cd ~/Code/Project/company
+macOS Project/company » dirs
+~/Code/Project/company ~/Code/My/iusx
+macOS Project/company »
+```
+
+唯一可惜的是只记录当前 shell 会话的目录栈，关闭终端或 shell 会话后就会丢失。因此还需要 shell 环境配合，最终效果就是每次 `cd` 目录的时候都会存储到 `~/.cds_config.json`:
+
+```
+{
+  "iusx": {
+    "path": "/Users/uwu/Code/My/iusx",
+    "commands": [
+      "nix-shell"
+    ]
+  },
+  "My": {
+    "path": "/Users/uwu/Code/My",
+    "commands": []
+  },
+  "dotfiles": {
+    "path": "/Users/uwu/Code/My/dotfiles",
+    "commands": []
+  },
+  "config": {
+    "path": "/Users/uwu/Code/My/dotfiles",
+    "commands": []
+  },
+  "cds": {
+    "path": "/Users/uwu/Code/My/cds",
+    "commands": []
+  }
+}
+```
+
+但是这就会产生一个问题，之后我还需要 TUI 来进行快速访问，例如我进行了如下的操作：
+
+```
+macOS My/cds ‹main*› » cd ~
+macOS ~ » cd development/flutter/dev
+macOS flutter/dev » pwd
+/Users/uwu/development/flutter/dev
+macOS flutter/dev ‹stable› » cd bots
+macOS dev/bots ‹stable› »
+```
+
+你会发现我在当前目录什么都没做，只是单纯的浏览，还是被记录下来了，而且很繁杂，几乎每次 cd 的停顿都会被记录：
+
+```
+  "dev": {
+    "path": "/Users/uwu/development/flutter/dev",
+    "commands": []
+  },
+  "bots": {
+    "path": "/Users/uwu/development/flutter/dev/bots",
+    "commands": []
+  }
+```
+
+为此我增加了一个逻辑，也就是每次在当前目录执行命令，权重 `score` +1, 这会方便之后的 TUI 的数据展示，权重越高的越在前面，甚至还有升序降序:
+
+```
+{
+  "iusx": {
+    "path": "/Users/uwu/Code/My/iusx",
+    "commands": [
+      "nix-shell"
+    ],
+    "score": 12
+  },
+  "My": {
+    "path": "/Users/uwu/Code/My",
+    "commands": [],
+    "score": 5
+  },
+  "cds": {
+    "path": "/Users/uwu/Code/My/cds",
+    "commands": [],
+    "score": 2
+  },
+  "video": {
+    "path": "/Users/uwu/Work/video",
+    "commands": [],
+    "score": 2
+  },
+  "company": {
+    "path": "/Users/uwu/Code/Project/company",
+    "commands": [],
+    "score": 2
+  }
+}
+```
+
+不过这些都是通过 shell 实现的，之后可能还需要写一个 Install 的脚本，毕竟连 zoxide 也是这么做的， [src/shell.rs](https://github.com/ajeetdsouza/zoxide/blob/main/src/shell.rs) 写的非常全，不过我貌似只是为了自己用，所以我自己用的舒服就好了，不需要考虑兼容下的问题？（或许吧:
+
+```
+make_template!(Bash, "bash.txt");
+make_template!(Elvish, "elvish.txt");
+make_template!(Fish, "fish.txt");
+make_template!(Nushell, "nushell.txt");
+make_template!(Posix, "posix.txt");
+make_template!(Powershell, "powershell.txt");
+make_template!(Tcsh, "tcsh.txt");
+make_template!(Xonsh, "xonsh.txt");
+make_template!(Zsh, "zsh.txt");
+```
 
 ::
 
