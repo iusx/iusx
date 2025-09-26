@@ -1,6 +1,7 @@
 ---
-title: 'ritsu'
-description: 'Computer networking, Security, and Design Enthusiast.'
+ogImage:
+    title: 'ritsu'
+    description: 'Computer networking, Security, and Design Enthusiast.'
 head:
   meta:
     - name: 'keywords'
