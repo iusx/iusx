@@ -9,13 +9,21 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxtjs/color-mode",
     "@nuxtjs/sitemap",
+    "nuxt-og-image",
+    "nuxt-site-config",
   ],
   site: {
     url: "https://m.ritsu.jiangxue.org/",
   },
+  ogImage: {
+    defaults: {
+      component: "Custom",
+    },
+    strictNuxtContentPaths: true,
+  },
   content: {
     markdown: {
-      remarkPlugins: ['remark-math'],
+      remarkPlugins: ["remark-math"],
       rehypePlugins: ["rehype-mathjax"],
     },
   },
