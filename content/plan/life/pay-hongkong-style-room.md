@@ -8,7 +8,7 @@ img: "life/plan/room/1.jpg"
 info: "封面：正在安装 Arch linux"
 client: "My"
 target: 13926.80
-current: -907.98
+current: -140.46
 displayType: "usd"
 ---
 
