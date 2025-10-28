@@ -1,0 +1,1 @@
+import{_ as r}from"./GeLCEbty.js";import{A as o,B as t,G as s}from"./B_Xh_pzU.js";const a={};function n(e,c){return o(),t("table",null,[s(e.$slots,"default")])}const _=r(a,[["render",n]]);export{_ as default};
