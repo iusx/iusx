@@ -2,7 +2,7 @@
 "title": "快捷键备忘录"
 "director": "N/A"
 "time": "2025"
-img: "10/1.png"
+img: "key-note/1.png"
 plan: "100,100"
 ---
 
@@ -96,7 +96,7 @@ end)
 
 ::img-tip
 ---
-url: 12/1.png
+url: key-note/2.png
 text: 由于我是双向识别障碍+色盲，所以在颜色很多的地方会感觉大脑凌乱，刚好 nvim-noirbuddy 这种单色的主题可以让我看清楚字。
 ---
 ::

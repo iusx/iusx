@@ -2,7 +2,7 @@
 "title": "Spine 2D"
 "director": "My"
 "time": "2025"
-img: "15/1.png"
+img: "spine/1.png"
 plan: "100,100"
 ---
 

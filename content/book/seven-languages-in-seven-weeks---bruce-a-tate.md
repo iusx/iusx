@@ -2,7 +2,7 @@
 "title": "Seven Languages in Seven Weeks"
 "director": "Bruce A. Tate"
 "time": "2025.01.08"
-img: "08/1.png"
+img: "seven-languages-in-seven-weeks-bruce-a-tate/1.png"
 plan: "268,323"
 ---
 

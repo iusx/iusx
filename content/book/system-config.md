@@ -2,7 +2,7 @@
 "title": "System config"
 "director": "MY"
 "time": "2025"
-img: "17/1.png"
+img: "system-config/1.png"
 plan: "100,100"
 ---
 

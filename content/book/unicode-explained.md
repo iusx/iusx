@@ -2,7 +2,7 @@
 "title": "Unicode Explained"
 "director": "Jukka K. Korpela"
 "time": "2025"
-img: "11/1.png"
+img: "unicode-explained/1.png"
 plan: "0,71"
 ---
 

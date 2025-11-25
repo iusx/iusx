@@ -2,7 +2,7 @@
 "title": "문재인의 운명"
 "director": "문재인"
 "time": "2024"
-img: "04/4.png"
+img: "fate-of-moon-jae-in/4.png"
 plan: "100,100"
 ---
 

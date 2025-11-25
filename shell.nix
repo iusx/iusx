@@ -8,5 +8,6 @@ pkgs.mkShell {
   ];
   shellHook = ''
     export SHELL=${pkgs.zsh}/bin/zsh
+    unset DEVELOPER_DIR
   '';
 }
