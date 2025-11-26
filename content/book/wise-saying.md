@@ -273,6 +273,7 @@ There is nothing new under the sun<br>
 太阳底下没有新鲜事
 ::
 
+---
 
 :text-title{t="Life"}
 
@@ -283,6 +284,14 @@ topic: 漆器工艺专著
 by: 髹饰录
 ---
 可巧手以继拙作，不可庸工以当精制
+::
+
+::wise-info
+---
+topic: 牙齿是死亡的第一个警示
+by: Terry Davis
+---
+Teeth are the first reminder of mortality. That's when it hits ya. Because they (go away and) don't come back
 ::
 
 
