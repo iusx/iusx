@@ -297,6 +297,14 @@ Teeth are the first reminder of mortality. That's when it hits ya. Because they 
 
 ::wise-info
 ---
+topic: 我花1万4千7百5十元6毛4买的胶带终于到了
+by: White
+---
+只要形成圈文化，那钱在圈里都好赚
+::
+
+::wise-info
+---
 topic: 充满正义感的理想主义者极其愚昧。
 by: 鲍鹏山
 ---
