@@ -35,7 +35,7 @@ defineProps(["title", "info", "time", "client", "img", "types"]);
     color: #888888;
     text-align: justify;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1440px) {
       width: 100%;
       font-size: 13px;
     }
