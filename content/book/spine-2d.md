@@ -72,7 +72,7 @@ type: tip
 
 ::img-tip
 ---
-url: 15/img/1.gif
+url: spine/img/1.gif
 text: 图 1 | Octocats 盯着你的输入框.gif（超级可爱
 ---
 ::
@@ -81,7 +81,7 @@ text: 图 1 | Octocats 盯着你的输入框.gif（超级可爱
 
 ::img-tip
 ---
-url: 15/img/2.gif
+url: spine/img/2.gif
 text: 图 2 | 在很多 blog 中很常见的看板娘 
 ---
 ::
@@ -98,7 +98,7 @@ text: 图 2 | 在很多 blog 中很常见的看板娘
 
 ::img-tip
 ---
-url: 15/img/3.gif
+url: spine/img/3.gif
 text: 图 3 | Apple Memoji（很掉帧，因为我压缩了<br>WSJ NEWS:Memoji:From Old Japan to a Custom Apple Innovation
 ---
 ::
@@ -109,7 +109,7 @@ text: 图 3 | Apple Memoji（很掉帧，因为我压缩了<br>WSJ NEWS:Memoji:F
 
 ::img-tip
 ---
-url: 15/img/4.gif
+url: spine/img/4.gif
 text: 图 4 | 就单个眨眼的效果（处于静态，就单独眨眼哇），可以看到 eyeBink 的数值的变动 SOURCE | <a href="https://codepen.io/mediapipe-preview/pen/OJBVQJm">MediaPipe Face Landmarker Task for web</a> 
 ---
 ::
@@ -128,7 +128,7 @@ type: tip
 
 ::img-tip
 ---
-url: 15/img/5.gif
+url: spine/img/5.gif
 text: 图 5 | 最终的实现效果，利用 mediapipe + spine 2d runtime + electron
 ---
 ::

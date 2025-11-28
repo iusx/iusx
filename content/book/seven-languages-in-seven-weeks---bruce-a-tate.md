@@ -42,7 +42,7 @@ plan: "268,323"
 
 ::img-tip
 ---
-url: 08/1.jpg
+url: seven-languages-in-seven-weeks-bruce-a-tate/1.jpg
 text: 绘画这门艺术，你需要经历过前期的 <b>构图、草稿、描边、上色、光影</b> 如果你是素描类的作品，还需要经历前期的封边到最后将美纹纸胶带撕下的过程。
 ---
 ::

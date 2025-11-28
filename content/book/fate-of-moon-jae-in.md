@@ -36,7 +36,7 @@ plan: "100,100"
 
 ::img-tip
 ---
-url: 04/WechatIMG4.jpg
+url: fate-of-moon-jae-in/WechatIMG4.jpg
 text: 🕯烛光集会：2016 年大韩民国反朴槿惠示威
 ---
 ::
