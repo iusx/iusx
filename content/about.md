@@ -25,10 +25,16 @@ tag:
     value: "F.D.S.A.T."
 
 hobbies:
-    - title: "bikes"
+    - title: "Bikes"
       info: "Yes, I have a bicycle."
       url: ""
-      img: "/img/life/about/1301.jpg"
+    - title: "Darwin Award"
+      info: "Potential Recipient"
+      url: ""
+    - title: "Flat Earth Theory"
+      info: "Devoted Believer"
+      url: ""
+
 pupus:
   - title: "The person I aspire to be"
     subtitle: "Full-stack, Design, Security, Animation, Technical-Art"

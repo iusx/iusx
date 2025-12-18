@@ -106,7 +106,7 @@ function closePupus() {
       </div>
       <div class="work" style="gap: 20px">
         <div class="work-info">
-          <p>Hobbies</p>
+          <p>BTW</p>
           <div class="work-info-text">
             <slot name="contributiondes" />
           </div>
@@ -115,7 +115,7 @@ function closePupus() {
           <!-- <div class="tables"> -->
           <!--   <an-table :table="contribution" /> -->
           <!-- </div> -->
-          <an-about-hob :list="hobbies"></an-about-hob>
+          <an-about-hob :list="hobbies" style="margin-top: 30px;"></an-about-hob>
         </div>
       </div>
       <div class="work">
