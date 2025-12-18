@@ -28,7 +28,7 @@ hobbies:
     - title: "bikes"
       info: "Yes, I have a bicycle."
       url: ""
-      img: "img/life/about/1301.jpg"
+      img: "/img/life/about/1301.jpg"
 pupus:
   - title: "The person I aspire to be"
     subtitle: "Full-stack, Design, Security, Animation, Technical-Art"
