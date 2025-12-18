@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 18 Dec 2025 11:22:20 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 18 Dec 2025 11:25:31 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
@@ -60,12 +60,6 @@
             <title><![CDATA[WISE SAYING]]></title>
             <link>m.ritsu.jiangxue.org//book/wise-saying</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//book/wise-saying</guid>
-        </item>
-        <item>
-            <title><![CDATA[Ethereum website contribution]]></title>
-            <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
-            <link>m.ritsu.jiangxue.org//outher/ethereum-website-pr</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//outher/ethereum-website-pr</guid>
         </item>
         <item>
             <title><![CDATA[CRG FPS 電子競技]]></title>
@@ -146,6 +140,12 @@
             <title><![CDATA[Tsing font]]></title>
             <link>m.ritsu.jiangxue.org//des/tsing</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//des/tsing</guid>
+        </item>
+        <item>
+            <title><![CDATA[Ethereum website contribution]]></title>
+            <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
+            <link>m.ritsu.jiangxue.org//outher/ethereum-website-pr</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//outher/ethereum-website-pr</guid>
         </item>
         <item>
             <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
