@@ -24,6 +24,11 @@ tag:
   - label: "Dream to be"
     value: "F.D.S.A.T."
 
+hobbies:
+    - title: "bikes"
+      info: "Yes, I have a bicycle."
+      url: ""
+      img: "img/life/about/1301.jpg"
 pupus:
   - title: "The person I aspire to be"
     subtitle: "Full-stack, Design, Security, Animation, Technical-Art"
@@ -169,10 +174,10 @@ contribution:
 A person with no education, no professional certificates, and not even any background. Has considerable interest in security, design, technical art, and software development, but only as a hobby rather than with professional rigor. Focused on implementing functionality, achieving desired effects, or accomplishing specific goals, rather than pursuing perfection.
 
 #contributiondes
-"Some of those people dont't do a lot<br>
-There's a lot of people who make small,small changes,"
+"Naître, c'est seulement commencer à mourir.<br>
+出生即是死亡的开始
 
-— Linus Torvalds
+— Théophile Gautier
 #end
 
 ::

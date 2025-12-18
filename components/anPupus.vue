@@ -76,6 +76,7 @@ const close = () => {
 <style lang="scss" scoped>
 .pop-lay {
   position: fixed;
+  z-index: 1;
   inset: 0;
   background: rgb(240 240 240 / 81%);
   display: flex;

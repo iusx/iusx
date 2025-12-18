@@ -25,6 +25,12 @@ interface ContributionItem {
   url: string;
 }
 
+interface HobItem {
+  img: string;
+  title: string;
+  url: string;
+  info: string;
+}
 
 interface WorkCon {
   time: string;
@@ -38,6 +44,7 @@ const props = defineProps<{
   pupus: PupusData[];
   contribution: ContributionItem[];
   works: WorkCon[];
+  hobbies: HobItem[]; 
 }>();
 
 const activePupus = ref<number | null>(null);
@@ -51,7 +58,6 @@ function openPupus(index: number) {
 function closePupus() {
   activePupus.value = null;
 }
-
 </script>
 
 <template>
@@ -98,17 +104,18 @@ function closePupus() {
           </div>
         </div>
       </div>
-      <div class="work">
+      <div class="work" style="gap: 20px">
         <div class="work-info">
-          <p>Contribution Logs</p>
+          <p>Hobbies</p>
           <div class="work-info-text">
             <slot name="contributiondes" />
           </div>
         </div>
         <div class="work-layout">
-          <div class="tables">
-            <an-table :table="contribution" />
-          </div>
+          <!-- <div class="tables"> -->
+          <!--   <an-table :table="contribution" /> -->
+          <!-- </div> -->
+          <an-about-hob :list="hobbies"></an-about-hob>
         </div>
       </div>
       <div class="work">
