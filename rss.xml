@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 20 Dec 2025 07:26:28 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 20 Dec 2025 07:40:43 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
@@ -142,12 +142,6 @@
             <guid isPermaLink="true">m.ritsu.jiangxue.org//des/tsing</guid>
         </item>
         <item>
-            <title><![CDATA[Ethereum website contribution]]></title>
-            <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
-            <link>m.ritsu.jiangxue.org//outher/ethereum-website-pr</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//outher/ethereum-website-pr</guid>
-        </item>
-        <item>
             <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
             <description><![CDATA[有时候在做流程图时需要一个好用的绘图软件。我尝试过 Draw.io、Visio、Dia、Graphviz、Umbrello、ProcessOn 等。这些软件各有特色，主要比较的是用户体验和免费程度。Edraw 早期界面像 Visio，现在融入了 Figma 等产品的交互方式。使用时发现它支持复制粘贴 SVG 数据，方便导出无水印流程图。我喜欢支持 SVG 的软件，比如 Figma 和 Illustrator。最喜欢的流程图风格是 IETF RFC 文件中的，用制表符绘制的 ASCII-Art，简洁而美观。]]></description>
             <link>m.ritsu.jiangxue.org//sec/edrawmax</link>
@@ -196,9 +190,10 @@
             <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</guid>
         </item>
         <item>
-            <title><![CDATA[CVE learn]]></title>
-            <link>m.ritsu.jiangxue.org//plan/security/cve-learn</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/security/cve-learn</guid>
+            <title><![CDATA[Ethereum website contribution]]></title>
+            <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
+            <link>m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</guid>
         </item>
         <item>
             <title><![CDATA[cds]]></title>
@@ -215,6 +210,11 @@
             <description><![CDATA[回顾了 Blog 的设计历程，从最初简单的布局到使用 D3.js 实现动态效果，再到探索 Spine 动画技术的可能性。作者反思了过去的“自嗨”心态，意识到技术能力的不足，但也找到了新的方向——借鉴 Pinterest 上的风格，结合手绘或约稿，利用 Spine 实现更专业的交互效果。虽然计划可能耗时较长（甚至跨年），但希望通过学习提升，最终打造一个兼具科技感和美术风格的博客，以此增强自信并摆脱“loser”心态。]]></description>
             <link>m.ritsu.jiangxue.org//plan/programming/new-blog-theme-plan</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/programming/new-blog-theme-plan</guid>
+        </item>
+        <item>
+            <title><![CDATA[CVE learn]]></title>
+            <link>m.ritsu.jiangxue.org//plan/security/cve-learn</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/security/cve-learn</guid>
         </item>
     </channel>
 </rss>
