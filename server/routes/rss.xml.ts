@@ -20,7 +20,6 @@ export default defineEventHandler(async (event) => {
       doc?._path?.includes("/book") ||
       doc?._path?.includes("/des") ||
       doc?._path?.includes("/plan") ||
-      doc?._path?.includes("/outher"),
   );
   for (const doc of blogPosts) {
     feed.item({

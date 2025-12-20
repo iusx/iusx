@@ -7,6 +7,10 @@ types: "cc"
 img: "life/eth/1.png"
 info: "https://ethereum.org/en/contributing/#contributors"
 client: "Ethereum Foundation"
+target: 100
+current: 50
+displayType: "percent"
+
 ---
 
 ::main-content{:title="title" :client="client" :time="time" :img="img" :info="info" :types="types"}
