@@ -1,13 +1,19 @@
 <template>
   <div class="box-layout">
-    <div class="box" v-for="item in list" :key="item.url">
+    <a
+      :href="item.url ? item.url : undefined"
+      target="_blank"
+      class="box"
+      v-for="item in list"
+      :key="item.url"
+    >
       <div class="img">
         <div class="title">
           <p>{{ item.title }}</p>
           <span>{{ item.info }}</span>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 </template>
 <script setup lang="ts">
@@ -31,6 +37,7 @@ defineProps<{
 }
 
 .box {
+  color: #a6a6a6;
   width: 100%;
   .title {
     border-bottom: 1px solid #e1e1e1;

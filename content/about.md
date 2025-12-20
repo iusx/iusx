@@ -31,9 +31,19 @@ hobbies:
     - title: "Darwin Award"
       info: "Potential Recipient"
       url: ""
-    - title: "Flat Earth Theory"
-      info: "Devoted Believer"
+    - title: "Flat earth theory"
+      info: "Devoted believer"
       url: ""
+    - title: "Rat Man"
+      info: "A sewer rat"
+      url: ""
+    - title: "Illiteracy"
+      info: "With no formal education"
+      url: ""
+    - title: "Luser"
+      info: "A loser"
+      url: "https://en.wikipedia.org/wiki/Luser"
+
 
 pupus:
   - title: "The person I aspire to be"
@@ -180,10 +190,10 @@ contribution:
 A person with no education, no professional certificates, and not even any background. Has considerable interest in security, design, technical art, and software development, but only as a hobby rather than with professional rigor. Focused on implementing functionality, achieving desired effects, or accomplishing specific goals, rather than pursuing perfection.
 
 #contributiondes
-"Naître, c'est seulement commencer à mourir.<br>
-出生即是死亡的开始
+"Every child is an artist".<br>
+The problem is how to remain an artist once we grow up
 
-— Théophile Gautier
+— Pablo Picasso
 #end
 
 ::
