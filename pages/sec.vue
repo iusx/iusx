@@ -173,6 +173,7 @@ main {
   height: 100%;
   width: 100%;
   position: fixed;
+  overflow-y: auto;
 
   .title-desc {
     color: #b5b5b5;
@@ -200,7 +201,7 @@ main {
     p {
       font-size: 60px;
 
-      @media (max-width: 400px) {
+      @media (max-width: 500px) {
         font-size: 30px;
       }
 
@@ -244,22 +245,5 @@ main {
 
 .title {
   width: 40vw !important;
-}
-
-.left {
-  text-transform: uppercase;
-  padding: 20px;
-  writing-mode: tb-rl;
-  padding-right: 5vw;
-  font-weight: bold;
-  color: #b5b5b5;
-  margin-right: 5vw;
-  background: #f5f5f5;
-  height: 100vh;
-  letter-spacing: 3.28px;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
 }
 </style>
