@@ -25,8 +25,8 @@ tag:
     value: "F.D.S.A.T."
 
 hobbies:
-    - title: "Bikes"
-      info: "Yes, I have a bicycle."
+    - title: "AI has killed someone."
+      info: "The humans who were killed by the AI."
       url: ""
     - title: "Darwin Award"
       info: "Potential Recipient"
