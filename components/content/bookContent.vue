@@ -69,6 +69,7 @@ const percentage = computed(() => {
 </script>
 
 <template>
+  <div class="progress"></div>
   <main class="layout">
     <div class="book-info pc">
       <div class="book-info-home-img">
@@ -339,5 +340,35 @@ main {
 
 table {
   width: 100%;
+}
+.progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  height: 4px;
+  background: #38e7cd;
+  transform-origin: 0 50%;
+  z-index: 10000000000000000000;
+  box-shadow: -1px 0px 0px 0px #38e7cd;
+  display: none;
+  animation: grow auto linear;
+  animation-timeline: scroll();
+}
+@supports (animation-timeline: scroll()) {
+  .progress {
+    display: block;
+    animation: grow auto linear;
+    animation-timeline: scroll();
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 </style>
