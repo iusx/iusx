@@ -350,7 +350,7 @@ table {
   background: #38e7cd;
   transform-origin: 0 50%;
   z-index: 10000000000000000000;
-  box-shadow: -1px 0px 0px 0px #38e7cd;
+  box-shadow: -7px -4px 20px 10px #38e7cd3d;
   display: none;
   animation: grow auto linear;
   animation-timeline: scroll();

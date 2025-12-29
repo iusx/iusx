@@ -65,7 +65,7 @@ main {
   width: fit-content;
   right: 0;
   border-left: 3px solid #38e7cd;
-  box-shadow: -1px 0px 0px 0px #38e7cd;
+  box-shadow: -1px 0px 7px 7px #38e7cd36;
   background-repeat: no-repeat;
   background-image: url(/img/page/drag.png);
   background: #000;
