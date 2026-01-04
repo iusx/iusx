@@ -156,11 +156,6 @@ const activeSection = ref(0);
 const sectionRefs = ref([]);
 const progressBar = ref(null);
 const progressCircle = ref(null);
-const iconPaths = {
-  behance: "",
-
-  github: "",
-};
 const userinfo = [
   {
     name: "ᗜ ヘ ᗜ 💧",
@@ -466,7 +461,7 @@ const sections = [
     tableData: contribution,
   },
   {
-    title: "I like network security<br>but is no CVE.",
+    title: "I like network security<br>CVE count: 0.",
     desc: "I hope my first CVE will be related to Windows, Linux/macOS, or even a programming language such as Rust or Python, rather than various frameworks or applications.",
     showTable: true,
     tableData: vulnData,
