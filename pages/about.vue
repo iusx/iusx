@@ -63,7 +63,7 @@
     <div class="content">
       <header>
         <div>
-          <this-page style="margin: 0; padding: 0">about</this-page>
+          <this-page style="margin: 0; padding: 0"><h1>I hobbies</h1></this-page>
           <span class="title-large"
             ><an-font
               class="me-tip"
