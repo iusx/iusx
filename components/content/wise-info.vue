@@ -58,6 +58,7 @@ defineProps(["by", "topic"]);
     font-size: 17px;
     color: #888888;
     font-family: "Noto Serif SC", serif;
+
   }
 
   .by {

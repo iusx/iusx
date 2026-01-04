@@ -134,7 +134,7 @@ by: 季康子问政于孔子
 :text-title{t="从各种地方看到的"}
 
 ## Book 1
-:text-title{t="Tech"}
+:text-title{t="BOOK"}
 
 ::wise-info
 ---
@@ -143,6 +143,10 @@ by: me
 ---
 当筛选团队成员要求够高的时候，会让该者更加的珍惜。如要求很低很容易达到的时候，该者不会有任何珍惜。
 ::
+
+
+
+---
 
 ## Tech 1
 :text-title{t="Tech"}
