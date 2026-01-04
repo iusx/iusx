@@ -14,49 +14,21 @@
       >
         <svg
           v-if="n === 1"
-          class="shape-svg orbit-ring"
+          class="shape-svg organic-breath"
           viewBox="0 0 300 300"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <defs></defs>
+          <circle cx="150" cy="150" r="3" class="core-point" />
 
-          <circle cx="150" cy="150" r="140" class="ring-base">
-            <animate
-              attributeName="opacity"
-              values="0.2;0.4;0.2"
-              dur="4s"
-              repeatCount="indefinite"
-            />
-          </circle>
+          <circle cx="150" cy="150" r="70" class="ring-breath" />
 
-          <g class="ring-group-accent">
-            <circle
-              cx="150"
-              cy="150"
-              r="140"
-              class="ring-accent"
-              stroke-dasharray="40 180 20 200 60 380"
-            />
-          </g>
-
-          <g class="ring-group-light">
-            <circle
-              cx="150"
-              cy="150"
-              r="135"
-              class="ring-light"
-              stroke-dasharray="100 340 20 420"
-            />
-          </g>
-
-          <circle cx="150" cy="150" r="2" fill="var(--accent)">
-            <animate
-              attributeName="opacity"
-              values="0.5;1;0.5"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-          </circle>
+          <circle
+            cx="150"
+            cy="150"
+            r="110"
+            class="ring-influence"
+            stroke-dasharray="1 8"
+          />
         </svg>
         <div v-if="n === 2" class="vuln-cards-wrapper" ref="cardStack">
           <div v-for="(card, i) in vulnData" :key="i" class="vuln-card">
@@ -630,40 +602,35 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* 1. 基础样式与默认变量 (默认为深色 Dark) */
+
 .app-wrapper {
-  /* 定义变量 */
+
   --bg: #080808;
   --text-muted: #444;
-  --text-primary: #e5e5e5; /* 改名: text-light 容易混淆，建议叫 primary */
+  --text-primary: #e5e5e5; 
   --accent: #38e7cd;
   --section-shadow: 0 -50px 100px #0098811c;
 
-  /* --- 关键修复：应用变量 --- */
   background-color: var(--bg);
   color: var(--text-primary);
-  /* ----------------------- */
 
   font-family: "Manrope", sans-serif;
   overflow-x: hidden;
   transition:
     background-color 0.3s ease,
-    color 0.3s ease; /*添加过渡动画让切换更柔和*/
+    color 0.3s ease; 
 }
 
-/* 2. 系统浅色模式 (System Light Mode) */
 @media (prefers-color-scheme: light) {
-  /* 注意：这里只有当 HTML 标签上没有手动强制指定 dark-mode 时才生效 */
+
   :root:not(.dark-mode) .app-wrapper {
-    --bg: #ffffff; /* 修复: 这里应该用白色或浅灰，而不是红色 #FF0000 */
+    --bg: #ffffff; 
     --text-muted: #999;
-    --text-primary: #1a1a1a; /* 修复: 浅色模式下文字要是深色的 */
+    --text-primary: #1a1a1a; 
     --section-shadow: 0 -50px 100px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* 3. 手动强制浅色模式 (Manual Light Mode) */
-/* 当 body 或父级拥有 .light-mode 类时强制生效，覆盖系统设置 */
 .light-mode .app-wrapper {
   --bg: #ffffff;
   --text-muted: #999;
@@ -988,13 +955,6 @@ h1 {
   }
 }
 
-.shape-svg {
-  width: 300px;
-  height: 300px;
-
-  display: block;
-}
-
 .ring-base,
 .ring-accent,
 .ring-light {
@@ -1040,13 +1000,6 @@ h1 {
   }
   to {
     transform: rotate(0deg);
-  }
-}
-
-@media (max-width: 768px) {
-  .shape-svg {
-    width: 100%;
-    height: auto;
   }
 }
 
@@ -1224,7 +1177,7 @@ h1 {
 .divider {
   width: 1px;
   height: 24px;
-  background-color:rgb(174 174 174 / 37%);
+  background-color: rgb(174 174 174 / 37%);
   margin: 0 16px;
 }
 
@@ -1273,5 +1226,69 @@ h1 {
   width: 40px;
   height: 1px;
   background: var(--text-light);
+}
+
+.organic-breath {
+
+  overflow: visible;
+}
+
+.core-point {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 10px var(--accent));
+  opacity: 0.9;
+}
+
+.ring-breath {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0.3;
+
+  transform-origin: center;
+
+  animation: deep-breath 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.ring-influence {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1;
+  opacity: 0.15;
+  stroke-linecap: round;
+
+  transform-origin: center;
+
+  animation: subtle-drift 12s ease-in-out infinite alternate;
+}
+
+@keyframes deep-breath {
+  0% {
+    transform: scale(0.9);
+    stroke-width: 1px;
+    opacity: 0.2;
+  }
+  50% {
+
+    transform: scale(1.05);
+    stroke-width: 2px;
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(0.9);
+    stroke-width: 1px;
+    opacity: 0.2;
+  }
+}
+
+@keyframes subtle-drift {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(0.98) rotate(15deg);
+    opacity: 0.3;
+  }
 }
 </style>
