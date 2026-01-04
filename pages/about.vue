@@ -63,7 +63,7 @@
     <div class="content">
       <header>
         <div>
-          <h1>I hobbies</h1>
+          <this-page style="margin: 0; padding: 0">about</this-page>
           <span class="title-large"
             ><an-font
               class="me-tip"
@@ -597,12 +597,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-
 .app-wrapper {
-
   --bg: #080808;
   --text-muted: #444;
-  --text-primary: #e5e5e5; 
+  --text-primary: #e5e5e5;
   --accent: #38e7cd;
   --section-shadow: 0 -50px 100px #0098811c;
 
@@ -613,15 +611,14 @@ onUnmounted(() => {
   overflow-x: hidden;
   transition:
     background-color 0.3s ease,
-    color 0.3s ease; 
+    color 0.3s ease;
 }
 
 @media (prefers-color-scheme: light) {
-
   :root:not(.dark-mode) .app-wrapper {
-    --bg: #ffffff; 
+    --bg: #ffffff;
     --text-muted: #999;
-    --text-primary: #1a1a1a; 
+    --text-primary: #1a1a1a;
     --section-shadow: 0 -50px 100px rgba(0, 0, 0, 0.1);
   }
 }
@@ -1224,7 +1221,6 @@ h1 {
 }
 
 .organic-breath {
-
   overflow: visible;
 }
 
@@ -1264,7 +1260,6 @@ h1 {
     opacity: 0.2;
   }
   50% {
-
     transform: scale(1.05);
     stroke-width: 2px;
     opacity: 0.6;
