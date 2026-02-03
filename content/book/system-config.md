@@ -43,4 +43,30 @@ type: tip
 
 不过对我来说 `nix-shell` 貌似就很满足我的需求了。剩下的 `nix-env`（升级/卸载）只是 ​​在借阅记录（profile generation）中划掉某本书的名字​​，但书（包）仍然放在书架上 `（/nix/store）`
 
+
+---
+
+# aerospace 2
+:text-title{t="aerospace"}
+
+之所以用 aerospace 是因为我之前非常喜欢用的 [Rectangle](https://rectangleapp.com/) 在我的 macos 15.6.1 (24G90) 系统中失效了，几乎所有快捷键都用不了。因此我问了使用 macOS 进行主系统的大佬，推荐我使用 aerospace。
+
+在此之前，我还使用了 [alttab](https://alt-tab-macos.netlify.app/) 确实比 macos 自带的切换好多了。但是我自从体验了 aerospace 之后就把他卸载掉了。
+
+目前我常用的 aerospace 快捷键就是：
+
+| key | info |
+| --- | --- |
+| alt(option) + 1,2,3,4 | 切换工作区 |
+| alt +  hjkl | 切换光标 |
+| alt + shift + hjkl | 整理窗口 |
+| alt + w | alt-w = 'fullscreen' 放大 |
+
+还是很容易就能上手的，例如可以自己配置 `alt` 快捷键，因为有很多，所有可以自定义：
+
+```
+    alt-q = 'close'
+    alt-r = ['layout tiles', 'balance-sizes']
+    alt-z = 'layout tiles accordion'
+```
 ::
