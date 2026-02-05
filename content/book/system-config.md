@@ -69,4 +69,17 @@ type: tip
     alt-r = ['layout tiles', 'balance-sizes']
     alt-z = 'layout tiles accordion'
 ```
+
+不过我在使用 aerospace 的时候，ghostty 出现了问题. 就是在 ghostty 中 new tab 的时候，new tab 会被 aerospace 单独识别为一个窗口。
+
+起初我认为就我遇到了这个问题（还想是自己的配置导致的），结果 ghostty 在 docs 上写了，由于是 ghostty 的 tab 用了 macos 原生的什么什么导致的，无法解决，只能通过下述配置解决该问题。
+
+
+```
+[[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout floating",
+]
+```
 ::
