@@ -1,214 +1,311 @@
 <script lang="ts" setup>
-const colorMode = useColorMode();
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 useSeoMeta({
-  title: "Design",
-  description: "Github + Hackerone + Behance ÷ Researchgate",
+  title: "Design Portfolio",
+  description: "Immersive Visual Works",
 });
 
 const { data: equalQueryDes } = await useAsyncData("equalDes", () => {
   return queryContent("des/").find();
 });
 
-if (equalQueryDes.value) {
-  equalQueryDes.value.sort((a, b) => {
-    const dateA = new Date(a.time).getTime();
-    const dateB = new Date(b.time).getTime();
-    return dateB - dateA;
+const sortedData = computed(() => {
+  if (!equalQueryDes.value) return [];
+  return [...equalQueryDes.value].sort((a, b) => {
+    return new Date(b.time).getTime() - new Date(a.time).getTime();
   });
-}
-const isWorkPopVisible = ref(false);
-
-const showWorkPop = () => {
-  isWorkPopVisible.value = true;
-};
-
-const hideWorkPop = () => {
-  isWorkPopVisible.value = false;
-};
-
-const sortedData = computed(() => equalQueryDes.value);
-
-const firstImg = computed(() => {
-  return sortedData.value.length > 0 ? sortedData.value[0].img : null;
 });
 
-const images = ref([]);
-const loading = ref(true);
-const imagesLoadedCount = ref(0);
+const mainContainer = ref(null);
 
 onMounted(() => {
-  sortedData.value.forEach((item) => {
-    const formattedPath = `${item.img}`;
-    images.value.push(formattedPath);
+  const ctx = gsap.context(() => {
 
-    const img = new Image();
-    img.src = formattedPath;
+    gsap.from(".page-header", {
+      y: 80,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power4.out",
+    });
 
-    img.onload = () => {
-      imagesLoadedCount.value++;
-      if (imagesLoadedCount.value === images.value.length) {
-        loading.value = false;
-      }
-    };
+    const images = gsap.utils.toArray(".img-inner");
+    images.forEach((img: any) => {
+      gsap.to(img, {
+        yPercent: 15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: img.parentElement,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    });
 
-    img.onerror = () => {
-      console.error(`Failed to load image ${formattedPath}`);
-    };
-  });
+    gsap.utils.toArray(".design-item").forEach((item: any) => {
+      gsap.from(item.querySelector(".item-info"), {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: item,
+          start: "top 80%",
+        },
+      });
+    });
+
+  }, mainContainer.value);
+
+  return () => ctx.revert();
 });
+
+const handleImageLoad = (e: Event) => {
+  const img = e.target as HTMLElement;
+  const parent = img.closest('.img-reveal-mask');
+  if (parent) {
+    parent.classList.add("is-loaded");
+  }
+};
 </script>
 
 <template>
-  <main>
-    <transition name="fade">
-      <div class="work-pop">
-        <div class="work-pop-layout">
-          <div class="work-pop-title">
-            <this-page>design</this-page>
-          </div>
-          <div class="work-pop-des">
-            <div class="work-pop-des-box" v-for="des in sortedData">
-              <div v-if="loading" class="no-img"></div>
-              <nuxt-link :to="des.url" target="_blank" v-else>
-                <img :src="des.img" :alt="des.title" />
-                <div class="work-desc-box">
-                  <p>{{ des.title }}</p>
+  <main ref="mainContainer" class="portfolio-container">
+    <header class="page-header">
+      <this-page>Selected Works</this-page>
+      <div class="divider"></div>
+    </header>
+
+    <div class="gallery-wrapper">
+      <div class="large-grid">
+        <article
+          v-for="(des, index) in sortedData"
+          :key="des._path"
+          class="design-item"
+        >
+          <nuxt-link :to="des.url" target="_blank" class="item-link">
+
+            <div class="img-reveal-mask">
+              <div class="skeleton-loader"></div>
+
+              <img
+                :src="des.img"
+                :alt="des.title"
+                class="img-inner"
+                loading="lazy"
+                @load="handleImageLoad"
+              />
+
+              <div class="hover-overlay">
+                <div class="overlay-border"></div> 
+                <div class="overlay-content">
+                  <span class="action-tag">[ OPEN_PROJECT ]</span>
+                  <p class="hover-desc">
+                    {{ des.description || des.title }}
+                  </p>
                 </div>
-              </nuxt-link>
+                <div class="arrow-icon">↗</div>
+              </div>
             </div>
-          </div>
-        </div>
+
+            <div class="item-info">
+              <div class="info-top">
+                <h2>{{ des.title }}</h2>
+                <span class="year">{{ des.time?.slice(0, 4) }}</span>
+              </div>
+              <p class="desc-preview">Visual Design / UI / UX</p>
+            </div>
+          </nuxt-link>
+        </article>
       </div>
-    </transition>
+    </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
-@keyframes loading {
-  0%,
-  100% {
-    opacity: 1;
+
+$gap-desktop: 6vw;
+$gap-mobile: 4rem;
+
+$img-ratio: 1.6; 
+
+$font-mono: 'JetBrains Mono', monospace;
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.portfolio-container {
+  padding: 8vw 4vw;
+  min-height: 100vh;
+  background-color: #fff;
+  transition: background-color 0.5s ease;
+}
+
+.page-header {
+  margin-bottom: 8vw;
+  :deep(this-page) {
+    font-size: clamp(3rem, 8vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 2rem;
   }
-  50% {
-    opacity: 0.5;
+  .divider {
+    width: 100%; height: 1px; background: #000; transform-origin: left;
   }
 }
 
-.no-img {
-  background-color: #f2f2f2;
-  animation: loading 1.5s infinite;
-  height: 100%;
+.large-grid {
+  display: grid;
+  column-gap: $gap-desktop;
+  row-gap: 8vw; 
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    row-gap: $gap-mobile;
+  }
+}
+
+.design-item {
   width: 100%;
-  border: 1px soldi red;
-}
-.dark-mode .no-img {
-  background-color: rgb(29, 29, 29);
-}
 
-a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-}
-.work-pop {
-  background: rgb(255, 255, 255);
-  box-shadow: 0px 4px 45.8px 49px rgba(166, 166, 166, 0.25);
-  .work-pop-title {
-  }
+  .img-reveal-mask {
+    width: 100%;
+    aspect-ratio: $img-ratio;
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    background-color: #f0f0f0;
+    transform: translateZ(0); 
 
-  .work-pop-layout {
-    margin: 0 auto;
-    width: 90%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+    .skeleton-loader {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1; 
+      background-color: #e0e0e0;
+      overflow: hidden;
 
-  .work-pop-des {
-    flex: 1;
-    padding-bottom: 20px;
-  }
-
-  .work-pop-des-box {
-    cursor: pointer;
-    transition: filter 0.3s ease;
-    margin-bottom: 2vw;
-    @media (max-width: 1024px) {
-      margin-bottom: 10vw;
-    }
-    a {
-      text-decoration: none;
-      display: grid;
-      align-items: end;
-      justify-items: start;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-
-      &::before {
-        content: "";
-        height: 100%;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
         background: linear-gradient(
-          360deg,
-          #000000 -6.11%,
-          rgb(54 54 54 / 0%) 49.63%,
-          rgba(102, 102, 102, 0) 70%
+          90deg, 
+          transparent, 
+          rgba(255, 255, 255, 0.5), 
+          transparent
         );
-        width: 100%;
-        grid-row: 1 / 2;
-        grid-column: 1 / 2;
-        z-index: 2;
+        animation: shimmer 1.5s infinite;
       }
-      .work-desc-box {
-        grid-row: 1 / 2;
-        grid-column: 1 / 2;
-        z-index: 2;
-        padding: 12px;
-        color: #fff;
-        text-transform: uppercase;
-        font-size: 20px;
-        transition: padding-left 0.3s ease;
+    }
 
-        p {
-          padding: 0;
-          margin: 0;
-          font-family: "tsing";
-          font-weight: bold;
+    .img-inner {
+      width: 100%;
+      height: 120%;
+      object-fit: cover;
+      opacity: 0; 
+      transform: translateY(-10%);
+      transition: opacity 0.6s ease-out; 
+      position: relative;
+      z-index: 2; 
+    }
+
+    &.is-loaded {
+      .skeleton-loader {
+        display: none; 
+      }
+      .img-inner {
+        opacity: 1; 
+      }
+    }
+
+    .hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(0px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      z-index: 10;
+
+      .overlay-border {
+        position: absolute; inset: 1rem; border: 1px solid rgba(255, 255, 255, 0.3);
+        transform: scale(0.95); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; pointer-events: none;
+      }
+      .overlay-content {
+        transform: translateY(20px); transition: transform 0.4s ease;
+        .action-tag { font-family: $font-mono; font-size: 0.8rem; color: #38e7cd; margin-bottom: 0.5rem; display: block; }
+        .hover-desc { font-size: 1.1rem; color: #fff; font-weight: 500; max-width: 80%; line-height: 1.4; margin: 0; }
+      }
+      .arrow-icon {
+        position: absolute; top: 2rem; right: 2rem; font-size: 2rem; color: #fff; opacity: 0;
+        transform: translate(-10px, 10px); transition: all 0.4s ease;
+      }
+    }
+  }
+
+  .item-info {
+    .info-top {
+      display: flex; justify-content: space-between; align-items: baseline;
+      border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; margin-bottom: 0.5rem;
+      h2 { font-size: clamp(1.2rem, 2vw, 2rem); font-weight: 500; color: #111; }
+      .year { font-family: monospace; font-size: 0.9rem; color: #888; }
+    }
+    .desc-preview { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+  }
+
+  .item-link {
+    text-decoration: none; cursor: pointer;
+    &:hover {
+      .img-inner { filter: brightness(0.8); }
+      .hover-overlay {
+        opacity: 1; backdrop-filter: blur(4px);
+        .overlay-border { opacity: 1; transform: scale(1); }
+        .overlay-content { transform: translateY(0); }
+        .arrow-icon { opacity: 1; transform: translate(0, 0); }
+      }
+      .item-info h2 { color: #000; }
+    }
+  }
+}
+
+.dark-mode {
+  .portfolio-container { background-color: #050505; }
+  .page-header .divider { background: #333; }
+
+  .design-item {
+    .img-reveal-mask { 
+      background-color: #1a1a1a; 
+
+      .skeleton-loader {
+        background-color: #1f1f1f;
+        &::after {
+          background: linear-gradient(
+            90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.05),
+            transparent
+          );
         }
       }
 
-      img {
-        width: 100%;
-        grid-row: 1 / 2;
-        grid-column: 1 / 2;
-        z-index: 1;
-        width: 100%;
-        border-radius: 7px;
-      }
+      .hover-overlay { background: rgba(0, 0, 0, 0.6); }
     }
 
-    &:hover {
-      filter: brightness(1.2);
-
-      .work-desc-box {
-        padding-left: 30px;
-      }
+    .item-info {
+      .info-top { border-bottom-color: rgba(255,255,255,0.1); h2 { color: #eee; } }
+      .desc-preview { color: #555; }
     }
   }
-}
-
-.dark-mode .work-pop {
-  background: rgb(0 0 0);
-}
-.dark-mode .work-desc-box {
-  color: #ffffff;
-}
-.dark-mode .work-pop .work-pop-des-box p {
-  color: white;
-}
-.dark-mode .work-pop-title {
-  color: white;
-}
-.dark-mode .work-pop .work-pop-des-box img {
-  opacity: 0.8;
 }
 </style>
