@@ -20,11 +20,37 @@ const sortedData = computed(() => {
   });
 });
 
-const mainContainer = ref(null);
+const mainContainer = ref<HTMLElement | null>(null);
+
+const removeSkeleton = (img: HTMLImageElement) => {
+  const parent = img.closest(".img-reveal-mask");
+  if (parent) {
+    parent.classList.add("is-loaded");
+  }
+};
+
+const handleImageLoad = (e: Event) => {
+  removeSkeleton(e.target as HTMLImageElement);
+};
+
+const handleImageError = (e: Event) => {
+
+  removeSkeleton(e.target as HTMLImageElement);
+};
 
 onMounted(() => {
-  const ctx = gsap.context(() => {
 
+  if (mainContainer.value) {
+    const images = mainContainer.value.querySelectorAll("img.img-inner");
+    images.forEach((img: any) => {
+      if (img.complete) {
+
+        removeSkeleton(img);
+      }
+    });
+  }
+
+  const ctx = gsap.context(() => {
     gsap.from(".page-header", {
       y: 80,
       opacity: 0,
@@ -51,25 +77,13 @@ onMounted(() => {
         y: 30,
         opacity: 0,
         duration: 1,
-        scrollTrigger: {
-          trigger: item,
-          start: "top 80%",
-        },
+        scrollTrigger: { trigger: item, start: "top 80%" },
       });
     });
-
   }, mainContainer.value);
 
   return () => ctx.revert();
 });
-
-const handleImageLoad = (e: Event) => {
-  const img = e.target as HTMLElement;
-  const parent = img.closest('.img-reveal-mask');
-  if (parent) {
-    parent.classList.add("is-loaded");
-  }
-};
 </script>
 
 <template>
@@ -87,7 +101,6 @@ const handleImageLoad = (e: Event) => {
           class="design-item"
         >
           <nuxt-link :to="des.url" target="_blank" class="item-link">
-
             <div class="img-reveal-mask">
               <div class="skeleton-loader"></div>
 
@@ -97,10 +110,11 @@ const handleImageLoad = (e: Event) => {
                 class="img-inner"
                 loading="lazy"
                 @load="handleImageLoad"
+                @error="handleImageError"
               />
 
               <div class="hover-overlay">
-                <div class="overlay-border"></div> 
+                <div class="overlay-border"></div>
                 <div class="overlay-content">
                   <span class="action-tag">[ OPEN_PROJECT ]</span>
                   <p class="hover-desc">
@@ -126,17 +140,18 @@ const handleImageLoad = (e: Event) => {
 </template>
 
 <style lang="scss" scoped>
-
 $gap-desktop: 6vw;
 $gap-mobile: 4rem;
-
-$img-ratio: 1.6; 
-
-$font-mono: 'JetBrains Mono', monospace;
+$img-ratio: 1.6;
+$font-mono: "JetBrains Mono", monospace;
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .portfolio-container {
@@ -157,14 +172,17 @@ $font-mono: 'JetBrains Mono', monospace;
     margin-bottom: 2rem;
   }
   .divider {
-    width: 100%; height: 1px; background: #000; transform-origin: left;
+    width: 100%;
+    height: 1px;
+    background: #000;
+    transform-origin: left;
   }
 }
 
 .large-grid {
   display: grid;
   column-gap: $gap-desktop;
-  row-gap: 8vw; 
+  row-gap: 8vw;
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     row-gap: $gap-mobile;
@@ -182,23 +200,30 @@ $font-mono: 'JetBrains Mono', monospace;
     border-radius: 4px;
     margin-bottom: 1.5rem;
     background-color: #f0f0f0;
-    transform: translateZ(0); 
+    transform: translateZ(0);
 
     .skeleton-loader {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 1; 
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
       background-color: #e0e0e0;
       overflow: hidden;
+      transition: opacity 0.4s ease; 
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: linear-gradient(
-          90deg, 
-          transparent, 
-          rgba(255, 255, 255, 0.5), 
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.5),
           transparent
         );
         animation: shimmer 1.5s infinite;
@@ -209,19 +234,20 @@ $font-mono: 'JetBrains Mono', monospace;
       width: 100%;
       height: 120%;
       object-fit: cover;
-      opacity: 0; 
+      opacity: 0;
       transform: translateY(-10%);
-      transition: opacity 0.6s ease-out; 
+      transition: opacity 0.6s ease-out;
       position: relative;
-      z-index: 2; 
+      z-index: 2;
     }
 
     &.is-loaded {
       .skeleton-loader {
-        display: none; 
+        opacity: 0; 
+        pointer-events: none;
       }
       .img-inner {
-        opacity: 1; 
+        opacity: 1;
       }
     }
 
@@ -239,72 +265,140 @@ $font-mono: 'JetBrains Mono', monospace;
       z-index: 10;
 
       .overlay-border {
-        position: absolute; inset: 1rem; border: 1px solid rgba(255, 255, 255, 0.3);
-        transform: scale(0.95); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; pointer-events: none;
+        position: absolute;
+        inset: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transform: scale(0.95);
+        opacity: 0;
+        transition:
+          transform 0.4s ease,
+          opacity 0.4s ease;
+        pointer-events: none;
       }
       .overlay-content {
-        transform: translateY(20px); transition: transform 0.4s ease;
-        .action-tag { font-family: $font-mono; font-size: 0.8rem; color: #38e7cd; margin-bottom: 0.5rem; display: block; }
-        .hover-desc { font-size: 1.1rem; color: #fff; font-weight: 500; max-width: 80%; line-height: 1.4; margin: 0; }
+        transform: translateY(20px);
+        transition: transform 0.4s ease;
+        .action-tag {
+          font-family: $font-mono;
+          font-size: 0.8rem;
+          color: #38e7cd;
+          margin-bottom: 0.5rem;
+          display: block;
+        }
+        .hover-desc {
+          font-size: 1.1rem;
+          color: #fff;
+          font-weight: 500;
+          max-width: 80%;
+          line-height: 1.4;
+          margin: 0;
+        }
       }
       .arrow-icon {
-        position: absolute; top: 2rem; right: 2rem; font-size: 2rem; color: #fff; opacity: 0;
-        transform: translate(-10px, 10px); transition: all 0.4s ease;
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        font-size: 2rem;
+        color: #fff;
+        opacity: 0;
+        transform: translate(-10px, 10px);
+        transition: all 0.4s ease;
       }
     }
   }
 
   .item-info {
     .info-top {
-      display: flex; justify-content: space-between; align-items: baseline;
-      border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 0.5rem; margin-bottom: 0.5rem;
-      h2 { font-size: clamp(1.2rem, 2vw, 2rem); font-weight: 500; color: #111; }
-      .year { font-family: monospace; font-size: 0.9rem; color: #888; }
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
+      h2 {
+        font-size: clamp(1.2rem, 2vw, 2rem);
+        font-weight: 500;
+        color: #111;
+      }
+      .year {
+        font-family: monospace;
+        font-size: 0.9rem;
+        color: #888;
+      }
     }
-    .desc-preview { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+    .desc-preview {
+      font-size: 0.9rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
   }
 
   .item-link {
-    text-decoration: none; cursor: pointer;
+    text-decoration: none;
+    cursor: pointer;
     &:hover {
-      .img-inner { filter: brightness(0.8); }
-      .hover-overlay {
-        opacity: 1; backdrop-filter: blur(4px);
-        .overlay-border { opacity: 1; transform: scale(1); }
-        .overlay-content { transform: translateY(0); }
-        .arrow-icon { opacity: 1; transform: translate(0, 0); }
+      .img-inner {
+        filter: brightness(0.8);
       }
-      .item-info h2 { color: #000; }
+      .hover-overlay {
+        opacity: 1;
+        backdrop-filter: blur(4px);
+        .overlay-border {
+          opacity: 1;
+          transform: scale(1);
+        }
+        .overlay-content {
+          transform: translateY(0);
+        }
+        .arrow-icon {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+      .item-info h2 {
+        color: #000;
+      }
     }
   }
 }
 
 .dark-mode {
-  .portfolio-container { background-color: #050505; }
-  .page-header .divider { background: #333; }
+  .portfolio-container {
+    background-color: #050505;
+  }
+  .page-header .divider {
+    background: #333;
+  }
 
   .design-item {
-    .img-reveal-mask { 
-      background-color: #1a1a1a; 
-
+    .img-reveal-mask {
+      background-color: #1a1a1a;
       .skeleton-loader {
         background-color: #1f1f1f;
         &::after {
           background: linear-gradient(
-            90deg, 
-            transparent, 
+            90deg,
+            transparent,
             rgba(255, 255, 255, 0.05),
             transparent
           );
         }
       }
-
-      .hover-overlay { background: rgba(0, 0, 0, 0.6); }
+      .hover-overlay {
+        background: rgba(0, 0, 0, 0.6);
+      }
     }
-
     .item-info {
-      .info-top { border-bottom-color: rgba(255,255,255,0.1); h2 { color: #eee; } }
-      .desc-preview { color: #555; }
+      .info-top {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+        h2 {
+          color: #eee;
+        }
+      }
+      .desc-preview {
+        color: #555;
+      }
     }
   }
 }
