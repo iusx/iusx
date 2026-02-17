@@ -1,0 +1,1 @@
+import{_ as r}from"./BGupOgmT.js";import{A as o,B as t,G as s}from"./DLwWnNAd.js";const n={};function c(e,a){return o(),t("p",null,[s(e.$slots,"default")])}const _=r(n,[["render",c]]);export{_ as default};

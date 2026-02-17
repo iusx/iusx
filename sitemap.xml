@@ -8,9 +8,90 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/to-kill-a-mockingbird/1.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/seven-languages-in-seven-weeks-bruce-a-tate/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/gimp/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/key-note/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/minecraft/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/system-config/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/unicode-explained/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/wise-saying/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/attacking-network-protocols/1.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/book/fate-of-moon-jae-in/4.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/des</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/hide.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/14.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/2.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/30.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/12.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/3.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/13.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/10.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/6.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/5.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/8.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/4.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/7.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/9.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/11.jpg</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/1.jpg</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/link</loc>
@@ -20,6 +101,15 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/github.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cnvd.png</image:loc>
+        </image:image>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cnnvd.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/attacking-network-protocols</loc>
@@ -56,24 +146,45 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/edrawmax</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/github-misconfiguration</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/iptv</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/tcmedical</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/turing</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/yadugroup</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/ycrenfu</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/test/qc</loc>
@@ -86,24 +197,42 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/life/pay-hongkong-style-room</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/open-contribute/ethereum-website-pr</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/programming/cds</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/programming/command-hide</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/programming/huluobei</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/programming/new-blog-theme-plan</loc>
+        <image:image>
+            <image:loc>https://m.ritsu.jiangxue.org/img/page/cc.png</image:loc>
+        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/security/cve-learn</loc>
     </url>
 </urlset>
-<!-- XML Sitemap generated by @nuxtjs/sitemap v5.1.5 at 2026-02-14T07:08:14.686Z -->
+<!-- XML Sitemap generated by @nuxtjs/sitemap v5.1.5 at 2026-02-17T08:49:42.155Z -->
