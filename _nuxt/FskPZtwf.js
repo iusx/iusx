@@ -1,0 +1,1 @@
+import{j as e,X as t,A as n,B as o}from"./D1zKxAeN.js";const c=e({__name:"textAnNext",props:{url:{type:String,required:!0}},setup(r){return t(()=>{setTimeout(()=>{window.location.href="/"},1e3)}),(a,s)=>(n(),o("main"))}});export{c as default};
