@@ -1,1 +1,0 @@
-import{_ as o}from"./TAy7Tfeb.js";import{A as t,B as s,G as a,S as c,T as n,M as _}from"./D1zKxAeN.js";const r={},p=e=>(c("data-v-375044bb"),e=e(),n(),e),d=p(()=>_("span",null,"|",-1));function l(e,u){return t(),s("p",null,[a(e.$slots,"default",{},void 0,!0),d])}const m=o(r,[["render",l],["__scopeId","data-v-375044bb"]]);export{m as _};
