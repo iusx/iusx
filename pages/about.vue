@@ -1,155 +1,149 @@
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const activeSection = ref(1);
-const mainContainer = ref<HTMLElement | null>(null);
-const horizontalTrack = ref<HTMLElement | null>(null);
-
-const profileData = {
-  intro: "A person with no education, no professional certificates, and not even any background. Focused on implementing functionality and achieving desired effects rather than pursuing perfection.",
-  secGoal: "I hope my first CVE will be related to Windows, Linux/macOS, or a programming language such as Rust or Python.",
-  career: "Full-Stack Software Engineer - 'Fringe Support And Analysis'"
-};
-
-const securityArchive = [
-  { id: "#293802", year: "2023", target: "GITHUB", cwe: "CWE-16", desc: "Vulnerability Report", active: true },
-  { id: "#293802", year: "2021", target: "EDRAW SOFTWARE", cwe: "CWE-840", desc: "Business Logic", active: false },
-  { id: "#293802", year: "2020", target: "TOPCHOICE MEDICAL", cwe: "CWE-79", desc: "Reflected XSS", active: false },
-  { id: "#293802", year: "2020", target: "YADU MEDICAL", cwe: "CWE-79", desc: "Reflected XSS", active: false },
-  { id: "#293802", year: "2020", target: "CHINA TELECOM IPTV", cwe: "CWE-840", desc: "Business Logic", active: false },
-  { id: "#293802", year: "2019", target: "HUMANWELL", cwe: "CWE-89", desc: "SQL Injection", active: false },
-];
-
-onMounted(() => {
-  let mm = gsap.matchMedia();
-
-  mm.add("(min-width: 1024px)", () => {
-    if (!horizontalTrack.value || !mainContainer.value) return;
-
-    const totalWidth = horizontalTrack.value.scrollWidth;
-    const amountToScroll = totalWidth - (window.innerWidth / 2);
-
-    gsap.to(horizontalTrack.value, {
-      x: -amountToScroll,
-      ease: "none",
-      scrollTrigger: {
-        trigger: mainContainer.value,
-        start: "top top",
-        end: "+=3000",
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-      }
-    });
-
-    gsap.utils.toArray(".text-block").forEach((sec: any) => {
-      gsap.from(sec, {
-        opacity: 0,
-        y: 50,
-        scrollTrigger: {
-          trigger: sec,
-          start: "top 80%",
-          end: "top 20%",
-          scrub: true,
-        }
-      });
-    });
-  });
-
-  mm.add("(max-width: 1023px)", () => {
-
-    gsap.from(".text-block", {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power2.out"
-    });
-  });
-
-  onUnmounted(() => {
-    mm.revert(); 
-  });
-});
-</script>
-
 <template>
-  <div ref="mainContainer" class="industrial-archive">
-    <div class="scanline"></div>
+  <div class="page-container">
+    <div class="main-wrapper">
 
-    <div class="narrative-aside">
-      <header class="aside-header">
-        <div class="sys-info">:: IDENTITY_ARCHIVE</div>
-        <div class="mode-toggle">DRIVERS [VEHICLE]</div>
-      </header>
-
-      <div class="text-flow">
-        <div class="text-block">
-          <h1 class="huge-title">IDENTITY<br><span class="dot-wrapper">SOURCE<span class="dot">.</span></span></h1>
-          <p class="mono-desc">{{ profileData.intro }}</p>
+      <div class="left-pane">
+        <div class="text-content">
+          <h1 class="main-title">
+            <span class="text-light">Visual Instincts.</span><br />
+            <span class="text-dark">Pragmatic Execution.</span>
+          </h1>
+          <p class="description">
+            Zero professional background. Everyone knows me for design, not
+            code. I just write enough average code to implement my ideas and
+            force the system to render the exact effects I want.
+          </p>
         </div>
 
-        <div class="text-block">
-          <h2 class="sub-title">&#47;&#47; NETWORK_SECURITY</h2>
-          <p class="mono-desc">CVE COUNT: 0. {{ profileData.secGoal }}</p>
+        <div class="premium-index-list">
+          <a
+            v-for="link in socialLinks"
+            :key="link.name"
+            :href="link.url"
+            target="_blank"
+            class="index-row"
+            :class="{ active: activeTag === link.radarId }"
+            @mouseenter="handleTagHover(link.radarId)"
+          >
+            <div class="active-indicator"></div>
+            <div class="row-left">
+              <span class="num">{{ link.num }}</span>
+              <span class="name">{{ link.name }}</span>
+            </div>
+            <div class="row-right">
+              <span class="meta">{{ link.meta }}</span>
+              <span class="arrow">↗</span>
+            </div>
+          </a>
         </div>
 
-        <div class="text-block">
-          <h2 class="sub-title">&#47;&#47; DESIGN_IDENTITY</h2>
-          <p class="mono-desc">A designer who builds. Known by friends through design, not code. Coding is just average, but I implement effects.</p>
-        </div>
-
-        <div class="text-block">
-          <div class="career-tag">2015 - NOW</div>
-          <h3 class="corp-name">JIANGXUE ANALYSIS</h3>
-          <p class="role-desc">{{ profileData.career }}</p>
+        <div class="action-footer">
+          <a href="mailto:rhyme.qing@gmail.com" class="sleek-btn">
+            <div class="btn-content">
+              <span class="status-glow"></span>
+              <span class="btn-text">LINKE ME</span>
+            </div>
+            <div class="btn-line"></div>
+          </a>
         </div>
       </div>
-    </div>
 
-    <div class="monitor-viewport">
-      <div class="live-axis desktop-only">
-        <div class="live-label">LIVE</div>
-        <div class="line"></div>
-      </div>
+      <div class="right-pane">
+        <div class="dark-card">
+          <header class="card-header">
+            <h2>Capability Matrix</h2>
+            <p>
+              A visual map of how I spend my time: designing the interface,
+              aggressively Googling how to build it, and researching
+              Windows/macOS security while waiting for my first CVE.
+            </p>
+          </header>
 
-      <div class="mobile-swipe-hint mobile-only">
-        <span>SWIPE TO VIEW LOGS</span>
-        <span class="arrow">→</span>
-      </div>
+          <div class="chart-container">
+            <svg
+              class="radar-chart"
+              viewBox="0 0 300 200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient
+                  id="cyanGlow"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#38e7cd" stop-opacity="0.8" />
+                  <stop offset="100%" stop-color="#0284c7" stop-opacity="0.2" />
+                </linearGradient>
+                <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="2" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <radialGradient id="bgHalo" cx="150" cy="100" r="80" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#38e7cd" stop-opacity="0.08" />
+                  <stop offset="100%" stop-color="#38e7cd" stop-opacity="0" />
+                </radialGradient>
+              </defs>
 
-      <div ref="horizontalTrack" class="data-track">
-        <div 
-          v-for="(item, index) in securityArchive" 
-          :key="index" 
-          class="archive-card"
-          :class="{ active: item.active }"
-        >
-          <div class="card-meta">
-            <span class="id-num">{{ item.id }}</span>
-            <span class="arrow">{{ index % 2 === 0 ? '▶' : '◀' }}</span>
-          </div>
-          <div class="card-content">
-            <div class="year">{{ item.year }}</div>
-            <h3 class="target">{{ item.target }}</h3>
-            <div class="cwe">{{ item.cwe }}</div>
-            <p class="desc">{{ item.desc }}</p>
-          </div>
-          <div v-if="item.active" class="active-block"></div>
-        </div>
+              <circle cx="150" cy="100" r="70" fill="url(#bgHalo)" />
 
-        <div class="bottom-timeline desktop-only">
-          <div v-for="n in 5" :key="n" class="timeline-row">
-            <span class="row-dot"></span>
-            <div class="row-track">
-              <div class="segment" :style="{ left: n * 15 + '%' }">
-                <div class="handle"></div>
-                <div class="label">--- 30 ◀</div>
-              </div>
+              <g class="wireframe" :stroke="wireframeColor" stroke-width="1" fill="none">
+                <line x1="150" y1="30" x2="50" y2="150" />
+                <line x1="150" y1="30" x2="250" y2="150" />
+                <line x1="50" y1="150" x2="250" y2="150" />
+                <line x1="150" y1="30" x2="150" y2="130" stroke-dasharray="3 3" opacity="0.6" />
+                <line x1="50" y1="150" x2="150" y2="130" stroke-dasharray="3 3" opacity="0.6" />
+                <line x1="250" y1="150" x2="150" y2="130" stroke-dasharray="3 3" opacity="0.6" />
+                <line x1="100" y1="90" x2="200" y2="90" :stroke="wireframeDim" stroke-dasharray="2 4" opacity="0.4" />
+                <line x1="120" y1="120" x2="180" y2="120" :stroke="wireframeDim" stroke-dasharray="2 4" opacity="0.4" />
+              </g>
+
+              <polygon
+                points="150,40 110,138 225,145"
+                fill="url(#cyanGlow)"
+                stroke="#38e7cd"
+                stroke-width="1.2"
+                opacity="0.5"
+              />
+
+              <circle
+                cx="150"
+                cy="40"
+                :r="activeTag === 'Design' ? 6 : 4"
+                :fill="activeTag === 'Design' ? '#ffffff' : '#38e7cd'"
+                class="data-point"
+                filter="url(#softGlow)"
+              />
+              <circle
+                cx="110"
+                cy="138"
+                :r="activeTag === 'Security' ? 6 : 4"
+                :fill="activeTag === 'Security' ? '#ffffff' : '#38e7cd'"
+                class="data-point"
+                filter="url(#softGlow)"
+              />
+              <circle
+                cx="225"
+                cy="145"
+                :r="activeTag === 'Development' ? 6 : 4"
+                :fill="activeTag === 'Development' ? '#ffffff' : '#38e7cd'"
+                class="data-point"
+                filter="url(#softGlow)"
+              />
+
+              <circle cx="150" cy="40" r="10" stroke="#38e7cd" stroke-width="0.4" fill="none" opacity="0.2" />
+              <circle cx="110" cy="138" r="10" stroke="#38e7cd" stroke-width="0.4" fill="none" opacity="0.2" />
+              <circle cx="225" cy="145" r="10" stroke="#38e7cd" stroke-width="0.4" fill="none" opacity="0.2" />
+            </svg>
+
+            <div class="chart-labels">
+              <span class="label top" :class="{ active: activeTag === 'Design' }">Design</span>
+              <span class="label left" :class="{ active: activeTag === 'Security' }">Security</span>
+              <span class="label right" :class="{ active: activeTag === 'Development' }">Development</span>
             </div>
           </div>
         </div>
@@ -158,250 +152,548 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<script setup lang="ts">
+import { ref, computed } from "vue";
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+const socialLinks = [
+  {
+    num: "01",
+    name: "Behance",
+    meta: "DESIGN_ARCHIVE",
+    url: "https://www.behance.net/1ui",
+    radarId: "Design",
+  },
+  {
+    num: "02",
+    name: "GitHub",
+    meta: "SOURCE_CODE",
+    url: "https://github.com/iusx",
+    radarId: "Development",
+  },
+  {
+    num: "03",
+    name: "Steam",
+    meta: "GAEM_LOG",
+    url: "https://steamcommunity.com/id/wvw_wvw/",
+    radarId: "Security",
+  },
+];
 
-$bg: #ffffff;
-$text: #1a1a1a;
-$accent: #ff5722; 
-$mono: 'JetBrains Mono', 'Menlo', monospace;
+const activeTag = ref<string>(socialLinks[0].radarId);
+const handleTagHover = (id: string) => {
+  activeTag.value = id;
+};
 
-.industrial-archive {
-  display: flex;
-  background-color: $bg;
-  color: $text;
-  font-family: $mono;
-  width: 100vw;
-  max-width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
+const wireframeColor = computed(() => {
+  return getComputedStyle(document.documentElement).getPropertyValue('--wireframe-main').trim() || '#333';
+});
+const wireframeDim = computed(() => {
+  return getComputedStyle(document.documentElement).getPropertyValue('--wireframe-dim').trim() || '#222';
+});
+</script>
 
-.desktop-only { display: block; }
-.mobile-only { display: none; }
+<style scoped lang="scss">
 
-.narrative-aside {
-  width: 45%;
-  height: 100%;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid #ddd;
-  z-index: 10;
-  background: $bg;
-  position: relative;
+.page-container {
+  --page-bg: #f4f5f7;
+  --wrapper-bg: #ffffff;
+  --left-pane-text: #0f172a;
+  --left-pane-text-light: #94a3b8;
+  --left-pane-text-secondary: #64748b;
+  --border-subtle: #f1f5f9;
+  --border-strong: #e2e8f0;
+  --row-hover-bg: #f8fafc;
+  --num-color: #cbd5e1;
+  --meta-color: #94a3b8;
+  --arrow-color: #cbd5e1;
+  --arrow-hover: #0f172a;
 
-  .aside-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    font-weight: 800;
-    margin-bottom: 80px;
-    .mode-toggle { border: 1px solid #000; padding: 2px 8px; }
-  }
+  --dark-card-bg: #111111;
+  --dark-card-text: #ffffff;
+  --dark-card-text-secondary: #a1a1aa;
+  --card-border: #333;
+  --label-bg: rgba(17, 17, 17, 0.8);
+  --label-text: #a1a1aa;
+  --label-active-border: #38e7cd;
 
-  .text-flow {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 20px;
-    &::-webkit-scrollbar { display: none; }
-  }
+  --wireframe-main: #333;
+  --wireframe-dim: #222;
+  --accent: #38e7cd;
 
-  .text-block {
-    margin-bottom: 120px;
-    .huge-title {
-      font-size: clamp(3rem, 6vw, 8rem);
-      line-height: 0.85;
-      font-weight: 900;
-      letter-spacing: -0.05em;
-      margin-bottom: 30px;
-      word-break: break-word; 
-      .dot { color: $accent; }
-      .dot-wrapper { display: inline-block; }
-    }
-    .sub-title { font-size: 14px; font-weight: 800; margin-bottom: 20px; }
-    .mono-desc { font-size: 14px; line-height: 1.6; color: #555; max-width: 400px; }
-    .career-tag { font-size: 11px; background: #000; color: #fff; width: fit-content; padding: 2px 6px; margin-bottom: 10px; }
-    .corp-name { font-size: 2rem; font-weight: 900; margin: 0; }
-  }
-}
-
-.monitor-viewport {
-  width: 55%;
-  height: 100%;
-  position: relative;
-  background: #f9f9f9;
-}
-
-.live-axis {
-  position: absolute;
-  left: 50%; top: 0; bottom: 0;
-  transform: translateX(-50%);
-  z-index: 100;
-  pointer-events: none;
-  .live-label { font-size: 12px; font-weight: 900; margin-top: 20px; margin-left: 10px; }
-  .line { width: 2px; height: 100%; background: #000; }
-}
-
-.data-track {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  height: 100%;
-  padding-left: 10vw; 
-  position: relative;
+  justify-content: center;
+  background-color: var(--page-bg);
+  padding: 40px;
+  box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
 }
 
-.archive-card {
-  min-width: 380px;
-  height: 320px;
-  background: #ebebeb;
-  margin-right: 20px;
-  padding: 30px;
+@media (prefers-color-scheme: dark) {
+  .page-container {
+    --page-bg: #0a0a0a;
+    --wrapper-bg: #1a1a1a;
+    --left-pane-text: #ededed;
+    --left-pane-text-light: #6b7280;
+    --left-pane-text-secondary: #9ca3af;
+    --border-subtle: #2a2a2a;
+    --border-strong: #3a3a3a;
+    --row-hover-bg: #222222;
+    --num-color: #4b5563;
+    --meta-color: #6b7280;
+    --arrow-color: #4b5563;
+    --arrow-hover: #ffffff;
+
+    --dark-card-bg: #0c0c0c;
+    --dark-card-text: #f0f0f0;
+    --dark-card-text-secondary: #a0a0a0;
+    --card-border: #2a2a2a;
+    --label-bg: rgba(0, 0, 0, 0.7);
+    --label-text: #b0b0b0;
+
+    --wireframe-main: #555;
+    --wireframe-dim: #333;
+  }
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1080px;
+  background: var(--wrapper-bg);
+  border-radius: 32px;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+  padding: 12px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 8px;
+  }
+}
+
+.left-pane {
+  flex: 1;
+  padding: 60px 50px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  flex-shrink: 0;
-  border: 1px solid transparent;
 
-  &.active { background: #f0f0f0; border-color: #ddd; }
-
-  .card-meta {
-    display: flex; justify-content: space-between;
-    .id-num { font-size: 40px; font-weight: 900; letter-spacing: -2px; }
-    .arrow { font-size: 20px; }
+  @media (max-width: 900px) {
+    padding: 40px 24px;
   }
 
-  .card-content {
-    .year { font-size: 12px; font-weight: 800; }
-    .target { font-size: 24px; font-weight: 900; margin: 5px 0; text-transform: uppercase; line-height: 1; }
-    .cwe { font-size: 14px; color: $accent; font-weight: bold; }
-    .desc { font-size: 11px; color: #888; margin-top: 10px; }
+  @media (max-width: 600px) {
+    padding: 32px 20px;
   }
 
-  .active-block {
-    position: absolute; inset: 0 0 0 auto;
-    width: 110px; background: $accent;
-  }
-}
+  .text-content {
+    margin-bottom: 60px;
 
-.bottom-timeline {
-  position: absolute;
-  bottom: 50px; left: 0; right: 0;
-  display: flex; flex-direction: column; gap: 15px;
-  opacity: 0.3;
+    @media (max-width: 600px) {
+      margin-bottom: 40px;
+    }
 
-  .timeline-row {
-    display: flex; align-items: center; gap: 20px;
-    padding-left: 40px;
-    .row-dot { width: 6px; height: 6px; background: $accent; border-radius: 50%; }
-    .row-track { flex: 1; height: 1px; background: #ddd; position: relative; }
-    .segment {
-      position: absolute; top: -10px; display: flex; align-items: center; gap: 10px;
-      .handle { width: 30px; height: 2px; background: #000; position: relative;
-        &::after { content: ''; position: absolute; right: -4px; top: -3px; width: 8px; height: 8px; background: #ccc; border-radius: 50%; }
+    .main-title {
+      font-size: 2.4rem;
+      line-height: 1.15;
+      margin: 0 0 20px 0;
+      letter-spacing: -0.04em;
+
+      @media (max-width: 600px) {
+        font-size: 2rem;
       }
-      .label { font-size: 9px; white-space: nowrap; }
+
+      .text-light {
+        color: var(--left-pane-text-light);
+        font-weight: 300;
+      }
+      .text-dark {
+        color: var(--left-pane-text);
+        font-weight: 700;
+      }
+    }
+
+    .description {
+      color: var(--left-pane-text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 90%;
+      margin: 0;
+
+      @media (max-width: 600px) {
+        font-size: 0.95rem;
+        max-width: 100%;
+      }
     }
   }
-}
 
-.scanline {
-  position: fixed; inset: 0; z-index: 999; pointer-events: none;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.03) 50%);
-  background-size: 100% 4px;
-}
-
-@media (max-width: 1023px) {
-  .desktop-only { display: none !important; }
-  .mobile-only { display: flex; }
-
-  .industrial-archive {
+  .premium-index-list {
+    display: flex;
     flex-direction: column;
-    height: auto; 
-    overflow-x: hidden; 
-    width: 100vw;
+    margin-bottom: auto;
+    border-top: 1px solid var(--border-subtle);
   }
 
-  .narrative-aside {
-    width: 100%;
-    height: auto;
-    padding: 0; 
-    border-right: none;
-
-    .aside-header {
-      position: sticky;
-      top: 0;
-      background: rgba($bg, 0.95);
-      backdrop-filter: blur(8px);
-      padding: 20px; 
-      margin-bottom: 20px;
-      z-index: 50;
-      border-bottom: 1px solid #eee;
-    }
-
-    .text-flow {
-      padding: 0 20px; 
-      overflow: visible;
-    }
-
-    .text-block {
-      margin-bottom: 60px;
-      .huge-title { font-size: 3.2rem; margin-bottom: 20px; }
-      .mono-desc { font-size: 13px; max-width: 100%; }
-      .corp-name { font-size: 1.5rem; }
-    }
-  }
-
-  .monitor-viewport {
-    width: 100%;
-    max-width: 100vw; 
-    height: auto;
-    background: #f4f4f4;
-    padding: 40px 0 60px 0;
-    border-top: 1px solid #ddd;
-    overflow: hidden; 
-  }
-
-  .mobile-swipe-hint {
-    padding: 0 20px;
-    margin-bottom: 15px;
-    font-size: 10px;
-    color: $accent;
-    font-weight: bold;
+  .index-row {
+    position: relative;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    .arrow { animation: swipe-bounce 1.5s infinite; }
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    text-decoration: none;
+    color: var(--left-pane-text);
+    transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+
+    @media (max-width: 600px) {
+      padding: 18px 0;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--row-hover-bg) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+
+    .active-indicator {
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 2px;
+      height: 60%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(56, 231, 205, 0.6);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 2px;
+    }
+
+    .row-left,
+    .row-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .row-left {
+      gap: 24px;
+
+      @media (max-width: 600px) {
+        gap: 16px;
+      }
+
+      .num {
+        font-family: "JetBrains Mono", "Fira Code", monospace;
+        font-size: 0.8rem;
+        color: var(--num-color);
+        font-weight: 500;
+        transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+
+        @media (max-width: 600px) {
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .row-right {
+      gap: 16px;
+
+      .meta {
+        font-family: "JetBrains Mono", "Fira Code", monospace;
+        font-size: 0.75rem;
+        color: var(--meta-color);
+        letter-spacing: 0.05em;
+        opacity: 0;
+        transform: translateX(10px);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .arrow {
+        color: var(--arrow-color);
+        font-size: 1.2rem;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    &:hover,
+    &.active {
+      &::after {
+        opacity: 1;
+      }
+
+      .active-indicator {
+        left: 0;
+        transform: translateY(-50%) scaleY(1);
+      }
+
+      .row-left {
+        transform: translateX(16px);
+
+        .num {
+          color: var(--accent);
+        }
+      }
+
+      .row-right {
+        .meta {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .arrow {
+          color: var(--arrow-hover);
+          transform: translate(4px, -4px);
+        }
+      }
+    }
   }
 
-  @keyframes swipe-bounce {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(5px); }
-  }
+  .action-footer {
+    margin-top: 60px;
 
-  .data-track {
+    @media (max-width: 600px) {
+      margin-top: 40px;
+    }
+
+    .sleek-btn {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: var(--left-pane-text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+
+      .btn-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .status-glow {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+        animation: pulse 2s infinite ease-in-out;
+      }
+
+      .btn-line {
+        height: 2px;
+        width: 100%;
+        background: var(--border-strong);
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background: var(--accent);
+          transform: translateX(-101%);
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+      }
+
+      &:hover {
+        .btn-content {
+          transform: translateY(-2px);
+          color: var(--accent);
+        }
+        .btn-line::after {
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+
+.right-pane {
+  flex: 1.15;
+  display: flex;
+
+  .dark-card {
+    background: var(--dark-card-bg);
+    border-radius: 24px;
     width: 100%;
-    padding: 0 20px 20px 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory; 
-    -webkit-overflow-scrolling: touch;
-    gap: 15px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1), 0 20px 40px rgba(0, 0, 0, 0.2);
+    color: var(--dark-card-text);
+    position: relative;
+    overflow: hidden;
+    background-image: radial-gradient(circle at top right, #222 0%, #111 60%);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+    @media (max-width: 900px) {
+      padding: 32px;
+      border-radius: 24px;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (max-width: 600px) {
+      padding: 24px;
+    }
   }
 
-  .archive-card {
-    min-width: 85vw;
-    max-width: 85vw; 
-    height: 280px; 
-    margin-right: 0;
-    scroll-snap-align: center; 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  .card-header {
+    margin-bottom: 50px;
+    z-index: 2;
 
-    .card-meta .id-num { font-size: 32px; }
-    .card-content .target { font-size: 20px; }
-    .active-block { width: 30px; }
+    @media (max-width: 900px) {
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      letter-spacing: -0.02em;
+
+      @media (max-width: 600px) {
+        font-size: 1.4rem;
+      }
+    }
+
+    p {
+      color: var(--dark-card-text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin: 0;
+
+      @media (max-width: 600px) {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+.chart-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -20px;
+
+  .radar-chart {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    overflow: visible;
+
+    .wireframe line {
+      stroke-linecap: round;
+      transition: stroke 0.3s ease;
+    }
+
+    .data-point {
+      transition: r 0.3s cubic-bezier(0.4, 0, 0.2, 1), fill 0.3s ease;
+    }
+  }
+
+  .chart-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    .label {
+      position: absolute;
+      font-size: 0.8rem;
+      color: var(--label-text);
+      background: var(--label-bg);
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(4px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+
+      @media (max-width: 600px) {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+      }
+
+      &.active {
+        color: #fff;
+        border-color: var(--label-active-border);
+        box-shadow: 0 0 12px rgba(56, 231, 205, 0.4);
+        z-index: 10;
+      }
+    }
+
+    .top {
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      &.active {
+        transform: translateX(-50%) scale(1.1);
+      }
+    }
+    .left {
+      bottom: 15%;
+      left: -5%;
+      @media (max-width: 600px) {
+        left: 0%;
+      }
+      &.active {
+        transform: scale(1.1);
+      }
+    }
+    .right {
+      bottom: 15%;
+      right: -5%;
+      @media (max-width: 600px) {
+        right: 0%;
+      }
+      &.active {
+        transform: scale(1.1);
+      }
+    }
   }
 }
 </style>
