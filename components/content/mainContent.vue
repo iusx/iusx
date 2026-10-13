@@ -1,77 +1,62 @@
 <script setup>
 import { defineProps } from "vue";
-const colorMode = useColorMode();
 
 defineProps(["title", "info", "time", "client", "img", "types"]);
 </script>
 <template>
-  <main class="layout page-content">
-    <div class="content">
-      <page-image :img="img" :info="info" :type="types" />
-      <page-title class="title" :title="title" :time="time" :client="client" />
-    </div>
+  <article class="layout page-content">
+    <header class="content">
+      <page-title :title="title" :time="time" :client="client" />
+      <page-image v-if="img" :img="img" :info="info" :type="types" />
+    </header>
     <div class="text-layout">
-      <div class="text">
+      <div class="text markdown-content">
         <slot></slot>
       </div>
     </div>
-  </main>
+  </article>
 </template>
 
 <style lang="scss" scoped>
-.dark-mode .text {
-  color: #5c5c5c !important;
-}
-
 .text-layout {
   width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  padding-bottom: 3rem;
+  min-width: 0;
+  padding-top: 1.5rem;
 
   .text {
-    width: 65%;
-    text-transform: capitalize;
-    color: #888888;
-    text-align: justify;
-
-    @media (max-width: 1440px) {
-      width: 100%;
-      font-size: 13px;
-    }
+    width: 100%;
+    padding: 0;
+    color: var(--article-text, #4a4a4a);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.85;
+    text-transform: none;
+    text-align: left;
+    overflow-wrap: anywhere;
+    :deep(> :first-child) { margin-top: 0; }
   }
 }
 
 .layout {
-  padding-left: 10%;
-  padding-right: 10%;
-  padding-top: 3%;
-
-  @media (max-width: 425px) {
-    padding-left: 3%;
-    padding-right: 3%;
-  }
+  width: min(960px, 90%);
+  margin: 2.5rem auto 5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  box-sizing: border-box;
+  border: 1px solid var(--article-border, #d4d4d4);
+  background: var(--article-bg, #fff);
+  font-family: var(--article-font, monospace);
 }
 
-content {
-  margin-bottom: 6rem;
-  transition: filter 0.3s ease;
-  filter: grayscale(0);
-
-  &:hover {
-    filter: grayscale(1);
-  }
-
-  a {
-    text-decoration: none;
-  }
+.content {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--article-border, #d4d4d4);
 }
 
-.title {
-  margin-top: 2.4rem;
+.dark-mode .layout { background: var(--article-bg, #000); }
+.dark-mode .text-layout .text { color: var(--article-text, #b3b3b3); }
 
-  @media (max-width: 425px) {
-    margin-top: 1.2rem;
-  }
+@media (max-width: 640px) {
+  .layout { width: 92%; margin-top: 1.25rem; padding: 1rem; }
+  .text-layout .text { font-size: 0.9375rem; }
 }
 </style>

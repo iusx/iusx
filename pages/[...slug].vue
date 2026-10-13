@@ -1,25 +1,19 @@
 <template>
-  <ContentDoc :path="path">
-    <template #not-found>
-      <error />
-    </template>
-  </ContentDoc>
+  <div :class="{ 'article-page': route.path !== '/' }">
+    <ContentDoc :key="route.path" :path="route.path">
+      <template #not-found>
+        <error />
+      </template>
+    </ContentDoc>
+  </div>
 </template>
 
 <script setup lang="ts">
-const slug = useRoute().params.slug;
+const route = useRoute();
 
 import error from '../error.vue';
 </script>
 
 <style lang="scss">
-p a {
-  color: rgb(152, 152, 152);
-  text-decoration: none;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: #38E7CD;
-  }
-}
+@import "../public/scss/article.scss";
 </style>

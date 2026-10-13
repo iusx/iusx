@@ -1,63 +1,95 @@
 <script setup>
-const colorMode = useColorMode();
-
-import { defineProps } from "vue";
-
-defineProps(["type"]);
+defineProps({
+  type: {
+    type: String,
+    default: "",
+  },
+});
 </script>
 
 <template>
-  <main class="text-tip big" v-if="type == 'big'">
-    <slot />
-  </main>
-  <main class="text-tip" v-else>
-    <slot />
-  </main>
+  <aside class="text-tip" :class="{ 'is-prominent': type === 'big' }">
+    <span class="text-tip-marker" aria-hidden="true">&gt;</span>
+    <div class="text-tip-content"><slot /></div>
+  </aside>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .text-tip {
-  border-left: 1px solid #888888;
-  background: rgba(246, 246, 246, 0.5803921569);
-  padding: 7px;
+  display: grid;
+  grid-template-columns: 1ch minmax(0, 1fr);
+  align-items: start;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 1px solid var(--article-border, #d4d4d4);
+  border-radius: 0;
+  background: var(--article-surface, transparent);
+  color: var(--article-text, #4a4a4a);
+  font-family: var(--article-font, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace);
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 1.8;
+  text-align: left;
+  text-transform: none;
 
-  p,
-  li {
-    font-size: 13px;
-    color: #888888;
-    width: fit-content;
-    margin-bottom: 0 !important;
+  &.is-prominent {
+    padding: 1rem;
+    border: 1px solid var(--article-border, #d4d4d4);
+    font-size: 0.9375rem;
+  }
+}
+
+.text-tip-marker {
+  color: var(--article-accent, #007f73);
+}
+
+.text-tip-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+
+  :deep(p),
+  :deep(li) {
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
   }
 
-  p:first-child {
-    color: #888888;
-    margin-top: 0;
+  :deep(p) {
+    margin: 0;
   }
 
-  ol li {
-    font-size: 13px;
-    color: #888888;
+  :deep(> * + *) {
+    margin-top: 0.75rem;
   }
 
-  ul:last-child {
+  :deep(ul),
+  :deep(ol) {
     margin-bottom: 0;
+    padding-left: 1.5rem;
   }
 }
 
-.dark-mode .text-tip {
-  background: rgba(246, 246, 246, 0.0705882353);
+.dark-mode {
+  .text-tip {
+    border-color: var(--article-border, #363636);
+    color: var(--article-text, #b3b3b3);
+  }
+
+  .text-tip-marker {
+    color: var(--article-accent, #38e7cd);
+  }
 }
 
-.big {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  padding: 13px;
-  font-style: oblique;
+@media (max-width: 640px) {
+  .text-tip {
+    gap: 0.625rem;
+    padding: 0.75rem;
 
-  p {
-    font-size: 15px;
+    &.is-prominent {
+      padding: 0.875rem;
+    }
   }
 }
 </style>

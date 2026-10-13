@@ -14,9 +14,7 @@ plan: "100,100"
 
 
 
-:text-title{t="第一章" type="2"}
-
-# 第一章 3
+:text-title{t="第一章" type="2" id="第一章-3"}
 ::wise-info
 ---
 topic: 杀死一只知更鸟

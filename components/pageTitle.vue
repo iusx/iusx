@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
-const colorMode = useColorMode();
 
 const monthNames = [
   "January",
@@ -31,6 +30,7 @@ const props = defineProps({
 const formattedTime = computed(() => {
   if (props.time) {
     const parts = props.time.split(".").map(Number);
+    if (parts.length !== 3 || parts.some(part => !Number.isFinite(part))) return props.time;
     const date = new Date(parts[0], parts[1] - 1, parts[2]);
 
     const monthName = monthNames[date.getMonth()];
@@ -53,78 +53,44 @@ const formattedTime = computed(() => {
 </script>
 
 <template>
-  <main>
-    <div class="title">
-      <p>{{ title }}</p>
-      <span class="time">{{ formattedTime }}</span>
+  <div class="article-title">
+    <h1><span class="title-prompt" aria-hidden="true">&gt;</span><span>{{ title }}</span></h1>
+    <div v-if="formattedTime || client" class="article-meta">
+      <span v-if="formattedTime" class="time">{{ formattedTime }}</span>
+      <span v-if="client" class="client"><span class="meta-label">client /</span> {{ client }}</span>
     </div>
-    <div class="client">
-      <span>clientele</span>
-      <p>{{ client }}</p>
-    </div>
-  </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.dark-mode p,
-span {
-  color: rgb(212, 212, 212) !important;
+.article-title {
+  margin-bottom: 1.5rem;
+  font-family: var(--article-font, monospace);
 }
-.dark-mode .client span {
-  opacity: 0.7;
-}
-main {
+h1 {
   display: flex;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0;
+  color: var(--article-strong, #242424);
+  font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+  line-height: 1.6;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  > span:last-child { min-width: 0; }
 }
-.title {
-  width: 100%;
-  p {
-    color: #1c0000;
-    font-size: 30px;
-    margin: 0;
-    line-height: 1;
-    @media (max-width: 425px) {
-      font-size: 1.3rem;
-    }
-  }
-  span {
-    padding: 0;
-    color: #1c0000;
-    font-size: 20px;
-    @media (max-width: 425px) {
-      font-size: 1rem;
-    }
-  }
-}
-.client {
-  width: 35%;
+.title-prompt { color: var(--article-accent, #007f73); font-weight: 400; }
+.article-meta {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  @media (max-width: 768px) {
-    margin-top: 1rem;
-    width: 100%;
-  }
-  @media (max-width: 425px) {
-    opacity: 0.5;
-  }
-  span {
-    color: #888888;
-    font-size: 14px;
-    line-height: 1;
-    text-transform: uppercase;
-  }
-  p {
-    color: #1c0000;
-    font-size: 14px;
-    line-height: 1;
-    font-weight: bold;
-    text-transform: uppercase;
-
-    margin: 0;
-  }
+  flex-wrap: wrap;
+  gap: 0.375rem 1.5rem;
+  margin-top: 0.75rem;
+  padding-left: 1.5rem;
+  color: var(--article-muted, #737373);
+  font-size: 0.75rem;
+  line-height: 1.8;
 }
+.meta-label { color: var(--article-faint, #999); }
+.dark-mode h1 { color: var(--article-strong, #ededed); }
+.dark-mode .title-prompt { color: var(--article-accent, #38e7cd); }
 </style>

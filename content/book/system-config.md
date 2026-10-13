@@ -64,7 +64,7 @@ type: tip
 
 还是很容易就能上手的，例如可以自己配置 `alt` 快捷键，因为有很多，所有可以自定义：
 
-```
+```toml
     alt-q = 'close'
     alt-r = ['layout tiles', 'balance-sizes']
     alt-z = 'layout tiles accordion'
@@ -75,7 +75,7 @@ type: tip
 起初我认为就我遇到了这个问题（还想是自己的配置导致的），结果 ghostty 在 docs 上写了，由于是 ghostty 的 tab 用了 macos 原生的什么什么导致的，无法解决，只能通过下述配置解决该问题。
 
 
-```
+```toml
 [[on-window-detected]]
 if.app-id="com.mitchellh.ghostty"
 run= [

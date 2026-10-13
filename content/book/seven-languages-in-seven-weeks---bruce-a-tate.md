@@ -99,7 +99,7 @@ This book is dedicated with love to Lynda Lyle Tate, 1936–2010.
 
 Ruby 以完全面向对象、可读性和简洁性、灵活性而知名。例如灵活的语法与动态特性：
 
-```
+```ruby
 class Greeter
   def initialize(name)
     @name = name.capitalize
@@ -137,14 +137,14 @@ ated the favorite language of many of them.(你激发并测试了读者的想象
 
 Iolang 作为动态语言，在类型阶段就比较宽松，比较灵活，例如:
 
-```
+```text
 x = 42        # 整数
 x = "Hello"   # 重新赋值为字符串
 ```
 
 而静态语言呢，类似 Typescript 这种类型比较强硬的：
 
-```
+```typescript
 let x: number = 42;
 x = "Hello"; // 编译错误：类型不匹配
 ```
@@ -168,7 +168,7 @@ x = "Hello"; // 编译错误：类型不匹配
 
 再然后就是 [Prolog community(Programming in Logic community)](https://en.wikipedia.org/wiki/Prolog)，这是一种逻辑编程语言。这种类型的我还没有接触过，他更像是数学中的逻辑推理。他的基础是一阶逻辑(First-order logic) 其核心的写法和经常接触到的语言有很大的不同。他的语法例如：
 
-```
+```prolog
 grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
 父母关系：如果 X 是 Y 的父母，且 Y 是 Z 的父母，则 X 是 Z 的祖父母。
 ```
@@ -190,7 +190,7 @@ grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
 
 接下来轮到了 Scala community 登场。该语言旨在解决 对 Java 的批评，一句话就以证明其含金量。他是一种 强大的静态类型高级通用编程语言，支持面向对象编程和函数式编程。
 
-```
+```scala
 import java.time.LocalDate as Date
 import Payment.*
 
@@ -225,7 +225,7 @@ process(Card(name, digits, expires))
 
 Lisp 发明和推广的 [S 表达式(S-expression)](https://en.wikipedia.org/wiki/S-expression) 还是很有特点的，例如一个计算式子：
 
-```
+```text
 (* (+ 1 2) (+ 3 4))
 
   + 1 2：表示加法操作，等于 3。
@@ -240,7 +240,7 @@ print(result)
 
 到这里可能 Python 的式子比 S-expression 更接近传统的数学表达式。如果看到这那就可能认为 Lisp 还是不行，不如去学 Python。但 Lisp 还有一个特点是 [元编程（Metaprogramming）能力](https://en.wikipedia.org/wiki/Metaprogramming#:~:text=Metaprogramming%20is%20a%20computer%20programming,even%20modify%20itself%2C%20while%20running.) 指编写可以操作、生成、或修改程序代码的程序的能力。也就是 **——把代码当作数据来处理，从而实现动态的行为和更高的灵活性。**
 
-```
+```lisp
 ;; 定义一个宏，用来生成“加法函数”
 (defmacro make-adder (n)
   `(lambda (x) (+ x ,n)))
@@ -258,7 +258,7 @@ print(result)
 
 在上面这个例子中，`宏的定义实际上是操作代码的模板，生成新的 Code。` 如果是 Python，那么可以通过函数来生成一个加法函数：
 
-```
+```python
 def make_adder(n):
     return lambda x: x + n
 
@@ -275,7 +275,7 @@ print(f"Result: {add_five(10)}")  # 输出 "Result: 15"
 
 Lisp、Clojure、Scheme 等语言通过其 S-expression 和宏系统提供强大的元编程能力。特点是代码即数据（homoiconicity），天然支持元编程；而 Python 通过反射和动态代码生成支持元编程，他的运行时动态性强，支持动态类型，如果要展示不可变结构，那下面的例子就很贴合：
 
-```
+```clojure
 (defn transform [person]
    (update (assoc person :hair-color :gray) :age inc))
 
@@ -302,7 +302,7 @@ Lisp、Clojure、Scheme 等语言通过其 S-expression 和宏系统提供强大
 
 所以，作为一个纯函数式的编程语言，它的式子是这样的：
 
-```
+```haskell
 -- 纯函数：输入相同，输出总是相同
 add :: Int -> Int -> Int
 add x y = x + y
@@ -313,7 +313,7 @@ main = print (add 3 5)  -- 输出 8
 
 那么不是纯函数的是这样的：
 
-```
+```python
 counter = 0
 
 def increment():
@@ -692,7 +692,7 @@ cat.speak()  # 输出: Whiskers makes a sound.
 
 如果没有面向对象，可复用性几乎为 0：
 
-```
+```python
 # 没有类，每只动物都要单独定义
 dog_name = "Buddy"
 dog_species = "Dog"
@@ -720,7 +720,7 @@ cat_speak()
 
 想象你在操作一辆车,你不需要知道引擎如何运作，只需要按下启动按钮。程序中，类可以“隐藏”它内部的细节，外部只需要调用公开的方法。
 
-```
+```python
 class Car:
     def __init__(self, brand):
         self.__engine_on = False  # 私有变量，外部无法直接访问
@@ -741,7 +741,7 @@ car.start_engine()  # 输出: Toyota engine started.
 
 假如动物园里有很多动物，很多行为是相似的，比如“发出声音”。我们可以用“动物”作为父类，然后让“狗”和“猫”继承它，省去重复代码。
 
-```
+```python
 # 定义一个类
 class Animal:
     def __init__(self, name, species):
@@ -771,7 +771,7 @@ Dog 和 Cat 类继承了 Animal 类：
 
 <br>
 
-```
+```python
 dog = Dog("Buddy", "Dog")
 ```
 
@@ -784,7 +784,7 @@ dog = Dog("Buddy", "Dog")
 
 多态（Polymorphism）是面向对象编程中的一个重要概念，指的是同一个接口（方法），在不同对象上表现出不同的行为。
 
-```
+```python
 # 定义一个类
 class Animal:
     def __init__(self, name, species):
@@ -815,7 +815,7 @@ Dog 和 Cat 类都实现了`speak()` 方法，但它们的表现不同
 
 **为什么这是多态？**
 
-```
+```python
 animals = [Dog("Buddy", "Dog"), Cat("Whiskers", "Cat")]
 
 for animal in animals:
@@ -830,7 +830,7 @@ for animal in animals:
 
 父类引用可以指向子类对象
 
-```
+```python
 animals = [Dog("Buddy", "Dog"), Cat("Whiskers", "Cat")]
 ```
 
@@ -839,7 +839,7 @@ animals = [Dog("Buddy", "Dog"), Cat("Whiskers", "Cat")]
 动态绑定（动态多态）
 - 在运行时，根据对象的实际类型调用相应的方法，而不是编译时决定。例如：
 
-```
+```python
 for animal in animals:
     animal.speak()
 ```
@@ -853,7 +853,7 @@ for animal in animals:
 
 不需要为每种动物分别写逻辑，只需调用 speak() 方法即可：
 
-```
+```python
 for animal in animals:
     animal.speak()
 ```
@@ -862,7 +862,7 @@ for animal in animals:
 
 如果以后新增一种动物，比如 Bird，只需定义它的类并实现 speak() 方法，无需修改已有代码：
 
-```
+```python
 class Bird(Animal):
     def speak(self):
         print(f"{self.name} chirps!")
@@ -879,7 +879,7 @@ for animal in animals:
 
 在一个动物园管理系统中，管理员需要统计各种动物的叫声，但管理员不关心具体是哪种动物，只需要知道它们会“说话”即可。因此，我们用抽象类 Animal 定义了所有动物的共同特性，并让具体的动物（如狗和猫）实现各自的叫声。
 
-```
+```python
 from abc import ABC, abstractmethod
 
 class Animal(ABC):  # 抽象类：定义动物的核心功能
@@ -932,7 +932,7 @@ for animal in animals:  # 遍历动物，不关心具体是哪种
 **特点3: 更接近自然语言** <br>
 声明式语言往往用更直观、逻辑性强的方式表达程序，接近人类思维方式。
 
-```
+```text
 range(1, 10).filter(even).sum()
 替代 sum = 0; for (i = 1; i <= 10; i++) { if (even(i)) sum +=i; } return sum;
 
@@ -971,7 +971,7 @@ REPL(Read-Eval-Print Loop)，是一种交互式编程环境，可以一行一行
 
 [事件驱动架构（EDA, Event-driven architecture)(https://en.wikipedia.org/wiki/Event-driven_architecture) 一句话概括就是以 **事件驱动的** 。要理解 EDA 很简单的方式就是了解事件。其核心思想是 **系统中的行为由“事件”的发生来驱动**，例如:
 
-```
+```text
 [User Clicks Button]
       ↓
 [Event Producer: UI 层构造 ClickedEvent]
@@ -1054,7 +1054,7 @@ type: tip
 下面的 code 涵盖了高阶函数、匿名函数以及函数引用，类似于这样的效果：
 
 
-```
+```text
 +----------------------+             +----------------------+          +----------------------+
 |    (lists:map/2)     <-----+       |   (fun(X) -> ...)    |          |   (fun Module:F/A)   |
 |         HOF          |     +-------|  anonymous function  |          |  function reference  |
@@ -1145,7 +1145,7 @@ Ruby 虽然这个保姆也是要督促你喝鱼肝油，但她会加一颗糖奖
 
 当我们了解完面向对象的时候，反过头来再看 Ruby 的 Code 
 
-```
+```text
 properties = ['object oriented', 'duck typed', 'productive', 'fun']
 properties.each { |property| puts "Ruby is #{property}." }
 
@@ -1350,7 +1350,7 @@ If it looks like a duck, swims like a duck, and quacks like a duck, then it prob
 Io lang 可以更好的理解对象、原型以及继承，因为他是基于原型的面向对象语言:
 
 
-```
+```text
    +----------------+                                   
    |                |                                   
 +->|     object     |                                   
@@ -1418,7 +1418,7 @@ Vehicle description print  // 输出: Something to take you far away
 
 如果是原型继承（Prototype Inheritance）的语言，他们的特性之一就是 **动态修改**:
 
-```
+```text
 io lang
 ---
 duck := Object clone
@@ -1458,7 +1458,7 @@ duck.walk();  // 输出：waddle
 
 在 Io lang 中，方法也是对象，不过给出了更符合的类型，即 Block：
 
-```
+```text
 method() type print
 ==> Block
 ```
@@ -1476,7 +1476,7 @@ method() type print
 
 我相信看到这肯定会有疑问，函数和数学中的函数有那些共同的作用？比如数学中的函数 $$ f(x) = x^2 $$ 这个函数我们可以通过 javascript 中的 `function` 即函数理解：
 
-```
+```javascript
 function add(x, y) {
     return x + y;
 }
@@ -1544,7 +1544,7 @@ let result = add(2, 3);  // result = 5
 2. Vue 中的 Slot 则是一个“组件内容占位机制”，专注于解决组件复用和模板动态化的问题。
 
 
-```
+```text
 duck := Object clone
 duck name := "Duck"
 duck speak := method("quack" println)
@@ -1567,7 +1567,7 @@ duck walk   # 输出：waddle
 
 目前。以我的知识储备来理解 DSL，更多的是处理特定格式的数据。以及多语言之间的配合，为某一个特定领域量身定制的语言，它的语法和功能紧密围绕该领域的需求。
 
-```
+```text
 iolang
 ---
 
@@ -1665,7 +1665,7 @@ print(html)
 
 例如，一个简单的逻辑推理：
 
-```
+```prolog
 % 定义事实
 likes(wallace, cheese).
 likes(grommit, cheese).
@@ -1723,7 +1723,7 @@ true.
 
 在 Prolog 中，`\+` 符号为逻辑否定。如果无法证明 X = Y 为真，则 \+(X = Y) 为真。如果能够证明 X = Y 为真，则 \+(X = Y) 为假。
 
-```
+```text
 ?- \+(1 = 2).
 true.   % 因为 1 不等于 2，无法证明 1 = 2，所以 \+(1 = 2) 为真。
 
@@ -1817,7 +1817,7 @@ false.  % 因为 1 = 1 可以被证明为真，所以 \+(1 = 1) 为假。
 
 书中给了一个反向推理那些食物是咸的例子，`food_flavor(X, Y) 推导出满足 Y = savory 的 X`：
 
-```
+```text
 food_type(velveeta, cheese).
 food_type(ritz, cracker).
 food_type(spam, meat).
@@ -1856,7 +1856,7 @@ false.
 
 一看到「递归」，那么自然离不开 **数组、列表、遍历、字典、元组** 这几个关键词。递归很擅长解决 **重复模式** 的问题，使得递归在算法等相关方面成为了必备的方法。比如可以使用递归来完成一个乘积计算：
 
-```
+```text
 factorial(0, 1). % 基准情况：0! = 1
 factorial(N, Result) :- 
     N > 0, 
@@ -1898,7 +1898,7 @@ n \cdot \text{factorial}(n - 1) & \text{if } n > 0
 
 在我了解 `append` 的时候。我只是单纯的认为他就是普通的连接数据，比如连接数组之类的，然后连接起来输出、还可以拆分。感觉没什么特别重要的，很不解为什么作者将它加入到本章节中。
 
-```
+```text
 ?-append([1, 2], [3, 4], What).
 ---
 What = [1, 2, 3, 4].
@@ -1923,7 +1923,7 @@ Part2 = [3, 4] ;
 
 在此之前，我一直认为数据结构仅仅是存储数据的一种方法。但之后和 [dragove](https://dragove.site/) 聊天后才意识到，数据的结构决定了如何 **操作数据** 以及 **使用数据的方式**，以及用什么样的写法，才能方便的操纵、使用这些数据。
 
-```
+```javascript
 class Cons {
   constructor(h, t) {
     this.h = h
@@ -1991,7 +1991,7 @@ console.log(c.toString())
 1. 每行、每列、每个小方格（2x2）（在4x4的情况下为4个2x2的方块）都必须包含 1~4 的数字
 2. 不允许有重复数字（我觉得数独的中文翻译就体现出了这个意思）
 
-```
+```text
 +---+---+---+---+
 |   | 2 |   | 4 |
 +---+---+---+---+
@@ -2005,7 +2005,7 @@ console.log(c.toString())
 
 数独矩阵的维度为 4 行 4 列，它被分成 4 个 2x2 的小方格。我们要做的就是将数字填上去，但有需要符合规则，即 **每行不允许有重复数字**:
 
-```
+```text
 :- use_module(library(clpfd)).
 
 sudoku4x4(Puzzle) :-
@@ -2067,7 +2067,7 @@ print_sudoku([A, B, C, D | Rest]) :-
 
 要理解八皇后谜题，首先需要了解国际象棋的基本规则和玩法。（不知道为什么 Windows 和 macOS 基本上都会自带一个国际象棋游戏，有些 Linux 也会预装，好像在国外国际象棋就跟斗地主一样人人都会吧），首先，国际象棋一般是这样的：
 
-```
+```text
    a b c d e f g h           
   +-+-+-+-+-+-+-+-+          
 8 |♜|♞|♝|♛|♚|♝|♞|♜| ← Black  
@@ -2124,7 +2124,7 @@ print_sudoku([A, B, C, D | Rest]) :-
 1. 保证列表中的数互不相同（列不同）
 2. 保证没有两个数的对角线关系成立：$$abs(Qi - Qj) ≠ abs(i - j)$$
 
-```
+```text
 % 引入约束逻辑编程库 clpfd（Constraint Logic Programming over Finite Domains）
 :- use_module(library(clpfd)).
 
@@ -2221,7 +2221,7 @@ Qs = [1, 5, 8, 6, 3, 7, 2, 4]
 
 在此之前，需要了解 **不共线、三个点共线**
 
-```
+```text
 无三点共线
     C
    / \
@@ -2233,7 +2233,8 @@ A---B---C
 ```
 
 那么很明显，八皇后问题最后的计算答案是 **无三线共点** 的。因此维基百科才会在更多解法中列举了这个.
-```                          1 2 3 4               
+```text
+                          1 2 3 4
 . Q . .     列: 2        1 . Q . .   ← Q1 在第1行第2列
 . . . Q     列: 4        2 . . . Q   ← Q2 在第2行第4列
 Q . . .     列: 1        3 Q . . .   ← Q3 在第3行第1列
@@ -2268,7 +2269,7 @@ type: tip
 
 例如 Scala 是 OOP × FP 混合的编程范式，所以有面向对象和函数式范式的应用:
 
-```
+```scala
 case class 咖啡机(品牌: String) {
   // OOP
   def 制作咖啡(类型: String): String = 
@@ -2297,7 +2298,7 @@ println(我的机器.制作咖啡("拿铁")) // 30ml咖啡+200ml奶
 
 不过由于我看这本书是总结语言的学习思路，所以我不会再本机装 lang，基本上用在线环境来运行。这里我推荐使用 Scala 提供的在线环境 [Scastie](https://scastie.scala-lang.org/) 对于 Scala 给我的直接映像就是输出 Hello 有很多种方法，比如：
 
-```
+```scala
 object Main extends App{print("Hello, World!")}
 
 @main
@@ -2315,7 +2316,7 @@ println("Hello, World")
 
 不过和 Java 相比，那也是非常的直观明了的：
 
-```
+```java
 public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
@@ -2345,7 +2346,7 @@ type: tip
 `val pi = 3.14159; println(f"Pi is approximately $pi%1.2f")`
 ::
 
-```
+```scala
 val x = 4 + "abc"
 println(x.getClass) 
 
@@ -2363,7 +2364,7 @@ AST 是抽象语法树（AST, Abstract Syntax Tree）的简称。当你写一段
 
 在 Scala 中，可以使用 [Scala AST explorer](https://scalameta.org/ast-explorer/#) 来进行查看。例如上面我说 **反正最后都要归类到 String** 其实很不严谨，可以将 Copy 放进去查看在编译的时候都做了什么：
 
-```
+```text
 val x = 4 + "abc"
 println(x.getClass) 
 
@@ -2402,7 +2403,7 @@ Source [0;38]
 
 简单点来说，其作用在于 **在定义类、特质、或方法时，使用类型参数来使其可以处理不同类型的数据**。让方法或类处理不同类型的数据，而不需要为每种类型都写一个单独的实现。
 
-```
+```scala
 // 定义一个泛型类 Box
 class Box[A](val value: A) {
   def getValue: A = value
@@ -2417,7 +2418,7 @@ println(stringBox.getValue) // 输出: Hello
 
 泛型很像 TypeScript 中 `Interface`, ：
 
-```
+```typescript
 // 定义一个泛型接口
 interface Box<T> {
   value: T;
@@ -2461,7 +2462,7 @@ type: tip
 ::
 
 
-```
+```scala
 enum CopyEvent:
   case CopyWholeTree
   case CopyNode(id: Int)
@@ -2490,7 +2491,7 @@ copyEvents --> {
 
 例如上面的 Code 就用到了 ADT 中的 `Sum Types` :
 
-```
+```scala
 enum PaymentMethod:
   case CreditCard(number: String)
   case Cash
@@ -2500,7 +2501,7 @@ enum PaymentMethod:
 
 如果是 Product type，那就是：
 
-```
+```scala
 case class Person(name: String, age: Int)
 // Person 拥有 name 和 age，你无法只给其中一个，必须两个都有 —— 这就是积类型。
 ```
@@ -2525,7 +2526,7 @@ Trait 在心理学中是一个理论，即 [特质理论](https://en.wikipedia.o
 
 比如下面 Code 就实现了一个 `动物(Animal)` 的 `Trait` 即它们都会 `speak`
 
-```
+```scala
 // 定义 trait
 trait Animal:
   def speak(): String
@@ -2548,7 +2549,7 @@ println(cat.speak()) // 输出: Meow!
 
 如果用 `interface` 的话，比如 Java:
 
-```
+```java
 interface Animal {
     String speak();
 }
@@ -2594,7 +2595,7 @@ public class Main {
 
 也就是说，当一个类型不符合预期时，编译器会尝试通过一个标记为 `implicit` 的函数将其自动转换为所需的类型。如果你将之前的插值放到 AST 里面，就会看到 `implicit`:
 
-```
+```text
 val pi = 3.14159
 println(f"Pi is approximately $pi%1.2f")
 
@@ -2620,7 +2621,7 @@ Source [0;57]
 
 隐式类型参数我的理解就是一种 **类型** 安全的注入机制，例如：
 
-```
+```scala
 implicit val defaultGreeting: String = "Hello"
 
 def greet(name: String)(implicit greeting: String) = println(s"$greeting, $name")
@@ -2630,7 +2631,7 @@ greet("Alice") // Alice, Hello
 
 通过 [Scala AST explorer](https://scalameta.org/ast-explorer/#) 可以看到，`$greeting` 在编译的时候，是会被 `Interpolate` 占位的：
 
-```
+```text
 - Term.Interpolate [109;128]
     Term.Name [109;110]
     Lit.String [111;111]
@@ -2642,7 +2643,7 @@ greet("Alice") // Alice, Hello
 
 如果不依赖隐式类型参数来写，那么就会是这样的：
 
-```
+```scala
 def greet(name: String, greeting: String) = println(s"$greeting, $name")
 
 val defaultGreeting = "Hello"
@@ -2656,7 +2657,7 @@ greet("Alice", defaultGreeting) // Hello, Alice
 
 隐式类非常好理解，很像 JavaScript 中的 `prototype` 例如：
 
-```
+```scala
 implicit class RichInt(val x: Int) {
   def squared: Int = x * x
 }
@@ -2666,7 +2667,7 @@ println(4.squared)  // 16
 
 在 Javascript 中就是：
 
-```
+```javascript
 Number.prototype.square = function() {
   return this * this;
 };
@@ -2684,7 +2685,7 @@ console.log((5).square()); // 25
 所以不可变性包含了 **不可变对象** 和 **不可变函数/变量**, 比如在 scala 中，`var` 是可变的，`val` 就不可变:
 
 
-```
+```scala
 var a = "mutable"
 a = "changed"   // OK
 
@@ -2734,7 +2735,7 @@ type: tip
 
 在 Scala 文档的 [Concurrency](https://docs.scala-lang.org/scala3/book/concurrency.html) 部分中，介绍了 `scala.concurrent.Future` 并且也有社区写的文档，例如 [Future and Promise](https://docs.scala-lang.org/overviews/core/futures.html):
 
-```
+```scala
 import scala.concurrent.{Future, Promise}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Success, Failure}
@@ -2774,7 +2775,7 @@ object Main {
 
 这个流程其实非常简单，主打一个 `Future / Promise`, 他的流程是这样的：
 
-```
+```text
 [主线程]
   │
   ├─ 创建Future → 后台线程执行计算 → 完成后触发回调
@@ -2786,7 +2787,7 @@ object Main {
 
 所以这个模型的核心思想是 **将结果的产生和消费解耦，让主线程不被阻塞。** 通过回调处理异步结果。想象一下这样的场景：
 
-```
+```text
 Future 就像你的外卖订单：
 你下单后(Future { ... })继续做自己的事
 设置回调(foreach)相当于告诉外卖员："送到后打电话给我"
@@ -2860,7 +2861,7 @@ everything is an actor
 
 类似于面向对象中的 “万物皆可对象”，Actor 应该是：“角色扮演”，例如你有一家快递公司：
 
-```
+```text
 [快递公司运作流程]
   顾客 → 快递员 → 分拣中心 → 配送站 → 收件人
 ```
@@ -2896,7 +2897,7 @@ everything is an actor
 
 了解完了 Actor mode ，可以了解 [akka](https://en.wikipedia.org/wiki/Akka_(toolkit))，akka 是一个公司，也是一个包。最早实现于 2006 年，感觉这种并发一般会和分布式、微服务之类的架构建立联系，所以详情可以去看 [akka docs](https://doc.akka.io/libraries/akka-core/current/typed/actors.html) 写的还是很全的。在 Scala 中可以  `import akka.actor` 来使用 Akka actor
 
-```
+```scala
 import akka.actor.typed.{ActorRef, ActorSystem, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
 
@@ -2987,7 +2988,7 @@ IF/ELSE: 逐个拆箱检查内容物
 
 <br>
 
-```
+```scala
 object PatternMatchingDemo extends App {
   // 基础值
   def explainNumber(num: Int): String = num match {
@@ -3031,7 +3032,7 @@ Erlang 是一个函数式、并发的语言，他的运行时就是为了**分�
 
 由于我只是学习目的，所以我尝试在线的环境来学习 Erlang。体验了一翻 [Replit](https://replit.com/) 感觉还是很不错的。如果要在 Erlang 中输出 Hello,world，那么需要使用 [io:format](https://www.erlang.org/doc/system/seq_prog#writing-output-to-a-terminal)(有一说一官方文档写的还是很不错的，很方便学习和理解):
 
-```
+```erlang
 
 --- filename: main.ert
 -module(main).
@@ -3043,7 +3044,7 @@ start() ->
 
 在 Erlang 中，文件相当于一个模块，也就是你看到的 `-module(main)` 之后需要导出 `-export([start/0, add/1])` 这里的 `0` 表示需要导出的是 0 个参数，如果需要导出，就是这样：
 
-```
+```erlang
 -module(main).
 -export([start/0, add/1]).
 start() ->
@@ -3055,7 +3056,7 @@ add(X) ->
 
 如果是 ES6 或者 Python，那就是这样的：
 
-```
+```text
 --- ES6
 export function hello() { ... }
 export default function () { ... }
@@ -3080,7 +3081,7 @@ __all__ = ['app', 'ball']
 
 如果要运行我们刚才写的 `add` 函数，可以通过进入 Erlang 的 REPL 执行：
 
-```
+```text
 > c(main).
 {ok,main}
 > main:add(10).
@@ -3118,7 +3119,7 @@ __all__ = ['app', 'ball']
 
 例如在创建新的进程或者两者之间需要收发消息的时候就需要用到 PID，可以参考 [Process Creation](https://www.erlang.org/doc/system/ref_man_processes#process-creation)
 
-```
+```text
 -module(main).
 
 -export([start/0, ping/2, pong/0]).
@@ -3247,7 +3248,7 @@ Given enough eyeballs, all bugs are shallow.<br>
 
 要理解 Clojure 还需要先了解 LISt Processing 、Code as Data 这些 lisp 的核心特性。从输出 Hello,world 的方式来看，两者都是差不多的：
 
-```
+```text
 Common Lisp:
 (format t "Hello, World!")
 ---
@@ -3258,7 +3259,7 @@ Clojure
 
 
 
-```
+```text
 --- Clojure
 
 ;;    name   params         body
@@ -3288,7 +3289,7 @@ Clojure
 :text-title{t="Clojure JVM"}
 这一章算是让我意外的，我看到了作者在 Scala 篇章中没有写的内容，比如 Scala 和 Clojure 都是 JVM 生态。他们都可以使用 Java 的生态构建项目(有一说一我还是挺喜欢 scala 的，Code 看起来确实比 `(` 好看多了)：
 
-```
+```text
 --- Scala
 
 import java.time.LocalDate
@@ -3369,7 +3370,7 @@ Homoiconicity 是代码和数据的表示形式高度统一，语言的基本数
 可以通过 `macroexpand` 函数来展开宏，例如 Clojure Docs 在 Macros 这一章给出的例子（可以丢进 [Try Clojure
 ](https://www.tryclojure.com/) 这个在线的 REPL 上看看，不过最近一次更新已经是 10 years ago 了 ：
 
-```
+```text
 user=> (-> {} (assoc :a 1) (assoc :b 2))
 {:b 2, :a 1}
 
@@ -3389,7 +3390,7 @@ user=> (macroexpand '(-> {} (assoc :a 1) (assoc :b 2)))
 
 解构（Destructuring），我的理解就是匹配，严谨来说就是 **一种将名称简洁地绑定到数据结构内的值的方法**。例如 MDN 的 [Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring) 例子非常的简洁明了，而 Clojure 给出的例子就很直观：
 
-```
+```clojure
 (def my-line [[5 10] [10 20]])
 
 (let [p1 (first my-line)
@@ -3404,7 +3405,7 @@ user=> (macroexpand '(-> {} (assoc :a 1) (assoc :b 2)))
 
 Clojure 用的是显式(explicit)。同样是函数式的 py 则是 隐式(implicit)，就显得很简洁：
 
-```
+```python
 head, *middle, tail = [1, 2, 3, 4, 5]
 
 print(head)    # 1
@@ -3464,7 +3465,7 @@ type: tip
 
 **惰性求值的优点是能够创建可计算的无限列表**，怪不得很多 lang 都喜欢 [斐波那契数列](https://en.wikipedia.org/wiki/Fibonacci_sequence) 做特性展示。原来是 show lang 的序列特性哇:
 
-```
+```clojure
 (def fib-seq
   (->> [0 1]                      
        (iterate (fn [[a b]] [b (+ a b)])) 
@@ -3488,7 +3489,7 @@ F(n) &= F(n-1) + F(n-2) \quad \text{当 } n \geq 2
 
 比如这里我们就展示到了 Clojure 的惰性求值特性也就是 [iterate](https://clojure.github.io/clojure/clojure.core-api.html#clojure.core/iterate) 方法。Clojure 文档介绍的很详细：
 
-```
+```text
 iterate
 function
 
@@ -3505,7 +3506,7 @@ ISeq(Interface for Sequence, Sequences)，在这一章节中，ISeq 和 Seq 的�
 
 使用 ISeq 不仅原生支持 [lazy-seq](https://clojure.github.io/clojure/clojure.core-api.html#clojure.core/lazy-seq)，同时还用有不可变不可变性（Immutability）增加了线程安全性, BTW 有一说一，Clojure docs 还挺全的。比如上面我们演示 斐波那契数列所使用的 [iterate](https://github.com/clojure/clojure/blob/clojure-1.11.1/src/clj/clojure/core.clj#L3030) 函数算是隐式依赖 ISeq 接口：
 
-```
+```text
 Give me some Clojure:
 > (instance? clojure.lang.ISeq s)
 true
@@ -3533,7 +3534,7 @@ type: tip
 [​​声明式编程​​	(Declarative Programming)](https://en.wikipedia.org/wiki/Declarative_programming) 有一说一我还挺喜欢这个范式的，不过他竟然还有个子范式，大名鼎鼎的 Functional programming  函数式编程 没想到也是在这个范式里面的。总的来说声明式的特点是 **关注“做什么”（What）**:
 
 
-```
+```text
 ┌───────────────────────┐                                                        
 │    Clojure vs Java    │                                                        
 └───────────────────────┤                                                        
@@ -3582,7 +3583,7 @@ Windows 则更像是一个多元宇宙。无论是进行商业软件开发、跑
 | (defrecord Robot)  | 机器人实现：用电子音打招呼。 |
 | (extend-type String) | 让纸条（String）也能“打招呼”（打印文字）。 |
 
-```
+```text
 Protocol  │ (defprotocol Greet                                           
           │   (say-hi [this]))                                           
                                                                          
@@ -3642,7 +3643,7 @@ type: tip
 
 多说无益，Clojure Docs 给了一个很好的例子诠释其哲学：
 
-```
+```text
 ; 
 (defn run [nvecs nitems nthreads niters]
   (let [vec-refs (vec (map (comp ref vec)
@@ -3708,7 +3709,7 @@ Implementing the Fibonacci sequence is considered the "Hello, world!" of Haskell
 斐波那契数列被认为是 Haskell 编程的“你好，世界！
 ::
 
-```
+```text
 fib 0 = 0
 fib 1 = 1
 fib n = fib (n-1) + fib (n-2)
@@ -3731,7 +3732,7 @@ main = do
 :text-title{t="Guards" type="2"}
 作为一个将 `λ` 体现在 Logo 上的 Language 来说，我认为学术风格必然会占很大的比例（从文档上也能直接看出是很纯粹的 tech style）。感觉第一章的内容和 Haskell website 上的那个 “Try it!” 很像，内容相近。不过最让我好奇的是 `Guards`(pattern guard) 的条件表达式，类比于其他语言中的 `if-else` or `switch-case`:
 
-```
+```text
 f x
   | pat <- exp
   , condition

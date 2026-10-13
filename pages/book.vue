@@ -1,410 +1,203 @@
-<script lang="ts" setup>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+<script setup lang="ts">
+import { computed, ref } from "vue";
 
 useSeoMeta({
-  title: "Library Archive",
-  description: "Input Source & Knowledge Base",
+  title: "Library",
+  description: "Books, notes, and things worth learning.",
 });
 
-const { data: equalQueryBook } = await useAsyncData("equalBook", () => {
-  return queryContent("book/").find();
-});
+const { data: books } = await useAsyncData("book-gallery", () =>
+  queryContent("book").only(["_path", "title", "img", "time", "director", "plan"]).find(),
+);
 
-const sortedData = computed(() => {
-  if (!equalQueryBook.value) return [];
-  return [...equalQueryBook.value].sort((a, b) => {
-    return new Date(b.time).getTime() - new Date(a.time).getTime();
-  });
-});
+const galleryElement = ref<HTMLElement | null>(null);
+const failedCovers = ref(new Set<string>());
 
-const mainContainer = ref<HTMLElement | null>(null);
+function dateValue(value: unknown) {
+  const match = String(value ?? "").match(/^(\d{4})(?:[.-](\d{1,2}))?(?:[.-](\d{1,2}))?/);
+  return match ? Number(match[1]) * 10000 + Number(match[2] || 1) * 100 + Number(match[3] || 1) : 0;
+}
 
-const resolveCover = (path: string) => {
-  if (!path) return "";
+function resolveCover(image: string) {
+  return /^(https?:\/\/|\/)/.test(image) ? image : `/img/book/${image}`;
+}
 
-  if (path.startsWith("/img/book/") || path.startsWith("http")) {
-    return path;
+function readingPercentage(plan: unknown) {
+  if (typeof plan !== "string") return null;
+  const values = plan.split(",");
+  if (values.length !== 2 || values.some(value => !value.trim())) return null;
+  const [current, total] = values.map(Number);
+  if (!Number.isFinite(current) || !Number.isFinite(total) || current < 0 || total <= 0) return null;
+  return Math.round(Math.min(current / total, 1) * 100);
+}
+
+const covers = computed(() => (books.value ?? [])
+  .filter(book => book._path && typeof book.img === "string" && book.img.trim() && !failedCovers.value.has(book._path))
+  .sort((a, b) => dateValue(b.time) - dateValue(a.time))
+  .map(book => {
+    const title = book.title || "查看文章";
+    const authorValue = String(book.director ?? "").trim();
+    const author = /^n\/a$/i.test(authorValue) ? "" : authorValue;
+    const percentage = readingPercentage(book.plan);
+    const status = percentage === null ? "" : percentage === 100 ? "已读" : percentage === 0 ? "未开始" : "阅读中";
+    return {
+      path: book._path!,
+      title,
+      author,
+      percentage,
+      status,
+      label: [title, author, percentage === null ? "" : `${status} ${percentage}%`].filter(Boolean).join("，"),
+      src: resolveCover(book.img.trim()),
+      // Local covers share this format; the protocol book is one pixel wider.
+      width: book.img === "attacking-network-protocols/1.png" ? 586 : 585,
+      height: 770,
+    };
+  }),
+);
+
+function hideFailedCover(path: string) {
+  failedCovers.value.add(path);
+}
+
+onNuxtReady(() => {
+  // An SSR image can finish before its error listener is attached.
+  for (const image of galleryElement.value?.querySelectorAll<HTMLImageElement>("img[data-book-path]") ?? []) {
+    if (image.complete && !image.naturalWidth) hideFailedCover(image.dataset.bookPath!);
   }
-
-  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-  return `/img/book/${cleanPath}`;
-};
-
-const removeSkeleton = (img: HTMLImageElement, status: "success" | "error") => {
-  const parent = img.closest(".cover-wrapper");
-  if (parent) {
-    parent.classList.add("is-loaded");
-    if (status === "error") parent.classList.add("has-error");
-  }
-};
-
-const handleImageLoad = (e: Event) => {
-  removeSkeleton(e.target as HTMLImageElement, "success");
-};
-
-const handleImageError = (e: Event) => {
-  const img = e.target as HTMLImageElement;
-  console.error("❌ Image Failed:", img.src);
-  removeSkeleton(img, "error");
-};
-
-onMounted(() => {
-  if (mainContainer.value) {
-    const images = mainContainer.value.querySelectorAll("img.cover-img");
-    images.forEach((img: any) => {
-      if (img.complete && img.naturalWidth > 0) {
-        removeSkeleton(img, "success");
-      }
-    });
-  }
-
-  const ctx = gsap.context(() => {
-    gsap.from(".archive-header", {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-    });
-    gsap.from(".book-card", {
-      y: 60,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.05,
-      ease: "back.out(1.7)",
-      scrollTrigger: { trigger: ".book-grid", start: "top 85%" },
-    });
-  }, mainContainer.value);
-
-  return () => ctx.revert();
 });
 </script>
 
 <template>
-  <main ref="mainContainer" class="library-container">
-    <header class="archive-header">
-      <div class="header-meta">
-        <span>// KNOWLEDGE_BASE</span>
-        <span>TOTAL_ITEMS: {{ sortedData.length }}</span>
-      </div>
-      <h1 class="title">LEARN<br />FOR COOL<span class="dot">.</span></h1>
-      <div class="divider"></div>
-    </header>
-
-    <div class="library-content">
-      <div class="book-grid">
-        <nuxt-link
-          v-for="book in sortedData"
-          :key="book._path"
-          :to="book._path"
-          class="book-card"
-        >
-          <div class="cover-wrapper">
-            <div class="skeleton-loader"></div>
-            <div class="error-msg">NOT FOUND</div>
-            <img
-              :src="resolveCover(book.img)"
-              :alt="book.title"
-              class="cover-img"
-              loading="lazy"
-              @load="handleImageLoad"
-              @error="handleImageError"
-            />
-
-            <div class="sheen"></div>
-          </div>
-
-          <div class="book-info">
-            <div class="info-header">
-              <span class="status-tag">
-                <span class="status-dot"></span> {{ book.status || "ARCHIVED" }}
-              </span>
-              <span class="year">{{ book.time?.slice(0, 4) }}</span>
-            </div>
-            <h3 class="book-title">{{ book.title }}</h3>
-            <p class="book-author">{{ book.author || "Unknown Author" }}</p>
-          </div>
-        </nuxt-link>
-      </div>
+  <main class="library-container" aria-label="书籍封面">
+    <div ref="galleryElement" class="cover-gallery">
+      <NuxtLink v-for="(book, index) in covers" :key="book.path" :to="book.path"
+        class="cover-link" :aria-label="book.label">
+        <img :src="book.src" alt="" :width="book.width" :height="book.height" :data-book-path="book.path"
+          :loading="index < 4 ? 'eager' : 'lazy'" :fetchpriority="index === 0 ? 'high' : 'auto'"
+          decoding="async" @error="hideFailedCover(book.path)" />
+        <span class="cover-details" aria-hidden="true">
+          <strong class="cover-title">{{ book.title }}</strong>
+          <span v-if="book.author" class="cover-author">{{ book.author }}</span>
+          <span v-if="book.percentage !== null" class="cover-reading">
+            <span>{{ book.status }}</span><span class="cover-percentage">{{ book.percentage }}%</span>
+          </span>
+          <span v-if="book.percentage !== null" class="cover-progress-track">
+            <span class="cover-progress-fill" :style="{ width: `${book.percentage}%` }"></span>
+          </span>
+        </span>
+      </NuxtLink>
     </div>
   </main>
 </template>
 
 <style lang="scss" scoped>
-$font-mono: "JetBrains Mono", monospace;
-$accent-color: #00e2c1;
-$book-ratio: 0.66;
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
 .library-container {
-  min-height: 100vh;
-  padding: 6vw 5vw;
-  background-color: #f4f4f4;
-  color: #111;
-  font-family: $font-mono;
+  --gallery-gap: 0.375rem;
+  min-height: 100dvh;
+  padding: clamp(0.5rem, 0.75vw, 1rem);
+  box-sizing: border-box;
+  background: #fff;
 }
 
-.archive-header {
-  margin-bottom: 5rem;
-  .header-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    color: #666;
-    margin-bottom: 1rem;
-    opacity: 0.7;
-  }
-  .title {
-    font-family: "Helvetica Neue", sans-serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 900;
-    line-height: 0.9;
-    margin: 0;
-    letter-spacing: -0.02em;
-    .dot {
-      color: $accent-color;
-    }
-  }
-  .divider {
-    width: 100%;
-    height: 2px;
-    background: #d9d8d8;
-    margin-top: 2rem;
-    transform-origin: left;
-  }
+.cover-gallery {
+  width: 100%;
+  margin: 0 auto;
+  column-count: 4;
+  column-gap: var(--gallery-gap);
 }
 
-.book-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 3rem 2rem;
-  perspective: 1000px;
-}
-
-.book-card {
-  display: flex;
-  flex-direction: column;
+.cover-link {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 0 var(--gallery-gap);
+  break-inside: avoid;
+  overflow: hidden;
+  border-radius: 0;
   text-decoration: none;
-  color: inherit;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  &:focus-visible {
+    outline: 1px solid #007f73;
+    outline-offset: 4px;
+  }
+
+  &:focus-visible .cover-details { opacity: 1; transform: translateY(0); }
+}
+
+.cover-details {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  .cover-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: $book-ratio;
-    background-color: #e0e0e0;
-    border-radius: 2px 6px 6px 2px;
-    transform-style: preserve-3d;
-    transition:
-      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      box-shadow 0.4s ease;
-    cursor: pointer;
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: clamp(0.875rem, 1.5vw, 1.5rem);
+  box-sizing: border-box;
+  background: linear-gradient(180deg, transparent 25%, rgba(0, 0, 0, 0.9) 70%, rgba(0, 0, 0, 0.96) 100%);
+  color: #ededed;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+  line-height: 1.5;
+  text-transform: none;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
 
-    .skeleton-loader {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: #ddd;
-      overflow: hidden;
-      &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.4),
-          transparent
-        );
-        animation: shimmer 1.5s infinite;
-      }
-    }
+.cover-title { font-size: clamp(0.9375rem, 1.2vw, 1.125rem); font-weight: 600; overflow-wrap: anywhere; }
+.cover-author { color: #b3b3b3; font-size: 0.75rem; overflow-wrap: anywhere; }
+.cover-reading { display: flex; justify-content: space-between; gap: 0.5rem; margin-top: 0.25rem; color: #b3b3b3; font-size: 0.6875rem; }
+.cover-percentage { color: #38e7cd; font-variant-numeric: tabular-nums; }
+.cover-progress-track { display: block; width: 100%; height: 2px; background: #ffffff33; }
+.cover-progress-fill { display: block; height: 100%; background: #38e7cd; }
 
-    .error-msg {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #333;
-      color: #ef0000;
-      font-weight: bold;
-      font-size: 12px;
-      text-align: center;
-      display: none;
-    }
+.dark-mode .library-container { background: #000; }
+.dark-mode .cover-link {
+  img { opacity: 0.7; }
+  &:focus-visible { outline-color: #38e7cd; }
+}
 
-    .cover-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 2px 6px 6px 2px;
-      position: relative;
-      z-index: 3;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
+@media (hover: hover) {
+  .cover-link:hover img { opacity: 0.9; }
+  .cover-link:hover .cover-details { opacity: 1; transform: translateY(0); }
+  .dark-mode .cover-link:hover img { opacity: 1; }
+}
 
-    .sheen {
-      position: absolute;
-      inset: 0;
-      z-index: 4;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.2) 0%,
-        transparent 50%
-      );
-      pointer-events: none;
-      opacity: 0.5;
-    }
+@media (min-width: 1800px) {
+  .cover-gallery { column-count: 5; }
+}
 
-    &.is-loaded {
-      .skeleton-loader {
-        display: none;
-      }
-      .cover-img {
-        opacity: 1;
-      }
-    }
+@media (max-width: 1100px) {
+  .cover-gallery { column-count: 3; }
+}
 
-    &.has-error {
-      .skeleton-loader {
-        display: none;
-      }
-      .error-msg {
-        display: flex;
-      }
-      border: 2px solid red;
-    }
-  }
+@media (max-width: 640px) {
+  .library-container { --gallery-gap: 0.25rem; padding: 0.375rem; }
+  .cover-gallery { column-count: 2; }
+  .cover-details { gap: 0.375rem; padding: 0.625rem; }
+  .cover-title { font-size: 0.8125rem; }
+  .cover-author, .cover-reading { font-size: 0.6875rem; }
+}
 
-  .book-info {
-    margin-top: 1.2rem;
-    .info-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: #666;
-      margin-bottom: 0.5rem;
-      .status-tag {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        .status-dot {
-          width: 6px;
-          height: 6px;
-          background: #000;
-          border-radius: 50%;
-        }
-      }
-    }
-    .book-title {
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.3;
-      margin: 0 0 0.3rem 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .book-author {
-      font-size: 0.85rem;
-      color: #555;
-      margin: 0;
-      font-style: italic;
-    }
-  }
-
-  &:hover {
-    .cover-wrapper {
-      transform: rotateY(-15deg) rotateX(5deg) scale(1.03) translateZ(10px);
-      box-shadow:
-        -10px 15px 30px rgba(0, 0, 0, 0.2),
-        -5px 5px 10px rgba(0, 0, 0, 0.1);
-      .sheen {
-        opacity: 0.8;
-      }
-    }
-    .book-title {
-      color: $accent-color;
-    }
-    .status-dot {
-      background: $accent-color;
-      box-shadow: 0 0 5px $accent-color;
-    }
+@media (hover: none) {
+  .cover-details {
+    inset: auto 0 0;
+    opacity: 1;
+    transform: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.94) 45%);
   }
 }
 
-.dark-mode {
-  .library-container {
-    background-color: #0a0a0a;
-    color: #eee;
-  }
-  .archive-header {
-    .header-meta {
-      color: #888;
-    }
-    .divider {
-      background: #333;
-    }
-  }
-  .book-card {
-    .cover-wrapper {
-      background-color: #222;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      .skeleton-loader {
-        background: #1a1a1a;
-        &::after {
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.05),
-            transparent
-          );
-        }
-      }
-    }
-    .book-info {
-      .info-header {
-        color: #888;
-        .status-dot {
-          background: #fff;
-        }
-      }
-      .book-title {
-        color: #ddd;
-      }
-      .book-author {
-        color: #666;
-      }
-    }
-    &:hover {
-      .cover-wrapper {
-        box-shadow: -10px 15px 40px rgba(0, 0, 0, 0.6);
-      }
-      .book-title {
-        color: #fff;
-      }
-      .status-dot {
-        background: $accent-color;
-      }
-    }
-  }
+@media (prefers-reduced-motion: reduce) {
+  .cover-link img, .cover-details { transition: none; }
+  .cover-details { transform: none; }
 }
 </style>

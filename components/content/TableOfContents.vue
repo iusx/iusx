@@ -1,142 +1,294 @@
-<template>
-  <ul>
-    <li v-for="heading in toc" :key="heading.id" :style="getPaddingStyle(heading)">
-      <a :href="`#${heading.id}`">{{ heading.text.slice(0, -1) }}</a>
-      <template v-if="!isNaN(parseInt(heading.text.slice(-1), 10))">
-        <template v-for="key in parseInt(heading.text.slice(-1), 10)">
-          <span></span>
-        </template>
-      </template>
-      <template v-if="parseInt(heading.text.slice(-1), 10) == 0">
-        <div class="no"></div>
-      </template>
-    </li>
-  </ul>
-</template>
+<script setup lang="ts">
+import { defineComponent, h, inject, onBeforeUnmount, onMounted, ref, shallowRef, unref, watch } from "vue";
+import type { PropType, Ref, VNode } from "vue";
 
-<script setup>
-import { ref, onMounted, nextTick, watchEffect } from 'vue'
+interface TocHeading {
+  id: string;
+  text: string;
+  level: number;
+  count: number | null;
+  children: TocHeading[];
+}
 
-const toc = ref([])
+const props = defineProps<{ contentElement?: HTMLElement | null }>();
+const injectedContentElement = inject<Ref<HTMLElement | null> | null>("bookContentElement", null);
+const emit = defineEmits<{ navigate: [id: string] }>();
+const navigation = ref<HTMLElement | null>(null);
+const headings = shallowRef<TocHeading[]>([]);
+const ready = ref(false);
+const currentHash = ref("");
+const headingSelector = "h1, h2, h3, h4, h5, h6";
+const generatedIds = new WeakMap<HTMLElement, { id: string; base: string; text: string }>();
+const observerOptions: MutationObserverInit = {
+  childList: true,
+  subtree: true,
+  characterData: true,
+  attributes: true,
+  attributeFilter: ["id", "data-toc-exclude", "data-toc-marker", "data-toc-count"],
+};
 
-watchEffect(async (onCleanup) => {
-  let retries = 0
-  const maxRetries = 5
+let content: HTMLElement | null = null;
+let observer: MutationObserver | null = null;
+let pendingFrame: number | null = null;
+let mounted = false;
 
-  const checkContent = async () => {
-    const content = document.querySelector('.markdown-content')
-    if (!content) {
-      if (retries++ < maxRetries) {
-        setTimeout(checkContent, 300)
+// A recursive list keeps heading levels meaningful, including skipped levels.
+const TocList = defineComponent({
+  name: "TocList",
+  props: {
+    items: { type: Array as PropType<TocHeading[]>, required: true },
+    currentHash: { type: String, default: "" },
+  },
+  emits: ["navigate"],
+  setup(listProps, { emit: listEmit }): () => VNode {
+    return () => h("ul", { class: "toc-list" }, listProps.items.map((heading) =>
+      h("li", { key: heading.id }, [
+        h("div", { class: "toc-row" }, [
+          h("a", {
+            href: `#${encodeURIComponent(heading.id)}`,
+            "aria-current": listProps.currentHash === heading.id ? "location" : undefined,
+            onClick: () => listEmit("navigate", heading.id),
+          }, heading.text),
+          heading.count === null ? null : h("span", {
+            class: "toc-count",
+            "aria-label": `${heading.count} 则摘录`,
+          }, String(heading.count)),
+        ]),
+        heading.children.length ? h(TocList, {
+          items: heading.children,
+          currentHash: listProps.currentHash,
+          onNavigate: (id: string) => listEmit("navigate", id),
+        }) : null,
+      ])
+    ));
+  },
+});
+
+const normalizeText = (text: string) => text.replace(/\s+/g, " ").trim();
+
+const headingText = (heading: HTMLElement) => {
+  const label = heading.cloneNode(true) as HTMLElement;
+  label.querySelectorAll('[aria-hidden="true"]').forEach(element => element.remove());
+  const text = normalizeText(label.textContent || "");
+  return heading.hasAttribute("data-toc-marker") ? text.replace(/\s+\d+$/, "") : text;
+};
+
+const createId = (text: string) => text.toLowerCase()
+  .replace(/[^\p{L}\p{N}\p{M}\s_-]/gu, "")
+  .trim()
+  .replace(/\s+/g, "-")
+  .replace(/-+/g, "-")
+  .replace(/^(\d)/, "_$1") || "section";
+
+function refreshHeadings() {
+  if (!content) return;
+
+  // Disconnect while supplying missing IDs so our own attributes do not queue a scan.
+  observer?.disconnect();
+  const elements = Array.from(content.querySelectorAll<HTMLElement>(headingSelector));
+  const duplicateTitles = new Set<Element>();
+  for (const marker of elements.filter((element) => element.hasAttribute("data-toc-marker"))) {
+    for (const sibling of [marker.previousElementSibling, marker.nextElementSibling]) {
+      if (sibling?.matches(".text-title")) {
+        duplicateTitles.add(sibling);
       }
-      return
     }
-
-    const headings = Array.from(content.querySelectorAll('h1, h2, h3, h4, h5, h6'))
-    const validHeadings = headings.filter(h => h.innerText.trim() !== '')
-
-    if (validHeadings.length === 0 && retries++ < maxRetries) {
-      setTimeout(checkContent, 300)
-      return
-    }
-
-    toc.value = validHeadings.map(heading => ({
-      id: heading.id,
-      text: heading.innerText,
-      level: parseInt(heading.tagName.slice(1))
-    }))
   }
 
-  const timer = setTimeout(checkContent, 100)
-  onCleanup(() => clearTimeout(timer))
-})
+  const ids = new Set<string>();
+  const roots: TocHeading[] = [];
+  const parents: TocHeading[] = [];
+  for (const element of elements) {
+    const text = headingText(element);
+    if (!text || duplicateTitles.has(element) || element.closest("[data-toc-exclude]")) continue;
 
-const getTextContent = (element) => {
-  return Array.from(element.childNodes)
-    .map(node => {
-      if (node.nodeType === Node.TEXT_NODE) return node.textContent
-      if (node.nodeType === Node.ELEMENT_NODE) return node.textContent
-      return ''
-    })
-    .join('')
-    .trim()
+    const originalId = element.id;
+    const generated = generatedIds.get(element);
+    const baseId = generated?.id === originalId
+      ? generated.text === text ? generated.base : createId(text)
+      : originalId || createId(text);
+    let id = baseId;
+    let suffix = 1;
+    while (ids.has(id)) id = `${baseId}-${suffix++}`;
+    ids.add(id);
+    if (id !== originalId) {
+      element.id = id;
+    }
+    if (id !== originalId || generated?.id === originalId) generatedIds.set(element, { id, base: baseId, text });
+
+    const countAttribute = element.getAttribute("data-toc-count");
+    const count = countAttribute === null ? null : Number(countAttribute);
+    const heading: TocHeading = {
+      id,
+      text,
+      level: Number(element.tagName.slice(1)),
+      count: count !== null && Number.isSafeInteger(count) && count >= 0 ? count : null,
+      children: [],
+    };
+
+    while (parents.length && parents[parents.length - 1].level >= heading.level) parents.pop();
+    if (parents.length) parents[parents.length - 1].children.push(heading);
+    else roots.push(heading);
+    parents.push(heading);
+  }
+
+  headings.value = roots;
+  ready.value = true;
+  observer?.observe(content, observerOptions);
 }
 
-const getPaddingStyle = (heading) => {
-  return {
-    marginLeft: `${(heading.level - 1) * 20}px`,
-    listStyleType: heading.level > 2 ? 'circle' : 'disc'
+function affectsHeadings(mutation: MutationRecord) {
+  const target = mutation.target instanceof Element ? mutation.target : mutation.target.parentElement;
+  if (target?.closest(headingSelector)) return true;
+  if (mutation.type === "attributes") return mutation.attributeName === "data-toc-exclude";
+  if (mutation.type !== "childList") return false;
+  return [...mutation.addedNodes, ...mutation.removedNodes].some((node) =>
+    node instanceof Element && (node.matches(headingSelector) || Boolean(node.querySelector(headingSelector)))
+  );
+}
+
+function bindContent() {
+  const nextContent = props.contentElement || unref(injectedContentElement)
+    || navigation.value?.closest(".book-layout, .layout")?.querySelector<HTMLElement>(".markdown-content")
+    || null;
+  if (content === nextContent && ready.value) return;
+
+  observer?.disconnect();
+  if (pendingFrame !== null) cancelAnimationFrame(pendingFrame);
+  pendingFrame = null;
+  content = nextContent;
+  if (!content) {
+    headings.value = [];
+    ready.value = true;
+    return;
+  }
+
+  observer = new MutationObserver((mutations) => {
+    if (pendingFrame !== null || !mutations.some(affectsHeadings)) return;
+    pendingFrame = requestAnimationFrame(() => {
+      pendingFrame = null;
+      refreshHeadings();
+    });
+  });
+  refreshHeadings();
+}
+
+function updateHash() {
+  try {
+    currentHash.value = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    currentHash.value = window.location.hash.slice(1);
   }
 }
+
+watch(() => props.contentElement || unref(injectedContentElement), () => {
+  if (mounted) bindContent();
+}, { flush: "post" });
+
+onMounted(() => {
+  mounted = true;
+  bindContent();
+  updateHash();
+  window.addEventListener("hashchange", updateHash);
+});
+
+onBeforeUnmount(() => {
+  mounted = false;
+  observer?.disconnect();
+  if (pendingFrame !== null) cancelAnimationFrame(pendingFrame);
+  window.removeEventListener("hashchange", updateHash);
+});
 </script>
 
+<template>
+  <nav ref="navigation" class="table-of-contents" aria-label="文章目录" :aria-busy="!ready">
+    <TocList v-if="headings.length" :items="headings" :current-hash="currentHash" @navigate="emit('navigate', $event)" />
+    <p v-else class="toc-empty">{{ ready ? "暂无目录" : "目录加载中…" }}</p>
+  </nav>
+</template>
+
 <style lang="scss" scoped>
-ul {
-  list-style: none;
-  padding: 0;
-}
+.table-of-contents {
+  --toc-color: var(--article-text, #4a4a4a);
+  --toc-muted: var(--article-muted, #737373);
+  --toc-line: var(--article-soft-border, #e8e8e8);
+  --toc-accent: var(--article-accent, #007f73);
+  font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 0.8125rem;
 
-ul li {
-  margin: 10.8px 2px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 100%;
-}
+  :deep(.toc-list) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
-li {
-  background: url("data:image/svg+xml,%3Csvg width='930' height='1' viewBox='0 0 930 1' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.5 0.5H930' stroke='%23D7D7D7'/%3E%3C/svg%3E%0A") no-repeat center;
-}
+  :deep(.toc-list .toc-list) {
+    margin-left: 0.7rem;
+    padding-left: 0.875rem;
+    border-left: 1px solid var(--toc-line);
+  }
 
-a {
-  background: white;
-  width: max-content;
-  color: #000;
-  text-decoration: none;
-  display: flex;
-  padding-right: 0.6vw;
-  align-items: center;
-  font-size: 14px;
+  :deep(.toc-row) {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 0.375rem 0;
+  }
 
-  &::before {
-    content: "";
-    display: block;
-    margin-right: 0.9vh;
-    width: 0.7vh;
-    height: 0.7vh;
-    margin-left: 1px;
-    border: 1px solid #000000;
-    transform: rotate(45deg);
+  :deep(a) {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    min-width: 0;
+    padding: 0.125rem 0;
+    color: var(--toc-color);
+    font-family: inherit;
+    line-height: 1.65;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+
+    &::before {
+      content: "[ ]";
+      color: var(--toc-muted);
+      font-size: 0.75rem;
+      white-space: pre;
+      flex-shrink: 0;
+    }
+
+    &:hover,
+    &[aria-current="location"] {
+      color: var(--toc-accent);
+    }
+
+    &[aria-current="location"]::before { content: "[>]"; color: var(--toc-accent); }
+
+    &:focus-visible {
+      outline: 1px solid var(--toc-accent);
+      outline-offset: 3px;
+    }
+  }
+
+  :deep(.toc-count) {
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--toc-muted);
+    font-size: 0.6875rem;
+    font-variant-numeric: tabular-nums;
+    &::before { content: "["; }
+    &::after { content: "]"; }
   }
 }
-
-.dark-mode a {
-  color: #898989;
-  background: #000;
-
-  &::before {
-    border: 1px solid #898989;
-  }
+.toc-empty {
+  margin: 0.625rem 0;
+  color: var(--toc-muted);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.65;
 }
-
-span::before {
-  content: "";
-  display: block;
-  width: 0.7vh;
-  height: 0.7vh;
-  border: 1px solid #000000;
-  transform: rotate(45deg);
-  background-color: white;
-}
-
-.no::before {
-  content: "";
-  display: block;
-  width: 0.7vh;
-  height: 0.7vh;
-  background-color: #d7d7d7;
-  border-radius: 100%;
-  margin: 0 !important;
-  padding: 0 !important;
+.dark-mode .table-of-contents {
+  --toc-color: var(--article-text, #b3b3b3);
+  --toc-muted: var(--article-muted, #808080);
+  --toc-line: var(--article-soft-border, #222);
+  --toc-accent: var(--article-accent, #38e7cd);
 }
 </style>

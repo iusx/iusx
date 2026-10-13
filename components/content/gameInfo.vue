@@ -1,39 +1,29 @@
 <template>
-  <main class="game-info-layout">
-    <div v-if="loading">
-      <an-skeleton :loading="loading" ref="skeletonRef">
-        <template #template>
-          <an-skeleton-item variant="image" style="width: 100%; height: 300px" />
-          <div>
-            <an-skeleton-item variant="h3" style="width: 50%" />
-          </div>
-        </template>
-      </an-skeleton>
-    </div>
+  <figure class="game-info-layout">
+    <div v-if="loading" class="game-loading" role="status">图片加载中…</div>
 
     <template v-else>
       <div class="img">
         <img :src="props.img" alt="" />
         <div class="title">
-          <img :src="logoImage" :style="{ width: `${props.size}px` }" />
+          <img :src="logoImage" :style="{ width: `${props.size}px` }" alt="" />
         </div>
       </div>
     </template>
-    <div class="desc-layout">
-      <div class="stars">
+    <figcaption class="desc-layout">
+      <div class="stars" role="img" :aria-label="`喜爱程度：${love || 0}/5`">
         <span v-for="n in 5" :key="n" class="star" :class="{ filled: n <= love }">
           {{ n <= love ? '★' : '☆' }} </span>
       </div>
-      <span class="desc">
+      <div class="desc">
         <slot></slot>
-      </span>
-    </div>
-  </main>
+      </div>
+    </figcaption>
+  </figure>
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from 'vue';
-const colorMode = useColorMode();
+import { computed, ref, onMounted } from 'vue';
 
 const props = defineProps({
   img: {
@@ -79,82 +69,75 @@ const logoImage = computed(() => {
 
 
 <style lang="scss" scoped>
-.game-info-layout:hover {
-  .img {
-    transform: scale(1.05); // 放大 5%
-  }
+.game-info-layout {
+  width: 100%;
+  min-width: 0;
+  margin: 1.75rem 0;
+  border: 1px solid var(--article-border, #d4d4d4);
+  border-radius: 0;
+  background: var(--article-surface, transparent);
+  color: var(--article-text, #4a4a4a);
+  font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  text-transform: none;
 }
 
-main {
-  box-shadow: -9px 7px 16px 0px rgb(115 115 115 / 25%);
-  border-left: none;
-  margin-bottom: 90px;
+.game-loading {
+  min-height: 8rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: var(--article-muted, #737373);
+  &::before { content: '›'; margin-right: 0.625rem; color: var(--article-accent, #007f73); }
+}
 
-  img {
+.img {
+  display: grid;
+  align-items: end;
+  justify-items: start;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    grid-area: 1 / 1;
+    align-self: stretch;
     width: 100%;
+    background: linear-gradient(90deg, #0009, transparent 75%);
+    z-index: 2;
+    pointer-events: none;
   }
 
-  .img {
-    display: grid;
-    align-items: end;
-    justify-items: start;
-    transition: transform 0.3s ease; // 平滑动画
-    cursor: pointer; // 鼠标变成手型
-
-    &::before {
-      content: '';
-      background: linear-gradient(89deg, #000 -6.11%, rgba(54, 54, 54, 0.47) 49.63%, rgba(102, 102, 102, 0) 70%);
-      height: 100%;
-      width: 100%;
-      grid-row: 1 / 2;
-      grid-column: 1 / 2;
-      z-index: 2;
-    }
-
-    img {
-      width: 100%;
-      grid-row: 1 / 2;
-      grid-column: 1 / 2;
-      z-index: 1;
-    }
-
-    .title {
-      grid-row: 1 / 2;
-      grid-column: 1 / 2;
-      z-index: 2;
-      padding: 12px;
-    }
-  }
-
-  .desc-layout {
-    padding: 12px;
-    background: #f8f8f8;
-    color: #888888;
-
-    .star {
-      margin-right: 4px;
-      transition: transform 0.2s ease;
-      text-shadow: 0px 4px 4px #38E7CD;
-    }
-
-    .star.filled {
-      color: #00E989;
-    }
-
-    .star:not(.filled) {
-      color: #00E989;
-    }
-
-    flex-direction: column;
-    font-size: 11px;
-  }
+  > img { grid-area: 1 / 1; display: block; width: 100%; max-width: 100%; height: auto; border-radius: 0; }
+  .title { grid-area: 1 / 1; z-index: 2; max-width: 100%; padding: 1rem; }
+  .title img { display: block; max-width: 100%; height: auto; border-radius: 0; }
 }
 
-.dark-mode main .desc-layout {
-  background: #121212;
+.dark-mode .img > img { opacity: 0.7; }
+
+.desc-layout {
+  min-width: 0;
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--article-soft-border, #e8e8e8);
 }
 
-.dark-mode main {
-  box-shadow: -9px 7px 16px 0px rgb(12 12 13);
+.stars {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--article-faint, #999);
+  font-size: 0.875rem;
+  .filled { color: var(--article-accent, #007f73); }
+}
+
+.desc {
+  overflow-wrap: anywhere;
+  :deep(p) { margin: 0; color: inherit; font-size: inherit; line-height: inherit; }
+  :deep(a) { color: var(--article-accent, #007f73); text-underline-offset: 0.2em; }
+}
+
+@media (max-width: 640px) {
+  .game-info-layout { margin-block: 1.5rem; }
+  .desc-layout, .img .title { padding: 0.75rem; }
 }
 </style>

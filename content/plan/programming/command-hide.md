@@ -40,7 +40,7 @@ type: tip
 
 要解决这个问题的话可能需要重构逻辑，例如对这种文件进行单独匹配，比如 vue 就需要单独调用 `js\html\css` 三个注释逻辑，而不是目前的这种：
 
-```
+```lua
 vue = { multi_patterns.html, single_patterns.slash, multi_patterns.c },
 ```
 

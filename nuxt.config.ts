@@ -22,6 +22,19 @@ export default defineNuxtConfig({
     strictNuxtContentPaths: true,
   },
   content: {
+    transformers: ["~/transformers/book-headings.ts"],
+    highlight: {
+      theme: {
+        default: "github-light",
+        "dark-mode": "github-dark",
+      },
+      langs: [
+        "bash", "css", "html", "vue", "yaml", "markdown",
+        "toml", "lua", "viml", "ruby", "typescript", "javascript",
+        "prolog", "scala", "lisp", "python", "clojure", "haskell",
+        "java", "erlang", "rust", "json", "diff",
+      ],
+    },
     markdown: {
       remarkPlugins: ["remark-math"],
       rehypePlugins: ["rehype-mathjax"],

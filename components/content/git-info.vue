@@ -83,13 +83,13 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <main>
-    <a v-if="repoInfo" :href="repoInfo.html_url" target="_blank" class="lay">
+  <div class="git-layout">
+    <div v-if="repoInfo" class="lay">
       <div class="git-info">
         <div class="git-title-layout">
           <div class="git-title">
-            <img width="20" :src="repoInfo.avatar" />
-            <p>{{ repoInfo.name }}</p>
+            <img width="20" height="20" :src="repoInfo.avatar" alt="" />
+            <p><a :href="repoInfo.html_url" target="_blank" rel="noopener noreferrer">{{ repoInfo.name }} ↗</a></p>
           </div>
         </div>
         <div class="git-state">
@@ -197,6 +197,7 @@ onMounted(async () => {
           <div class="git-issues" v-if="props.type === 'iss'">
             <a
               v-for="issue in openIssues"
+              class="open"
               role="listitem"
               :key="issue.id"
               target="_blank"
@@ -275,127 +276,88 @@ onMounted(async () => {
                   d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"
                 ></path>
               </svg>
-              <span>{{ prInfo.title }} #{{ prInfo.number }}</span>
+              <span>{{ prInfo.title }} #{{ prInfo.number }} <span class="git-pr-state">[{{ prInfo.merged ? 'merged' : prInfo.state }}]</span></span>
             </a>
           </div>
         </div>
       </div>
-    </a>
-  </main>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.dark-mode .git-info {
-  border: 1px solid #505050;
-}
-.dark-mode .git-info .git-title {
-  border-bottom: 1px solid #505050;
-}
-
-.dark-mode .git-info .git-state .git-issues {
-  border-top: 1px solid #505050;
-}
-
-.dark-mode .git-info .git-state .git-pr {
-  border-top: 1px solid #505050;
-}
-
-main {
-  margin-top: 20px !important;
-  margin-bottom: 12px !important;
-}
-.lay {
+.git-layout {
+  margin: 1.75rem 0;
+  min-width: 0;
+  font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 0.875rem;
+  line-height: 1.7;
   text-transform: none;
-  text-decoration: none;
-  color: #868686;
 }
+
 .git-info {
-  &:hover {
-    border-left: 5px solid #38e7cd;
-  }
-  border: 1px solid #e1e1e1;
-  transition: border-left 0.3s ease;
-  .git-title {
-    img {
-      border-radius: 100%;
-    }
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border-bottom: 1px solid #e1e1e1;
-    gap: 9px;
-    p {
-      margin: 0px;
-    }
-  }
-  .git-state {
-    padding: 12px;
-    .git-num {
-      gap: 12px;
-      display: flex;
-      margin-top: 12px;
-      align-items: center;
-      a {
-        text-decoration: none;
-        display: flex;
-        gap: 3px;
-        align-items: center;
-        color: #868686;
-      }
-    }
-    .git-issues {
-      border-top: 1px solid #e1e1e1;
-      padding-top: 12px;
-      gap: 12px;
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-      margin-top: 12px;
-      .close {
-        svg {
-          color: #8957e5;
-        }
-      }
-      a {
-        text-decoration: none;
-        display: flex;
-        gap: 3px;
-        align-items: center;
-        svg {
-          color: #1f883d;
-        }
-        color: #868686;
-      }
-    }
-    .git-pr {
-      border-top: 1px solid #e1e1e1;
-      padding-top: 12px;
-      gap: 12px;
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-      margin-top: 12px;
+  min-width: 0;
+  border: 1px solid var(--article-border, #d4d4d4);
+  border-radius: 0;
+  background: var(--article-surface, transparent);
+  color: var(--article-text, #4a4a4a);
 
-      .Open svg {
-        color: #1f883d;
-      }
-      .Close svg {
-        color: #cf222e;
-      }
-      .Merged svg {
-        color: #8250df;
-      }
-
-      a {
-        text-decoration: none;
-        display: flex;
-        gap: 3px;
-        align-items: center;
-
-        color: #868686;
-      }
-    }
+  a {
+    color: inherit;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    &:hover { color: var(--article-accent, #007f73); }
+    &:focus-visible { outline: 1px solid var(--article-accent, #007f73); outline-offset: 3px; }
   }
+}
+
+.git-title {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--article-soft-border, #e8e8e8);
+  color: var(--article-strong, #242424);
+  font-weight: 600;
+
+  img { flex: 0 0 20px; width: 20px; height: 20px; border-radius: 0; filter: grayscale(1); }
+  p { min-width: 0; margin: 0; font-size: inherit; line-height: inherit; }
+}
+
+.git-state { padding: 0.8rem 1rem; }
+.git-desc { color: var(--article-muted, #737373); overflow-wrap: anywhere; }
+.git-num {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--article-muted, #737373);
+
+  a { display: flex; align-items: center; gap: 0.375rem; }
+}
+
+.git-issues,
+.git-pr {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--article-soft-border, #e8e8e8);
+
+  a { display: flex; align-items: flex-start; gap: 0.5rem; }
+  svg { flex-shrink: 0; margin-top: 0.25rem; color: var(--article-muted, #737373); }
+  .open svg, .Open svg { color: var(--article-accent, #007f73); }
+  .close, .Close { color: var(--article-muted, #737373); }
+}
+
+.git-pr-state { color: var(--article-faint, #999); font-size: 0.75rem; white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .git-layout { margin-block: 1.5rem; }
+  .git-title, .git-state { padding: 0.75rem; }
 }
 </style>
