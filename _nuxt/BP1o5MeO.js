@@ -1,1 +1,0 @@
-import{_ as r}from"./ni1-p_vA.js";import{A as o,B as t,G as n}from"./Cfs-p2Ar.js";const s={};function c(e,a){return o(),t("strong",null,[n(e.$slots,"default")])}const _=r(s,[["render",c]]);export{_ as default};

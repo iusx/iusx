@@ -181,20 +181,6 @@
   outline-offset: 3px;
 }
 
-// The shared navigation keeps its interaction, with the same flat terminal surfaces on articles.
-body:has(.article-page) .hud-sidebar {
-  .drag-handle, .nav-links {
-    background: #fff;
-    border-color: #d4d4d4;
-    box-shadow: none;
-    backdrop-filter: none;
-  }
-  .nav-item { border-radius: 0; }
-}
-.dark-mode body:has(.article-page) .hud-sidebar {
-  .drag-handle, .nav-links { background: #000; border-color: #363636; }
-}
-
 @media (max-width: 1024px) {
   .article-page :is(.markdown-content, .text-layout .text) :is(h1, h2, h3, h4, h5, h6) {
     scroll-margin-top: 5rem;
