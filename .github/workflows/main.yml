@@ -18,10 +18,11 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Install dependencies
-        run: |
-          npm install -g pnpm
-          pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm run generate
