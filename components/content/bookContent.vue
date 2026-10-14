@@ -344,7 +344,7 @@ const handleSidebarKeydown = event => {
   .reading-progress {
     display: block;
     position: fixed;
-    inset: auto 0 0;
+    inset: auto var(--site-menu-width, 0px) var(--site-menu-height, 0px) 0;
     height: 2px;
     z-index: 1002;
     background: var(--book-accent);

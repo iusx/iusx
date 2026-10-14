@@ -5,6 +5,10 @@ import "lenis/dist/lenis.css";
 
 const route = useRoute();
 const isReadingPage = computed(() => route.path.startsWith("/book/"));
+const pagePath = computed(() => route.path.replace(/\/+$/, "") || "/");
+const isContentDetail = computed(() => pagePath.value !== "/"
+  && route.matched.some(record => record.name === "slug"));
+const showHackerAmbient = computed(() => !isContentDetail.value && pagePath.value !== "/des");
 const reducedMotion = usePreferredReducedMotion();
 const smoothScroller = shallowRef<import("lenis").default | null>(null);
 provide("smoothScroller", smoothScroller);
@@ -40,15 +44,44 @@ onBeforeUnmount(() => stopScrollWatcher?.());
   <div id="app" :class="{ 'reading-page': isReadingPage }">
     <div class="scanline"></div>
 
-    <an-more />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <an-more :appearance="route.path === '/des' || route.path === '/des/' ? 'artwork' : 'default'" />
+    <div class="site-content">
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </div>
+    <ClientOnly>
+      <HackerAmbient v-if="showHackerAmbient" :key="pagePath" />
+    </ClientOnly>
   </div>
 </template>
 
 <style lang="scss">
 @import "/public/scss/app.scss";
+
+:root {
+  --site-menu-width: 48px;
+  --site-menu-height: 0px;
+}
+
+.site-content {
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding-right: var(--site-menu-width);
+  padding-bottom: var(--site-menu-height);
+}
+
+@media (max-width: 700px) {
+  :root {
+    --site-menu-width: 0px;
+    --site-menu-height: calc(48px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media print {
+  :root { --site-menu-width: 0px; --site-menu-height: 0px; }
+  .site-content { min-height: auto; padding-right: 0; padding-bottom: 0; }
+}
 
 @font-face {
   font-family: "Tsing";

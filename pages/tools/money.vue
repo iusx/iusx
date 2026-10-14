@@ -1509,7 +1509,7 @@ button {
   }
 
   :global(.scanline),
-  :global(.hud-sidebar) {
+  :global(.site-menu) {
     display: none !important;
   }
 
