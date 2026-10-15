@@ -12,7 +12,7 @@ let redirectTimer: ReturnType<typeof setTimeout>;
 
 onMounted(() => {
   redirectTimer = setTimeout(() => {
-    window.location.href = "/";
+    void navigateTo("/");
   }, 1000);
 });
 
@@ -22,7 +22,7 @@ onBeforeUnmount(() => clearTimeout(redirectTimer));
 <template>
   <div class="article-redirect" role="status">
     <span class="article-redirect-marker" aria-hidden="true">→</span>
-    <a href="/">返回首页...</a>
+    <NuxtLink to="/">返回首页...</NuxtLink>
   </div>
 </template>
 

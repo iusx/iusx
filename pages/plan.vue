@@ -28,8 +28,8 @@
             <p>{{ formatPercent(plan.progress) }}</p>
           </div>
         </div>
-        <a
-          :href="subPlan._path"
+        <NuxtLink
+          :to="subPlan._path"
           v-for="(subPlan, subIndex) in plan.subPlans"
           :key="subIndex"
           class="sub-plan"
@@ -55,7 +55,7 @@
               <p>{{ formatPercent(subPlan.progress) }}</p>
             </div>
           </div>
-        </a>
+        </NuxtLink>
       </div>
     </div>
   </main>

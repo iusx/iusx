@@ -11,15 +11,15 @@
         </div>
         <div class="link">
           <span v-for="item in links" :key="item.href">
-            <a :href="item.href">{{ item.name }}</a>
+            <NuxtLink :to="item.href">{{ item.name }}</NuxtLink>
             {{ item.separator }}
           </span>
         </div>
       </div>
       <div class="copyright">
         <div class="copy-link">
-          <a href="/about">about</a>
-          <a href="/link">Friendly link</a>
+          <NuxtLink to="/about">about</NuxtLink>
+          <NuxtLink to="/link">Friendly link</NuxtLink>
           <a href="/rss.xml">Rss</a>
           <a href="/sitemap.xml">Sitemap</a>
         </div>

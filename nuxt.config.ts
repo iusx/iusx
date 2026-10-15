@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: { pageTransition: { name: "hacker-page", mode: "out-in" } },
   devtools: { enabled: true },
   nitro: { prerender: { routes: ["/rss.xml"] } },
   modules: [

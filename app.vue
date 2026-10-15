@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, provide, shallowRef, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, provide, ref, shallowRef, watch } from "vue";
 import { usePreferredReducedMotion } from "@vueuse/core";
 import "lenis/dist/lenis.css";
 
@@ -10,9 +10,22 @@ const isContentDetail = computed(() => pagePath.value !== "/"
   && route.matched.some(record => record.name === "slug"));
 const showHackerAmbient = computed(() => !isContentDetail.value && pagePath.value !== "/des");
 const reducedMotion = usePreferredReducedMotion();
+const pageTransitionActive = ref(false);
+const homeIntroActive = ref(pagePath.value === "/");
+const homeIntroBlocking = ref(false);
+function finishHomeIntro() {
+  homeIntroActive.value = false;
+  homeIntroBlocking.value = false;
+}
+watch(pagePath, path => { if (path !== "/") finishHomeIntro(); });
+provideTransitionSound();
 const smoothScroller = shallowRef<import("lenis").default | null>(null);
 provide("smoothScroller", smoothScroller);
 let stopScrollWatcher: (() => void) | undefined;
+watch([smoothScroller, homeIntroBlocking], ([scroller, blocked]) => {
+  if (blocked) scroller?.stop();
+  else scroller?.start();
+});
 
 useHead({
   titleTemplate: (titleChunk) => {
@@ -42,16 +55,19 @@ onBeforeUnmount(() => stopScrollWatcher?.());
 
 <template>
   <div id="app" :class="{ 'reading-page': isReadingPage }">
+    <HomeIntro v-if="homeIntroActive" @start="homeIntroBlocking = true" @finish="finishHomeIntro" />
     <div class="scanline"></div>
 
-    <an-more :appearance="route.path === '/des' || route.path === '/des/' ? 'artwork' : 'default'" />
-    <div class="site-content">
+    <an-more :inert="homeIntroBlocking" :appearance="route.path === '/des' || route.path === '/des/' ? 'artwork' : 'default'" />
+    <div class="site-content" :inert="homeIntroBlocking">
       <NuxtLayout>
-        <NuxtPage />
+        <HackerPageTransition v-slot="{ transition }" @active-change="pageTransitionActive = $event">
+          <NuxtPage :transition="transition" :page-key="pageRoute => pageRoute.path" />
+        </HackerPageTransition>
       </NuxtLayout>
     </div>
     <ClientOnly>
-      <HackerAmbient v-if="showHackerAmbient" :key="pagePath" />
+      <HackerAmbient v-if="showHackerAmbient && !pageTransitionActive && !homeIntroActive" :key="pagePath" />
     </ClientOnly>
   </div>
 </template>

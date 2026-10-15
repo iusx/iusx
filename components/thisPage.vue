@@ -1,41 +1,44 @@
 <template>
-  <p class="about">
-    <a href="/" :style="{ color: linkColor }"
+  <p
+    class="about"
+    :style="{
+      '--page-link-light': props.color.light,
+      '--page-link-dark': props.color.dark,
+    }"
+  >
+    <NuxtLink to="/"
       ><small>Home /</small><span><slot /></span
-    ></a>
+    ></NuxtLink>
   </p>
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
-const colorMode = useColorMode();
-
 const props = defineProps({
   page: String,
   color: {
     type: Object,
     default: () => ({
-      light: "#000000", 
-      dark: "#ffffff",  
+      light: "#000000",
+      dark: "#ffffff",
     }),
   },
 });
-
-const linkColor = computed(() =>
-  colorMode.value === "dark" ? props.color.dark : props.color.light
-);
 </script>
 
 <style lang="scss" scoped>
 a {
+  color: var(--page-link-light);
   text-decoration: none;
   &:visited {
-    color: inherit;
+    color: var(--page-link-light);
   }
 }
 
-.dark-mode span {
-  color: #fff;
+.dark-mode a {
+  &,
+  &:visited {
+    color: var(--page-link-dark);
+  }
 }
 .about {
   padding-top: 12px;

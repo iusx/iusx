@@ -27,7 +27,7 @@ function imageUrl(image: string) {
   <figure v-else-if="info || images.length" class="text-space-figure">
     <figcaption v-if="info" class="text-space-caption" v-html="info" />
     <div v-if="images.length" class="text-space-media">
-      <page-image v-if="images.length > 1 && type !== 'flat'" :img="images.join(',')" />
+      <page-image v-if="images.length > 1 && type !== 'flat'" :img="images.join(',')" :alt="info" />
       <template v-else>
         <a
           v-for="image in images"
@@ -138,16 +138,13 @@ function imageUrl(image: string) {
     margin-top: 0.75rem;
   }
 
-  :deep(img) {
+  > a > img {
     display: block;
+    width: auto;
     max-width: 100%;
     height: auto;
     margin: 0 auto;
     border-radius: 0;
-  }
-
-  > a > img {
-    width: auto;
   }
 
   :deep(.tips) {
@@ -189,7 +186,7 @@ function imageUrl(image: string) {
     }
   }
 
-  .text-space-media :deep(img) {
+  .text-space-media > a > img {
     opacity: 0.7;
   }
 
