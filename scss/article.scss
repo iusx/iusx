@@ -55,13 +55,15 @@
   text-transform: none;
 
   > p,
-  > :is(ul, ol, blockquote) p {
+  > .article-section > p,
+  > :is(ul, ol, blockquote) p,
+  > .article-section > :is(ul, ol, blockquote) p {
     color: inherit;
     font-size: inherit;
     line-height: inherit;
   }
 
-  > p { margin: 1.25rem 0; }
+  > p, > .article-section > p { margin: 1.25rem 0; }
 
   :is(strong, b) {
     color: var(--article-strong) !important;
@@ -78,14 +80,15 @@
     scroll-margin-top: 2rem;
   }
 
-  > :is(h1, h2, h3, h4, h5, h6):not(.text-title):not([data-toc-marker]) {
+  > :is(h1, h2, h3, h4, h5, h6):not(.text-title):not([data-toc-marker]),
+  > .article-section > :is(h1, h2, h3, h4, h5, h6):not(.text-title):not([data-toc-marker]) {
     margin: 2.5rem 0 1rem;
     &::before { content: "# "; color: var(--article-muted); font-weight: 400; }
     a { color: inherit; }
   }
-  > h1:not(.text-title) { font-size: clamp(1.25rem, 2vw, 1.625rem); }
-  > h2:not(.text-title) { font-size: 1.125rem; }
-  > :is(h3, h4, h5, h6):not(.text-title) { font-size: 1rem; }
+  > h1:not(.text-title), > .article-section > h1:not(.text-title) { font-size: clamp(1.25rem, 2vw, 1.625rem); }
+  > h2:not(.text-title), > .article-section > h2:not(.text-title) { font-size: 1.125rem; }
+  > :is(h3, h4, h5, h6):not(.text-title), > .article-section > :is(h3, h4, h5, h6):not(.text-title) { font-size: 1rem; }
 
   :is(p, li, blockquote, figcaption) a {
     color: inherit;

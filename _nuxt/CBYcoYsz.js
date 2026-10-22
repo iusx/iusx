@@ -1,0 +1,1 @@
+function a(r){try{return localStorage.getItem(r)}catch{return null}}function n(r,t){try{return localStorage.setItem(r,t),!0}catch{return!1}}function o(r){try{return localStorage.removeItem(r),!0}catch{return!1}}function u(r){try{const t=JSON.parse(r||"[]");return Array.isArray(t)?t.filter(e=>typeof e=="string"):[]}catch{return[]}}export{o as a,u as p,a as r,n as w};
