@@ -209,6 +209,11 @@ export async function createDesignStage(
   const pending = new Set<() => void>()
   const maximumTextureSize = Math.min(renderer.capabilities.maxTextureSize, 4096)
   let disposed = false
+  let needsRender = true
+  let renderedAmbientFrame: number | undefined
+  let viewportWidth = 0
+  let viewportHeight = 0
+  let pixelRatio = 0
 
   const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))
 
@@ -239,9 +244,15 @@ export async function createDesignStage(
     const width = Math.max(1, Math.round(bounds.width))
     const height = Math.max(1, Math.round(bounds.height))
     const mobile = window.matchMedia('(pointer: coarse)').matches || width < 768
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75))
-    renderer.setSize(width, height, false)
+    const ratio = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75)
+    if (width === viewportWidth && height === viewportHeight && ratio === pixelRatio) return
+    viewportWidth = width
+    viewportHeight = height
+    pixelRatio = ratio
+    // Update dimensions and DPR together, without reallocating the buffer twice.
+    renderer.setDrawingBufferSize(width, height, ratio)
     uniforms.uViewport.value.set(width, height)
+    needsRender = true
   }
 
   function loadImage(url: string): Promise<StageImage | null> {
@@ -340,24 +351,44 @@ export async function createDesignStage(
     touchTexture(current.texture)
     touchTexture(next.texture)
     trimCache()
+    needsRender = true
+  }
+
+  function setUniform(uniform: { value: number }, value: number) {
+    if (uniform.value === value) return
+    uniform.value = value
+    needsRender = true
   }
 
   function setMotion(motion: StageMotion) {
     if (disposed) return
-    if (motion.transition !== undefined) uniforms.uTransition.value = clamp(motion.transition, 0, 1)
-    if (motion.transitionFx !== undefined) uniforms.uTransitionFx.value = clamp(motion.transitionFx, 0, 1)
-    if (motion.dragX !== undefined) uniforms.uDragX.value = clamp(motion.dragX, -0.6, 0.6)
-    if (motion.direction !== undefined) uniforms.uDirection.value = motion.direction < 0 ? -1 : 1
-    if (motion.hover !== undefined) uniforms.uHover.value = clamp(motion.hover, 0, 1)
-    if (motion.pointerX !== undefined) uniforms.uPointer.value.x = clamp(motion.pointerX, -1, 1)
-    if (motion.pointerY !== undefined) uniforms.uPointer.value.y = clamp(motion.pointerY, -1, 1)
-    if (motion.reduced !== undefined) uniforms.uReduced.value = motion.reduced ? 1 : 0
+    if (motion.transition !== undefined) setUniform(uniforms.uTransition, clamp(motion.transition, 0, 1))
+    if (motion.transitionFx !== undefined) setUniform(uniforms.uTransitionFx, clamp(motion.transitionFx, 0, 1))
+    if (motion.dragX !== undefined) setUniform(uniforms.uDragX, clamp(motion.dragX, -0.6, 0.6))
+    if (motion.direction !== undefined) setUniform(uniforms.uDirection, motion.direction < 0 ? -1 : 1)
+    if (motion.hover !== undefined) setUniform(uniforms.uHover, clamp(motion.hover, 0, 1))
+    const pointerX = motion.pointerX === undefined ? uniforms.uPointer.value.x : clamp(motion.pointerX, -1, 1)
+    const pointerY = motion.pointerY === undefined ? uniforms.uPointer.value.y : clamp(motion.pointerY, -1, 1)
+    if (pointerX !== uniforms.uPointer.value.x || pointerY !== uniforms.uPointer.value.y) {
+      uniforms.uPointer.value.set(pointerX, pointerY)
+      needsRender = true
+    }
+    if (motion.reduced !== undefined) setUniform(uniforms.uReduced, motion.reduced ? 1 : 0)
   }
 
   function render(timeSeconds: number) {
     if (disposed || renderer.getContext().isContextLost()) return
-    uniforms.uTime.value = Number.isFinite(timeSeconds) ? timeSeconds : 0
+    const time = Number.isFinite(timeSeconds) ? timeSeconds : 0
+    // The shader uses time only as floor(uTime * 16). Keep the exact same
+    // animated frames, while avoiding identical draws between those frames.
+    // fround matches the float uploaded to the GPU at frame boundaries.
+    const ambientFrame = Math.floor(Math.fround(time) * 16)
+    const ambientActive = uniforms.uHover.value < 0.999 && uniforms.uReduced.value === 0
+    if (!needsRender && (!ambientActive || ambientFrame === renderedAmbientFrame)) return
+    uniforms.uTime.value = time
     renderer.render(scene, camera)
+    renderedAmbientFrame = ambientFrame
+    needsRender = false
   }
 
   function dispose() {

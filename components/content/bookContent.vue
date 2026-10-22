@@ -1,6 +1,7 @@
 <script setup>
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, provide, ref, unref, watch } from "vue";
 import { useMediaQuery } from "@vueuse/core";
+import { activateArticleSection } from "~/utils/article-activation";
 
 const props = defineProps({
   title: { type: String, default: "" },
@@ -47,6 +48,9 @@ const menuButton = ref(null);
 const isMobile = useMediaQuery("(max-width: 1024px)");
 const isDrawerOpen = ref(false);
 const smoothScroller = inject("smoothScroller", null);
+const introBlocking = inject("introBlocking", ref(false));
+let stopEntryHashWatcher;
+let disposed = false;
 let pausedScroller = null;
 watch(() => isDrawerOpen.value ? unref(smoothScroller) : null, scroller => {
   pausedScroller?.start();
@@ -61,26 +65,48 @@ const navigateToHeading = async id => {
   isDrawerOpen.value = false;
   await nextTick();
   let heading = contentElement.value?.querySelector(`#${CSS.escape(id)}`);
+  await activateArticleSection(heading);
+  heading = contentElement.value?.querySelector(`#${CSS.escape(id)}`);
   if (heading?.hasAttribute("data-toc-marker")) {
     heading = [heading.previousElementSibling, heading.nextElementSibling]
       .find(element => element?.matches(".text-title")) || heading;
-    heading.scrollIntoView({ block: "start" });
   }
   if (heading) {
+    heading.scrollIntoView({ block: "start" });
     heading.setAttribute("tabindex", "-1");
     heading.focus({ preventScroll: true });
   }
 };
 watch(isMobile, mobile => { if (!mobile) closeDrawer(); });
 
+onNuxtReady(() => {
+  if (disposed || !window.location.hash) return;
+  // A direct hash entry may precede both the intro unlocking the page and the
+  // lazy section activating. Align/focus the live heading once both are ready.
+  stopEntryHashWatcher = watch(() => unref(introBlocking), blocked => {
+    if (blocked) return;
+    void nextTick().then(() => {
+      stopEntryHashWatcher?.();
+      if (disposed) return;
+      let id = window.location.hash.slice(1);
+      try { id = decodeURIComponent(id); } catch { /* Preserve malformed hashes verbatim. */ }
+      if (id) void navigateToHeading(id);
+    });
+  }, { immediate: true, flush: "post" });
+});
+
 onMounted(() => {
-  // SSR cannot know the viewport; synchronize accessibility without rerendering Markdown slots.
-  const sidebar = sidebarElement.value;
-  if (sidebar) {
-    sidebar.inert = isMobile.value && !isDrawerOpen.value;
-    if (isMobile.value) sidebar.setAttribute("role", "dialog");
+  // Viewport changes must not rerender Markdown while its async components
+  // are still hydrating. Keep viewport-only attributes out of the template.
+  watch([isMobile, isDrawerOpen], ([mobile, open]) => {
+    const sidebar = sidebarElement.value;
+    if (!sidebar) return;
+    sidebar.inert = mobile && !open;
+    if (mobile) sidebar.setAttribute("role", "dialog");
+    else sidebar.removeAttribute("role");
     if (sidebar.inert) sidebar.setAttribute("aria-hidden", "true");
-  }
+    else sidebar.removeAttribute("aria-hidden");
+  }, { immediate: true, flush: "post" });
   watch(isDrawerOpen, async open => {
     if (open) {
       const previousOverflow = document.body.style.overflow;
@@ -96,6 +122,8 @@ onMounted(() => {
   }, { flush: "post" });
 });
 onBeforeUnmount(() => {
+  disposed = true;
+  stopEntryHashWatcher?.();
   restoreScroll();
   pausedScroller?.start();
 });
@@ -131,9 +159,7 @@ const handleSidebarKeydown = event => {
     </Transition>
     <main class="book-layout">
       <aside id="book-details" ref="sidebarElement" class="book-info" :class="{ 'is-open': isDrawerOpen }"
-        :role="isMobile ? 'dialog' : undefined" :aria-modal="isDrawerOpen ? 'true' : undefined"
-        :aria-hidden="isMobile && !isDrawerOpen ? 'true' : undefined" aria-label="书籍信息与目录"
-        :inert="(isMobile && !isDrawerOpen) || undefined"
+        :aria-modal="isDrawerOpen ? 'true' : undefined" aria-label="书籍信息与目录"
         tabindex="-1" data-lenis-prevent @keydown="handleSidebarKeydown">
         <button class="directory-close" type="button" aria-label="关闭目录" @click="closeDrawer">CLOSE ×</button>
         <NuxtLink class="library-link" to="/book" @click="closeDrawer">← LIBRARY</NuxtLink>
@@ -314,11 +340,13 @@ const handleSidebarKeydown = event => {
   font-size: 1rem;
   line-height: 1.85;
   overflow-wrap: anywhere;
-  :deep(> p) { color: inherit; font-size: inherit; line-height: inherit; }
-  :deep(> p) { margin: 1.25rem 0; }
+  :deep(> p), :deep(> .article-section > p) { color: inherit; font-size: inherit; line-height: inherit; }
+  :deep(> p), :deep(> .article-section > p) { margin: 1.25rem 0; }
   :deep(> :first-child) { margin-top: 0; }
+  :deep(> .article-section:first-child > :first-child) { margin-top: 0; }
   :deep(:is(h1, h2, h3, h4, h5, h6)) { scroll-margin-top: 2rem; text-transform: none; }
-  :deep(> :is(h1, h2, h3, h4, h5, h6):not(.text-title)) {
+  :deep(> :is(h1, h2, h3, h4, h5, h6):not(.text-title)),
+  :deep(> .article-section > :is(h1, h2, h3, h4, h5, h6):not(.text-title)) {
     margin: 2.5rem 0 1rem;
     color: var(--book-strong);
     font-size: 1.1875rem;

@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from "vue";
 const colorMode = useColorMode();
 
 const props = defineProps({
@@ -9,37 +8,12 @@ const props = defineProps({
   },
 });
 
-const firstImg = props.sortedData.length > 0 ? props.sortedData[0].img : null;
-
-const images = ref([]);
-
-const loading = ref(true);
-const imagesLoadedCount = ref(0);
-
-onMounted(() => {
-  props.sortedData.forEach((item) => {
-    const formattedPath = `/img/book/${item.img}`;
-    images.value.push(formattedPath);
-
-    const img = new Image();
-    img.src = formattedPath;
-
-    img.onload = () => {
-      imagesLoadedCount.value++;
-      if (imagesLoadedCount.value === images.value.length) {
-        loading.value = false;
-      }
-    };
-
-    img.onerror = () => {
-      console.error(`Failed to load image ${formattedPath}`);
-    };
-  });
-});
+const { loading } = useImagePreload(() => props.sortedData.map(item => `/img/book/${item.img}`));
 </script>
 
 <template>
   <div class="note-book-box-no" v-if="loading" v-for="(des, index) in sortedData"
+    :key="des._path"
     :class="{ 'scale-effect': index % 3 !== 1 }">
     <nuxt-link :to="des._path">
       <div class="note-book-box-desc">
@@ -51,7 +25,7 @@ onMounted(() => {
       <div class="note-book-state"></div>
     </nuxt-link>
   </div>
-  <NuxtLink :to="des._path" v-else class="note-book-box" v-for="(des, index) in sortedData">
+  <NuxtLink :to="des._path" v-else class="note-book-box" v-for="des in sortedData" :key="des._path">
     <img :src="`/img/book/` + des.img" />
     <div class="note-book-box-desc">
       <span>in reading</span>

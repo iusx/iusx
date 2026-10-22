@@ -375,6 +375,14 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
   };
   for (let node = 0; node < count; node++) if (discovery[node] < 0) visit(node);
 
+  const activeIncoming = Array(count).fill(0) as number[];
+  const activeOutgoing = Array(count).fill(0) as number[];
+  for (const { source, target } of endpoints) {
+    if (source !== target && componentOf[source] === componentOf[target]) {
+      activeIncoming[target]++;
+      activeOutgoing[source]++;
+    }
+  }
   const localOrder = Array(count).fill(0) as number[];
   for (const component of components) {
     const active = new Set(component);
@@ -387,14 +395,22 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
       let bestScore = -Infinity;
       for (const node of component) {
         if (!active.has(node)) continue;
-        const inCount = incoming[node].filter(edge => endpoints[edge].source !== node && active.has(endpoints[edge].source)).length;
-        const outCount = outgoing[node].filter(edge => endpoints[edge].target !== node && active.has(endpoints[edge].target)).length;
+        const inCount = activeIncoming[node];
+        const outCount = activeOutgoing[node];
         if (!inCount && source < 0) source = node;
         if (!outCount && sink < 0) sink = node;
         if (outCount - inCount > bestScore) { best = node; bestScore = outCount - inCount; }
       }
       const chosen = source >= 0 ? source : sink >= 0 ? sink : best;
       active.delete(chosen);
+      for (const edge of outgoing[chosen]) {
+        const target = endpoints[edge].target;
+        if (active.has(target)) activeIncoming[target]--;
+      }
+      for (const edge of incoming[chosen]) {
+        const source = endpoints[edge].source;
+        if (active.has(source)) activeOutgoing[source]--;
+      }
       if (source < 0 && sink >= 0) right.push(chosen);
       else left.push(chosen);
     }
@@ -431,8 +447,14 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
       const previous = new Map(layer.map((node, index) => [node, index]));
       const barycenter = (node: number): number => {
         const edges = direction > 0 ? incoming[node] : outgoing[node];
-        const neighbors = edges.filter(index => forward[index]).map(index => direction > 0 ? endpoints[index].source : endpoints[index].target);
-        return neighbors.length ? neighbors.reduce((sum, neighbor) => sum + rows[neighbor], 0) / neighbors.length : rows[node];
+        let total = 0;
+        let neighbors = 0;
+        for (const index of edges) {
+          if (!forward[index]) continue;
+          total += rows[direction > 0 ? endpoints[index].source : endpoints[index].target];
+          neighbors++;
+        }
+        return neighbors ? total / neighbors : rows[node];
       };
       const centers = new Map(layer.map(node => [node, barycenter(node)]));
       layer.sort((a, b) => centers.get(a)! - centers.get(b)! || previous.get(a)! - previous.get(b)!);

@@ -39,24 +39,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import * as d3 from "d3";
 
-const colorMode = useColorMode();
-
-const links = ref([
+const links = [
   { name: "Security", href: "/sec", separator: " + " },
   { name: "Design", href: "/des", separator: " ÷ " },
   { name: "Plan", href: "/plan", separator: " + " },
   { name: "Learn", href: "/book" },
-]);
+];
 
 const force = ref(null);
 
 let simulation = null;
 let addTimer = null;
 let focusTimer = null;
+let focusStartTimer = null;
 let zoomBehavior = null;
+let disposeGraph = () => {};
 
 onMounted(() => {
   const width = 1600;
@@ -95,16 +95,18 @@ onMounted(() => {
   const gLinks = zoomRoot.append("g").attr("class", "links");
   const gNodes = zoomRoot.append("g").attr("class", "nodes");
 
-  gLinks
+  // forceLink replaces numeric endpoints with node objects after initialization.
+  const linkKey = (link) => `${link.source.id ?? link.source}-${link.target.id ?? link.target}`;
+  let linkSelection = gLinks
     .selectAll("line")
-    .data(d3Links, (d) => `${d.source}-${d.target}`)
+    .data(d3Links, linkKey)
     .enter()
     .append("line")
     .attr("class", "link")
     .attr("stroke", "#00FFF6")
     .attr("stroke-width", 1);
 
-  gNodes
+  let nodeSelection = gNodes
     .selectAll("circle")
     .data(nodes, (d) => d.id)
     .enter()
@@ -139,23 +141,21 @@ onMounted(() => {
   svg.call(zoomBehavior);
 
   function ticked() {
-    gLinks
-      .selectAll("line")
+    linkSelection
       .attr("x1", (d) => d.source.x)
       .attr("y1", (d) => d.source.y)
       .attr("x2", (d) => d.target.x)
       .attr("y2", (d) => d.target.y);
 
-    gNodes
-      .selectAll("circle")
+    nodeSelection
       .attr("cx", (d) => d.x)
       .attr("cy", (d) => d.y);
   }
 
   function refreshSelections() {
-    gLinks
+    linkSelection = gLinks
       .selectAll("line")
-      .data(d3Links, (d) => `${d.source}-${d.target}`)
+      .data(d3Links, linkKey)
       .join(
         (enter) =>
           enter
@@ -167,7 +167,7 @@ onMounted(() => {
         (exit) => exit.remove(),
       );
 
-    gNodes
+    nodeSelection = gNodes
       .selectAll("circle")
       .data(nodes, (d) => d.id)
       .join(
@@ -200,6 +200,7 @@ onMounted(() => {
     const INTERVAL = DURATION + 700;
 
     focusTimer = setInterval(() => {
+      if (document.hidden) return;
       const targetNode = nodes.find((n) => n.id === targetId);
       if (!targetNode) return;
       const targetTransform = computeTransformForNode(targetNode, 2.0);
@@ -213,17 +214,6 @@ onMounted(() => {
 
       zoomed = !zoomed;
     }, INTERVAL);
-  }
-
-  function stopFocusLoop() {
-    if (focusTimer) {
-      clearInterval(focusTimer);
-      focusTimer = null;
-      svg
-        .transition()
-        .duration(1000)
-        .call(zoomBehavior.transform, d3.zoomIdentity);
-    }
   }
 
   function addOneNode() {
@@ -245,10 +235,12 @@ onMounted(() => {
     linkForce.links(d3Links);
 
     refreshSelections();
-    simulation.alpha(0.9).restart();
+    simulation.alpha(0.9);
+    if (!document.hidden) simulation.restart();
 
     if (id === 3) {
-      setTimeout(() => {
+      focusStartTimer = setTimeout(() => {
+        focusStartTimer = null;
         startFocusLoopOnId(3);
       }, 400);
     }
@@ -262,9 +254,20 @@ onMounted(() => {
     }
     addOneNode();
   }, STEP_MS);
+
+  const syncVisibility = () => document.hidden ? simulation.stop() : simulation.restart();
+  document.addEventListener("visibilitychange", syncVisibility);
+  syncVisibility();
+  disposeGraph = () => {
+    document.removeEventListener("visibilitychange", syncVisibility);
+    svg.interrupt();
+    svg.selectAll("*").interrupt();
+    svg.on(".zoom", null).remove();
+  };
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
+  clearTimeout(focusStartTimer);
   if (addTimer) {
     clearInterval(addTimer);
     addTimer = null;
@@ -274,9 +277,7 @@ onUnmounted(() => {
     focusTimer = null;
   }
   if (simulation) simulation.stop();
-  if (force.value) {
-    d3.select(force.value).selectAll("*").remove();
-  }
+  disposeGraph();
 });
 </script>
 

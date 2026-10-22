@@ -13,7 +13,8 @@ useSeoMeta({
 });
 useHead({ bodyAttrs: { class: "design-exhibition" } });
 
-const { data: content } = await useAsyncData("equalDes", () => queryContent("des/").find());
+const { data: content } = await useAsyncData("equalDes", () => queryContent("des/")
+  .only(["_path", "title", "img", "url", "time", "client", "director"]).find(), { deep: false });
 const dateValue = (value: string) => {
   const parts = value.split(/[.-]/).map(Number);
   return parts.length === 3 ? Date.UTC(parts[0], parts[1] - 1, parts[2]) : 0;
@@ -82,6 +83,7 @@ let resizeObserver: ResizeObserver | undefined;
 let cipherContext: CanvasRenderingContext2D | null = null;
 let disposed = false;
 let lastCipherFrame = -1;
+let cipherDirty = false;
 let wheelTotal = 0;
 let wheelTime = 0;
 let wheelAxis: "x" | "y" | undefined;
@@ -485,7 +487,9 @@ function handleFocusOut(event: FocusEvent) {
 
 function clearCipher() {
   const canvas = cipherCanvas.value;
-  if (canvas && cipherContext) cipherContext.clearRect(0, 0, canvas.width, canvas.height);
+  if (!cipherDirty || !canvas || !cipherContext) return;
+  cipherContext.clearRect(0, 0, canvas.width, canvas.height);
+  cipherDirty = false;
 }
 
 function resize() {
@@ -493,9 +497,12 @@ function resize() {
   const canvas = cipherCanvas.value;
   const bounds = artwork.value?.getBoundingClientRect();
   if (!canvas || !bounds) return;
-  canvas.width = Math.round(bounds.width);
-  canvas.height = Math.round(bounds.height);
-  cipherContext = canvas.getContext("2d");
+  const width = Math.round(bounds.width);
+  const height = Math.round(bounds.height);
+  if (canvas.width !== width) { canvas.width = width; cipherDirty = false; }
+  if (canvas.height !== height) { canvas.height = height; cipherDirty = false; }
+  cipherContext ??= canvas.getContext("2d");
+  clearCipher();
   syncFrame();
 }
 
@@ -516,6 +523,7 @@ function drawCipher(time: number) {
     intensity: transitioning.value ? envelope * 0.75 : 0.7,
     rows,
   });
+  cipherDirty = true;
 }
 
 function tick(time: number) {

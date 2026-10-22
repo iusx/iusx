@@ -8,6 +8,7 @@ useSeoMeta({
 
 const { data: books } = await useAsyncData("book-gallery", () =>
   queryContent("book").only(["_path", "title", "img", "time", "director", "plan"]).find(),
+  { deep: false },
 );
 
 const galleryElement = ref<HTMLElement | null>(null);

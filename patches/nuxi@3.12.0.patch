@@ -1,0 +1,15 @@
+diff --git a/dist/chunks/index4.mjs b/dist/chunks/index4.mjs
+index 72641740da8941467b5f6667be09fec40f8cc6a0..1203112493b30e36b7a93cb7e8f24c0075a20d8d 100644
+--- a/dist/chunks/index4.mjs
++++ b/dist/chunks/index4.mjs
+@@ -531,6 +531,10 @@ function _createProxyFn(type, server) {
+       _resolve();
+     });
+     res.on("error", (error) => {
++      if (res.destroyed && (error.code === "ECONNABORTED" || error.code === "ECONNRESET" || error.code === "EPIPE")) {
++        _resolve();
++        return;
++      }
+       _reject(error);
+     });
+     for (const pass of type === "ws" ? server._wsPasses : server._webPasses) {

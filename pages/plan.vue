@@ -5,7 +5,7 @@
       <span>MY plan</span>
     </div>
     <div class="layout-box">
-      <div v-for="(plan, index) in sortedData" :key="index" class="layout">
+      <div v-for="plan in sortedData" :key="plan._path" class="layout">
         <div class="title-box">
           <p class="title-box_name">{{ plan.title }}</p>
           <div class="title">
@@ -30,8 +30,8 @@
         </div>
         <NuxtLink
           :to="subPlan._path"
-          v-for="(subPlan, subIndex) in plan.subPlans"
-          :key="subIndex"
+          v-for="subPlan in plan.subPlans"
+          :key="subPlan._path"
           class="sub-plan"
         >
           <div class="title">
@@ -65,9 +65,10 @@
 import { computed } from "vue";
 useSeoMeta({ title: "PLAN" });
 
-const { data: equalQueryLink } = await useAsyncData("equalLink", () => {
-  return queryContent("plan/").find();
-});
+const { data: plans } = await useAsyncData("plan-overview", () =>
+  queryContent("plan/").only(["_path", "title", "target", "current", "displayType", "time"]).find(),
+  { deep: false },
+);
 
 const formatNumber = (value) => value.toLocaleString();
 const formatPercent = (value) => (value < 0 ? "-" : "") + Math.abs(value) + "%";
@@ -75,7 +76,7 @@ const getBarClass = (current, target) =>
   current < 0 ? "progress-negative" : "";
 
 const groupedData = computed(() => {
-  const raw = equalQueryLink.value || [];
+  const raw = plans.value || [];
   const map = new Map();
 
   raw.forEach((item) => {
@@ -87,16 +88,15 @@ const groupedData = computed(() => {
     const parentPath = "/" + seg.slice(0, 2).join("/");
 
     if (seg.length === 2) {
-      if (!map.has(parentPath)) {
-        map.set(parentPath, {
-          ...item,
-          _path: parentPath,
-          subPlans: [],
-          target: item.target || (item.displayType === "usd" ? 0 : 100),
-          current: item.current || 0,
-          displayType: item.displayType || "percent",
-        });
-      }
+      const subPlans = map.get(parentPath)?.subPlans || [];
+      map.set(parentPath, {
+        ...item,
+        _path: parentPath,
+        subPlans,
+        target: item.target || (item.displayType === "usd" ? 0 : 100),
+        current: item.current || 0,
+        displayType: item.displayType || "percent",
+      });
     } else {
       if (!map.has(parentPath)) {
         const folderName = seg[1];
@@ -104,8 +104,8 @@ const groupedData = computed(() => {
           .replace(/[-_]/g, " ")
           .replace(/\b\w/g, (c) => c.toUpperCase());
         map.set(parentPath, {
+          _path: parentPath,
           title: humanTitle,
-          target: item.displayType === "usd" ? 0 : 100,
           target: 100,
           current: 0,
           progress: 0,
@@ -244,7 +244,7 @@ main {
   src:
     url("/Tsing.woff2") format("woff2"),
     url("/Tsing.woff") format("woff"),
-    url("/Tsing.ttf") format("truetype");
+    url("/TSING.ttf") format("truetype");
 }
 
 @media (max-width: 1440px) {

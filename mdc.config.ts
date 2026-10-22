@@ -1,3 +1,5 @@
+import { highlightLanguages } from "./utils/highlight-languages";
+
 // Preserve Shiki's grammar rules while keeping the blog's neutral and mint palette.
 const lightPalette: Record<string, string> = {
   "#24292e": "#3f3f3f",
@@ -46,6 +48,14 @@ type ColorReplacementOptions = {
 
 export default {
   shiki: {
+    async setup(highlighter: { loadLanguage: (...languages: unknown[]) => Promise<void> }) {
+      if (import.meta.server) {
+        // Shiki 1.3 temporarily removes Markdown while loading embedded grammars.
+        // Finish loading before MDC starts concurrent code-block requests.
+        const { bundledLanguages } = await import("shiki/langs");
+        await highlighter.loadLanguage(...highlightLanguages.map(language => bundledLanguages[language]));
+      }
+    },
     transformers: [
       {
         name: "iusx:code-palette",

@@ -30,6 +30,23 @@ const hash = (seed: number) => {
   const value = Math.sin(seed * 127.1) * 43758.5453;
   return value - Math.floor(value);
 };
+// Particle seeds are fixed throughout every transition. Reuse their original
+// trajectories instead of recomputing the same trigonometry on every frame.
+function createParticles() {
+  return Array.from({ length: 180 }, (_, index) => {
+    const seed = index * 17 + 3;
+    return {
+      x: hash(seed),
+      y: hash(seed + 2),
+      travelX: 20 + hash(seed + 1) * 100,
+      travelY: 6 + hash(seed + 3) * 32,
+      size: 1 + Math.floor(hash(seed + 4) * 3),
+      opacity: 0.25 + hash(seed + 5) * 0.65,
+      lineWidth: index % 9 === 0 ? 8 + hash(seed + 6) * 28 : 0,
+    };
+  });
+}
+let particles: ReturnType<typeof createParticles> | undefined;
 
 function setActive(value: boolean) {
   active.value = value;
@@ -68,11 +85,16 @@ function resize() {
   const element = canvas.value;
   if (!element || !context) return;
   const bounds = element.getBoundingClientRect();
-  width = Math.round(bounds.width);
-  height = Math.round(bounds.height);
+  const nextWidth = Math.round(bounds.width);
+  const nextHeight = Math.round(bounds.height);
   ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-  element.width = Math.max(1, Math.round(width * ratio));
-  element.height = Math.max(1, Math.round(height * ratio));
+  const bufferWidth = Math.max(1, Math.round(nextWidth * ratio));
+  const bufferHeight = Math.max(1, Math.round(nextHeight * ratio));
+  if (element.width !== bufferWidth) element.width = bufferWidth;
+  if (element.height !== bufferHeight) element.height = bufferHeight;
+  if (width === nextWidth && height === nextHeight) return;
+  width = nextWidth;
+  height = nextHeight;
   cellSize = Math.max(18, Math.ceil(width / 44));
   tiles = [];
   for (let y = 0; y < height; y += cellSize) {
@@ -97,6 +119,7 @@ function updatePalette(element: Element) {
 
 function draw(progress: number, leaving: boolean) {
   if (!context) return;
+  particles ??= createParticles();
   context.clearRect(0, 0, canvas.value!.width, canvas.value!.height);
   context.save();
   context.scale(ratio, ratio);
@@ -110,16 +133,15 @@ function draw(progress: number, leaving: boolean) {
 
   // Small data fragments travel across the pixel veil; no DOM screenshots or textures.
   const count = width < 700 ? 90 : 180;
+  const direction = leaving ? 1 : -1;
   context.fillStyle = accent;
   for (let index = 0; index < count; index++) {
-    const seed = index * 17 + 3;
-    const direction = leaving ? 1 : -1;
-    const x = hash(seed) * width + direction * progress * (20 + hash(seed + 1) * 100);
-    const y = hash(seed + 2) * height - progress * (6 + hash(seed + 3) * 32);
-    const size = 1 + Math.floor(hash(seed + 4) * 3);
-    context.globalAlpha = envelope * (0.25 + hash(seed + 5) * 0.65);
-    context.fillRect(x, y, size, size);
-    if (index % 9 === 0) context.fillRect(x - 12, y, 8 + hash(seed + 6) * 28, 1);
+    const particle = particles[index];
+    const x = particle.x * width + direction * progress * particle.travelX;
+    const y = particle.y * height - progress * particle.travelY;
+    context.globalAlpha = envelope * particle.opacity;
+    context.fillRect(x, y, particle.size, particle.size);
+    if (particle.lineWidth) context.fillRect(x - 12, y, particle.lineWidth, 1);
   }
   drawHackerNoise(context, width, height, {
     frame: Math.floor(progress * 14), color: accent, intensity: envelope * 0.45, rows: 3, particles: 16,

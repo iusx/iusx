@@ -1,5 +1,6 @@
 <script setup>
-import { defineProps, ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { fetchGithubJson } from "~/utils/github-data";
 
 const props = defineProps({
   url: {
@@ -17,11 +18,15 @@ const closedIssues = ref([]);
 const prInfo = ref(null);
 
 const parseRepo = (url) => {
-  const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-  if (match) {
-    return { owner: match[1], repo: match[2] };
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname !== "github.com" && parsed.hostname !== "www.github.com") return null;
+    const [owner, repository] = parsed.pathname.split("/").filter(Boolean);
+    const repo = repository?.replace(/\.git$/, "");
+    return owner && repo ? { owner, repo } : null;
+  } catch {
+    return null;
   }
-  return null;
 };
 
 const parsePrNumber = (url) => {
@@ -29,58 +34,68 @@ const parsePrNumber = (url) => {
   return match ? match[1] : null;
 };
 
-onMounted(async () => {
-  const parsed = parseRepo(props.url);
-  if (!parsed) return;
-  const { owner, repo } = parsed;
+let stopWatching;
+onMounted(() => {
+  stopWatching = watch([() => props.url, () => props.type], async ([url, type], _, onCleanup) => {
+    const controller = new AbortController();
+    onCleanup(() => controller.abort());
+    repoInfo.value = prInfo.value = null;
+    openIssues.value = closedIssues.value = [];
 
-  try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
-    const data = await res.json();
+    const parsed = parseRepo(url);
+    if (!parsed) return;
+    const apiUrl = `https://api.github.com/repos/${encodeURIComponent(parsed.owner)}/${encodeURIComponent(parsed.repo)}`;
+    const load = (endpoint, apply) => fetchGithubJson(endpoint, controller.signal).then((data) => {
+      if (!controller.signal.aborted) apply(data);
+    });
+    const tasks = [load(apiUrl, (data) => {
+      if (!data?.owner || typeof data.full_name !== "string") throw new Error("Invalid GitHub repository response");
+      repoInfo.value = {
+        name: data.full_name,
+        description: data.description,
+        stars: data.stargazers_count,
+        forks: data.forks_count,
+        avatar: data.owner.avatar_url,
+        issues: data.open_issues_count,
+        html_url: data.html_url,
+      };
+    })];
 
-    repoInfo.value = {
-      name: data.full_name,
-      description: data.description,
-      stars: data.stargazers_count,
-      forks: data.forks_count,
-      avatar: data.owner.avatar_url,
-      issues: data.open_issues_count,
-      html_url: data.html_url,
-    };
-
-    if (props.type === "iss") {
-      const openRes = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/issues?state=open&per_page=5`,
+    if (type === "iss") {
+      const applyIssues = (target) => (data) => {
+        if (!Array.isArray(data)) throw new Error("Invalid GitHub issues response");
+        target.value = data;
+      };
+      tasks.push(
+        load(`${apiUrl}/issues?state=open&per_page=5`, applyIssues(openIssues)),
+        load(`${apiUrl}/issues?state=closed&per_page=5`, applyIssues(closedIssues)),
       );
-      openIssues.value = await openRes.json();
-
-      const closedRes = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/issues?state=closed&per_page=5`,
-      );
-      closedIssues.value = await closedRes.json();
     }
 
-    if (props.type === "pr") {
-      const prNumber = parsePrNumber(props.url);
-      if (prNumber) {
-        const prRes = await fetch(
-          `https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}`,
-        );
-        const prData = await prRes.json();
-
+    const prNumber = type === "pr" ? parsePrNumber(url) : null;
+    if (prNumber) {
+      tasks.push(load(`${apiUrl}/pulls/${prNumber}`, (data) => {
+        if (!data || !Number.isInteger(data.number)) throw new Error("Invalid GitHub pull request response");
         prInfo.value = {
-          title: prData.title,
-          number: prData.number,
-          state: prData.state, // "open" / "closed"
-          merged: prData.merged_at !== null,
-          url: prData.html_url,
+          title: data.title,
+          number: data.number,
+          state: data.state,
+          merged: Boolean(data.merged_at),
+          url: data.html_url,
         };
+      }));
+    }
+
+    const results = await Promise.allSettled(tasks);
+    for (const result of results) {
+      if (result.status === "rejected" && result.reason?.name !== "AbortError") {
+        console.error("GitHub API error:", result.reason);
       }
     }
-  } catch (e) {
-    console.error("GitHub API error:", e);
-  }
+  }, { immediate: true });
 });
+
+onBeforeUnmount(() => stopWatching?.());
 </script>
 <template>
   <div class="git-layout">

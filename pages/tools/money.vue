@@ -342,7 +342,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
+import { readStoredValue, writeStoredValue } from "~/utils/browser-storage";
 
 type BankCard = {
   id: string;
@@ -433,7 +434,7 @@ const printableProductCount = computed(() => {
 onMounted(() => {
   printExportedAt.value = formatDisplayDate(new Date());
 
-  const rawCards = localStorage.getItem(storageKey);
+  const rawCards = readStoredValue(storageKey);
 
   if (rawCards) {
     try {
@@ -446,7 +447,7 @@ onMounted(() => {
     }
   }
 
-  const rawProducts = localStorage.getItem(productStorageKey);
+  const rawProducts = readStoredValue(productStorageKey);
   if (rawProducts) {
     try {
       const parsed = JSON.parse(rawProducts);
@@ -465,7 +466,9 @@ watch(
   cards,
   (value) => {
     if (!hasMounted.value) return;
-    localStorage.setItem(storageKey, JSON.stringify(value));
+    if (!writeStoredValue(storageKey, JSON.stringify(value))) {
+      dataStatus.value = "浏览器无法保存数据，请导出备份";
+    }
   },
   { deep: true },
 );
@@ -474,7 +477,9 @@ watch(
   productPlans,
   (value) => {
     if (!hasMounted.value) return;
-    localStorage.setItem(productStorageKey, JSON.stringify(value));
+    if (!writeStoredValue(productStorageKey, JSON.stringify(value))) {
+      dataStatus.value = "浏览器无法保存数据，请导出备份";
+    }
   },
   { deep: true },
 );
@@ -519,15 +524,12 @@ function isAllocationOpen(key: string) {
 }
 
 function productsFor(key: string) {
-  if (!productPlans.value[key]) {
-    productPlans.value[key] = [];
-  }
-
-  return productPlans.value[key];
+  return productPlans.value[key] || [];
 }
 
 function addProduct(key: string) {
-  productsFor(key).push({
+  const products = productPlans.value[key] || (productPlans.value[key] = []);
+  products.push({
     id: createId(),
     name: "",
     annualRate: 0,
@@ -567,12 +569,22 @@ function triggerImport() {
   importInput.value?.click();
 }
 
+let importReader: FileReader | undefined;
+
+onBeforeUnmount(() => {
+  if (!importReader) return;
+  importReader.onload = importReader.onerror = null;
+  importReader.abort();
+});
+
 function importData(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (!file) return;
 
+  importReader?.abort();
   const reader = new FileReader();
+  importReader = reader;
   reader.onload = () => {
     try {
       const parsed = JSON.parse(String(reader.result || "{}"));
@@ -599,7 +611,13 @@ function importData(event: Event) {
       dataStatus.value = "导入失败，请选择有效 JSON";
     } finally {
       input.value = "";
+      importReader = undefined;
     }
+  };
+  reader.onerror = () => {
+    dataStatus.value = "读取失败，请重新选择文件";
+    input.value = "";
+    importReader = undefined;
   };
   reader.readAsText(file);
 }

@@ -3,7 +3,8 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
 import { useId } from "#imports";
 import { select, zoom, zoomIdentity } from "d3";
 import { layoutFlow } from "~/utils/content-flow";
-import type { FlowGraph, PositionedFlowNode } from "~/utils/content-flow";
+import type { FlowEdge, FlowGraph, PositionedFlowNode } from "~/utils/content-flow";
+import { displayText } from "~/utils/display-text";
 
 const props = defineProps<{ graph: FlowGraph; title: string; height: string | number }>();
 const id = useId();
@@ -28,20 +29,35 @@ const height = computed(() => {
 });
 const viewport = ref({ width: 960, height: height.value });
 const layout = computed(() => layoutFlow(props.graph));
+const nodesById = computed(() => new Map(layout.value.nodes.map(node => [node.id, node])));
+const edgesByNode = computed(() => {
+  const index = new Map<string, FlowEdge[]>();
+  for (const edge of props.graph.edges) {
+    const source = index.get(edge.source) || [];
+    source.push(edge);
+    index.set(edge.source, source);
+    if (edge.target !== edge.source) {
+      const target = index.get(edge.target) || [];
+      target.push(edge);
+      index.set(edge.target, target);
+    }
+  }
+  return index;
+});
 const startingNode = computed(() => {
   const targets = new Set(props.graph.edges.map(edge => edge.target));
   return layout.value.nodes.find(node => !targets.has(node.id)) || layout.value.nodes[0];
 });
-const selectedNode = computed(() => layout.value.nodes.find(node => node.id === selectedId.value));
-const incidentEdges = computed(() => props.graph.edges.filter(edge => edge.source === selectedId.value || edge.target === selectedId.value));
+const selectedNode = computed(() => nodesById.value.get(selectedId.value));
+const incidentEdges = computed(() => edgesByNode.value.get(selectedId.value) || []);
 // Hover previews a neighborhood without replacing the pinned detail panel.
 const highlightedId = computed(() => hoveredId.value || selectedId.value);
-const highlightedEdges = computed(() => props.graph.edges.filter(edge => edge.source === highlightedId.value || edge.target === highlightedId.value));
+const highlightedEdges = computed(() => edgesByNode.value.get(highlightedId.value) || []);
 const activeEdges = computed(() => new Set(highlightedEdges.value.map(edge => edge.id)));
 const relatedNodes = computed(() => new Set([highlightedId.value, ...highlightedEdges.value.flatMap(edge => [edge.source, edge.target])]));
 const kindLabels: Record<string, string> = { origin: "起点", goal: "目标", intent: "意图", fact: "事实", finding: "发现", digest: "摘要", note: "节点" };
 const statusLabels: Record<string, string> = { open: "待处理", pending: "待处理", active: "进行中", confirmed: "已确认", done: "已完成", blocked: "已阻塞", exhausted: "预算耗尽", stopped: "已停止", met: "已达成", origin: "起点" };
-const labelFor = (labels: Record<string, string>, value: string) => Object.prototype.hasOwnProperty.call(labels, value) ? labels[value] : value;
+const labelFor = (labels: Record<string, string>, value: string) => displayText(Object.prototype.hasOwnProperty.call(labels, value) ? labels[value] : value);
 const kindLabel = (value: string) => labelFor(kindLabels, value) || "节点";
 const kindColor = (value: string) => `var(--flow-${Object.prototype.hasOwnProperty.call(kindLabels, value) ? value : 'note'})`;
 const statusLabel = (value: string) => labelFor(statusLabels, value);
@@ -265,7 +281,7 @@ function handleWheel(event: WheelEvent) {
   select(svg.value).call(zoomBehavior.scaleBy, factor, anchor);
 }
 function focusNode(nodeId: string) {
-  const node = layout.value.nodes.find(item => item.id === nodeId);
+  const node = nodesById.value.get(nodeId);
   if (!node) return;
   focusedId.value = nodeId;
   const k = Math.max(0.8, currentView.k);
@@ -411,7 +427,7 @@ onBeforeUnmount(() => {
 <template>
   <figure ref="figure" class="content-flow" :class="{ 'is-wheel-pending': desktopInput && !wheelActive }" :style="{ '--flow-height': `${height}px` }" :data-lenis-prevent="wheelActive ? '' : undefined" @pointerenter="beginWheelHover" @pointermove="beginWheelHover" @pointerleave="resetWheelHover" @keydown.capture="handleEscape">
     <header class="flow-toolbar">
-      <div class="flow-heading"><span aria-hidden="true">&gt;</span><span>{{ title }}</span><span class="flow-count">{{ graph.nodes.length }} 节点 / {{ graph.edges.length }} 关系</span></div>
+      <div class="flow-heading"><span aria-hidden="true">&gt;</span><span>{{ displayText(title) }}</span><span class="flow-count">{{ graph.nodes.length }} 节点 / {{ graph.edges.length }} 关系</span></div>
       <div v-if="graph.nodes.length" class="flow-tools" role="group" aria-label="流程图视图控制">
         <button type="button" aria-label="缩小流程图" title="缩小" @click="zoomBy(0.8)"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12" /></svg></button>
         <button type="button" :aria-label="`当前缩放 ${scalePercentage}%，恢复 100%`" :title="`100%（当前 ${scalePercentage}%）`" @click="actualSize"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="14" height="14" /><path d="M7 7v6M13 7v6" /><circle cx="10" cy="8" r="0.6" fill="currentColor" stroke="none" /><circle cx="10" cy="12" r="0.6" fill="currentColor" stroke="none" /></svg></button>
@@ -423,7 +439,7 @@ onBeforeUnmount(() => {
     </header>
 
       <div ref="viewportElement" class="flow-viewport" :class="{ 'is-empty': !graph.nodes.length, 'is-dragging': dragging }" @pointerdown.capture="handlePointerDown" @click="handleCanvasClick">
-        <svg ref="svg" class="flow-svg" width="100%" height="100%" role="group" :aria-hidden="!graph.nodes.length || undefined" :aria-label="`${title}，可交互流程图`" :aria-describedby="graph.nodes.length ? `${id}-help` : undefined" :tabindex="graph.nodes.length ? 0 : -1" @keydown="handleCanvasKeydown">
+        <svg ref="svg" class="flow-svg" width="100%" height="100%" role="group" :aria-hidden="!graph.nodes.length || undefined" :aria-label="`${displayText(title)}，可交互流程图`" :aria-describedby="graph.nodes.length ? `${id}-help` : undefined" :tabindex="graph.nodes.length ? 0 : -1" @keydown="handleCanvasKeydown">
           <defs>
             <marker :id="`${id}-arrow`" viewBox="0 -4 7 8" refX="6" refY="0" markerWidth="7" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,-3 L6,0 L0,3" class="flow-arrow" /></marker>
             <marker :id="`${id}-active-arrow`" viewBox="0 -4 7 8" refX="6" refY="0" markerWidth="7" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,-3 L6,0 L0,3" class="flow-arrow is-active" /></marker>
@@ -434,16 +450,16 @@ onBeforeUnmount(() => {
               <template v-for="edge in layout.edges" :key="`label:${edge.id}`">
                 <g v-if="edge.label" class="flow-edge-label" :class="{ 'is-active': activeEdges.has(edge.id), 'is-muted': highlightedId && !activeEdges.has(edge.id) }" :transform="`translate(${edge.labelX},${edge.labelY})`">
                   <rect :x="-edge.labelWidth / 2" :y="-edge.labelHeight / 2" :width="edge.labelWidth" :height="edge.labelHeight" />
-                  <text>{{ edge.label.slice(0, 18) }}</text>
+                  <text>{{ displayText(edge.label.slice(0, 18)) }}</text>
                 </g>
               </template>
             </g>
             <foreignObject v-for="node in layout.nodes" :key="node.id" :x="node.x" :y="node.y" :width="layout.nodeWidth" :height="layout.nodeHeight" class="flow-node" :style="{ '--flow-kind': kindColor(node.kind) }" :class="{ 'is-selected': selectedId === node.id, 'is-highlighted': highlightedId === node.id, 'is-related': highlightedId && relatedNodes.has(node.id), 'is-muted': highlightedId && !relatedNodes.has(node.id) }">
               <div xmlns="http://www.w3.org/1999/xhtml" class="flow-node-shell">
-                <button type="button" class="flow-node-card" :data-flow-node="node.id" :tabindex="node.id === (focusedId || startingNode?.id) ? 0 : -1" :aria-pressed="selectedId === node.id" :aria-controls="selectedId === node.id ? `${id}-details` : undefined" :aria-label="`查看${kindLabel(node.kind)} ${node.id}：${node.label}`" @pointerenter="previewNode($event, node.id)" @pointerleave="leaveNode(node.id)" @click="handleNodeClick($event, node.id)" @keydown="handleNodeKeydown($event, node)">
-                  <span class="flow-node-heading"><span class="flow-node-kind"><span aria-hidden="true">▪</span>{{ kindLabel(node.kind) }}</span><span class="flow-node-id">#{{ node.id }}</span></span>
-                  <span class="flow-node-label">{{ node.label }}</span>
-                  <span class="flow-node-footer"><span :class="{ 'has-status': node.status }">{{ statusLabel(node.status) || '查看详情 ↗' }}</span><span v-if="node.priority" class="flow-node-priority">{{ /^\d+$/.test(node.priority) ? `P${node.priority}` : node.priority }}</span></span>
+                <button type="button" class="flow-node-card" :data-flow-node="node.id" :tabindex="node.id === (focusedId || startingNode?.id) ? 0 : -1" :aria-pressed="selectedId === node.id" :aria-controls="selectedId === node.id ? `${id}-details` : undefined" :aria-label="`查看${kindLabel(node.kind)} ${displayText(node.id)}：${displayText(node.label)}`" @pointerenter="previewNode($event, node.id)" @pointerleave="leaveNode(node.id)" @click="handleNodeClick($event, node.id)" @keydown="handleNodeKeydown($event, node)">
+                  <span class="flow-node-heading"><span class="flow-node-kind"><span aria-hidden="true">▪</span>{{ kindLabel(node.kind) }}</span><span class="flow-node-id">#{{ displayText(node.id) }}</span></span>
+                  <span class="flow-node-label">{{ displayText(node.label) }}</span>
+                  <span class="flow-node-footer"><span :class="{ 'has-status': node.status }">{{ statusLabel(node.status) || '查看详情 ↗' }}</span><span v-if="node.priority" class="flow-node-priority">{{ displayText(/^\d+$/.test(node.priority) ? `P${node.priority}` : node.priority) }}</span></span>
                 </button>
               </div>
             </foreignObject>
@@ -455,18 +471,18 @@ onBeforeUnmount(() => {
         <span class="flow-legend"><span v-for="entry in kinds" :key="entry.kind" :style="{ '--flow-kind': entry.color }">{{ entry.label }}</span></span>
         <span :id="`${id}-help`" class="flow-help"><template v-if="desktopInput"><span>悬停高亮关联 · 单击节点锁定详情 · 单击空白取消</span><span>按住空白拖动平移 · {{ wheelActive ? '滚轮缩放 · Shift / 横向滚动平移' : '停留 3 秒启用滚轮 · 移出后恢复页面滚动' }}</span></template><template v-else><span>轻点节点查看详情 · 轻点空白取消</span><span>滑动滚动文章 · 使用按钮缩放</span></template></span>
       </figcaption>
-      <span class="flow-announcement" aria-live="polite">{{ selectedNode ? `已选中 ${selectedNode.id}，详情显示于图下方。` : '' }}</span>
+      <span class="flow-announcement" aria-live="polite">{{ selectedNode ? `已选中 ${displayText(selectedNode.id)}，详情显示于图下方。` : '' }}</span>
 
       <aside v-if="selectedNode" :id="`${id}-details`" class="flow-inspector" :style="{ '--flow-kind': kindColor(selectedNode.kind) }" aria-label="节点详情" data-toc-exclude :data-lenis-prevent="wheelActive || !desktopInput ? '' : undefined">
-        <header class="flow-inspector-heading"><span><span aria-hidden="true">&gt;</span> {{ kindLabel(selectedNode.kind) }} / #{{ selectedNode.id }} <span v-if="selectedNode.status">· {{ statusLabel(selectedNode.status) }}</span></span><button type="button" aria-label="关闭节点详情" @click="closeDetails">关闭 ×</button></header>
-        <p class="flow-detail-title">{{ selectedNode.label }}</p>
-        <dl v-if="selectedNode.details.length" class="flow-detail-fields"><template v-for="(detail, index) in selectedNode.details" :key="index"><dt>{{ detail.label }}</dt><dd>{{ detail.text }}</dd></template></dl>
-        <div v-if="incidentEdges.length" class="flow-neighbors"><span class="flow-neighbors-label">关联节点</span><button v-for="edge in incidentEdges" :key="edge.id" type="button" @click="selectNode(edge.source === selectedId ? edge.target : edge.source, true)">{{ edge.source === selectedId ? '→' : '←' }} {{ edge.label || '关联' }} / #{{ edge.source === selectedId ? edge.target : edge.source }}</button></div>
+        <header class="flow-inspector-heading"><span><span aria-hidden="true">&gt;</span> {{ kindLabel(selectedNode.kind) }} / #{{ displayText(selectedNode.id) }} <span v-if="selectedNode.status">· {{ statusLabel(selectedNode.status) }}</span></span><button type="button" aria-label="关闭节点详情" @click="closeDetails">关闭 ×</button></header>
+        <p class="flow-detail-title">{{ displayText(selectedNode.label) }}</p>
+        <dl v-if="selectedNode.details.length" class="flow-detail-fields"><template v-for="(detail, index) in selectedNode.details" :key="index"><dt>{{ displayText(detail.label) }}</dt><dd>{{ displayText(detail.text) }}</dd></template></dl>
+        <div v-if="incidentEdges.length" class="flow-neighbors"><span class="flow-neighbors-label">关联节点</span><button v-for="edge in incidentEdges" :key="edge.id" type="button" @click="selectNode(edge.source === selectedId ? edge.target : edge.source, true)">{{ edge.source === selectedId ? '→' : '←' }} {{ displayText(edge.label || '关联') }} / #{{ displayText(edge.source === selectedId ? edge.target : edge.source) }}</button></div>
       </aside>
 
       <details class="flow-outline" :data-lenis-prevent="wheelActive || !desktopInput ? '' : undefined">
         <summary>文字列表 <span>{{ graph.nodes.length }} 节点</span></summary>
-        <div class="flow-outline-list" role="list"><div v-for="node in graph.nodes" :key="node.id" role="listitem"><button type="button" @click="selectNode(node.id, true)"><span>#{{ node.id }} · {{ kindLabel(node.kind) }}</span>{{ node.label }}</button></div></div>
+        <div class="flow-outline-list" role="list"><div v-for="node in graph.nodes" :key="node.id" role="listitem"><button type="button" @click="selectNode(node.id, true)"><span>#{{ displayText(node.id) }} · {{ kindLabel(node.kind) }}</span>{{ displayText(node.label) }}</button></div></div>
       </details>
     </template>
     <p v-else class="flow-empty" role="status">暂无节点。传入 text 文字或 file 文件即可生成流程图。</p>

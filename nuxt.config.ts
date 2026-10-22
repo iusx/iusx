@@ -1,10 +1,29 @@
 import { cp } from "node:fs/promises";
 import { join } from "node:path";
+import { highlightLanguages } from "./utils/highlight-languages";
+import { prepareDevDependencyIncludes } from "./utils/dev-dependencies";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: { pageTransition: { name: "hacker-page", mode: "out-in" } },
   devtools: { enabled: true },
+  hooks: {
+    ready(nuxt) {
+      if (!nuxt.options.dev) return;
+      nuxt.hook("vite:configResolved", (config, { isClient }) => {
+        if (!isClient) return;
+        config.optimizeDeps ||= {};
+        config.optimizeDeps.include = prepareDevDependencyIncludes(config.optimizeDeps.include);
+        // Nuxi shares its HTTP server with HMR. Nuxt 3.11 adds a standalone
+        // port afterwards; let Vite use the page's port for that shared server.
+        const hmr = config.server?.hmr;
+        if (hmr && typeof hmr === "object" && hmr.server) {
+          hmr.port = undefined;
+          hmr.protocol = undefined;
+        }
+      });
+    },
+  },
   nitro: {
     prerender: { routes: ["/rss.xml"] },
     hooks: {
@@ -18,7 +37,6 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/content",
     "nuxt-icon",
-    "nuxt-swiper",
     "@vueuse/nuxt",
     "@nuxtjs/color-mode",
     "@nuxtjs/sitemap",
@@ -41,12 +59,7 @@ export default defineNuxtConfig({
         default: "github-light",
         "dark-mode": "github-dark",
       },
-      langs: [
-        "bash", "css", "html", "vue", "yaml", "markdown",
-        "toml", "lua", "viml", "ruby", "typescript", "javascript",
-        "prolog", "scala", "lisp", "python", "clojure", "haskell",
-        "java", "erlang", "rust", "json", "diff",
-      ],
+      langs: [...highlightLanguages],
     },
     markdown: {
       remarkPlugins: ["remark-math"],

@@ -24,6 +24,8 @@ const maxZoom = 4;
 let dragStart: { id: number; x: number; y: number; panX: number; panY: number } | null = null;
 let restorePage = () => {};
 let copyFeedbackTimer: ReturnType<typeof setTimeout> | undefined;
+let copyController: AbortController | undefined;
+let copyTask = 0;
 
 const ready = computed(() => naturalSize.value.width > 0 && !imageFailed.value);
 const copied = computed(() => copyMessage.value === "图片已复制");
@@ -102,8 +104,8 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
-async function pngBlob() {
-  const response = await fetch(props.src);
+async function pngBlob(src: string, signal: AbortSignal) {
+  const response = await fetch(src, { signal });
   if (!response.ok) throw new Error("Image request failed");
   const blob = await response.blob();
   if (blob.type === "image/png") return blob;
@@ -114,6 +116,7 @@ async function pngBlob() {
     const source = new Image();
     source.src = url;
     await source.decode();
+    if (signal.aborted) throw new DOMException("Image request aborted", "AbortError");
     const canvas = document.createElement("canvas");
     canvas.width = source.naturalWidth;
     canvas.height = source.naturalHeight;
@@ -128,6 +131,15 @@ async function pngBlob() {
   }
 }
 
+function cancelCopy() {
+  copyTask++;
+  copyController?.abort();
+  copyController = undefined;
+  copying.value = false;
+  clearTimeout(copyFeedbackTimer);
+  copyFeedbackTimer = undefined;
+}
+
 async function copyImage() {
   if (copying.value) return;
   clearTimeout(copyFeedbackTimer);
@@ -135,17 +147,25 @@ async function copyImage() {
     copyMessage.value = "当前浏览器不支持复制图片，请右键或长按图片复制。";
     return;
   }
+  const task = ++copyTask;
+  const controller = new AbortController();
+  copyController = controller;
   copying.value = true;
   copyMessage.value = "";
   try {
     // Start write in the click handler; Safari needs the user activation here.
-    await navigator.clipboard.write([new ClipboardItem({ "image/png": pngBlob() })]);
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": pngBlob(props.src, controller.signal) })]);
+    if (task !== copyTask) return;
     copyMessage.value = "图片已复制";
-    copyFeedbackTimer = setTimeout(() => { copyMessage.value = ""; }, 2200);
+    copyFeedbackTimer = setTimeout(() => { copyMessage.value = ""; copyFeedbackTimer = undefined; }, 2200);
   } catch {
+    if (task !== copyTask) return;
     copyMessage.value = "复制失败，请检查剪贴板权限，或右键／长按图片复制。";
   } finally {
-    copying.value = false;
+    if (task === copyTask) {
+      copyController = undefined;
+      copying.value = false;
+    }
   }
 }
 
@@ -154,6 +174,7 @@ function close() {
 }
 
 function handleClose() {
+  cancelCopy();
   restorePage();
   emit("close");
 }
@@ -166,7 +187,7 @@ useResizeObserver(stage, entries => {
 });
 
 watch(() => props.src, () => {
-  clearTimeout(copyFeedbackTimer);
+  cancelCopy();
   naturalSize.value = { width: 0, height: 0 };
   imageFailed.value = false;
   copyMessage.value = "";
@@ -206,7 +227,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  clearTimeout(copyFeedbackTimer);
+  cancelCopy();
   dialog.value?.close();
   restorePage();
 });

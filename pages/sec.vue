@@ -4,9 +4,10 @@ useSeoMeta({
   description: "Security research and vulnerability disclosure index.",
 });
 
-const { data: equalQuerySec } = await useAsyncData("equal", () => {
-  return queryContent("sec/").find();
-});
+const { data: equalQuerySec } = await useAsyncData("security-reports", () =>
+  queryContent("sec/").only(["_path", "title", "platform", "time"]).find(),
+  { deep: false },
+);
 
 const sortedData = computed(() => {
   if (!equalQuerySec.value) return [];
@@ -18,8 +19,6 @@ const sortedData = computed(() => {
 
 <template>
   <main class="sec-container">
-    <div class="scanline"></div>
-
     <header class="sec-header">
       <div class="title-group">
         <h1 class="glitch-text" data-text="VULNERABILITY">VULNERABILITY</h1>
@@ -76,37 +75,20 @@ $bg-color: #0a0a0a;
 $accent-color: #ef0000; 
 $text-dim: #888;
 $border-color: #222;
-$font-mono: "JetBrains Mono", "Fira Code", monospace;
+$font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei", monospace;
 
 .sec-container {
   background-color: $bg-color;
   min-height: 100vh;
   padding: 4rem 2rem;
   font-family: $font-mono;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.7;
   color: #fff;
   position: relative;
   overflow-x: hidden;
 
-  .scanline {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:
-      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-      linear-gradient(
-        90deg,
-        rgba(255, 0, 0, 0.03),
-        rgba(0, 255, 0, 0.01),
-        rgba(0, 0, 255, 0.03)
-      );
-    background-size:
-      100% 4px,
-      3px 100%;
-    pointer-events: none;
-    z-index: 100;
-  }
 }
 
 .sec-header {
@@ -115,19 +97,22 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
   padding-left: 1.5rem;
 
   .glitch-text {
-    font-size: clamp(2rem, 8vw, 5rem);
-    font-weight: 900;
-    letter-spacing: -2px;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
     margin: 0;
-    line-height: 1;
+    line-height: 1.25;
     text-transform: uppercase;
   }
 
   .subtitle {
+    display: flex;
+    align-items: baseline;
     color: $accent-color;
-    font-size: 1.2rem;
+    font-size: 0.8125rem;
     margin-top: 0.5rem;
     .terminal-prefix {
+      flex-shrink: 0;
       margin-right: 0.5rem;
     }
   }
@@ -135,7 +120,7 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
   .desc-text {
     margin-top: 2rem;
     color: $text-dim;
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
     line-height: 1.6;
     .status-active {
       color: #00ff41;
@@ -174,7 +159,8 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
   position: relative;
 
   .card-id {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
     color: $accent-color;
     margin-bottom: 1rem;
     opacity: 0.7;
@@ -195,16 +181,17 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
       }
 
       .year-tag {
-        font-size: 0.8rem;
+        font-size: 0.6875rem;
+        font-variant-numeric: tabular-nums;
         background: #222;
         padding: 2px 6px;
       }
     }
 
     .card-title {
-      font-size: 1.25rem;
+      font-size: 1.0625rem;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.55;
       margin: 0;
       color: #ddd;
     }
@@ -218,7 +205,7 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
 
     .view-report {
       font-size: 0.75rem;
-      letter-spacing: 1px;
+      letter-spacing: 0.04em;
       color: $text-dim;
     }
 
@@ -272,15 +259,6 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
     background-color: var(--sec-light-bg);
     color: var(--sec-light-text);
 
-    .scanline {
-      opacity: 0.3;
-      background:
-        linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.05) 50%),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02));
-      background-size:
-        100% 3px,
-        3px 100%;
-    }
   }
 
   .sec-header {
@@ -331,7 +309,7 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
     .card-id {
 
       color: $accent-color;
-      font-weight: 800;
+      font-weight: 400;
       opacity: 1;
     }
 
@@ -349,14 +327,14 @@ $font-mono: "JetBrains Mono", "Fira Code", monospace;
 
       .card-title {
         color: #333;
-        font-weight: 700;
+        font-weight: 600;
       }
     }
 
     .card-footer {
       .view-report {
         color: #666;
-        font-weight: 600;
+        font-weight: 400;
       }
 
     }

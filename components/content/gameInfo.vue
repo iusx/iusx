@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   img: {
@@ -44,21 +44,7 @@ const props = defineProps({
   }
 });
 
-const loading = ref(true);
-
-onMounted(() => {
-  const img = new Image();
-  img.src = props.img;
-
-  img.onload = () => {
-    loading.value = false;
-  };
-
-  img.onerror = () => {
-    console.error(`Failed to load image ${props.img}`);
-  };
-});
-
+const { loading } = useImagePreload(() => [props.img]);
 
 const logoImage = computed(() => {
   const segments = props.img.split('/');

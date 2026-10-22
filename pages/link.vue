@@ -6,47 +6,19 @@ useSeoMeta({
 
 const colorMode = useColorMode();
 
-const { data: equalQueryLink } = await useAsyncData("equalLink", () => {
-  return queryContent("link/").find();
-});
+const { data: links } = await useAsyncData("friendly-links", () =>
+  queryContent("link/").only(["_path", "url", "img", "name", "time"]).find(),
+  { deep: false },
+);
 
-if (equalQueryLink.value) {
-  equalQueryLink.value.sort((a, b) => {
+const sortedData = computed(() => [...(links.value ?? [])]
+  .sort((a, b) => {
     const dateA = new Date(a.time).getTime();
     const dateB = new Date(b.time).getTime();
     return dateB - dateA;
-  });
-}
-const sortedData = computed(() => equalQueryLink.value);
-
-const firstImg = computed(() => {
-  return sortedData.value.length > 0 ? sortedData.value[0].img : null;
-});
-
-const images = ref([]);
-const loading = ref(true);
-const imagesLoadedCount = ref(0);
-
-onMounted(() => {
-  sortedData.value.forEach((item) => {
-    const formattedPath = item.img;
-    images.value.push(formattedPath);
-
-    const img = new Image();
-    img.src = formattedPath;
-
-    img.onload = () => {
-      imagesLoadedCount.value++;
-      if (imagesLoadedCount.value === images.value.length) {
-        loading.value = false;
-      }
-    };
-
-    img.onerror = () => {
-      console.error(`Failed to load image ${formattedPath}`);
-    };
-  });
-});
+  }),
+);
+const { loading } = useImagePreload(() => sortedData.value.map(item => item.img));
 </script>
 
 <template>
@@ -62,6 +34,7 @@ onMounted(() => {
             target="_blank"
             class="background"
             v-for="link in sortedData"
+            :key="link._path"
           >
             <div class="links-con-img">
               <div v-if="loading" class="no-img"></div>

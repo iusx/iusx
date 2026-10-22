@@ -1,5 +1,7 @@
 import { defineTransformer } from "@nuxt/content/transformers";
 import type { MarkdownNode } from "@nuxt/content/types";
+import { groupLongBookSections } from "../utils/article-sections";
+import { wrapNativeSvgNodes } from "../utils/native-svg";
 
 const textContent = (node: MarkdownNode): string =>
   node.type === "text" ? node.value || "" : (node.children || []).map(textContent).join("");
@@ -27,7 +29,9 @@ export default defineTransformer({
   transform(content) {
     if (/^\w+:book:/.test(content._id) && content.body) {
       markLegacyHeadings(content.body.children);
+      groupLongBookSections(content.body, content._id);
     }
+    if (content.body?.children) wrapNativeSvgNodes(content.body);
     return content;
   },
 });

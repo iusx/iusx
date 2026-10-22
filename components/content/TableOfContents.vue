@@ -47,7 +47,14 @@ const TocList = defineComponent({
           h("a", {
             href: `#${encodeURIComponent(heading.id)}`,
             "aria-current": listProps.currentHash === heading.id ? "location" : undefined,
-            onClick: () => listEmit("navigate", heading.id),
+            onClick: (event: MouseEvent) => {
+              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.preventDefault();
+              // Let the browser record the hash before activating/focusing the
+              // live heading; a later default anchor action would steal focus.
+              window.location.hash = encodeURIComponent(heading.id);
+              listEmit("navigate", heading.id);
+            },
           }, heading.text),
           heading.count === null ? null : h("span", {
             class: "toc-count",
@@ -79,6 +86,14 @@ const createId = (text: string) => text.toLowerCase()
   .replace(/\s+/g, "-")
   .replace(/-+/g, "-")
   .replace(/^(\d)/, "_$1") || "section";
+
+function sameHeadings(previous: TocHeading[], next: TocHeading[]): boolean {
+  return previous.length === next.length && previous.every((heading, index) => {
+    const other = next[index];
+    return heading.id === other.id && heading.text === other.text && heading.level === other.level
+      && heading.count === other.count && sameHeadings(heading.children, other.children);
+  });
+}
 
 function refreshHeadings() {
   if (!content) return;
@@ -132,7 +147,7 @@ function refreshHeadings() {
     parents.push(heading);
   }
 
-  headings.value = roots;
+  if (!sameHeadings(headings.value, roots)) headings.value = roots;
   ready.value = true;
   observer?.observe(content, observerOptions);
 }

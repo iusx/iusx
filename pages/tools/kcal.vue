@@ -30,6 +30,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import { parseStringList, readStoredValue, removeStoredValue, writeStoredValue } from '~/utils/browser-storage';
 
 const colorMode = useColorMode();
 
@@ -41,26 +42,27 @@ const todayResults = ref([]); // 存储今日计算的结果
 
 // 从本地存储加载之前保存的结果
 onMounted(() => {
-  const storedEnergyResult = localStorage.getItem('energyResult');
+  const storedEnergyResult = readStoredValue('energyResult');
   if (storedEnergyResult) {
     energyResult.value = storedEnergyResult;
   }
 
-  const storedFoodName = localStorage.getItem('foodName');
+  const storedFoodName = readStoredValue('foodName');
   if (storedFoodName) {
     foodName.value = storedFoodName;
   }
 
-  const storedEnergyPer100g = localStorage.getItem('energyPer100g');
-  if (storedEnergyPer100g) {
-    energyPer100g.value = parseFloat(storedEnergyPer100g);
+  const storedEnergyPer100g = Number(readStoredValue('energyPer100g'));
+  if (Number.isFinite(storedEnergyPer100g) && storedEnergyPer100g > 0) {
+    energyPer100g.value = storedEnergyPer100g;
   }
 
   loadTodayResults();
 });
 
 function calculateEnergy() {
-  if (weight.value > 0 && energyPer100g.value > 0 && foodName.value.trim() !== '') {
+  if (Number.isFinite(Number(weight.value)) && Number.isFinite(Number(energyPer100g.value)) &&
+    weight.value > 0 && energyPer100g.value > 0 && foodName.value.trim() !== '') {
     // 计算能量并转换为kcal
     const calculatedEnergyKj = (energyPer100g.value / 100) * weight.value;
     const calculatedEnergyKcal = calculatedEnergyKj * 0.239; // 将kJ转换为kcal
@@ -68,9 +70,9 @@ function calculateEnergy() {
     energyResult.value = formattedResult;
 
     // 将结果、食物名称和每100克能量保存到本地存储
-    localStorage.setItem('energyResult', energyResult.value);
-    localStorage.setItem('foodName', foodName.value);
-    localStorage.setItem('energyPer100g', energyPer100g.value);
+    writeStoredValue('energyResult', energyResult.value);
+    writeStoredValue('foodName', foodName.value);
+    writeStoredValue('energyPer100g', String(energyPer100g.value));
 
     // 添加到今日结果列表
     addTodayResult(formattedResult);
@@ -79,38 +81,45 @@ function calculateEnergy() {
   }
 }
 
+let resultsDate = '';
+
 function addTodayResult(result) {
   const currentDate = new Date().toDateString();
   const storageKey = `todayResults_${currentDate}`;
 
-  let results = JSON.parse(localStorage.getItem(storageKey)) || [];
+  const stored = readStoredValue(storageKey);
+  const results = stored === null && resultsDate === currentDate
+    ? [...todayResults.value]
+    : parseStringList(stored);
   results.push(result);
   todayResults.value = results;
-  localStorage.setItem(storageKey, JSON.stringify(results));
+  resultsDate = currentDate;
+  writeStoredValue(storageKey, JSON.stringify(results));
 }
 
 function loadTodayResults() {
   const currentDate = new Date().toDateString();
   const storageKey = `todayResults_${currentDate}`;
 
-  const results = JSON.parse(localStorage.getItem(storageKey)) || [];
-  todayResults.value = results;
+  resultsDate = currentDate;
+  todayResults.value = parseStringList(readStoredValue(storageKey));
 }
 
 const totalEnergy = computed(() => {
   return todayResults.value.reduce((sum, result) => {
     const match = result.match(/能量为: ([\d.]+) kcal/);
-    if (match) {
-      return sum + parseFloat(match[1]);
+    const energy = match ? Number(match[1]) : 0;
+    if (Number.isFinite(energy)) {
+      return sum + energy;
     }
     return sum;
   }, 0).toFixed(3);
 });
 
 function clearStorage() {
-  localStorage.removeItem('energyResult');
-  localStorage.removeItem('foodName');
-  localStorage.removeItem('energyPer100g');
+  removeStoredValue('energyResult');
+  removeStoredValue('foodName');
+  removeStoredValue('energyPer100g');
   energyResult.value = null;
   foodName.value = '';
   energyPer100g.value = 870; // 重置默认值，870kJ 约等于 209.93kcal
@@ -120,7 +129,8 @@ function clearTodayResults() {
   const currentDate = new Date().toDateString();
   const storageKey = `todayResults_${currentDate}`;
 
-  localStorage.removeItem(storageKey);
+  removeStoredValue(storageKey);
+  resultsDate = currentDate;
   todayResults.value = [];
 }
 </script>

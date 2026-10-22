@@ -28,6 +28,7 @@ let ratio = 1;
 let color = "#38e7cd";
 let burstCount = 0;
 let lastFrame = -1;
+let canvasDirty = false;
 const removeListeners: Array<() => void> = [];
 
 function isInteractive(target: EventTarget | null) {
@@ -41,7 +42,9 @@ function isPaused() {
 }
 
 function clear() {
-  if (context && canvas.value) context.clearRect(0, 0, canvas.value.width, canvas.value.height);
+  if (!canvasDirty || !context || !canvas.value) return;
+  context.clearRect(0, 0, canvas.value.width, canvas.value.height);
+  canvasDirty = false;
 }
 
 function stop() {
@@ -71,6 +74,7 @@ function draw() {
     particles: Math.min(32, Math.max(10, Math.round(width * height / 45000))),
   });
   context.restore();
+  canvasDirty = true;
 }
 
 function schedule() {
@@ -128,25 +132,34 @@ function resize() {
   width = Math.round(bounds.width);
   height = Math.round(bounds.height);
   ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-  element.width = Math.max(1, Math.round(width * ratio));
-  element.height = Math.max(1, Math.round(height * ratio));
+  const bufferWidth = Math.max(1, Math.round(width * ratio));
+  const bufferHeight = Math.max(1, Math.round(height * ratio));
+  if (element.width !== bufferWidth) { element.width = bufferWidth; canvasDirty = false; }
+  if (element.height !== bufferHeight) { element.height = bufferHeight; canvasDirty = false; }
+  clear();
   updateColor();
   sync();
 }
 
 function pointerOver(event: PointerEvent) {
-  hovering = event.pointerType !== "touch" && isInteractive(event.target);
+  const nextHovering = event.pointerType !== "touch" && isInteractive(event.target);
+  if (hovering === nextHovering) return;
+  hovering = nextHovering;
   sync();
 }
 
 function pointerOut(event: PointerEvent) {
-  hovering = event.pointerType !== "touch" && isInteractive(event.relatedTarget);
+  const nextHovering = event.pointerType !== "touch" && isInteractive(event.relatedTarget);
+  if (hovering === nextHovering) return;
+  hovering = nextHovering;
   sync();
 }
 
 function pauseForScroll() {
-  scrolling = true;
-  stop();
+  if (!scrolling) {
+    scrolling = true;
+    stop();
+  }
   if (resumeTimer) clearTimeout(resumeTimer);
   resumeTimer = setTimeout(() => { scrolling = false; sync(); }, 240);
 }

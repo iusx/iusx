@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { useAsyncData, useRequestURL } from "#imports";
 import { readTimelineFile, timelineFilePath } from "~/utils/content-timeline";
+import { displayText } from "~/utils/display-text";
 
 const props = defineProps<{ file: string }>();
 const requestURL = useRequestURL();
@@ -35,20 +36,20 @@ const remainingCount = computed(() => Math.max((entries.value?.length ?? 0) - pr
         <TimelineItem
           v-for="entry in visibleEntries"
           :key="entry.key"
-          :time="entry.time"
-          :datetime="entry.datetime"
-          :ago="entry.ago"
-          :kind="entry.kind"
-          :number="entry.number"
-          :status="entry.status"
-          :priority="entry.priority"
-          :title="entry.title"
+          :time="displayText(entry.time)"
+          :datetime="displayText(entry.datetime)"
+          :ago="displayText(entry.ago)"
+          :kind="displayText(entry.kind)"
+          :number="displayText(entry.number)"
+          :status="displayText(entry.status)"
+          :priority="displayText(entry.priority)"
+          :title="displayText(entry.title)"
         >
-          <p v-if="entry.text" class="timeline-file-text">{{ entry.text }}</p>
+          <p v-if="entry.text" class="timeline-file-text">{{ displayText(entry.text) }}</p>
           <template v-if="entry.details.length" #details>
             <div v-for="(detail, index) in entry.details" :key="index" class="timeline-file-detail">
-              <span class="timeline-file-label">{{ detail.label }}</span>
-              <p class="timeline-file-text">{{ detail.text }}</p>
+              <span class="timeline-file-label">{{ displayText(detail.label) }}</span>
+              <p class="timeline-file-text">{{ displayText(detail.text) }}</p>
             </div>
           </template>
         </TimelineItem>

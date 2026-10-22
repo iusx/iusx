@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 defineProps(["variant", "width", "height"]);
 const colorMode = useColorMode();
 </script>

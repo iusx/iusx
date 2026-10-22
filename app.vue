@@ -11,18 +11,21 @@ const isContentDetail = computed(() => pagePath.value !== "/"
 const showHackerAmbient = computed(() => !isContentDetail.value && pagePath.value !== "/des");
 const reducedMotion = usePreferredReducedMotion();
 const pageTransitionActive = ref(false);
-const homeIntroActive = ref(pagePath.value === "/");
-const homeIntroBlocking = ref(false);
-function finishHomeIntro() {
-  homeIntroActive.value = false;
-  homeIntroBlocking.value = false;
+// The app mounts once per document load, so every entry route gets the intro
+// while client-side navigation keeps the existing page transition.
+const introActive = ref(true);
+const introBlocking = ref(false);
+provide("introBlocking", introBlocking);
+function finishIntro() {
+  introActive.value = false;
+  introBlocking.value = false;
 }
-watch(pagePath, path => { if (path !== "/") finishHomeIntro(); });
+watch(pagePath, finishIntro);
 provideTransitionSound();
 const smoothScroller = shallowRef<import("lenis").default | null>(null);
 provide("smoothScroller", smoothScroller);
 let stopScrollWatcher: (() => void) | undefined;
-watch([smoothScroller, homeIntroBlocking], ([scroller, blocked]) => {
+watch([smoothScroller, introBlocking], ([scroller, blocked]) => {
   if (blocked) scroller?.stop();
   else scroller?.start();
 });
@@ -55,11 +58,11 @@ onBeforeUnmount(() => stopScrollWatcher?.());
 
 <template>
   <div id="app" :class="{ 'reading-page': isReadingPage }">
-    <HomeIntro v-if="homeIntroActive" @start="homeIntroBlocking = true" @finish="finishHomeIntro" />
+    <HomeIntro v-if="introActive" @start="introBlocking = true" @finish="finishIntro" />
     <div class="scanline"></div>
 
-    <an-more :inert="homeIntroBlocking" :appearance="route.path === '/des' || route.path === '/des/' ? 'artwork' : 'default'" />
-    <div class="site-content" :inert="homeIntroBlocking">
+    <an-more :inert="introBlocking" :appearance="route.path === '/des' || route.path === '/des/' ? 'artwork' : 'default'" />
+    <div class="site-content" :inert="introBlocking">
       <NuxtLayout>
         <HackerPageTransition v-slot="{ transition }" @active-change="pageTransitionActive = $event">
           <NuxtPage :transition="transition" :page-key="pageRoute => pageRoute.path" />
@@ -67,7 +70,7 @@ onBeforeUnmount(() => stopScrollWatcher?.());
       </NuxtLayout>
     </div>
     <ClientOnly>
-      <HackerAmbient v-if="showHackerAmbient && !pageTransitionActive && !homeIntroActive" :key="pagePath" />
+      <HackerAmbient v-if="showHackerAmbient && !pageTransitionActive && !introActive" :key="pagePath" />
     </ClientOnly>
   </div>
 </template>
@@ -105,7 +108,7 @@ onBeforeUnmount(() => stopScrollWatcher?.());
   src:
     url("/Tsing.woff2") format("woff2"),
     url("/Tsing.woff") format("woff"),
-    url("/Tsing.ttf") format("truetype");
+    url("/TSING.ttf") format("truetype");
 }
 
 .scanline {

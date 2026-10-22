@@ -1,6 +1,4 @@
 <script setup>
-import { defineProps } from "vue";
-
 defineProps(["title", "info", "time", "client", "img", "types"]);
 </script>
 <template>
