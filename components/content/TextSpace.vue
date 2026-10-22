@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 
 const props = defineProps<{
   info?: string;
@@ -13,6 +13,10 @@ const images = computed(() =>
     .map((image) => image.trim())
     .filter(Boolean),
 );
+const previewSrc = ref("");
+const altText = computed(() => (props.info ?? "")
+  .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() || "文章插图");
+watch([images, () => props.type], () => { previewSrc.value = ""; });
 
 function imageUrl(image: string) {
   return /^(?:https?:\/\/|\/)/.test(image) ? image : `/img/${image}`;
@@ -29,18 +33,19 @@ function imageUrl(image: string) {
     <div v-if="images.length" class="text-space-media">
       <page-image v-if="images.length > 1 && type !== 'flat'" :img="images.join(',')" :alt="info" />
       <template v-else>
-        <a
-          v-for="image in images"
-          :key="image"
-          :href="imageUrl(image)"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="查看原图"
+        <button
+          v-for="(image, index) in images"
+          :key="`${image}-${index}`"
+          type="button"
+          aria-haspopup="dialog"
+          :aria-label="`预览图片：${altText}${images.length > 1 ? `（${index + 1} / ${images.length}）` : ''}`"
+          @click="previewSrc = imageUrl(image)"
         >
           <img :src="imageUrl(image)" alt="" loading="lazy" decoding="async" />
-        </a>
+        </button>
       </template>
     </div>
+    <ImagePreview v-if="previewSrc" :src="previewSrc" :alt="altText" @close="previewSrc = ''" />
   </figure>
 </template>
 
@@ -130,15 +135,24 @@ function imageUrl(image: string) {
   grid-area: media;
   min-width: 0;
 
-  > a {
+  > button {
+    appearance: none;
     display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    cursor: zoom-in;
   }
 
-  > a + a {
+  > button + button {
     margin-top: 0.75rem;
   }
 
-  > a > img {
+  > button > img {
     display: block;
     width: auto;
     max-width: 100%;
@@ -156,7 +170,7 @@ function imageUrl(image: string) {
     font-size: 0.8125rem;
   }
 
-  a:focus-visible {
+  button:focus-visible {
     outline: 1px solid var(--article-accent, #007f73);
     outline-offset: 4px;
   }
@@ -186,7 +200,7 @@ function imageUrl(image: string) {
     }
   }
 
-  .text-space-media > a > img {
+  .text-space-media > button > img {
     opacity: 0.7;
   }
 

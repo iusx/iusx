@@ -100,18 +100,20 @@ onNuxtReady(() => {
 }
 
 .cover-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(14rem, 20vw, 18rem), 1fr));
+  align-items: start;
+  gap: var(--gallery-gap);
   width: 100%;
+  min-width: 0;
   margin: 0 auto;
-  column-count: 4;
-  column-gap: var(--gallery-gap);
 }
 
 .cover-link {
   position: relative;
   display: block;
   width: 100%;
-  margin: 0 0 var(--gallery-gap);
-  break-inside: avoid;
+  min-width: 0;
   overflow: hidden;
   border-radius: 0;
   text-decoration: none;
@@ -171,17 +173,9 @@ onNuxtReady(() => {
   .dark-mode .cover-link:hover img { opacity: 1; }
 }
 
-@media (min-width: 1800px) {
-  .cover-gallery { column-count: 5; }
-}
-
-@media (max-width: 1100px) {
-  .cover-gallery { column-count: 3; }
-}
-
 @media (max-width: 640px) {
   .library-container { --gallery-gap: 0.25rem; padding: 0.375rem; }
-  .cover-gallery { column-count: 2; }
+  .cover-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cover-details { gap: 0.375rem; padding: 0.625rem; }
   .cover-title { font-size: 0.8125rem; }
   .cover-author, .cover-reading { font-size: 0.6875rem; }

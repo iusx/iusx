@@ -25,6 +25,7 @@ const failedImages = ref<string[]>([]);
 const mediaElement = ref<HTMLElement | null>(null);
 const trackElement = ref<HTMLElement | null>(null);
 const currentIndex = ref(0);
+const previewSrc = ref("");
 const reducedMotion = usePreferredReducedMotion();
 const altText = computed(() => (props.alt || props.info || "文章插图")
   .replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim());
@@ -98,6 +99,7 @@ useResizeObserver(trackElement, () => {
 
 watch(images, async () => {
   clearTimeout(scrollEndTimer);
+  previewSrc.value = "";
   focusTrack();
   currentIndex.value = 0;
   pendingIndex = null;
@@ -130,12 +132,13 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
                 :aria-label="`查看原图：${altText}（${index + 1} / ${images.length}）`">↗ 查看原图</a>
             </div>
           </div>
-          <a v-else :href="item" target="_blank" rel="noopener noreferrer" class="image-link"
-            :aria-label="`查看原图：${altText}（${index + 1} / ${images.length}）`" draggable="false">
-            <span class="image-original" aria-hidden="true">↗ 查看原图</span>
+          <button v-else type="button" class="image-link" aria-haspopup="dialog"
+            :aria-label="`预览图片：${altText}（${index + 1} / ${images.length}）`" draggable="false"
+            @click="previewSrc = item">
+            <span class="image-original" aria-hidden="true">＋ 预览图片</span>
             <img :src="item" :alt="`${altText}（${index + 1} / ${images.length}）`" data-article-image
               :loading="index === 0 ? 'eager' : 'lazy'" decoding="async" draggable="false" @error="markFailed(item)" />
-          </a>
+          </button>
         </div>
       </div>
       <div class="gallery-controls">
@@ -154,15 +157,17 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
     </div>
     <template v-else>
       <div v-if="failedImages.includes(images[0])" class="image-error" role="status">图片暂时无法显示</div>
-      <a v-else :href="images[0]" target="_blank" rel="noopener noreferrer" class="image-link">
-        <span class="image-original">↗ 查看原图</span>
+      <button v-else type="button" class="image-link" aria-haspopup="dialog"
+        :aria-label="`预览图片：${altText}`" @click="previewSrc = images[0]">
+        <span class="image-original" aria-hidden="true">＋ 预览图片</span>
         <img :src="images[0]" :alt="altText" data-article-image decoding="async" @error="markFailed(images[0])" />
-      </a>
+      </button>
     </template>
     <figcaption v-if="info || type" class="info">
       <span v-if="info" class="info-title">{{ info }}</span>
       <img v-if="type" :src="'/img/page/' + type + '.png'" alt="图片版权标记" />
     </figcaption>
+    <ImagePreview v-if="previewSrc" :src="previewSrc" :alt="altText" @close="previewSrc = ''" />
   </figure>
 </template>
 
@@ -174,9 +179,17 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
   font-family: var(--article-font, monospace);
 }
 .image-link {
+  appearance: none;
   position: relative;
   display: block;
+  width: 100%;
+  padding: 0;
   border: 1px solid var(--article-border, #d4d4d4);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: zoom-in;
   img { display: block; width: 100%; height: auto; border-radius: 0; }
 }
 .image-original {

@@ -14,7 +14,11 @@ const imagePath = computed(() => {
 const altText = computed(() => props.alt || props.text.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() || "文章插图");
 const imageElement = ref(null);
 const imageFailed = ref(false);
-watch(imagePath, () => { imageFailed.value = false; });
+const previewSrc = ref("");
+watch(imagePath, () => {
+  imageFailed.value = false;
+  previewSrc.value = "";
+});
 
 onNuxtReady(() => {
   const image = imageElement.value;
@@ -24,16 +28,18 @@ onNuxtReady(() => {
 
 <template>
   <figure class="image-tip">
-    <a v-if="imagePath && !imageFailed" class="image-tip-media" :href="imagePath" target="_blank" rel="noopener noreferrer"
-      :aria-label="`查看原图：${altText}`">
+    <button v-if="imagePath && !imageFailed" type="button" class="image-tip-media" aria-haspopup="dialog"
+      :aria-label="`预览图片：${altText}`" @click="previewSrc = imagePath">
       <img ref="imageElement" class="image-tip-image" :src="imagePath" :alt="altText" loading="lazy" decoding="async"
         @error="imageFailed = true" />
-    </a>
+    </button>
     <div v-else class="image-tip-fallback" role="status">图片暂时无法显示</div>
     <figcaption v-if="text || (imagePath && !imageFailed)" class="image-tip-caption">
       <div v-if="text" class="image-tip-description" v-html="text"></div>
-      <a v-if="imagePath && !imageFailed" class="image-tip-original" :href="imagePath" target="_blank" rel="noopener noreferrer">查看原图 ↗</a>
+      <button v-if="imagePath && !imageFailed" type="button" class="image-tip-original" aria-haspopup="dialog"
+        :aria-label="`预览图片：${altText}`" @click="previewSrc = imagePath">预览图片 ＋</button>
     </figcaption>
+    <ImagePreview v-if="previewSrc" :src="previewSrc" :alt="altText" @close="previewSrc = ''" />
   </figure>
 </template>
 
@@ -57,12 +63,17 @@ onNuxtReady(() => {
 }
 
 .image-tip-media {
+  appearance: none;
   grid-area: media;
   display: block;
+  width: 100%;
   min-width: 0;
   padding: 0;
   border: 1px solid var(--article-border, #d4d4d4);
   background: var(--image-surface);
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
 
   &:focus-visible {
     outline: 1px solid var(--article-accent, #007f73);
@@ -111,12 +122,18 @@ onNuxtReady(() => {
 }
 
 .image-tip-original {
+  appearance: none;
   align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--article-accent, #007f73);
+  font: inherit;
   font-size: 0.75rem;
   line-height: 1.5;
   text-decoration: none;
   white-space: nowrap;
+  cursor: zoom-in;
 
   &:hover { text-decoration: underline; text-underline-offset: 0.2em; }
   &:focus-visible { outline: 1px solid var(--article-accent, #007f73); outline-offset: 3px; }
