@@ -1,1 +1,0 @@
-import{d as o,o as e,c as t,F as r,i as a,f as _,aq as l}from"./De9J-wjs.js";const c={width:"377",height:"377",viewBox:"0 0 377 377",fill:"none",xmlns:"http://www.w3.org/2000/svg"},i=["d"],u=o({__name:"rhymeIcon",setup(d){return(h,m)=>(e(),t("svg",c,[(e(!0),t(r,null,a(_(l),(n,s)=>(e(),t("path",{key:s,d:n,fill:"#38E7CD"},null,8,i))),128))]))}});export{u as default};
