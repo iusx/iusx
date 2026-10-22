@@ -4,7 +4,7 @@
         <description><![CDATA[ritsu]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 15 Oct 2026 09:13:01 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 22 Oct 2026 04:08:37 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
@@ -184,16 +184,16 @@
             <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/ycrenfu</guid>
         </item>
         <item>
-            <title><![CDATA[Ethereum website contribution]]></title>
-            <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
-            <link>m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</guid>
-        </item>
-        <item>
             <title><![CDATA[Hongkong style room]]></title>
             <description><![CDATA[作者2023年逃离深圳到惠州，住父母养老房。两年间主要靠不定期的大佬项目救济，年收入约410851.49日元。这一年远程工作后日子渐好，解决了吃饭问题。作者意识到自身不足，想攒钱买房，预算10万左右，还总结出捞钱所需因素，但自认有所欠缺。]]></description>
             <link>m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</link>
             <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</guid>
+        </item>
+        <item>
+            <title><![CDATA[Ethereum website contribution]]></title>
+            <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
+            <link>m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</link>
+            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</guid>
         </item>
         <item>
             <title><![CDATA[cds]]></title>
