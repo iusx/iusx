@@ -15,6 +15,7 @@ const fullscreenButton = ref<HTMLButtonElement | null>(null);
 const selectedId = ref("");
 const hoveredId = ref("");
 const desktopInput = ref(false);
+const wheelActive = ref(false);
 const dragging = ref(false);
 const focusedId = ref("");
 const fullscreen = ref(false);
@@ -71,12 +72,45 @@ let pendingView: View = currentView;
 let measured = false;
 let scaleTimer: ReturnType<typeof setTimeout> | undefined;
 let inputMedia: MediaQueryList | undefined;
+let wheelHoverTimer: ReturnType<typeof setTimeout> | undefined;
+let pointerInside = false;
+
+function resetWheelHover() {
+  if (wheelHoverTimer !== undefined) clearTimeout(wheelHoverTimer);
+  wheelHoverTimer = undefined;
+  pointerInside = false;
+  wheelActive.value = false;
+}
+function scheduleWheelCapture() {
+  if (wheelActive.value || wheelHoverTimer !== undefined || !pointerInside || !desktopInput.value || !props.graph.nodes.length) return;
+  wheelHoverTimer = setTimeout(() => {
+    wheelHoverTimer = undefined;
+    wheelActive.value = true;
+  }, 3_000);
+}
+function syncWheelHover() {
+  // Hydration and window focus can happen with the mouse already over the graph.
+  if (!desktopInput.value || !document.hasFocus() || !figure.value?.matches(":hover")) {
+    resetWheelHover();
+    return;
+  }
+  pointerInside = true;
+  scheduleWheelCapture();
+}
+function beginWheelHover(event: PointerEvent) {
+  if (event.pointerType === "touch") { resetWheelHover(); return; }
+  if (!desktopInput.value) return;
+  pointerInside = true;
+  scheduleWheelCapture();
+}
 
 function syncInputMode() {
   desktopInput.value = Boolean(inputMedia?.matches);
+  resetWheelHover();
   figure.value?.removeEventListener("wheel", handleWheel);
   if (desktopInput.value) figure.value?.addEventListener("wheel", handleWheel, { passive: false });
   resetPointerGesture();
+  syncWheelHover();
 }
 
 interface CanvasGesture {
@@ -202,7 +236,13 @@ function zoomBy(factor: number) {
 function actualSize() { zoomBy(1 / currentView.k); }
 function handleWheel(event: WheelEvent) {
   if (!desktopInput.value || !props.graph.nodes.length || !svg.value || !zoomBehavior) return;
-  // Detail/list panels keep their own native scrolling inside the component.
+  if (!wheelActive.value) {
+    // A wheel attempt must not restart the dwell timer or require pointer movement.
+    pointerInside = true;
+    scheduleWheelCapture();
+    return;
+  }
+  // Once activated, detail/list panels keep their own native scrolling.
   if ((event.target as Element)?.closest?.(".flow-inspector, .flow-outline-list")) return;
   if (pointerGesture) pointerGesture.invalid = true;
   completedGesture = undefined;
@@ -305,8 +345,9 @@ function measure() {
 watch(layout, () => {
   clearSelection();
   resetPointerGesture();
+  resetWheelHover();
   focusedId.value = "";
-  void nextTick(reset);
+  void nextTick(() => { reset(); syncWheelHover(); });
 });
 onMounted(() => {
   if (!svg.value) return;
@@ -348,9 +389,12 @@ onMounted(() => {
   observer = new ResizeObserver(measure);
   if (viewportElement.value) observer.observe(viewportElement.value);
   document.addEventListener("fullscreenchange", syncFullscreen);
+  window.addEventListener("blur", resetWheelHover);
+  window.addEventListener("focus", syncWheelHover);
 });
 onBeforeUnmount(() => {
   resetPointerGesture();
+  resetWheelHover();
   observer?.disconnect();
   if (frame !== undefined) cancelAnimationFrame(frame);
   if (scaleTimer !== undefined) clearTimeout(scaleTimer);
@@ -358,12 +402,14 @@ onBeforeUnmount(() => {
   inputMedia?.removeEventListener("change", syncInputMode);
   if (svg.value) select(svg.value).on(".zoom", null);
   document.removeEventListener("fullscreenchange", syncFullscreen);
+  window.removeEventListener("blur", resetWheelHover);
+  window.removeEventListener("focus", syncWheelHover);
   if (document.fullscreenElement === figure.value) void document.exitFullscreen().catch(() => {});
 });
 </script>
 
 <template>
-  <figure ref="figure" class="content-flow" :style="{ '--flow-height': `${height}px` }" :data-lenis-prevent="desktopInput ? '' : undefined" @keydown.capture="handleEscape">
+  <figure ref="figure" class="content-flow" :class="{ 'is-wheel-pending': desktopInput && !wheelActive }" :style="{ '--flow-height': `${height}px` }" :data-lenis-prevent="wheelActive ? '' : undefined" @pointerenter="beginWheelHover" @pointermove="beginWheelHover" @pointerleave="resetWheelHover" @keydown.capture="handleEscape">
     <header class="flow-toolbar">
       <div class="flow-heading"><span aria-hidden="true">&gt;</span><span>{{ title }}</span><span class="flow-count">{{ graph.nodes.length }} 节点 / {{ graph.edges.length }} 关系</span></div>
       <div v-if="graph.nodes.length" class="flow-tools" role="group" aria-label="流程图视图控制">
@@ -407,18 +453,18 @@ onBeforeUnmount(() => {
     <template v-if="graph.nodes.length">
       <figcaption class="flow-caption">
         <span class="flow-legend"><span v-for="entry in kinds" :key="entry.kind" :style="{ '--flow-kind': entry.color }">{{ entry.label }}</span></span>
-        <span :id="`${id}-help`" class="flow-help"><template v-if="desktopInput"><span>悬停高亮关联 · 单击节点锁定详情 · 单击空白取消</span><span>按住空白拖动平移 · 滚轮缩放 · Shift / 横向滚动平移</span></template><template v-else><span>轻点节点查看详情 · 轻点空白取消</span><span>滑动滚动文章 · 使用按钮缩放</span></template></span>
+        <span :id="`${id}-help`" class="flow-help"><template v-if="desktopInput"><span>悬停高亮关联 · 单击节点锁定详情 · 单击空白取消</span><span>按住空白拖动平移 · {{ wheelActive ? '滚轮缩放 · Shift / 横向滚动平移' : '停留 3 秒启用滚轮 · 移出后恢复页面滚动' }}</span></template><template v-else><span>轻点节点查看详情 · 轻点空白取消</span><span>滑动滚动文章 · 使用按钮缩放</span></template></span>
       </figcaption>
       <span class="flow-announcement" aria-live="polite">{{ selectedNode ? `已选中 ${selectedNode.id}，详情显示于图下方。` : '' }}</span>
 
-      <aside v-if="selectedNode" :id="`${id}-details`" class="flow-inspector" :style="{ '--flow-kind': kindColor(selectedNode.kind) }" aria-label="节点详情" data-toc-exclude data-lenis-prevent>
+      <aside v-if="selectedNode" :id="`${id}-details`" class="flow-inspector" :style="{ '--flow-kind': kindColor(selectedNode.kind) }" aria-label="节点详情" data-toc-exclude :data-lenis-prevent="wheelActive || !desktopInput ? '' : undefined">
         <header class="flow-inspector-heading"><span><span aria-hidden="true">&gt;</span> {{ kindLabel(selectedNode.kind) }} / #{{ selectedNode.id }} <span v-if="selectedNode.status">· {{ statusLabel(selectedNode.status) }}</span></span><button type="button" aria-label="关闭节点详情" @click="closeDetails">关闭 ×</button></header>
         <p class="flow-detail-title">{{ selectedNode.label }}</p>
         <dl v-if="selectedNode.details.length" class="flow-detail-fields"><template v-for="(detail, index) in selectedNode.details" :key="index"><dt>{{ detail.label }}</dt><dd>{{ detail.text }}</dd></template></dl>
         <div v-if="incidentEdges.length" class="flow-neighbors"><span class="flow-neighbors-label">关联节点</span><button v-for="edge in incidentEdges" :key="edge.id" type="button" @click="selectNode(edge.source === selectedId ? edge.target : edge.source, true)">{{ edge.source === selectedId ? '→' : '←' }} {{ edge.label || '关联' }} / #{{ edge.source === selectedId ? edge.target : edge.source }}</button></div>
       </aside>
 
-      <details class="flow-outline" data-lenis-prevent>
+      <details class="flow-outline" :data-lenis-prevent="wheelActive || !desktopInput ? '' : undefined">
         <summary>文字列表 <span>{{ graph.nodes.length }} 节点</span></summary>
         <div class="flow-outline-list" role="list"><div v-for="node in graph.nodes" :key="node.id" role="listitem"><button type="button" @click="selectNode(node.id, true)"><span>#{{ node.id }} · {{ kindLabel(node.kind) }}</span>{{ node.label }}</button></div></div>
       </details>
@@ -487,6 +533,8 @@ onBeforeUnmount(() => {
 .flow-outline summary { padding: 0.625rem 1rem; color: var(--flow-muted); cursor: pointer; }
 .flow-outline summary > span { margin-left: 0.5rem; font-size: 0.625rem; }
 .flow-outline-list { max-height: 18rem; padding: 0 1rem 0.5rem; overflow-y: auto; overscroll-behavior: contain; }
+/* While waiting, nested panels also let wheel scrolling reach the article. */
+.is-wheel-pending .flow-inspector, .is-wheel-pending .flow-outline-list { overflow-y: hidden; overscroll-behavior: auto; }
 .flow-outline-list button { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; padding: 0.75rem 0; border: 0; border-top: 1px solid var(--flow-soft); background: transparent; color: var(--flow-text); font: inherit; text-align: left; cursor: pointer; white-space: pre-wrap; overflow-wrap: anywhere; }
 .flow-outline-list button > span { color: var(--flow-muted); font-size: 0.6875rem; }
 .content-flow button:focus-visible, .flow-outline summary:focus-visible { outline: 1px solid var(--flow-accent); outline-offset: -3px; }
