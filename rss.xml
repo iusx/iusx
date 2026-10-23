@@ -1,235 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title><![CDATA[ritsu]]></title>
-        <description><![CDATA[ritsu]]></description>
+        <description><![CDATA[ritsu 的个人网站，记录视觉设计、安全研究、编程实践与阅读笔记。]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 23 Oct 2026 06:50:15 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 23 Oct 2026 06:50:36 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
-            <title><![CDATA[たのしいバイナリの歩き方]]></title>
-            <link>m.ritsu.jiangxue.org//book/a-fun-guide-to-exploring-binaries</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/a-fun-guide-to-exploring-binaries</guid>
+            <title><![CDATA[Season Log 胡罗北日历]]></title>
+            <description><![CDATA[近年来逐渐关注自己身体的健康，例如去年买了两个椭圆机。同时年底还买了一辆自行车，每天有氧 35 分钟坚持了大半年，而自行车每天凌晨两三点的时候在地下停车场练习。毕竟上马路了摇摇晃晃的会被后车问候家人。自行车到了之后感觉非常精致，齿轮、链条甚至是刹车系统、变速系统都很有分量。全套 Shimano 的，自行车也让我了…]]></description>
+            <link>https://m.ritsu.jiangxue.org/plan/programming/huluobei</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/plan/programming/huluobei</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Fri, 02 Jan 2026 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
-            <link>m.ritsu.jiangxue.org//book/attacking-network-protocols</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/attacking-network-protocols</guid>
-        </item>
-        <item>
-            <title><![CDATA[Theme: My blog]]></title>
-            <link>m.ritsu.jiangxue.org//book/content-theme</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/content-theme</guid>
-        </item>
-        <item>
-            <title><![CDATA[문재인의 운명]]></title>
-            <link>m.ritsu.jiangxue.org//book/fate-of-moon-jae-in</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/fate-of-moon-jae-in</guid>
-        </item>
-        <item>
-            <title><![CDATA[Gimp]]></title>
-            <link>m.ritsu.jiangxue.org//book/gimp</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/gimp</guid>
-        </item>
-        <item>
-            <title><![CDATA[快捷键备忘录]]></title>
-            <link>m.ritsu.jiangxue.org//book/key-note</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/key-note</guid>
-        </item>
-        <item>
-            <title><![CDATA[Minecraft]]></title>
-            <link>m.ritsu.jiangxue.org//book/minecraft</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/minecraft</guid>
-        </item>
-        <item>
-            <title><![CDATA[Seven Languages in Seven Weeks]]></title>
-            <link>m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/seven-languages-in-seven-weeks-bruce-a-tate</guid>
-        </item>
-        <item>
-            <title><![CDATA[Spine 2D]]></title>
-            <link>m.ritsu.jiangxue.org//book/spine-2d</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/spine-2d</guid>
-        </item>
-        <item>
-            <title><![CDATA[System config]]></title>
-            <link>m.ritsu.jiangxue.org//book/system-config</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/system-config</guid>
-        </item>
-        <item>
-            <title><![CDATA[杀死一只知更鸟]]></title>
-            <link>m.ritsu.jiangxue.org//book/to-kill-a-mockingbird</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/to-kill-a-mockingbird</guid>
-        </item>
-        <item>
-            <title><![CDATA[Unicode Explained]]></title>
-            <link>m.ritsu.jiangxue.org//book/unicode-explained</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/unicode-explained</guid>
-        </item>
-        <item>
-            <title><![CDATA[WISE SAYING]]></title>
-            <link>m.ritsu.jiangxue.org//book/wise-saying</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//book/wise-saying</guid>
-        </item>
-        <item>
-            <title><![CDATA[CRG FPS 電子競技]]></title>
-            <link>m.ritsu.jiangxue.org//des/crg-fps</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/crg-fps</guid>
-        </item>
-        <item>
-            <title><![CDATA[ICRH HCI]]></title>
-            <link>m.ritsu.jiangxue.org//des/icrh-hci</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/icrh-hci</guid>
-        </item>
-        <item>
-            <title><![CDATA[IENN-Editor]]></title>
-            <link>m.ritsu.jiangxue.org//des/ienn-editor</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/ienn-editor</guid>
-        </item>
-        <item>
-            <title><![CDATA[IENN IO]]></title>
-            <link>m.ritsu.jiangxue.org//des/ienn-io</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/ienn-io</guid>
-        </item>
-        <item>
-            <title><![CDATA[Intelligence Gathering]]></title>
-            <link>m.ritsu.jiangxue.org//des/intelligence-gathering</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/intelligence-gathering</guid>
-        </item>
-        <item>
-            <title><![CDATA[Jiangxue Luanyin lab]]></title>
-            <link>m.ritsu.jiangxue.org//des/jiangxue-luanyin-lab</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/jiangxue-luanyin-lab</guid>
-        </item>
-        <item>
-            <title><![CDATA[Myung]]></title>
-            <link>m.ritsu.jiangxue.org//des/myung</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/myung</guid>
-        </item>
-        <item>
-            <title><![CDATA[NPO.NETWORK]]></title>
-            <link>m.ritsu.jiangxue.org//des/nponetwork</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/nponetwork</guid>
-        </item>
-        <item>
-            <title><![CDATA[Programmer-Community]]></title>
-            <link>m.ritsu.jiangxue.org//des/programmer-community</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/programmer-community</guid>
-        </item>
-        <item>
-            <title><![CDATA[Safety Data Index]]></title>
-            <link>m.ritsu.jiangxue.org//des/safety-data-index</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/safety-data-index</guid>
-        </item>
-        <item>
-            <title><![CDATA[Tianyan v1]]></title>
-            <link>m.ritsu.jiangxue.org//des/tianyan-v1</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/tianyan-v1</guid>
-        </item>
-        <item>
-            <title><![CDATA[To Web3 ACG]]></title>
-            <link>m.ritsu.jiangxue.org//des/to-web3-acg</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/to-web3-acg</guid>
-        </item>
-        <item>
-            <title><![CDATA[Anxin Security]]></title>
-            <link>m.ritsu.jiangxue.org//des/anxin-sec</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/anxin-sec</guid>
-        </item>
-        <item>
-            <title><![CDATA[comment-hide]]></title>
-            <link>m.ritsu.jiangxue.org//des/comment-hide</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/comment-hide</guid>
-        </item>
-        <item>
-            <title><![CDATA[Splash]]></title>
-            <link>m.ritsu.jiangxue.org//des/splash</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/splash</guid>
-        </item>
-        <item>
-            <title><![CDATA[Tsing font]]></title>
-            <link>m.ritsu.jiangxue.org//des/tsing</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//des/tsing</guid>
-        </item>
-        <item>
-            <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
-            <description><![CDATA[有时候在做流程图时需要一个好用的绘图软件。我尝试过 Draw.io、Visio、Dia、Graphviz、Umbrello、ProcessOn 等。这些软件各有特色，主要比较的是用户体验和免费程度。Edraw 早期界面像 Visio，现在融入了 Figma 等产品的交互方式。使用时发现它支持复制粘贴 SVG 数据，方便导出无水印流程图。我喜欢支持 SVG 的软件，比如 Figma 和 Illustrator。最喜欢的流程图风格是 IETF RFC 文件中的，用制表符绘制的 ASCII-Art，简洁而美观。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/edrawmax</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/edrawmax</guid>
-        </item>
-        <item>
-            <title><![CDATA[GraphQL Misconfiguration in CWE-16 Github API]]></title>
-            <description><![CDATA[这是我第一次提交漏洞缺陷并且获得赏金等奖励，所以对我来说还是比较难忘的。由于我已经全身心投入到产品设计和开发中，再次发现知名公司或平台的安全漏洞对我来说就像达到了一个里程碑。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/github-misconfiguration</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/github-misconfiguration</guid>
-        </item>
-        <item>
-            <title><![CDATA[CHINA TELECOM IPTV Payment bypass]]></title>
-            <description><![CDATA[发现智能电视机顶盒的网络电视功能，开启了家人的全新娱乐体验。从经典节目到热门电影，一应俱全。不过，发现了一个让人忍不住好奇的漏洞。利用这个小技巧，我们尽情享受了一周的节目，直到漏洞被修复，CNVD 的那份证书让我倍感荣幸。时光流逝，我回顾起四年前的梦想，感慨万分。如今，安全领域的探索已不再是我的重心，但那份热爱和期待依然存在，或许，下一个 CVE 编号就在不远的将来。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/iptv</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/iptv</guid>
-        </item>
-        <item>
-            <title><![CDATA[TOPCHOICE MEDICAL INVESMENT CO., INC]]></title>
-            <description><![CDATA[大约在 2020 年，我十六岁时开始练手挖洞，提交过两个 XSS 漏洞和一个图灵机器人逻辑漏洞，并成功进入 CNVD。当时混迹于安在、圈子社区、吐司等群，认识不少朋友，也白嫖过培训课程。还曾组建过‘江雪分析’团队并做了简单网站，主动找安全团队换友链。那段经历虽技术含量不高，但让我体会到勇气、探索与成长，比所谓‘圈子’更有价值。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/tcmedical</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/tcmedical</guid>
-        </item>
-        <item>
-            <title><![CDATA[Turing Robot Payment bypass]]></title>
-            <description><![CDATA[大约在 2020 年，我十六岁时开始练手挖洞，提交过两个 XSS 漏洞和一个图灵机器人逻辑漏洞，并成功进入 CNVD。当时混迹于安在、圈子社区、吐司等群，认识不少朋友，也白嫖过培训课程。还曾组建过‘江雪分析’团队并做了简单网站，主动找安全团队换友链。那段经历虽技术含量不高，但让我体会到勇气、探索与成长，比所谓‘圈子’更有价值。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/turing</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/turing</guid>
-        </item>
-        <item>
-            <title><![CDATA[HENAN YADU MEDICAL GROUP CORPORATION]]></title>
-            <description><![CDATA[大约在 2020 年，我十六岁时开始练手挖洞，提交过两个 XSS 漏洞和一个图灵机器人逻辑漏洞，并成功进入 CNVD。当时混迹于安在、圈子社区、吐司等群，认识不少朋友，也白嫖过培训课程。还曾组建过‘江雪分析’团队并做了简单网站，主动找安全团队换友链。那段经历虽技术含量不高，但让我体会到勇气、探索与成长，比所谓‘圈子’更有价值。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/yadugroup</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/yadugroup</guid>
-        </item>
-        <item>
-            <title><![CDATA[YICHANG HUMANWELL PHARMACEUTICAL CWE-89]]></title>
-            <description><![CDATA[从对安全的兴趣到学习第一个漏洞，我探索了 OWASP TOP 10，并发现了 Injection 漏洞，尤其是 SQL 注入。漏洞的发现让我认识到安全问题是系统设计和逻辑处理不当的结果。随着学习的深入，发现了更多类型的漏洞，而安全研究也不断拓展。安全领域的探索是一个持续学习和探索的过程，每个人都有自己的独特见解和关注点。]]></description>
-            <link>m.ritsu.jiangxue.org//sec/ycrenfu</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//sec/ycrenfu</guid>
+            <title><![CDATA[cds]]></title>
+            <description><![CDATA[最近发现了一个对我来说还挺有用的一个需求，例如每次我都需要进入到某个目录，但是每次我都是傻傻的不断用 去进。虽说我的 neovim 可以通过 Frecency/MRU 进到最近的 project 中，以及进到该目录后运行 这种很傻的操作。（但我感觉还挺有仪式感的，尤其是碰到 nixpkgs 更新）]]></description>
+            <link>https://m.ritsu.jiangxue.org/plan/programming/cds</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/plan/programming/cds</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Fri, 22 Aug 2025 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Hongkong style room]]></title>
             <description><![CDATA[作者2023年逃离深圳到惠州，住父母养老房。两年间主要靠不定期的大佬项目救济，年收入约410851.49日元。这一年远程工作后日子渐好，解决了吃饭问题。作者意识到自身不足，想攒钱买房，预算10万左右，还总结出捞钱所需因素，但自认有所欠缺。]]></description>
-            <link>m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/life/pay-hongkong-style-room</guid>
+            <link>https://m.ritsu.jiangxue.org/plan/life/pay-hongkong-style-room</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/plan/life/pay-hongkong-style-room</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Wed, 20 Aug 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[NEW BLOG THEME PLAN]]></title>
+            <description><![CDATA[回顾了 Blog 的设计历程，从最初简单的布局到使用 D3.js 实现动态效果，再到探索 Spine 动画技术的可能性。作者反思了过去的“自嗨”心态，意识到技术能力的不足，但也找到了新的方向——借鉴 Pinterest 上的风格，结合手绘或约稿，利用 Spine 实现更专业的交互效果。虽然计划可能耗时较长（甚至跨…]]></description>
+            <link>https://m.ritsu.jiangxue.org/plan/programming/new-blog-theme-plan</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/plan/programming/new-blog-theme-plan</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Sun, 06 Jul 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[CVE learn]]></title>
+            <description><![CDATA[早在我上小学时，就觉得 CVE 很帅。步入初中时，在初三那年我拿到了广东电信 IPTV 的通用漏洞。步入社会时，我拿到了 Github 的 Bug bounty。但我始终没有去拿一个 CVE 的编号。因为水是可以水的，但我已经水了 CNVD 和 Hackerone，我希望我的第一个 CVE 编号可以是不那么水的，…]]></description>
+            <link>https://m.ritsu.jiangxue.org/plan/security/cve-learn</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/plan/security/cve-learn</guid>
+            <dc:creator><![CDATA[My]]></dc:creator>
+            <pubDate>Sun, 29 Jun 2025 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[command-hide]]></title>
+            <description><![CDATA[我写了差不多一篇小软文，题目为 VSCode plugin comment-hide: Dare to write comments! 这篇文章打算投稿到 chokcoco 的 icss 前端趣闻的，但貌似大佬比较忙没时间审稿了（确信！）只好翻译成 English 发到 dev.to 上。如你所见我写了两个版本，…]]></description>
+            <link>https://m.ritsu.jiangxue.org/plan/programming/command-hide</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/plan/programming/command-hide</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Mon, 31 Mar 2025 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[Ethereum website contribution]]></title>
             <description><![CDATA[一次很好的人生体验，体验到了 CTT 的快递服务，以及 Ethereum community contribution 生态的完善。]]></description>
-            <link>m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/open-contribute/ethereum-website-pr</guid>
+            <link>https://m.ritsu.jiangxue.org/plan/open-contribute/ethereum-website-pr</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/plan/open-contribute/ethereum-website-pr</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Wed, 19 Feb 2025 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[CVE learn]]></title>
-            <link>m.ritsu.jiangxue.org//plan/security/cve-learn</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/security/cve-learn</guid>
+            <title><![CDATA[Seven Languages in Seven Weeks]]></title>
+            <description><![CDATA[如果从 2015 那个对计算机懵懂的我来说，到 2025 年已经过了十年。可以说对计算机方面拥有了十年的兴趣。假如从 2018 我第一个漏洞算起，至今已经过了七年。再从 2020 我打算学习设计开始，已经过了五年。]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/seven-languages-in-seven-weeks-bruce-a-tate</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/seven-languages-in-seven-weeks-bruce-a-tate</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Wed, 08 Jan 2025 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[cds]]></title>
-            <link>m.ritsu.jiangxue.org//plan/programming/cds</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/programming/cds</guid>
+            <title><![CDATA[GraphQL Misconfiguration in CWE-16 Github API]]></title>
+            <description><![CDATA[这是我第一次提交漏洞缺陷并且获得赏金等奖励，所以对我来说还是比较难忘的。由于我已经全身心投入到产品设计和开发中，再次发现知名公司或平台的安全漏洞对我来说就像达到了一个里程碑。]]></description>
+            <link>https://m.ritsu.jiangxue.org/sec/github-misconfiguration</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/sec/github-misconfiguration</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Mon, 04 Dec 2023 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[command-hide]]></title>
-            <link>m.ritsu.jiangxue.org//plan/programming/command-hide</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/programming/command-hide</guid>
+            <title><![CDATA[Edraw Software Watermarking Bypass]]></title>
+            <description><![CDATA[有时候在做流程图时需要一个好用的绘图软件。我尝试过 Draw.io、Visio、Dia、Graphviz、Umbrello、ProcessOn 等。这些软件各有特色，主要比较的是用户体验和免费程度。Edraw 早期界面像 Visio，现在融入了 Figma 等产品的交互方式。使用时发现它支持复制粘贴 SVG 数据…]]></description>
+            <link>https://m.ritsu.jiangxue.org/sec/edrawmax</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/sec/edrawmax</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Wed, 17 Mar 2021 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[Season Log 胡罗北日历]]></title>
-            <link>m.ritsu.jiangxue.org//plan/programming/huluobei</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/programming/huluobei</guid>
+            <title><![CDATA[TOPCHOICE MEDICAL INVESMENT CO., INC]]></title>
+            <description><![CDATA[大约在 2020 年，我十六岁时开始练手挖洞，提交过两个 XSS 漏洞和一个图灵机器人逻辑漏洞，并成功进入 CNVD。当时混迹于安在、圈子社区、吐司等群，认识不少朋友，也白嫖过培训课程。还曾组建过‘江雪分析’团队并做了简单网站，主动找安全团队换友链。那段经历虽技术含量不高，但让我体会到勇气、探索与成长，比所谓‘圈…]]></description>
+            <link>https://m.ritsu.jiangxue.org/sec/tcmedical</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/sec/tcmedical</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Sat, 28 Mar 2020 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[NEW BLOG THEME PLAN]]></title>
-            <description><![CDATA[回顾了 Blog 的设计历程，从最初简单的布局到使用 D3.js 实现动态效果，再到探索 Spine 动画技术的可能性。作者反思了过去的“自嗨”心态，意识到技术能力的不足，但也找到了新的方向——借鉴 Pinterest 上的风格，结合手绘或约稿，利用 Spine 实现更专业的交互效果。虽然计划可能耗时较长（甚至跨年），但希望通过学习提升，最终打造一个兼具科技感和美术风格的博客，以此增强自信并摆脱“loser”心态。]]></description>
-            <link>m.ritsu.jiangxue.org//plan/programming/new-blog-theme-plan</link>
-            <guid isPermaLink="true">m.ritsu.jiangxue.org//plan/programming/new-blog-theme-plan</guid>
+            <title><![CDATA[HENAN YADU MEDICAL GROUP CORPORATION]]></title>
+            <description><![CDATA[大约在 2020 年，我十六岁时开始练手挖洞，提交过两个 XSS 漏洞和一个图灵机器人逻辑漏洞，并成功进入 CNVD。当时混迹于安在、圈子社区、吐司等群，认识不少朋友，也白嫖过培训课程。还曾组建过‘江雪分析’团队并做了简单网站，主动找安全团队换友链。那段经历虽技术含量不高，但让我体会到勇气、探索与成长，比所谓‘圈…]]></description>
+            <link>https://m.ritsu.jiangxue.org/sec/yadugroup</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/sec/yadugroup</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Sat, 28 Mar 2020 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[CHINA TELECOM IPTV Payment bypass]]></title>
+            <description><![CDATA[发现智能电视机顶盒的网络电视功能，开启了家人的全新娱乐体验。从经典节目到热门电影，一应俱全。不过，发现了一个让人忍不住好奇的漏洞。利用这个小技巧，我们尽情享受了一周的节目，直到漏洞被修复，CNVD 的那份证书让我倍感荣幸。时光流逝，我回顾起四年前的梦想，感慨万分。如今，安全领域的探索已不再是我的重心，但那份热爱和…]]></description>
+            <link>https://m.ritsu.jiangxue.org/sec/iptv</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/sec/iptv</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Tue, 04 Feb 2020 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Turing Robot Payment bypass]]></title>
+            <description><![CDATA[大约在 2020 年，我十六岁时开始练手挖洞，提交过两个 XSS 漏洞和一个图灵机器人逻辑漏洞，并成功进入 CNVD。当时混迹于安在、圈子社区、吐司等群，认识不少朋友，也白嫖过培训课程。还曾组建过‘江雪分析’团队并做了简单网站，主动找安全团队换友链。那段经历虽技术含量不高，但让我体会到勇气、探索与成长，比所谓‘圈…]]></description>
+            <link>https://m.ritsu.jiangxue.org/sec/turing</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/sec/turing</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Fri, 17 Jan 2020 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[YICHANG HUMANWELL PHARMACEUTICAL CWE-89]]></title>
+            <description><![CDATA[从对安全的兴趣到学习第一个漏洞，我探索了 OWASP TOP 10，并发现了 Injection 漏洞，尤其是 SQL 注入。漏洞的发现让我认识到安全问题是系统设计和逻辑处理不当的结果。随着学习的深入，发现了更多类型的漏洞，而安全研究也不断拓展。安全领域的探索是一个持续学习和探索的过程，每个人都有自己的独特见解和…]]></description>
+            <link>https://m.ritsu.jiangxue.org/sec/ycrenfu</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/sec/ycrenfu</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Tue, 06 Aug 2019 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[たのしいバイナリの歩き方]]></title>
+            <description><![CDATA[在那个信息匮乏的年代，想学逆向要么啃书要么看视频。但就算是看了视频也没有什么帮助，因为涉及底层学起来还是很枯燥的，不像是 Web Security 找个靶场或者 Google 黑语法 就能检验最新学到的 OWASP TOP 10。跑一跑最新学到的 sqlmap。而逆向学的就多了，开始就是 IDA PRO，不像是…]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/a-fun-guide-to-exploring-binaries</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/a-fun-guide-to-exploring-binaries</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[Attacking Network Protocols: A Hacker's Guide to Capture, Analysis, and Exploitation]]></title>
+            <description><![CDATA[本书的作者是 James Forshaw，也是著名的 Google Project Zero 成员之一。他负责维护很多开源的分析工具，同时自己也根据多年的经验总结出自己想要的工具。并在一些会议中分享，甚至是 open source。到目前，他已经是一位高级猎食者，从当初的破解游戏机，到揭秘操作系统中的复杂问题，具…]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/attacking-network-protocols</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/attacking-network-protocols</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[Theme: My blog]]></title>
+            <description><![CDATA[用一句话概括文章。]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/content-theme</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/content-theme</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[문재인의 운명]]></title>
+            <description><![CDATA[我承认很大一部分原因是因为文在寅颜值比较高，比较好奇他是怎么摆脱「青瓦台魔咒」清算的。对于韩国这个邻国，我并不太了解这个国家的文化和习俗，但韩剧还是很不错的，毕竟全部颜值在线同时还是实力派。我有留意过一些韩国大学的学生 CV，是非常注重形象管理的，将颜值即正义这个理念贯彻始终。]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/fate-of-moon-jae-in</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/fate-of-moon-jae-in</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[Gimp]]></title>
+            <description><![CDATA[哈哈，写完并且过了很久之后我在 STEAM 上买游戏的时候看到了 Krita。虽然知道他是开源的，但是我还是在 STEAM 上花了钱购买了他。有一说一 Gimp 有点像 Adobe Illustrator + Photoshop 的结合体，而 krita 则类似 sai + ps]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/gimp</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/gimp</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[快捷键备忘录]]></title>
+            <description><![CDATA[快捷键是一个非常棒的一个工具，但是我很多时候可能并不会那么经常使用，但又会在需要的时候重新拾起这方面的工作。因此我会将一些比较不常用，但又可能会在未来某个时间段重新使用的快捷键记录下来。]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/key-note</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/key-note</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[Minecraft]]></title>
+            <description><![CDATA[还记得我第一次玩 Minecraft 的时候，还是在小学，同学来我家帮我注册邮箱. 记得当时有很多启动器, 里面有很多服务器可以选择. 我影响比较深的就是多玩我的世界盒子和麦块(好像是叫这个名字). 到之后加 QQ 群下载启动器 Hello Minecraft! Launcher(那个时候还不知道是这个) 我影响…]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/minecraft</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/minecraft</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[Spine 2D]]></title>
+            <description><![CDATA[市面上同类型的产品有很多，例如 Live 2D、Pixelover、Rive 甚至是 Loongbones。有些效果 Adobe 的 AE 都可以做。但我为什么选择 Spine 2D 呢？无论如何，我看一个产品的角度是很片面的。我会从以下几点看待一个产品的实力：]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/spine-2d</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/spine-2d</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[System config]]></title>
+            <description><![CDATA[也是视奸 群u萌 看到的，了解了下发现是 2003 年就开始发布，至今已经 22 年了。（第一印象还以为是一个发行版，确实有，NixOS）。再看看自己的系统环境确实有点乱，于是就有了重装系统的念头。新的系统毫不犹豫就用上了 Nix，不过我用的是 DeterminateSystems 家的（好像是对 macOS 有…]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/system-config</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/system-config</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[杀死一只知更鸟]]></title>
+            <description><![CDATA[我发现最近一两年我几乎很少看书，更多时间都是在看电影，电视剧甚至是刷视频。虽然买了 B 站的年度大会员和夸克网盘的会员，但我意识到真正能给我带来收获的更多是 telegram 和 x.com。前者能看一些小道消息，而后者能每天给我推我感兴趣的。而不是 b 站那种垃圾算法和推广一些我不感兴趣充斥着广告推广的视频。因…]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/to-kill-a-mockingbird</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/to-kill-a-mockingbird</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[Unicode Explained]]></title>
+            <description><![CDATA[起因是在 neovim 群中看到了群友的名字是 每次 @ 他的时候文字都会被 包裹起来。 实际上我并没有将文字写在 中，而是默认这样的，这个用到的就是]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/unicode-explained</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/unicode-explained</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[WISE SAYING]]></title>
+            <description><![CDATA[科学理论的优越性不在于它是否新颖，而在于它能否以统一的机制解释广泛的生物学事实。我们之所以接受自然选择，是因为它不仅能解释物种适应性，还能涵盖系统发生、群体遗传等多个层面；而仅能解释局部现象的假说，往往无法在证据积累中维持其解释力。因此，在科学共同体中，理论的竞争终将归结为“解释范围”与“逻辑经济性”的胜负。]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/wise-saying</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/wise-saying</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
         </item>
     </channel>
 </rss>

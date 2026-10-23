@@ -9,6 +9,8 @@
   --article-soft-border: #e8e8e8;
   --article-surface: transparent;
   --article-accent: #007f73;
+  --article-chapter-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  --article-subheading-size: 1.0625rem;
   min-height: 100dvh;
   padding: 1px 0;
   background: var(--article-bg);
@@ -82,13 +84,28 @@
 
   > :is(h1, h2, h3, h4, h5, h6):not(.text-title):not([data-toc-marker]),
   > .article-section > :is(h1, h2, h3, h4, h5, h6):not(.text-title):not([data-toc-marker]) {
-    margin: 2.5rem 0 1rem;
+    margin: 2.25rem 0 0.875rem;
     &::before { content: "# "; color: var(--article-muted); font-weight: 400; }
     a { color: inherit; }
   }
   > h1:not(.text-title), > .article-section > h1:not(.text-title) { font-size: clamp(1.25rem, 2vw, 1.625rem); }
-  > h2:not(.text-title), > .article-section > h2:not(.text-title) { font-size: 1.125rem; }
-  > :is(h3, h4, h5, h6):not(.text-title), > .article-section > :is(h3, h4, h5, h6):not(.text-title) { font-size: 1rem; }
+  > h2:not(.text-title):not([data-toc-marker]),
+  > .article-section > h2:not(.text-title):not([data-toc-marker]) {
+    margin: 3.25rem 0 1.25rem;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--article-soft-border);
+    font-size: var(--article-chapter-size);
+    &::before { color: var(--article-accent); }
+  }
+  > h3:not(.text-title), > .article-section > h3:not(.text-title) { font-size: var(--article-subheading-size); }
+  > :is(h4, h5, h6):not(.text-title), > .article-section > :is(h4, h5, h6):not(.text-title) { font-size: 1rem; }
+
+  @each $level, $marker in (h3: "## ", h4: "### ", h5: "#### ", h6: "##### ") {
+    > #{$level}:not(.text-title):not([data-toc-marker]),
+    > .article-section > #{$level}:not(.text-title):not([data-toc-marker]) {
+      &::before { content: $marker; }
+    }
+  }
 
   :is(p, li, blockquote, figcaption) a {
     color: inherit;

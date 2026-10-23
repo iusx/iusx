@@ -1,0 +1,1 @@
+import{y as o,o as s,f as t,S as a,v as c,x as n,k as _}from"./CFa5PYAp.js";const r={},d=e=>(c("data-v-375044bb"),e=e(),n(),e),p=d(()=>_("span",null,"|",-1));function l(e,u){return s(),t("p",null,[a(e.$slots,"default",{},void 0,!0),p])}const i=o(r,[["render",l],["__scopeId","data-v-375044bb"]]);export{i as _};

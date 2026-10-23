@@ -8,51 +8,9 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/a-fun-guide-to-exploring-binaries/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/theme/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/to-kill-a-mockingbird/1.jpg</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/seven-languages-in-seven-weeks-bruce-a-tate/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/gimp/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/key-note/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/minecraft/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/system-config/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/unicode-explained/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/wise-saying/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/attacking-network-protocols/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/fate-of-moon-jae-in/4.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/des</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/des/01/hide.jpg</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/link</loc>
@@ -62,126 +20,45 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/page/github.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/page/cnvd.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/page/cnnvd.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/a-fun-guide-to-exploring-binaries</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/a-fun-guide-to-exploring-binaries/1.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/attacking-network-protocols</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/attacking-network-protocols/1.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/content-theme</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/theme/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/gimp/test.jpg</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/key-note/2.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/fate-of-moon-jae-in</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/fate-of-moon-jae-in/4.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/fate-of-moon-jae-in/WechatIMG4.jpg</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/gimp</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/gimp/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/gimp/test.jpg</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/key-note</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/key-note/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/key-note/2.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/minecraft</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/minecraft/1.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/seven-languages-in-seven-weeks-bruce-a-tate</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/seven-languages-in-seven-weeks-bruce-a-tate/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/seven-languages-in-seven-weeks-bruce-a-tate/1.jpg</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/spine-2d</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/img/1.gif</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/img/2.gif</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/img/3.gif</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/img/4.gif</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/spine/img/5.gif</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/system-config</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/system-config/1.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/to-kill-a-mockingbird</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/to-kill-a-mockingbird/1.jpg</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/unicode-explained</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/unicode-explained/1.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/book/wise-saying</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/wise-saying/1.png</image:loc>
-        </image:image>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/edrawmax</loc>
@@ -203,9 +80,6 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/sec/ycrenfu</loc>
-    </url>
-    <url>
-        <loc>https://m.ritsu.jiangxue.org/test/qc</loc>
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/tools/color</loc>
@@ -236,12 +110,6 @@
     </url>
     <url>
         <loc>https://m.ritsu.jiangxue.org/plan/security/cve-learn</loc>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/cve-learn/1.png</image:loc>
-        </image:image>
-        <image:image>
-            <image:loc>https://m.ritsu.jiangxue.org/img/book/cve-learn/2.jpg</image:loc>
-        </image:image>
     </url>
 </urlset>
-<!-- XML Sitemap generated by @nuxtjs/sitemap v5.1.5 at 2026-10-23T06:50:19.695Z -->
+<!-- XML Sitemap generated by @nuxtjs/sitemap v5.1.5 at 2026-10-23T06:50:42.029Z -->
