@@ -47,7 +47,6 @@ function keyResize(event: KeyboardEvent) {
   <figure class="text-compare" :aria-label="title">
     <header class="compare-heading">
       <span class="compare-heading-title"><span aria-hidden="true">&gt;</span> {{ displayText(title) }}</span>
-      <span class="compare-heading-note">左右对照</span>
     </header>
     <div class="compare-wrap" :class="{ 'is-resizing': resizing }" :style="{ '--compare-split': `${split}%` }">
       <div ref="grid" class="compare-grid"><slot /></div>
