@@ -102,7 +102,7 @@ function scheduleWheelCapture() {
   wheelHoverTimer = setTimeout(() => {
     wheelHoverTimer = undefined;
     wheelActive.value = true;
-  }, 3_000);
+  }, 1_300);
 }
 function syncWheelHover() {
   // Hydration and window focus can happen with the mouse already over the graph.
@@ -469,7 +469,7 @@ onBeforeUnmount(() => {
     <template v-if="graph.nodes.length">
       <figcaption class="flow-caption">
         <span class="flow-legend"><span v-for="entry in kinds" :key="entry.kind" :style="{ '--flow-kind': entry.color }">{{ entry.label }}</span></span>
-        <span :id="`${id}-help`" class="flow-help"><template v-if="desktopInput"><span>悬停高亮关联 · 单击节点锁定详情 · 单击空白取消</span><span>按住空白拖动平移 · {{ wheelActive ? '滚轮缩放 · Shift / 横向滚动平移' : '停留 3 秒启用滚轮 · 移出后恢复页面滚动' }}</span></template><template v-else><span>轻点节点查看详情 · 轻点空白取消</span><span>滑动滚动文章 · 使用按钮缩放</span></template></span>
+        <span :id="`${id}-help`" class="flow-help"><template v-if="desktopInput"><span>悬停高亮关联 · 单击节点锁定详情 · 单击空白取消</span><span>按住空白拖动平移 · {{ wheelActive ? '滚轮缩放 · Shift / 横向滚动平移' : '停留 1.3 秒启用滚轮 · 移出后恢复页面滚动' }}</span></template><template v-else><span>轻点节点查看详情 · 轻点空白取消</span><span>滑动滚动文章 · 使用按钮缩放</span></template></span>
       </figcaption>
       <span class="flow-announcement" aria-live="polite">{{ selectedNode ? `已选中 ${displayText(selectedNode.id)}，详情显示于图下方。` : '' }}</span>
 

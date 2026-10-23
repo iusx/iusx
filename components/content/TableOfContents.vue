@@ -9,6 +9,10 @@ interface TocHeading {
   count: number | null;
   children: TocHeading[];
 }
+interface HeadingGroup {
+  element: HTMLElement;
+  headings: { id: string; element: HTMLElement }[];
+}
 
 const props = defineProps<{ contentElement?: HTMLElement | null }>();
 const injectedContentElement = inject<Ref<HTMLElement | null> | null>("bookContentElement", null);
@@ -16,7 +20,7 @@ const emit = defineEmits<{ navigate: [id: string] }>();
 const navigation = ref<HTMLElement | null>(null);
 const headings = shallowRef<TocHeading[]>([]);
 const ready = ref(false);
-const currentHash = ref("");
+const activeId = ref("");
 const headingSelector = "h1, h2, h3, h4, h5, h6";
 const generatedIds = new WeakMap<HTMLElement, { id: string; base: string; text: string }>();
 const observerOptions: MutationObserverInit = {
@@ -29,15 +33,22 @@ const observerOptions: MutationObserverInit = {
 
 let content: HTMLElement | null = null;
 let observer: MutationObserver | null = null;
+let resizeObserver: ResizeObserver | null = null;
 let pendingFrame: number | null = null;
+let activeFrame: number | null = null;
+let headingGroups: HeadingGroup[] = [];
 let mounted = false;
+
+const containsHeading = (items: TocHeading[], id: string): boolean => items.some(heading =>
+  heading.id === id || containsHeading(heading.children, id)
+);
 
 // A recursive list keeps heading levels meaningful, including skipped levels.
 const TocList = defineComponent({
   name: "TocList",
   props: {
     items: { type: Array as PropType<TocHeading[]>, required: true },
-    currentHash: { type: String, default: "" },
+    activeId: { type: String, default: "" },
   },
   emits: ["navigate"],
   setup(listProps, { emit: listEmit }): () => VNode {
@@ -46,7 +57,8 @@ const TocList = defineComponent({
         h("div", { class: "toc-row" }, [
           h("a", {
             href: `#${encodeURIComponent(heading.id)}`,
-            "aria-current": listProps.currentHash === heading.id ? "location" : undefined,
+            "aria-current": listProps.activeId === heading.id ? "location" : undefined,
+            "data-active-ancestor": containsHeading(heading.children, listProps.activeId) ? "" : undefined,
             onClick: (event: MouseEvent) => {
               if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
               event.preventDefault();
@@ -63,7 +75,7 @@ const TocList = defineComponent({
         ]),
         heading.children.length ? h(TocList, {
           items: heading.children,
-          currentHash: listProps.currentHash,
+          activeId: listProps.activeId,
           onNavigate: (id: string) => listEmit("navigate", id),
         }) : null,
       ])
@@ -102,10 +114,12 @@ function refreshHeadings() {
   observer?.disconnect();
   const elements = Array.from(content.querySelectorAll<HTMLElement>(headingSelector));
   const duplicateTitles = new Set<Element>();
+  const visibleTitles = new Map<HTMLElement, HTMLElement>();
   for (const marker of elements.filter((element) => element.hasAttribute("data-toc-marker"))) {
     for (const sibling of [marker.previousElementSibling, marker.nextElementSibling]) {
       if (sibling?.matches(".text-title")) {
         duplicateTitles.add(sibling);
+        visibleTitles.set(marker, sibling as HTMLElement);
       }
     }
   }
@@ -113,6 +127,7 @@ function refreshHeadings() {
   const ids = new Set<string>();
   const roots: TocHeading[] = [];
   const parents: TocHeading[] = [];
+  const groups: HeadingGroup[] = [];
   for (const element of elements) {
     const text = headingText(element);
     if (!text || duplicateTitles.has(element) || element.closest("[data-toc-exclude]")) continue;
@@ -140,6 +155,14 @@ function refreshHeadings() {
       count: count !== null && Number.isSafeInteger(count) && count >= 0 ? count : null,
       children: [],
     };
+    const positionElement = visibleTitles.get(element) || element;
+    const groupElement = positionElement.closest<HTMLElement>(".article-section") || positionElement;
+    let group = groups[groups.length - 1];
+    if (!group || group.element !== groupElement) {
+      group = { element: groupElement, headings: [] };
+      groups.push(group);
+    }
+    group.headings.push({ id, element: positionElement });
 
     while (parents.length && parents[parents.length - 1].level >= heading.level) parents.pop();
     if (parents.length) parents[parents.length - 1].children.push(heading);
@@ -148,8 +171,62 @@ function refreshHeadings() {
   }
 
   if (!sameHeadings(headings.value, roots)) headings.value = roots;
+  headingGroups = groups;
   ready.value = true;
   observer?.observe(content, observerOptions);
+  scheduleActiveHeading();
+}
+
+function updateActiveHeading() {
+  if (!headingGroups.length) {
+    activeId.value = "";
+    return;
+  }
+
+  const lastGroup = headingGroups[headingGroups.length - 1];
+  if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+    activeId.value = lastGroup.headings[lastGroup.headings.length - 1].id;
+    return;
+  }
+
+  const readingLine = Math.max(80, Math.min(window.innerHeight * 0.3, 320));
+  let low = 0;
+  let high = headingGroups.length - 1;
+  let index = -1;
+  // Search section boxes first so distant content-visibility sections keep
+  // their deferred layout. Only read individual headings in the current group.
+  while (low <= high) {
+    const middle = (low + high) >>> 1;
+    if (headingGroups[middle].element.getBoundingClientRect().top <= readingLine) {
+      index = middle;
+      low = middle + 1;
+    } else high = middle - 1;
+  }
+
+  if (index < 0) {
+    activeId.value = headingGroups[0].headings[0].id;
+    return;
+  }
+  const group = headingGroups[index];
+  const previous = headingGroups[index - 1]?.headings;
+  let id = previous ? previous[previous.length - 1].id : group.headings[0].id;
+  if (group.element.getBoundingClientRect().bottom <= readingLine) {
+    id = group.headings[group.headings.length - 1].id;
+  } else {
+    for (const heading of group.headings) {
+      if (heading.element.getBoundingClientRect().top > readingLine) break;
+      id = heading.id;
+    }
+  }
+  activeId.value = id;
+}
+
+function scheduleActiveHeading() {
+  if (!mounted || activeFrame !== null) return;
+  activeFrame = requestAnimationFrame(() => {
+    activeFrame = null;
+    updateActiveHeading();
+  });
 }
 
 function affectsHeadings(mutation: MutationRecord) {
@@ -169,11 +246,17 @@ function bindContent() {
   if (content === nextContent && ready.value) return;
 
   observer?.disconnect();
+  resizeObserver?.disconnect();
+  content?.removeEventListener("load", scheduleActiveHeading, true);
   if (pendingFrame !== null) cancelAnimationFrame(pendingFrame);
+  if (activeFrame !== null) cancelAnimationFrame(activeFrame);
   pendingFrame = null;
+  activeFrame = null;
+  headingGroups = [];
   content = nextContent;
   if (!content) {
     headings.value = [];
+    activeId.value = "";
     ready.value = true;
     return;
   }
@@ -186,14 +269,28 @@ function bindContent() {
     });
   });
   refreshHeadings();
+  content.addEventListener("load", scheduleActiveHeading, true);
+  if (typeof ResizeObserver !== "undefined") {
+    resizeObserver = new ResizeObserver(scheduleActiveHeading);
+    resizeObserver.observe(content);
+  }
 }
 
 function updateHash() {
+  let id: string;
   try {
-    currentHash.value = decodeURIComponent(window.location.hash.slice(1));
+    id = decodeURIComponent(window.location.hash.slice(1));
   } catch {
-    currentHash.value = window.location.hash.slice(1);
+    id = window.location.hash.slice(1);
   }
+  if (containsHeading(headings.value, id)) activeId.value = id;
+  scheduleActiveHeading();
+}
+
+function navigate(id: string) {
+  activeId.value = id;
+  emit("navigate", id);
+  scheduleActiveHeading();
 }
 
 watch(() => props.contentElement || unref(injectedContentElement), () => {
@@ -205,19 +302,26 @@ onMounted(() => {
   bindContent();
   updateHash();
   window.addEventListener("hashchange", updateHash);
+  window.addEventListener("scroll", scheduleActiveHeading, { passive: true });
+  window.addEventListener("resize", scheduleActiveHeading);
 });
 
 onBeforeUnmount(() => {
   mounted = false;
   observer?.disconnect();
+  resizeObserver?.disconnect();
+  content?.removeEventListener("load", scheduleActiveHeading, true);
   if (pendingFrame !== null) cancelAnimationFrame(pendingFrame);
+  if (activeFrame !== null) cancelAnimationFrame(activeFrame);
   window.removeEventListener("hashchange", updateHash);
+  window.removeEventListener("scroll", scheduleActiveHeading);
+  window.removeEventListener("resize", scheduleActiveHeading);
 });
 </script>
 
 <template>
   <nav ref="navigation" class="table-of-contents" aria-label="文章目录" :aria-busy="!ready">
-    <TocList v-if="headings.length" :items="headings" :current-hash="currentHash" @navigate="emit('navigate', $event)" />
+    <TocList v-if="headings.length" :items="headings" :active-id="activeId" @navigate="navigate" />
     <p v-else class="toc-empty">{{ ready ? "暂无目录" : "目录加载中…" }}</p>
   </nav>
 </template>
@@ -271,6 +375,7 @@ onBeforeUnmount(() => {
     }
 
     &:hover,
+    &[data-active-ancestor],
     &[aria-current="location"] {
       color: var(--toc-accent);
     }

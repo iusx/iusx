@@ -345,14 +345,6 @@ const handleSidebarKeydown = event => {
   :deep(> :first-child) { margin-top: 0; }
   :deep(> .article-section:first-child > :first-child) { margin-top: 0; }
   :deep(:is(h1, h2, h3, h4, h5, h6)) { scroll-margin-top: 2rem; text-transform: none; }
-  :deep(> :is(h1, h2, h3, h4, h5, h6):not(.text-title)),
-  :deep(> .article-section > :is(h1, h2, h3, h4, h5, h6):not(.text-title)) {
-    margin: 2.5rem 0 1rem;
-    color: var(--book-strong);
-    font-size: 1.1875rem;
-    font-weight: 600;
-    line-height: 1.6;
-  }
   :deep([data-toc-marker]) { height: 0; margin: 0 !important; padding: 0; overflow: hidden; font-size: 0 !important; }
   :deep(img) { display: block; max-width: 100%; height: auto; }
   :deep(pre) { overflow-x: auto; }

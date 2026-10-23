@@ -105,7 +105,7 @@ export default defineComponent({
   contain-intrinsic-size: auto var(--article-section-height, 1600px);
 }
 .article-section:first-child { content-visibility: visible; }
-.article-section:not(:first-child) > .text-title:first-child { margin-top: 2.5rem; }
+.article-section:not(:first-child) > .text-title:first-child { margin-top: var(--heading-space-before, 3.25rem); }
 .article-section > :last-child { margin-bottom: 0; }
 @media print {
   /* Full static text is already present, even in sections never activated. */
