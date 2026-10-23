@@ -1,32 +1,32 @@
 import { serverQueryContent } from "#content/server";
 // @ts-ignore
 import RSS from "rss";
+import { canonicalUrl, documentSeo, SITE_SEO } from "../../utils/seo";
 
 export default defineEventHandler(async (event) => {
   const feed = new RSS({
-    title: "ritsu",
-    site_url: "https://m.ritsu.jiangxue.org/",
-    feed_url: `https://m.ritsu.jiangxue.org/rss.xml`,
+    title: SITE_SEO.name,
+    description: SITE_SEO.description,
+    site_url: canonicalUrl("/"),
+    feed_url: `${SITE_SEO.url}/rss.xml`,
   });
 
   const docs = await serverQueryContent(event)
-    .sort({ date: -1 })
     .where({ _partial: false })
     .find();
 
-  const blogPosts = docs.filter(
-    (doc) =>
-      doc?._path?.includes("/sec") ||
-      doc?._path?.includes("/book") ||
-      doc?._path?.includes("/des") ||
-      doc?._path?.includes("/plan"),
-  );
-  for (const doc of blogPosts) {
+  const blogPosts = docs
+    .filter(doc => doc._path && /^\/(sec|book|des|plan)\//.test(doc._path) && !doc._draft)
+    .map(doc => ({ doc, seo: documentSeo(doc, doc._path!) }))
+    .filter(({ seo }) => !seo.noindex)
+    .sort((a, b) => (Date.parse(b.seo.publishedTime || "") || 0) - (Date.parse(a.seo.publishedTime || "") || 0));
+  for (const { doc, seo } of blogPosts) {
     feed.item({
-      title: doc.title ?? "-",
-      url: `m.ritsu.jiangxue.org/${doc._path}`,
-      date: doc.release_date,
-      description: doc.description,
+      title: seo.title,
+      url: canonicalUrl(doc._path!),
+      ...(seo.publishedTime ? { date: seo.publishedTime } : {}),
+      description: seo.description,
+      author: seo.author,
     });
   }
 

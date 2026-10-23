@@ -24,5 +24,9 @@ plan: "1,100"
 
 所以在看本书之前，我会先尝试下 AI 时代特有的方式，例如 REA 和 Artex，前者针对逆向，后者则是 Web 渗透。我希望自己通过 rust 编译一个密钥发卡程序，然后连接服务器，然后加壳做一个测试 demo。看看 REA 能不能绕过我的 API 校验实现破解 Adobe 类似的效果。而 Artex 则是随便找一个生产环境进行测试。
 
+## 简陋的发卡程序测试
 
+在 Codex 额度充值之前，我直接 GPT-6.1 Astra Ultra 让他帮我生成一个前端 QT 后端 rust 并且加壳的 demo。一开始它选的是 [VMProtect](https://www.vmpsoft.com/) ，但是这个要花钱（不过好像一般都是用盗版的）。于是我让 GPT 帮我用开源的，它找到了 [xollvm](https://github.com/und3ath/xollvm) 有一说一才 156 个 star。
+
+### LLVM
 ::

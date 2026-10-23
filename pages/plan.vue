@@ -63,7 +63,6 @@
 
 <script setup>
 import { computed } from "vue";
-useSeoMeta({ title: "PLAN" });
 
 const { data: plans } = await useAsyncData("plan-overview", () =>
   queryContent("plan/").only(["_path", "title", "target", "current", "displayType", "time"]).find(),

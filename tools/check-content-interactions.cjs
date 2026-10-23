@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const nuxtRoot = path.dirname(require.resolve('nuxt/package.json'));
 const { transformSync } = require(require.resolve('esbuild', { paths: [nuxtRoot] }));
-const { computed, reactive } = require(require.resolve('vue', { paths: [nuxtRoot] }));
+const { computed, reactive, defineComponent, h } = require(require.resolve('vue', { paths: [nuxtRoot] }));
 function source(file) { return fs.readFileSync(path.join(root, file), 'utf8'); }
 function section(text, start, end) {
   const from = text.indexOf(start);
@@ -65,6 +65,99 @@ test('TOC equivalence detects every rendered field, hierarchy and order', () => 
   const moved = clone();
   moved.push(moved[0].children.pop());
   assert.equal(context.same(original, moved), false);
+});
+
+function tocScrollHarness() {
+  const text = source('components/content/TableOfContents.vue');
+  const frames = new Map();
+  const window = { scrollY: 0, innerHeight: 1000, location: { hash: '#typography' } };
+  const activeId = { value: 'typography' };
+  const reads = [];
+  const box = (name, top, height = 40) => ({ getBoundingClientRect: () => {
+    reads.push(name);
+    return { top: top - window.scrollY, bottom: top + height - window.scrollY };
+  } });
+  const heading = (id, top) => ({ id, element: box(id, top) });
+  const headingGroups = [
+    { element: box('section-1', 0, 1500), headings: [heading('typography', 100), heading('excerpt', 900)] },
+    { element: box('section-2', 1500, 2000), headings: [heading('gallery', 1600), heading('annotation', 1750)] },
+    { element: box('section-3', 3500, 2000), headings: [heading('last', 3600)] },
+  ];
+  let frameId = 0;
+  const context = evaluate('let activeFrame = null;\n'
+    + section(text, 'function updateActiveHeading()', 'function affectsHeadings(')
+    + '\nglobalThis.api = { updateActiveHeading, scheduleActiveHeading };', {
+    headingGroups, activeId, window, mounted: true,
+    document: { documentElement: { scrollHeight: 6000 } },
+    requestAnimationFrame: callback => { const id = ++frameId; frames.set(id, callback); return id; },
+  });
+  return { ...context.api, window, activeId, frames, reads, headingGroups,
+    frame() {
+      const callbacks = [...frames.values()];
+      frames.clear();
+      callbacks.forEach(callback => callback());
+    },
+  };
+}
+
+test('TOC follows scrolling in both directions while the clicked URL hash stays unchanged', () => {
+  const scroll = tocScrollHarness();
+  scroll.updateActiveHeading();
+  assert.equal(scroll.activeId.value, 'typography');
+  scroll.window.scrollY = 1350;
+  scroll.scheduleActiveHeading();
+  scroll.scheduleActiveHeading();
+  assert.equal(scroll.frames.size, 1, 'rapid scroll events must share one frame');
+  scroll.frame();
+  assert.equal(scroll.activeId.value, 'gallery');
+  assert.equal(scroll.window.location.hash, '#typography');
+  scroll.window.scrollY = 1500;
+  scroll.updateActiveHeading();
+  assert.equal(scroll.activeId.value, 'annotation');
+  scroll.window.scrollY = 800;
+  scroll.updateActiveHeading();
+  assert.equal(scroll.activeId.value, 'excerpt');
+  scroll.window.scrollY = 5000;
+  scroll.updateActiveHeading();
+  assert.equal(scroll.activeId.value, 'last');
+});
+
+test('TOC reads headings only in the current deferred section and handles layout changes', () => {
+  const scroll = tocScrollHarness();
+  scroll.window.scrollY = 1500;
+  scroll.updateActiveHeading();
+  assert.equal(scroll.activeId.value, 'annotation');
+  assert(!scroll.reads.includes('typography') && !scroll.reads.includes('last'), 'distant headings must keep their deferred layout');
+  // An image or an activated section can move titles without a window scroll.
+  scroll.headingGroups[1].headings[1].element.getBoundingClientRect = () => ({ top: 600, bottom: 640 });
+  scroll.scheduleActiveHeading();
+  scroll.frame();
+  assert.equal(scroll.activeId.value, 'gallery');
+  scroll.headingGroups.length = 0;
+  scroll.updateActiveHeading();
+  assert.equal(scroll.activeId.value, '');
+});
+
+test('TOC renders the current subsection and highlights its parent chapter', () => {
+  const text = source('components/content/TableOfContents.vue');
+  const context = evaluate(section(text, 'const containsHeading =', 'const normalizeText =')
+    + '\nglobalThis.list = TocList;', { defineComponent, h });
+  const items = [
+    { id: 'typography', text: '文字排版', count: null, children: [] },
+    { id: 'gallery', text: '图片与画廊', count: null, children: [
+      { id: 'annotation', text: '图文注释', count: null, children: [] },
+    ] },
+  ];
+  const render = context.list.setup({ items, activeId: 'annotation' }, { emit() {} });
+  const tree = render();
+  const previous = tree.children[0].children[0].children[0];
+  const chapter = tree.children[1].children[0].children[0];
+  assert.equal(previous.props['data-active-ancestor'], undefined);
+  assert.equal(chapter.props['data-active-ancestor'], '');
+  assert.equal(chapter.props['aria-current'], undefined);
+  const nested = tree.children[1].children[1];
+  const childTree = nested.type.setup(nested.props, { emit() {} })();
+  assert.equal(childTree.children[0].children[0].children[0].props['aria-current'], 'location');
 });
 
 function deferred() {

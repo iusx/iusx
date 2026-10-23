@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "test": "node tools/check-content-flow.cjs && node tools/check-content-interactions.cjs && node tools/check-content-highlight.mjs && node --experimental-strip-types --test tests/ordinary-runtime.test.mjs tests/display-text.test.mjs tests/article-sections.test.mjs tests/article-activation.test.mjs tests/native-svg.test.mjs && pnpm test:dev",
+    "test": "node tools/check-content-flow.cjs && node tools/check-content-interactions.cjs && node tools/check-content-highlight.mjs && node --experimental-strip-types --test tests/ordinary-runtime.test.mjs tests/display-text.test.mjs tests/article-sections.test.mjs tests/article-activation.test.mjs tests/native-svg.test.mjs tests/seo.test.mjs tests/seo-head.test.mjs && pnpm test:dev",
     "test:dev": "node --experimental-strip-types tools/check-dev-dependencies.mjs && node tools/check-dev-proxy.mjs",
     "perf:report": "node tools/performance-report.mjs"
   },

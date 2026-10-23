@@ -1,9 +1,4 @@
 <script lang="ts" setup>
-useSeoMeta({
-  title: "Security | Vulnerability Reports",
-  description: "Security research and vulnerability disclosure index.",
-});
-
 const { data: equalQuerySec } = await useAsyncData("security-reports", () =>
   queryContent("sec/").only(["_path", "title", "platform", "time"]).find(),
   { deep: false },

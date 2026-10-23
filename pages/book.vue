@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-useSeoMeta({
-  title: "Library",
-  description: "Books, notes, and things worth learning.",
-});
-
 const { data: books } = await useAsyncData("book-gallery", () =>
   queryContent("book").only(["_path", "title", "img", "time", "director", "plan"]).find(),
   { deep: false },

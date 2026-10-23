@@ -1,9 +1,4 @@
 <script lang="ts" setup>
-useSeoMeta({
-  title: "Friendly link",
-  description: "Github + Hackerone + Behance ÷ Researchgate",
-});
-
 const colorMode = useColorMode();
 
 const { data: links } = await useAsyncData("friendly-links", () =>

@@ -7,10 +7,6 @@ import { createBackgroundPalette, sampleImageBackground } from "~/utils/design-b
 import type { BackgroundPalette, RGB } from "~/utils/design-background";
 import { drawHackerNoise } from "~/utils/hacker-noise";
 
-useSeoMeta({
-  title: "Design",
-  description: "An interactive gallery of visual work by ritsu.",
-});
 useHead({ bodyAttrs: { class: "design-exhibition" } });
 
 const { data: content } = await useAsyncData("equalDes", () => queryContent("des/")
@@ -70,6 +66,8 @@ let transitionToPalette = defaultPalette;
 const previousBodyStyles = new Map<string, { value: string; priority: string }>();
 
 const driver = { transition: 0, transitionFx: 0, dragX: 0, direction: 1, hover: 0, pointerX: 0, pointerY: 0, reduced: false };
+const autoplayIntervalMs = 1300;
+const transitionDurationSeconds = 0.6;
 let animator: typeof import("gsap")["gsap"] | undefined;
 let stage: DesignStage | undefined;
 let activeTexture: StageImage | null = null;
@@ -142,10 +140,10 @@ function clearAutoplay() {
   timer = undefined;
 }
 
-function scheduleAutoplay() {
+function scheduleAutoplay(delayMs = autoplayIntervalMs) {
   clearAutoplay();
   if (disposed || pauseAutoplay.value || projects.value.length < 2 || !animator) return;
-  timer = setTimeout(() => changeWork(1), 7500);
+  timer = setTimeout(() => changeWork(1), delayMs);
 }
 
 function syncFrame() {
@@ -164,7 +162,7 @@ function updateInspection() {
 }
 
 watch(inspecting, updateInspection, { flush: "sync" });
-watch(dragging, scheduleAutoplay, { flush: "sync" });
+watch(dragging, () => scheduleAutoplay(), { flush: "sync" });
 watch([manuallyPaused, tabHidden, reduced], () => {
   driver.reduced = reduced.value;
   clearCipher();
@@ -201,10 +199,11 @@ async function goTo(index: number, direction = 1) {
   root.value?.style.setProperty("--mix", "0");
   transitioning.value = true;
   driver.transitionFx = reduced.value ? 0 : 1;
+  const transitionStartedAt = performance.now();
   transitionTween = animator.to(driver, {
     transition: 1,
     dragX: 0,
-    duration: reduced.value ? 0.18 : 1.2,
+    duration: reduced.value ? 0.18 : transitionDurationSeconds,
     ease: "none",
     onUpdate: () => {
       root.value?.style.setProperty("--mix", String(driver.transition));
@@ -228,7 +227,8 @@ async function goTo(index: number, direction = 1) {
       transitionTween = undefined;
       syncFrame();
       preloadNext();
-      scheduleAutoplay();
+      // Include the transition in the cadence instead of adding another full wait.
+      scheduleAutoplay(Math.max(0, autoplayIntervalMs - (performance.now() - transitionStartedAt)));
     },
   });
 }

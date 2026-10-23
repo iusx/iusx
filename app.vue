@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, provide, ref, shallowRef, watch } from "vue";
 import { usePreferredReducedMotion } from "@vueuse/core";
 import "lenis/dist/lenis.css";
+import { routeSeo } from "~/utils/seo-pages";
 
 const route = useRoute();
 const isReadingPage = computed(() => route.path.startsWith("/book/"));
@@ -30,11 +31,7 @@ watch([smoothScroller, introBlocking], ([scroller, blocked]) => {
   else scroller?.start();
 });
 
-useHead({
-  titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - ritsu` : "ritsu";
-  },
-});
+usePageSeo(() => routeSeo(route.path));
 
 onMounted(() => {
   stopScrollWatcher = watch(reducedMotion, async (motion, _, onCleanup) => {

@@ -388,11 +388,6 @@ const moneyFormatter = new Intl.NumberFormat("zh-CN", {
   maximumFractionDigits: 0,
 });
 
-useSeoMeta({
-  title: "Money",
-  description: "银行卡金额记录与小岛经济学式资金分配",
-});
-
 const canAddCard = computed(() => {
   return draft.bank.length > 0 && sanitizeAmount(draft.balance) > 0;
 });

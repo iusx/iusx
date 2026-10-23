@@ -2,6 +2,7 @@ import { cp } from "node:fs/promises";
 import { join } from "node:path";
 import { highlightLanguages } from "./utils/highlight-languages";
 import { prepareDevDependencyIncludes } from "./utils/dev-dependencies";
+import { SITE_SEO } from "./utils/seo";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -25,7 +26,7 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
-    prerender: { routes: ["/rss.xml"] },
+    prerender: { routes: ["/rss.xml", "/robots.txt"] },
     hooks: {
       async "prerender:init"(nitro) {
         // Nuxt 3.11 copies public files after prerendering. Copy them before
@@ -44,7 +45,19 @@ export default defineNuxtConfig({
     "nuxt-site-config",
   ],
   site: {
-    url: "https://m.ritsu.jiangxue.org/",
+    url: SITE_SEO.url,
+    name: SITE_SEO.name,
+    description: SITE_SEO.description,
+    defaultLocale: SITE_SEO.language,
+  },
+  sitemap: {
+    strictNuxtContentPaths: true,
+    excludeAppSources: ["nuxt:prerender"],
+    exclude: ["/test", "/test/**"],
+    autoLastmod: false,
+  },
+  routeRules: {
+    "/test/**": { headers: { "X-Robots-Tag": "noindex, follow" } },
   },
   ogImage: {
     defaults: {
