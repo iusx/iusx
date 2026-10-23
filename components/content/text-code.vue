@@ -15,22 +15,33 @@ const files = computed(() => {
   const list = Array.isArray(value) ? value : String(value ?? "").split(/[,\n]/);
   return list.map(file => displayText(file).trim()).filter(Boolean);
 });
-const folders = computed(() => {
-  const index = new Map<string, { path: string; name: string; files: { path: string; name: string; index: number }[] }>();
+type CodeFile = { type: "file"; path: string; name: string; index: number; depth: number };
+type CodeFolder = { type: "folder"; path: string; name: string; index: number; depth: number; children: CodeEntry[] };
+type CodeEntry = CodeFile | CodeFolder;
+const entries = computed(() => {
+  const root: CodeEntry[] = [];
+  const folders = new Map<string, CodeFolder>();
   for (const [fileIndex, value] of files.value.entries()) {
     const path = value.replace(/\\/g, "/").replace(/\/{2,}/g, "/");
-    const slash = path.lastIndexOf("/");
-    const folderPath = slash >= 0 ? path.slice(0, slash) || "/" : "";
-    const name = slash >= 0 ? path.slice(slash + 1) : path;
-    const entry = index.get(folderPath) ?? {
-      path: folderPath,
-      name: folderPath === "/" ? "/" : folderPath.split("/").filter(Boolean).at(-1) ?? "",
-      files: [],
-    };
-    entry.files.push({ path, name, index: fileIndex });
-    index.set(folderPath, entry);
+    const parts = path.split("/").filter(Boolean);
+    const name = parts.pop() ?? path;
+    let children = root;
+    let folderPath = "";
+    for (const [depth, part] of parts.entries()) {
+      folderPath += `/${part}`;
+      let folder = folders.get(folderPath);
+      if (!folder) {
+        folder = { type: "folder", path: folderPath, name: part, index: fileIndex, depth, children: [] };
+        folders.set(folderPath, folder);
+        children.push(folder);
+      }
+      children = folder.children;
+    }
+    children.push({ type: "file", path, name, index: fileIndex, depth: parts.length });
   }
-  return [...index.values()].sort((a, b) => a.path.localeCompare(b.path));
+  const flatten = (list: CodeEntry[]): CodeEntry[] => list.flatMap(entry =>
+    entry.type === "folder" ? [entry, ...flatten(entry.children)] : [entry]);
+  return flatten(root);
 });
 const clamp = (value: number) => files.value.length ? Math.max(0, Math.min(Math.trunc(value), files.value.length - 1)) : 0;
 const resolveActive = (): number => {
@@ -71,27 +82,31 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
     </header>
     <div class="code-layout" :class="{ 'is-single': files.length <= 1 }">
       <nav v-if="files.length" class="code-tree" role="tablist" aria-label="代码文件">
-        <div v-for="folder in folders" :key="folder.path" class="code-folder">
-          <div v-if="folder.name" class="code-folder-name">{{ folder.name }}</div>
+        <template v-for="entry in entries" :key="entry.type === 'folder' ? `folder-${entry.path}` : `file-${entry.index}`">
+          <div
+            v-if="entry.type === 'folder'"
+            class="code-folder-name"
+            :style="{ paddingLeft: `${0.5 + entry.depth * 0.9}rem` }"
+          >{{ entry.name }}/</div>
           <button
-            v-for="file in folder.files"
-            :key="file.path"
+            v-else
             type="button"
             role="tab"
             class="code-file"
-            :class="{ 'is-active': activeIndex === file.index }"
-            :id="`${id}-tab-${file.index}`"
-            :data-file-index="file.index"
-            :aria-selected="activeIndex === file.index"
+            :class="{ 'is-active': activeIndex === entry.index }"
+            :id="`${id}-tab-${entry.index}`"
+            :data-file-index="entry.index"
+            :aria-selected="activeIndex === entry.index"
             :aria-controls="`${id}-code`"
-            :tabindex="activeIndex === file.index ? 0 : -1"
-            :title="file.path"
-            @click="select(file.index)"
-            @keydown="handleTabKey($event, file.index)"
+            :tabindex="activeIndex === entry.index ? 0 : -1"
+            :title="entry.path"
+            :style="{ paddingLeft: `${0.5 + entry.depth * 0.9}rem` }"
+            @click="select(entry.index)"
+            @keydown="handleTabKey($event, entry.index)"
           >
-            <span aria-hidden="true">·</span>{{ file.name }}
+            <span aria-hidden="true">·</span>{{ entry.name }}
           </button>
-        </div>
+        </template>
       </nav>
       <div
         :id="`${id}-code`"
@@ -160,14 +175,13 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
   border-right: 1px solid var(--code-soft);
   overflow: auto;
 }
-.code-folder { min-width: 0; }
-.code-folder + .code-folder { margin-top: 0.5rem; }
 .code-folder-name {
   padding: 0.25rem 0.5rem;
   color: var(--code-muted);
   font-size: 0.6875rem;
   overflow-wrap: anywhere;
 }
+.code-folder-name:not(:first-child) { margin-top: 0.5rem; }
 .code-file {
   display: flex;
   align-items: baseline;
@@ -200,17 +214,11 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
 @media (max-width: 640px) {
   .code-layout { grid-template-columns: minmax(0, 1fr); }
   .code-tree {
-    flex-direction: row;
-    align-items: center;
+    max-height: 15rem;
     padding: 0.5rem;
     border-right: 0;
     border-bottom: 1px solid var(--code-soft);
-    overflow-x: auto;
+    overflow: auto;
   }
-  .code-folder { display: flex; align-items: center; gap: 0.25rem; flex: none; }
-  .code-folder + .code-folder { margin-top: 0; margin-left: 0.5rem; }
-  .code-folder-name { flex: none; padding: 0.25rem; }
-  .code-file { width: auto; flex: none; white-space: nowrap; }
-  .code-file.is-active { box-shadow: inset 0 -2px 0 var(--code-accent); }
 }
 </style>

@@ -241,6 +241,62 @@ fn main() {
 ```
 ::
 
+## 代码对照
+
+`text-compare` 左右两栏对照代码，适合展示逆向结果与源码。内部放两个 `text-compare-side`，`title` 是栏目标题。中间分隔线可左右拖动调整宽度，双击复位；窄屏自动改为上下排列。
+
+````md
+::text-compare{title="hello 对照"}
+:::text-compare-side{title="C / 伪代码"}
+```c
+int _hello(void) { return _puts("Hello, world!"); }
+```
+:::
+:::text-compare-side{title="Rust / 源码"}
+```rust
+pub extern "C" fn hello() { unsafe { puts(c"Hello, world!".as_ptr()); } }
+```
+:::
+::
+````
+
+::text-compare{title="hello 对照"}
+:::text-compare-side{title="C / 伪代码"}
+```c
+int _hello(void)
+
+{
+  int iVar1;
+
+  iVar1 = _puts("Hello, world!");
+  return iVar1;
+}
+```
+:::
+:::text-compare-side{title="Rust / 源码"}
+```rust
+#[cfg(not(xollvm))]
+mod hello;
+
+#[cfg(xollvm)]
+unsafe extern "C" {
+    fn hello();
+}
+
+fn main() {
+    #[cfg(not(xollvm))]
+    hello::hello();
+
+    #[cfg(xollvm)]
+    // SAFETY: 链接的 hello 来自本示例，没有参数或调用前提。
+    unsafe {
+        hello();
+    }
+}
+```
+:::
+::
+
 ## 时间线
 
 ### 手写条目

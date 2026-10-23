@@ -85,6 +85,7 @@ title: Hello,World test
 files:
   - /src/hello.rs
   - /src/main.rs
+  - run.py
 ---
 ```rust
 // hello.rs
@@ -125,9 +126,166 @@ fn main() {
     }
 }
 ```
+
+```python
+#!/usr/bin/env python3
+"""构建真正的 xollvm Hello World，并比较运行输出和文件中的字符串。"""
+
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+
+DEMO = Path(__file__).resolve().parent
+ROOT = DEMO.parents[1]
+OUT = DEMO / "artifacts"
+
+
+def run(*args: object) -> bytes:
+    return subprocess.run([str(arg) for arg in args], check=True, stdout=subprocess.PIPE).stdout
+
+
+def main() -> None:
+    for tool in ("rustc",):
+        if not shutil.which(tool):
+            raise SystemExit(f"需要 {tool}")
+    prefixes = ([Path(os.environ["LLVM_PREFIX"])] if "LLVM_PREFIX" in os.environ else [
+        Path("/opt/homebrew/opt/llvm@22"), Path("/usr/local/opt/llvm@22"),
+        Path("/usr/lib/llvm-22"), Path("/usr/lib/llvm-23"),
+    ])
+    llvm = next((path / "bin" for path in prefixes if (path / "bin/opt").is_file()), None)
+    if llvm is None:
+        raise SystemExit("需要 LLVM 22/23；可设置 LLVM_PREFIX 指向其安装目录。")
+    version = run(llvm / "llvm-config", "--version").decode().strip()
+    if version.split(".")[0] not in {"22", "23"}:
+        raise SystemExit(f"需要 LLVM 22/23，实际为 {version}")
+    plugins = ([Path(os.environ["OBFUSCATOR_PLUGIN"])] if "OBFUSCATOR_PLUGIN" in os.environ else [
+        ROOT / "build/Obfuscator.dylib", ROOT / "build/Obfuscator.so",
+    ])
+    plugin = next((path.resolve() for path in plugins if path.is_file()), None)
+    if plugin is None:
+        raise SystemExit("请先构建 xollvm 插件，步骤见 ../rust-basics/README.zh-CN.md。")
+    OUT.mkdir(exist_ok=True)
+
+    # 只导出打印函数的 IR，避免把 Rust 标准库一起送入混淆器。
+    # 导出阶段用 O0，避免提前生成 tail call 后又被 strenc 引入栈缓冲。
+    # 普通版和混淆版的最终对象仍然统一使用 O2 编译。
+    run("rustc", "--edition=2024", "--crate-type=lib", "--crate-name=hello",
+        "--emit=llvm-ir", "-C", "opt-level=0", "-C", "panic=abort",
+        DEMO / "src/hello.rs", "-o", OUT / "plain.ll")
+    ir = (OUT / "plain.ll").read_text()
+    spec = b"obf: strenc(cipher=xor)\0"
+    encoded = "".join(f"\\{byte:02X}" for byte in spec)
+    annotation = f'''
+@.hello.spec = private constant [{len(spec)} x i8] c"{encoded}", section "llvm.metadata"
+@llvm.global.annotations = appending global [1 x {{ ptr, ptr, ptr, i32, ptr }}] [{{ ptr, ptr, ptr, i32, ptr }} {{ ptr @hello, ptr @.hello.spec, ptr null, i32 1, ptr null }}], section "llvm.metadata"
+'''
+    offset = re.search(r"^define\b", ir, re.MULTILINE).start()
+    (OUT / "annotated.ll").write_text(ir[:offset] + annotation + ir[offset:])
+    with (OUT / "obfuscation.log").open("wb") as log:
+        subprocess.run([str(llvm / "opt"), f"-load-pass-plugin={plugin}",
+                        "-passes=obfuscation,verify", "-obf-seed=42", "-obf-verify",
+                        "-obf-verbose", str(OUT / "annotated.ll"), "-S", "-o",
+                        str(OUT / "obfuscated.ll")], check=True, stdout=log, stderr=log)
+
+    triple = re.search(r'target triple = "([^"]+)"', ir).group(1)
+    for mode, name in (("plain", "normal"), ("obfuscated", "obfuscated")):
+        compiler_args = [llvm / "clang", "-target", triple, "-O2", "-c",
+                         OUT / f"{mode}.ll", "-o", OUT / f"{mode}.o"]
+        if sys.platform == "darwin":
+            compiler_args.extend(["-isysroot", run("xcrun", "--show-sdk-path").decode().strip()])
+        run(*compiler_args)
+        disassembler_args = [llvm / "llvm-objdump", "--disassemble", "--no-show-raw-insn"]
+        # Mach-O 专用视图能直接显示 _puts、解密函数等符号，便于新手阅读。
+        disassembler_args.append("--macho" if sys.platform == "darwin" else "--reloc")
+        (OUT / f"{mode}.s").write_bytes(run(*disassembler_args, OUT / f"{mode}.o"))
+        run("rustc", "--edition=2024", "--cfg=xollvm", "--check-cfg=cfg(xollvm)",
+            "-C", "opt-level=2", "-C", "panic=abort", "-C", f"link-arg={OUT / f'{mode}.o'}",
+            DEMO / "src/main.rs", "-o", OUT / name)
+        output = run(OUT / name)
+        (OUT / f"{name}-output.txt").write_bytes(output)
+        if output != b"Hello, world!\n":
+            raise SystemExit(f"{name} 输出不符合预期：{output!r}")
+
+    # 直接搜索文件字节，比 strings 是否恰好将它识别为独立字符串更明确。
+    plaintext = b"Hello, world!"
+    if plaintext not in (OUT / "normal").read_bytes():
+        raise SystemExit("普通版中未找到预期明文，实验对照不成立。")
+    if plaintext in (OUT / "obfuscated").read_bytes():
+        raise SystemExit("混淆版仍含连续明文，不能认为本次字符串混淆生效。")
+    print("普通版运行：Hello, world!")
+    print("混淆版运行：Hello, world!")
+    print("搜索可执行文件中的 Hello, world!：普通版找到；混淆版未找到。")
+    print("混淆版执行时先还原字符串，再打印。产物位于 artifacts/。")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except subprocess.CalledProcessError as error:
+        raise SystemExit(f"执行失败：{error.cmd}（详细混淆日志见 artifacts/obfuscation.log）") from error
+
+```
 ::
 
-为了更好的理解这之间的区别，和 xollvm 的作用，我下载了 IDA PRO Free。
+然后分别运行生成的程序：
+
+```bash
+./artifacts/normal       # 运行普通版
+./artifacts/obfuscated   # 运行经过 xollvm 混淆的版本
+```
+
+两次都打印：
+
+```text
+Hello, world!
+```
+
+::git-info{url="https://github.com/NationalSecurityAgency/ghidra"}
+::
+
+从字符串和人类可读的方式查看，这两次都是一样的。为了更好的理解这之间的区别，和 xollvm 的作用，我下载了 ~~IDA PRO Free。~~(free 的分析不了 ARM64 的，只能用 [Ghidra](https://github.com/NationalSecurityAgency/ghidra)了。
+
+#### normal
+
+1. 打开后选 File → New Project → Non-Shared Project。
+2. 用 File → Import File 导入 artifacts/normal，双击打开并同意自动分析。
+3. 在 Window → Functions 中搜索 `_hello`
+4. 在 Functions 窗口中选中 `_hello`, 在顶部导航栏 Window -> Decompiler
+
+::text-compare{title="hello 对照"}
+:::text-compare-side{title="Ghidra outputs"}
+```c
+int _hello(void)
+
+{
+  int iVar1;
+  
+  iVar1 = _puts("Hello, world!");
+  return iVar1;
+}
+```
+:::
+:::text-compare-side{title="Rust / 源码"}
+```rust
+// puts 是系统提供的“打印一行字符串”函数。
+unsafe extern "C" {
+    fn puts(text: *const core::ffi::c_char) -> core::ffi::c_int;
+}
+
+#[unsafe(no_mangle)]
+#[inline(never)]
+pub extern "C" fn hello() {
+    // SAFETY: c"..." 提供有效、以零结尾的字符串，puts 只在调用期间读取它。
+    unsafe {
+        puts(c"Hello, world!".as_ptr());
+    }
+}
+```
+:::
+::
 
 #### LLVM
 
