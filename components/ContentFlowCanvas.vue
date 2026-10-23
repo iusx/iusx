@@ -62,6 +62,143 @@ const kindLabel = (value: string) => labelFor(kindLabels, value) || "节点";
 const kindColor = (value: string) => `var(--flow-${Object.prototype.hasOwnProperty.call(kindLabels, value) ? value : 'note'})`;
 const statusLabel = (value: string) => labelFor(statusLabels, value);
 const kinds = computed(() => [...new Set(props.graph.nodes.map(node => node.kind))].map(kind => ({ kind, label: kindLabel(kind), color: kindColor(kind) })));
+const exporting = ref(false);
+const exportError = ref("");
+
+function xmlText(value: string | number): string {
+  return displayText(value).replace(/[<>&"']/g, character => ({
+    "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&apos;",
+  })[character]!);
+}
+function exportColors() {
+  const fallback = {
+    bg: "#ffffff", text: "#4a4a4a", strong: "#242424", muted: "#737373",
+    border: "#d4d4d4", accent: "#007f73", note: "#737373",
+  };
+  if (!figure.value || typeof document === "undefined") return fallback;
+  const probe = document.createElement("span");
+  probe.setAttribute("aria-hidden", "true");
+  probe.style.cssText = "position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;";
+  figure.value.appendChild(probe);
+  const read = (name: string, value: string): string => {
+    probe.style.color = `var(${name})`;
+    const color = getComputedStyle(probe).color;
+    return color && color !== "rgba(0, 0, 0, 0)" ? color : value;
+  };
+  const colors = {
+    bg: read("--flow-bg", fallback.bg), text: read("--flow-text", fallback.text),
+    strong: read("--flow-strong", fallback.strong), muted: read("--flow-muted", fallback.muted),
+    border: read("--flow-border", fallback.border), accent: read("--flow-accent", fallback.accent),
+    note: read("--flow-note", fallback.note),
+    origin: read("--flow-origin", fallback.muted), goal: read("--flow-goal", fallback.accent),
+    intent: read("--flow-intent", fallback.accent), finding: read("--flow-finding", fallback.accent),
+    fact: read("--flow-fact", fallback.accent), digest: read("--flow-digest", fallback.accent),
+  };
+  probe.remove();
+  return colors;
+}
+function textWidth(value: string, fontSize: number): number {
+  return [...value].reduce((total, character) => total + (
+    /[\u2e80-\u9fff\uf900-\ufaff\uff00-\uffef]/u.test(character) ? fontSize : fontSize * 0.62
+  ), 0);
+}
+function exportLabelLines(value: string, maxWidth: number, fontSize: number): string[] {
+  const lines: string[] = [];
+  let line = "";
+  for (const character of displayText(value).replace(/\s+/g, " ")) {
+    if (line && textWidth(line + character, fontSize) > maxWidth) { lines.push(line); line = character; }
+    else line += character;
+  }
+  lines.push(line);
+  if (lines.length <= 2) return lines;
+  let clipped = "";
+  for (const character of lines.slice(1).join("")) {
+    if (textWidth(`${clipped}${character}…`, fontSize) > maxWidth) break;
+    clipped += character;
+  }
+  return [lines[0], `${clipped}…`];
+}
+function buildExportSvg() {
+  const graph = layout.value;
+  const colors = exportColors();
+  const margin = 24;
+  const width = Math.ceil(graph.width + margin * 2);
+  const height = Math.ceil(graph.height + margin * 2);
+  const font = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+  const parts = [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`,
+    `<defs><marker id="flow-export-arrow" viewBox="0 -4 7 8" refX="6" refY="0" markerWidth="7" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,-3 L6,0 L0,3" fill="${colors.border}"/></marker></defs>`,
+    `<g transform="translate(${margin} ${margin})">`,
+  ];
+  for (const group of graph.groups) {
+    parts.push(`<g><rect x="${group.x}" y="${group.y}" width="${group.width}" height="${group.height}" fill="none" stroke="${colors.border}" stroke-dasharray="6 4"/><text x="${group.x + 12}" y="${group.y + 18}" font-family="${font}" font-size="11" fill="${colors.muted}">${xmlText(group.label)}</text></g>`);
+  }
+  for (const edge of graph.edges) {
+    parts.push(`<path d="${edge.path}" fill="none" stroke="${colors.border}" stroke-width="1.25"${edge.kind === "covers" ? ' stroke-dasharray="4 4"' : ""} marker-end="url(#flow-export-arrow)"/>`);
+    if (edge.label) {
+      parts.push(`<text x="${edge.labelX}" y="${edge.labelY}" text-anchor="middle" dominant-baseline="central" font-family="${font}" font-size="11" fill="${colors.text}" stroke="${colors.bg}" stroke-width="3" stroke-linejoin="round" paint-order="stroke">${xmlText(edge.label.slice(0, 18))}</text>`);
+    }
+  }
+  for (const node of graph.nodes) {
+    const x = node.x;
+    const y = node.y;
+    const kindName = Object.prototype.hasOwnProperty.call(kindLabels, node.kind) ? node.kind : "note";
+    const tone = Object.prototype.hasOwnProperty.call(colors, kindName) ? colors[kindName as keyof typeof colors] : colors.accent;
+    const status = statusLabel(node.status);
+    parts.push(`<g><rect x="${x}" y="${y}" width="${graph.nodeWidth}" height="${graph.nodeHeight}" fill="${colors.bg}" stroke="${colors.border}"/>`);
+    parts.push(`<rect x="${x + 12}" y="${y + 15}" width="4" height="4" fill="${tone}"/><text x="${x + 20}" y="${y + 20}" font-family="${font}" font-size="10" fill="${tone}">${xmlText(kindLabel(node.kind))}</text>`);
+    parts.push(`<text x="${x + graph.nodeWidth - 12}" y="${y + 20}" text-anchor="end" font-family="${font}" font-size="10" fill="${colors.muted}">#${xmlText(node.id)}</text>`);
+    exportLabelLines(node.label, graph.nodeWidth - 24, 12).forEach((line, index) => {
+      parts.push(`<text x="${x + 12}" y="${y + 52 + index * 18}" font-family="${font}" font-size="12" fill="${colors.text}">${xmlText(line)}</text>`);
+    });
+    if (status) parts.push(`<text x="${x + 12}" y="${y + graph.nodeHeight - 14}" font-family="${font}" font-size="10" fill="${colors.accent}">${xmlText(status)}</text>`);
+    if (node.priority) parts.push(`<text x="${x + graph.nodeWidth - 12}" y="${y + graph.nodeHeight - 14}" text-anchor="end" font-family="${font}" font-size="10" fill="${colors.muted}">${xmlText(/^\d+$/.test(node.priority) ? `P${node.priority}` : node.priority)}</text>`);
+    parts.push("</g>");
+  }
+  parts.push("</g></svg>");
+  return { svg: parts.join(""), width, height };
+}
+async function exportPng() {
+  if (exporting.value || !layout.value.nodes.length || typeof document === "undefined") return;
+  exporting.value = true;
+  exportError.value = "";
+  try {
+    const { svg, width, height } = buildExportSvg();
+    const source = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
+    const image = new Image();
+    try {
+      await new Promise<void>((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error("渲染导出图片超时。")), 15_000);
+        image.onload = () => { clearTimeout(timer); resolve(); };
+        image.onerror = () => { clearTimeout(timer); reject(new Error("无法渲染导出图片。")); };
+        image.src = source;
+      });
+    } finally { URL.revokeObjectURL(source); }
+    const scale = Math.min(2, 4096 / Math.max(width, height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("当前浏览器不支持导出图片。");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, "image/png"));
+    if (!blob) throw new Error("无法生成 PNG 图片。");
+    const filename = (displayText(props.title) || "流程图").replace(/[\\/:*?"<>|]+/g, "-").replace(/\s+/g, "-").slice(0, 80) || "流程图";
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${filename}.png`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1_000);
+  } catch (error) {
+    exportError.value = error instanceof Error ? error.message : "导出图片失败。";
+  } finally {
+    exporting.value = false;
+  }
+}
 
 interface View { x: number; y: number; k: number }
 function fittedView(): View {
@@ -434,6 +571,7 @@ onBeforeUnmount(() => {
         <button type="button" aria-label="放大流程图" title="放大" @click="zoomBy(1.25)"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M10 4v12" /></svg></button>
         <button type="button" aria-label="适配全部节点" title="适配全部" @click="fit"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4M13 3h4v4M17 13v4h-4M7 17H3v-4" /><rect x="7" y="7" width="6" height="6" /></svg></button>
         <button type="button" aria-label="返回流程起点" title="返回起点" @click="reset"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 17V3m0 1h10l-3 4 3 4H5" /></svg></button>
+        <button type="button" aria-label="导出 PNG 图片（透明背景）" title="导出 PNG（透明背景）" :disabled="exporting" @click="exportPng"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 15v2h12v-2" /></svg></button>
         <button v-if="fullscreenAvailable" ref="fullscreenButton" type="button" :aria-label="fullscreen ? '退出全屏' : '全屏查看'" :title="fullscreen ? '退出全屏' : '全屏查看'" :aria-pressed="fullscreen" @click="toggleFullscreen"><svg viewBox="0 0 20 20" aria-hidden="true"><path v-if="fullscreen" d="M3 7h4V3M13 3v4h4M17 13h-4v4M7 17v-4H3" /><path v-else d="M7 3H3v4M13 3h4v4M17 13v4h-4M7 17H3v-4" /></svg></button>
       </div>
     </header>
@@ -445,6 +583,12 @@ onBeforeUnmount(() => {
             <marker :id="`${id}-active-arrow`" viewBox="0 -4 7 8" refX="6" refY="0" markerWidth="7" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,-3 L6,0 L0,3" class="flow-arrow is-active" /></marker>
           </defs>
           <g ref="scene" :transform="initialTransform">
+            <g v-if="layout.groups.length" class="flow-groups" aria-hidden="true">
+              <g v-for="group in layout.groups" :key="group.id" class="flow-group" :class="{ 'is-nested': group.depth > 0 }" :data-flow-group="group.id">
+                <rect :x="group.x" :y="group.y" :width="group.width" :height="group.height" />
+                <text :x="group.x + 12" :y="group.y + 18">{{ displayText(group.label) }}</text>
+              </g>
+            </g>
             <g class="flow-edges" aria-hidden="true">
               <path v-for="edge in layout.edges" :key="edge.id" :d="edge.path" class="flow-edge" :class="{ 'is-active': activeEdges.has(edge.id), 'is-muted': highlightedId && !activeEdges.has(edge.id), 'is-summary': edge.kind === 'covers' }" :marker-end="`url(#${id}-${activeEdges.has(edge.id) ? 'active-arrow' : 'arrow'})`" />
               <template v-for="edge in layout.edges" :key="`label:${edge.id}`">
@@ -454,7 +598,7 @@ onBeforeUnmount(() => {
                 </g>
               </template>
             </g>
-            <foreignObject v-for="node in layout.nodes" :key="node.id" :x="node.x" :y="node.y" :width="layout.nodeWidth" :height="layout.nodeHeight" class="flow-node" :style="{ '--flow-kind': kindColor(node.kind) }" :class="{ 'is-selected': selectedId === node.id, 'is-highlighted': highlightedId === node.id, 'is-related': highlightedId && relatedNodes.has(node.id), 'is-muted': highlightedId && !relatedNodes.has(node.id) }">
+            <foreignObject v-for="node in layout.nodes" :key="node.id" :x="node.x" :y="node.y" :width="layout.nodeWidth" :height="layout.nodeHeight" class="flow-node" :style="{ '--flow-kind': kindColor(node.kind) }" :class="{ 'is-selected': selectedId === node.id, 'is-hovered': hoveredId === node.id, 'is-related': highlightedId && relatedNodes.has(node.id), 'is-muted': highlightedId && !relatedNodes.has(node.id) }">
               <div xmlns="http://www.w3.org/1999/xhtml" class="flow-node-shell">
                 <button type="button" class="flow-node-card" :data-flow-node="node.id" :tabindex="node.id === (focusedId || startingNode?.id) ? 0 : -1" :aria-pressed="selectedId === node.id" :aria-controls="selectedId === node.id ? `${id}-details` : undefined" :aria-label="`查看${kindLabel(node.kind)} ${displayText(node.id)}：${displayText(node.label)}`" @pointerenter="previewNode($event, node.id)" @pointerleave="leaveNode(node.id)" @click="handleNodeClick($event, node.id)" @keydown="handleNodeKeydown($event, node)">
                   <span class="flow-node-heading"><span class="flow-node-kind"><span aria-hidden="true">▪</span>{{ kindLabel(node.kind) }}</span><span class="flow-node-id">#{{ displayText(node.id) }}</span></span>
@@ -486,6 +630,7 @@ onBeforeUnmount(() => {
       </details>
     </template>
     <p v-else class="flow-empty" role="status">暂无节点。传入 text 文字或 file 文件即可生成流程图。</p>
+    <p v-if="exportError" class="flow-empty" role="alert">{{ exportError }}</p>
     <p v-if="fullscreenError" class="flow-empty" role="status">{{ fullscreenError }}</p>
   </figure>
 </template>
@@ -499,12 +644,17 @@ onBeforeUnmount(() => {
 .flow-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem; }
 .flow-tools button, .flow-inspector-heading button { display: inline-flex; align-items: center; justify-content: center; min-width: 1.875rem; min-height: 1.875rem; box-sizing: border-box; padding: 0.25rem 0.5rem; border: 1px solid var(--flow-border); background: var(--flow-bg); color: var(--flow-text); font: inherit; font-size: 0.6875rem; line-height: 1.4; cursor: pointer; }
 .flow-tools button { flex: none; width: 2rem; height: 2rem; padding: 0; }
+.flow-tools button:disabled { opacity: 0.45; cursor: wait; }
 .flow-tools svg { display: block; width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 .flow-viewport { position: relative; height: var(--flow-height, 520px); min-width: 0; background-color: var(--flow-bg); background-image: radial-gradient(var(--flow-soft) 0.75px, transparent 0.75px); background-size: 18px 18px; overflow: hidden; }
 .flow-viewport.is-empty { height: 0; }
 .flow-viewport.is-empty .flow-svg { display: none; }
 .flow-svg { display: block; width: 100%; height: 100%; touch-action: auto; }
-.flow-svg:focus-visible { outline: 1px solid var(--flow-accent); outline-offset: -3px; }
+.flow-svg:focus, .flow-svg:focus-visible { outline: none; }
+.flow-groups { pointer-events: none; }
+.flow-group rect { fill: var(--flow-bg); fill-opacity: 0.55; stroke: var(--flow-border); stroke-width: 1; stroke-dasharray: 6 4; vector-effect: non-scaling-stroke; }
+.flow-group.is-nested rect { stroke-dasharray: 3 3; }
+.flow-group text { fill: var(--flow-muted); font: 11px var(--article-font, ui-monospace, monospace); letter-spacing: 0.02em; }
 .flow-edge { fill: none; stroke: var(--flow-border); stroke-width: 1.25; vector-effect: non-scaling-stroke; pointer-events: none; }
 .flow-edge.is-summary { stroke-dasharray: 4 4; }
 .flow-edge.is-active { stroke: var(--flow-accent); stroke-width: 2.25; }
@@ -520,9 +670,9 @@ onBeforeUnmount(() => {
 .flow-node.is-muted { opacity: 0.25; }
 .flow-node-shell { width: 100%; height: 100%; padding: 2px; box-sizing: border-box; }
 .flow-node-card { display: flex; flex-direction: column; justify-content: space-between; gap: 0.375rem; width: 100%; height: 100%; box-sizing: border-box; padding: 0.75rem; border: 1px solid var(--flow-border); border-radius: 0; background: var(--flow-bg); color: var(--flow-text); font: 12px/1.55 var(--article-font, ui-monospace, monospace); text-align: left; cursor: pointer; overflow: hidden; }
-.is-related .flow-node-card, .is-selected .flow-node-card { border-color: var(--flow-kind, var(--flow-accent)); }
-.is-highlighted .flow-node-card { border-color: var(--flow-accent); box-shadow: inset 0 0 0 1px var(--flow-accent); }
-.is-selected .flow-node-card { box-shadow: inset 2px 0 0 var(--flow-kind, var(--flow-accent)); }
+.is-related .flow-node-card { border-color: var(--flow-kind, var(--flow-accent)); }
+.is-selected .flow-node-card { border-color: var(--flow-border); box-shadow: none; }
+.is-hovered .flow-node-card { border-color: var(--flow-accent); box-shadow: inset 0 0 0 1px var(--flow-accent); }
 .flow-node-heading, .flow-node-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; width: 100%; font-size: 10px; line-height: 1.4; }
 .flow-node-kind { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--flow-kind, var(--flow-strong)); }
 .flow-node-kind > span { color: var(--flow-kind, var(--flow-accent)); }
@@ -563,7 +713,7 @@ onBeforeUnmount(() => {
   .flow-svg { cursor: grab; }
   .flow-svg:active, .is-dragging .flow-svg { cursor: grabbing; }
   .flow-node-card:hover { border-color: var(--flow-kind, var(--flow-accent)); }
-  .flow-tools button:hover, .flow-inspector-heading button:hover { border-color: var(--flow-accent); color: var(--flow-accent); }
+  .flow-tools button:not(:disabled):hover, .flow-inspector-heading button:hover { border-color: var(--flow-accent); color: var(--flow-accent); }
 }
 @media (max-width: 640px) {
   .flow-toolbar { padding: 0.75rem; }

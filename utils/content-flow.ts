@@ -7,6 +7,7 @@ export interface FlowNode {
   status: string;
   priority: string;
   details: { label: string; text: string }[];
+  group?: string;
 }
 
 export interface FlowEdge {
@@ -17,12 +18,15 @@ export interface FlowEdge {
   kind: string;
 }
 
-export interface FlowGraph { nodes: FlowNode[]; edges: FlowEdge[] }
+export interface FlowGroup { id: string; label: string; parent?: string }
+export interface FlowGraph { nodes: FlowNode[]; edges: FlowEdge[]; groups?: FlowGroup[] }
 export interface PositionedFlowNode extends FlowNode { x: number; y: number }
 export interface PositionedFlowEdge extends FlowEdge { path: string; labelX: number; labelY: number; labelWidth: number; labelHeight: number }
+export interface PositionedFlowGroup extends FlowGroup { x: number; y: number; width: number; height: number; depth: number }
 export interface FlowLayout {
   nodes: PositionedFlowNode[];
   edges: PositionedFlowEdge[];
+  groups: PositionedFlowGroup[];
   width: number;
   height: number;
   nodeWidth: number;
@@ -103,9 +107,181 @@ function checkReferences(nodes: FlowNode[], edges: FlowEdge[]): void {
   }
 }
 
+const mermaidHeader = /^(?:flowchart|graph)(?:\s+(?:TB|TD|BT|LR|RL))?\s*$/i;
+const mermaidIgnored = /^(?:direction|classDef|class|style|linkStyle|click|accTitle|accDescr)\b/i;
+
+function firstMeaningfulLine(text: string): string {
+  for (const raw of text.split(/\r\n?|\n/)) {
+    const line = raw.trim();
+    if (line && !line.startsWith("%%")) return line;
+  }
+  return "";
+}
+
+function mermaidText(value: string): string {
+  let text = value.trim();
+  if (text.length >= 2 && text.startsWith('"') && text.endsWith('"')) text = text.slice(1, -1);
+  return text.replace(/\\"/g, '"').replace(/&quot;/g, '"').replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/<br\s*\/?>/gi, "\n").trim();
+}
+
+function mermaidStatements(text: string): { text: string; line: number }[] {
+  const statements: { text: string; line: number }[] = [];
+  text.split(/\r\n?|\n/).forEach((raw, index) => {
+    if (raw.trimStart().startsWith("%%")) return;
+    let start = 0;
+    let quoted = false;
+    const push = (end: number) => {
+      const value = raw.slice(start, end).trim();
+      if (value) statements.push({ text: value, line: index + 1 });
+    };
+    for (let cursor = 0; cursor < raw.length; cursor++) {
+      if (raw[cursor] === '"' && raw[cursor - 1] !== "\\") quoted = !quoted;
+      else if (raw[cursor] === ";" && !quoted) { push(cursor); start = cursor + 1; }
+    }
+    push(raw.length);
+  });
+  return statements;
+}
+
+const mermaidShapes: [string, string][] = [
+  ["[[", "]]"], ["[(", ")]"], ["((", "))"], ["([", "])"], ["{{", "}}"],
+  ["[", "]"], ["(", ")"], ["{", "}"],
+];
+
+/** Accept the common Mermaid flowchart subset, including subgraphs and bidirectional links. */
+function parseMermaidFlow(text: string): FlowGraph {
+  const nodes: FlowNode[] = [];
+  const edges: FlowEdge[] = [];
+  const groups: FlowGroup[] = [];
+  const byId = new Map<string, FlowNode>();
+  const groupIds = new Set<string>();
+  const stack: string[] = [];
+  let generatedGroups = 0;
+
+  const ensureNode = (id: string, label: string | undefined, group: string): FlowNode => {
+    let node = byId.get(id);
+    if (!node) {
+      node = { id, label: label ?? id, kind: "note", status: "", priority: "", details: [], group };
+      byId.set(id, node);
+      nodes.push(node);
+      checkCounts(nodes.length, edges.length);
+    } else if (label !== undefined) node.label = label;
+    return node;
+  };
+  const addEdge = (source: string, target: string, label: string): void => {
+    edges.push({ id: `edge-${edges.length + 1}`, source, target, label, kind: "" });
+    checkCounts(nodes.length, edges.length);
+  };
+
+  for (const statement of mermaidStatements(text)) {
+    const line = statement.text;
+    const lineNumber = statement.line;
+    if (mermaidHeader.test(line) || mermaidIgnored.test(line)) continue;
+    if (/^end$/i.test(line)) { stack.pop(); continue; }
+    const fail = (message: string): never => { throw new Error(`第 ${lineNumber} 行：${message}`); };
+    const subgraph = line.match(/^subgraph\b\s*(.*)$/i);
+    if (subgraph) {
+      const spec = subgraph[1].trim();
+      const shaped = spec.match(/^([^\s[\]]+)\s*\[(.*)\]$/);
+      let id = shaped ? shaped[1] : "";
+      let label = shaped ? mermaidText(shaped[2]) : "";
+      if (!id) {
+        if (spec.startsWith('"')) label = mermaidText(spec);
+        else if (/^[^\s]+$/.test(spec)) { id = spec; label ||= spec; }
+        else label = mermaidText(spec);
+        if (!id) id = `group-${++generatedGroups}`;
+      }
+      while (groupIds.has(id)) id = `${id}-${++generatedGroups}`;
+      groupIds.add(id);
+      groups.push({ id, label: label || id, parent: stack.at(-1) ?? "" });
+      stack.push(id);
+      continue;
+    }
+    let cursor = 0;
+    const whitespace = () => { while (/\s/.test(line[cursor] ?? "")) cursor++; };
+    const readNode = (): { id: string; label?: string } => {
+      whitespace();
+      const start = cursor;
+      while (cursor < line.length) {
+        if (/^(?:<--|-->|---|-.->|==>|--o|--x)/.test(line.slice(cursor))) break;
+        if (/[\s[\](){}<>|&;,"']/.test(line[cursor])) break;
+        cursor++;
+      }
+      const id = line.slice(start, cursor);
+      if (!id) fail("请使用 Mermaid 节点 id，例如 A[开始]");
+      whitespace();
+      let label: string | undefined;
+      const shape = mermaidShapes.find(([open]) => line.startsWith(open, cursor));
+      if (shape) {
+        const [open, close] = shape;
+        const contentStart = cursor + open.length;
+        const end = line.indexOf(close, contentStart);
+        if (end < 0) fail(`节点「${id}」缺少结束符 ${close}`);
+        label = mermaidText(line.slice(contentStart, end));
+        cursor = end + close.length;
+      }
+      ensureNode(id, label, stack.at(-1) ?? "");
+      return { id, label };
+    };
+    const readPipeLabel = (): string => {
+      if (line[cursor] !== "|") return "";
+      const end = line.indexOf("|", cursor + 1);
+      if (end < 0) fail("连线文字缺少结束符 |");
+      const label = mermaidText(line.slice(cursor + 1, end));
+      cursor = end + 1;
+      return label;
+    };
+    const readArrow = (): { length: number; bidirectional: boolean; reverse: boolean; label: string } | undefined => {
+      const rest = line.slice(cursor);
+      const labelled = rest.match(/^(?:--\s+(.+?)\s+(-->|---|--o|--x)|==\s+(.+?)\s+==>|-\.\s+(.+?)\s+\.->)/);
+      if (labelled) {
+        return {
+          length: labelled[0].length, bidirectional: false, reverse: false,
+          label: mermaidText(labelled[1] ?? labelled[3] ?? labelled[4] ?? ""),
+        };
+      }
+      for (const [token, meta] of [
+        ["<-->", { bidirectional: true, reverse: false }], ["<--", { bidirectional: false, reverse: true }],
+        ["-->", { bidirectional: false, reverse: false }], ["---", { bidirectional: false, reverse: false }],
+        ["-.->", { bidirectional: false, reverse: false }], ["==>", { bidirectional: false, reverse: false }],
+        ["--o", { bidirectional: false, reverse: false }], ["--x", { bidirectional: false, reverse: false }],
+      ] as [string, { bidirectional: boolean; reverse: boolean }][]) {
+        if (rest.startsWith(token)) return { length: token.length, label: "", ...meta };
+      }
+      return undefined;
+    };
+
+    const sources: string[] = [readNode().id];
+    whitespace();
+    while (line[cursor] === "&") { cursor++; sources.push(readNode().id); whitespace(); }
+    let source = sources.at(-1)!;
+    while (cursor < line.length) {
+      const arrow = readArrow();
+      if (!arrow) fail("节点之间请使用 --> 或 -->|说明|，例如 a[开始] -->|完成| b[发布]");
+      cursor += arrow.length;
+      const inlineLabel = arrow.label || readPipeLabel();
+      if (!inlineLabel) whitespace();
+      const target = readNode().id;
+      if (arrow.reverse) {
+        for (const from of sources) addEdge(target, from, inlineLabel);
+      } else {
+        for (const from of sources) addEdge(from, target, inlineLabel);
+        if (arrow.bidirectional) for (const from of sources) addEdge(target, from, "");
+      }
+      sources.length = 0;
+      source = target;
+      sources.push(source);
+      whitespace();
+    }
+  }
+  return { nodes, edges, groups };
+}
+
 /** A deliberately small DSL: id[label] -->|edge label| id[label], including chains. */
 export function parseFlowText(text: string): FlowGraph {
   if (text.length > MAX_TEXT_LENGTH) throw new Error("流程图文字不能超过 100,000 个字符");
+  if (mermaidHeader.test(firstMeaningfulLine(text))) return parseMermaidFlow(text);
   const nodes: FlowNode[] = [];
   const edges: FlowEdge[] = [];
   const byId = new Map<string, FlowNode>();
@@ -172,7 +348,7 @@ export function parseFlowText(text: string): FlowGraph {
       source = target;
     }
   });
-  return { nodes, edges };
+  return { nodes, edges, groups: [] };
 }
 
 /** Read standard nodes/edges, Artex broadcast items, or Artex exploration nodes. */
@@ -202,7 +378,7 @@ export function readFlowFile(input: unknown): FlowGraph {
       if (entry.title && entry.text && entry.title !== entry.text) details.unshift({ label: "摘要", text: entry.text });
       return {
         id, label: entry.title || entry.text || id, kind: entry.status === "origin" ? "origin" : nodeKind(entry.kind),
-        status: entry.status, priority: String(entry.priority), details,
+        status: entry.status, priority: String(entry.priority), details, group: "",
       };
     }
     if (item.details != null && !Array.isArray(item.details)) throw new Error(`节点「${id}」的 details 应为数组`);
@@ -214,8 +390,27 @@ export function readFlowFile(input: unknown): FlowGraph {
       id, label: scalar(item.label, `节点「${id}」的 label`) || id,
       kind: nodeKind(item.kind), status: scalar(item.status, "节点 status"),
       priority: scalar(item.priority, "节点 priority"), details,
+      group: scalar(item.group, `节点「${id}」的 group`),
     };
   });
+
+  const groupItems = document.groups ?? [];
+  if (!Array.isArray(groupItems)) throw new Error("JSON 的 groups 应为数组");
+  const groupIds = new Set<string>();
+  const groups: FlowGroup[] = groupItems.map((value, index) => {
+    const item = object(value, `第 ${index + 1} 个分组`);
+    const id = scalar(item.id, `第 ${index + 1} 个分组的 id`);
+    if (!id) throw new Error(`第 ${index + 1} 个分组缺少 id`);
+    if (groupIds.has(id)) throw new Error(`分组 id「${id}」重复，请为每个分组使用唯一 id`);
+    groupIds.add(id);
+    return { id, label: scalar(item.label, `分组「${id}」的 label`) || id, parent: scalar(item.parent, `分组「${id}」的 parent`) };
+  });
+  for (const node of nodes) {
+    if (!node.group || groupIds.has(node.group)) continue;
+    groupIds.add(node.group);
+    groups.push({ id: node.group, label: node.group, parent: "" });
+  }
+  for (const group of groups) if (group.parent && !groupIds.has(group.parent)) group.parent = "";
 
   // Reserve explicit ids first, so generated ids never collide with user ids.
   const edgeRecords = edgeItems.map((value, index) => object(value, `第 ${index + 1} 条边`));
@@ -241,7 +436,7 @@ export function readFlowFile(input: unknown): FlowGraph {
     return { id, source, target, kind, label: scalar(item.label, `边「${id}」的 label`) || (artex ? relationLabels.get(kind) ?? kind : "") };
   });
   checkReferences(nodes, edges);
-  return { nodes, edges };
+  return { nodes, edges, groups };
 }
 
 type Point = { x: number; y: number };
@@ -338,7 +533,7 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
   // Also validate callers that construct FlowGraph themselves, without mutating their data.
   const clean = readFlowFile(graph);
   const count = clean.nodes.length;
-  if (!count) return { nodes: [], edges: [], width: 0, height: 0, nodeWidth: NODE_WIDTH, nodeHeight: NODE_HEIGHT };
+  if (!count) return { nodes: [], edges: [], groups: [], width: 0, height: 0, nodeWidth: NODE_WIDTH, nodeHeight: NODE_HEIGHT };
   const indexById = new Map(clean.nodes.map((node, index) => [node.id, index]));
   const endpoints = clean.edges.map(edge => ({ source: indexById.get(edge.source)!, target: indexById.get(edge.target)! }));
   const outgoing = Array.from({ length: count }, () => [] as number[]);
@@ -433,7 +628,7 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
   const layers = Array.from({ length: Math.max(...rank) + 1 }, () => [] as number[]);
   rank.forEach((layer, node) => layers[layer].push(node));
   const rows = Array(count).fill(0) as number[];
-  const maxRows = Math.max(...layers.map(layer => layer.length));
+  let maxRows = Math.max(...layers.map(layer => layer.length));
   const updateRows = () => layers.forEach(layer => {
     const offset = Math.floor((maxRows - layer.length) / 2);
     layer.forEach((node, row) => { rows[node] = row + offset; });
@@ -461,6 +656,55 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
       const offset = Math.floor((maxRows - layer.length) / 2);
       layer.forEach((node, row) => { rows[node] = row + offset; });
     }
+  }
+  // Subgraphs reserve a fixed row band, so their boxes stay rectangular and never
+  // swallow nodes from another group. Ungrouped nodes share their own band.
+  const groups = clean.groups ?? [];
+  if (groups.length) {
+    const groupById = new Map(groups.map(group => [group.id, group]));
+    const topGroup = (id: string): string => {
+      const seen = new Set<string>();
+      let current = id;
+      while (groupById.get(current)?.parent && !seen.has(current)) {
+        seen.add(current);
+        current = groupById.get(current)!.parent!;
+      }
+      return current;
+    };
+    const keyOf = (node: FlowNode): string => node.group ? topGroup(node.group) : "";
+    const keys: string[] = [];
+    const seenKeys = new Set<string>();
+    for (const node of clean.nodes) {
+      const key = keyOf(node);
+      if (!seenKeys.has(key)) { seenKeys.add(key); keys.push(key); }
+    }
+    const layerCounts = new Map(keys.map(key => [key, Array(layers.length).fill(0) as number[]]));
+    layers.forEach((layer, layerIndex) => {
+      for (const node of layer) layerCounts.get(keyOf(clean.nodes[node]))![layerIndex]++;
+    });
+    const bandHeights = new Map(keys.map(key => [key, Math.max(1, ...layerCounts.get(key)!)]));
+    const bandStarts = new Map<string, number>();
+    let rowCursor = 0;
+    for (const key of keys) {
+      bandStarts.set(key, rowCursor);
+      rowCursor += bandHeights.get(key)!;
+    }
+    maxRows = rowCursor;
+    layers.forEach(layer => {
+      const members = new Map<string, number[]>();
+      for (const node of layer) {
+        const key = keyOf(clean.nodes[node]);
+        const list = members.get(key) ?? [];
+        list.push(node);
+        members.set(key, list);
+      }
+      for (const [key, list] of members) {
+        list.sort((a, b) => rows[a] - rows[b] || a - b);
+        const height = bandHeights.get(key)!;
+        const offset = Math.floor((height - list.length) / 2);
+        list.forEach((node, index) => { rows[node] = bandStarts.get(key)! + offset + index; });
+      }
+    });
   }
   const labelWidths = clean.edges.map(edge => edge.label ? Math.min(edge.label.length, 18) * 11 + 14 : 0);
   const pairCounts = new Map<string, number>();
@@ -536,6 +780,41 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
   const nodes: PositionedFlowNode[] = clean.nodes.map((node, index) => ({
     ...node, x: columnX[rank[index]], y: rowY[rows[index]],
   }));
+
+  const positionedGroupById = new Map(groups.map(group => [group.id, group]));
+  const groupDepth = (group: FlowGroup): number => {
+    let depth = 0;
+    let current = group;
+    const seen = new Set<string>();
+    while (current.parent && positionedGroupById.has(current.parent) && !seen.has(current.id)) {
+      seen.add(current.id);
+      depth++;
+      current = positionedGroupById.get(current.parent)!;
+    }
+    return depth;
+  };
+  const positionedGroups = groups.map(group => {
+    const members = nodes.filter(node => {
+      let current = node.group ?? "";
+      const seen = new Set<string>();
+      while (current && !seen.has(current)) {
+        if (current === group.id) return true;
+        seen.add(current);
+        current = positionedGroupById.get(current)?.parent ?? "";
+      }
+      return false;
+    });
+    if (!members.length) return null;
+    const left = Math.min(...members.map(node => node.x)) - 24;
+    const top = Math.min(...members.map(node => node.y)) - 34;
+    const right = Math.max(...members.map(node => node.x + NODE_WIDTH)) + 24;
+    const bottom = Math.max(...members.map(node => node.y + NODE_HEIGHT)) + 20;
+    return {
+      id: group.id, label: group.label, parent: group.parent, depth: groupDepth(group),
+      x: left, y: top, width: right - left, height: bottom - top,
+    };
+  }).filter((group): group is PositionedFlowGroup => Boolean(group));
+  positionedGroups.sort((a, b) => a.depth - b.depth || a.y - b.y || a.x - b.x);
 
   const sourcePort = Array(clean.edges.length).fill(0) as number[];
   const targetPort = Array(clean.edges.length).fill(0) as number[];
@@ -649,9 +928,17 @@ export function layoutFlow(graph: FlowGraph): FlowLayout {
     return { ...edge, path: route.path, labelX: position.x, labelY: position.y, labelWidth, labelHeight: LABEL_HEIGHT };
   });
   return {
-    nodes, edges,
-    width: Math.max(right + columnGaps[layers.length], ...edges.filter(edge => edge.label).map(edge => edge.labelX + edge.labelWidth / 2 + 24)),
-    height: Math.max(bottom + rowGaps[maxRows], ...edges.filter(edge => edge.label).map(edge => edge.labelY + edge.labelHeight / 2 + 24)),
+    nodes, edges, groups: positionedGroups,
+    width: Math.max(
+      right + columnGaps[layers.length],
+      ...edges.filter(edge => edge.label).map(edge => edge.labelX + edge.labelWidth / 2 + 24),
+      ...positionedGroups.map(group => group.x + group.width + 24),
+    ),
+    height: Math.max(
+      bottom + rowGaps[maxRows],
+      ...edges.filter(edge => edge.label).map(edge => edge.labelY + edge.labelHeight / 2 + 24),
+      ...positionedGroups.map(group => group.y + group.height + 24),
+    ),
     nodeWidth: NODE_WIDTH, nodeHeight: NODE_HEIGHT,
   };
 }

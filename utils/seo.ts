@@ -1,7 +1,7 @@
 export const SITE_SEO = {
   name: 'ritsu',
   url: 'https://m.ritsu.jiangxue.org',
-  description: 'ritsu 的个人网站，记录视觉设计、安全研究、编程实践与阅读笔记。',
+  description: 'Computer networking, Security, and Design Enthusiast.',
   image: '/logo.png',
   language: 'zh-CN',
 };
@@ -196,7 +196,7 @@ export function documentSeo(document: Record<string, unknown>, path: string): Se
   const publishedTime = [seo.publishedTime, document.date, document.publishedAt, document.release_date, document.time].map(parseSeoDate).find(Boolean);
   const modifiedTime = [seo.modifiedTime, document.modifiedAt, document.updatedAt, document.updated, document.dateModified].map(parseSeoDate).find(Boolean);
   const explicitRobots = firstText(robotsText(seo.robots), metaValue(head, 'robots'), robotsText(document.robots));
-  const noindex = seo.noindex === true || document.noindex === true || [seo.robots, document.robots, metaValue(head, 'robots')].some(restrictsIndexing)
+  const noindex = seo.noindex === true || document.noindex === true || document.index === false || document.indexable === false || [seo.robots, document.robots, metaValue(head, 'robots')].some(restrictsIndexing)
     || (['des', 'link'].includes(category) && !bodyDescription);
   const robots = noindex && explicitRobots && !restrictsIndexing(explicitRobots)
     ? `noindex, ${explicitRobots.replace(/(?:^|[\s,;])index(?=$|[\s,;])/gi, '').replace(/^[\s,;]+/, '')}`.replace(/[\s,;]+$/, '')

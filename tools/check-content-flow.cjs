@@ -38,9 +38,36 @@ const fixtures = [
   ['empty', graph(0, [])],
   ['self loops and parallel edges', graph(4, [[0, 0], [0, 1], [0, 1], [1, 2], [2, 1], [2, 3], [3, 3]], true)],
   ['DSL branches', current.parseFlowText('start[开始] -->|分支| a[甲]\nstart --> b[乙]\na --> end[结束]\nb --> end')],
+  ['Mermaid subgraphs', current.parseFlowText(`flowchart TD
+    subgraph Manager["管理侧：独立签发工具"]
+        Key["加密保存的签名私钥"] --> Issuer["Rust 发卡工具"]
+    end
+    Issuer --> Token["带数字签名的授权卡密"]
+    subgraph Client["CardGuard 主进程"]
+        UI["C++ / Qt 桌面界面"]
+        Rust["Rust 授权校验静态库"]
+        Policy["xollvm 虚拟化的策略函数"]
+        PublicKey["编译时嵌入的公钥"]
+        UI <-->|"C ABI 调用与返回"| Rust
+        UI <-->|"最终授权判断"| Policy
+        PublicKey --> Rust
+    end
+    Token -->|"用户输入"| UI
+    System["本机设备标识与系统时间"] --> Rust`)],
+  ['Mermaid labelled edge', current.parseFlowText('graph LR\n  A[甲] -- 完成 --> B[乙]\n  B --> C')],
   ['maximum dense cycle', denseCycle],
   ['maximum DAG', maxDag],
 ];
+const mermaid = fixtures.find(([name]) => name === 'Mermaid subgraphs')[1];
+assert.equal(mermaid.nodes.length, 8, 'Mermaid: node count');
+assert.equal(mermaid.edges.length, 9, 'Mermaid: bidirectional arrows became two edges');
+assert.equal(JSON.stringify(mermaid.groups), JSON.stringify([
+  { id: 'Manager', label: '管理侧：独立签发工具', parent: '' },
+  { id: 'Client', label: 'CardGuard 主进程', parent: '' },
+]), 'Mermaid: subgraph labels');
+assert.equal(mermaid.nodes.find(node => node.id === 'UI').group, 'Client', 'Mermaid: node group');
+assert.equal(mermaid.edges.find(edge => edge.source === 'UI' && edge.target === 'Rust').label, 'C ABI 调用与返回');
+assert.equal(fixtures.find(([name]) => name === 'Mermaid labelled edge')[1].edges[0].label, '完成', 'Mermaid: -- label --> form');
 for (const name of [
   'artex-exploration-graph-task-8-20261022T070916Z-redacted.json',
   'artex-broadcast-task-8-20261022T055749Z-redacted.json',

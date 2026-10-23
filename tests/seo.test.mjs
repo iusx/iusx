@@ -71,6 +71,9 @@ test('existing head metadata and author fields remain supported', () => {
   assert.equal(page.author, 'Author Name');
   assert.equal(page.noindex, true);
   assert.equal(page.robots, 'noindex, nofollow, noarchive');
+  const legacy = documentSeo({ head: { description: 'Legacy head description', image: { src: '/legacy-cover.png' } } }, '/book/legacy');
+  assert.equal(legacy.description, 'Legacy head description');
+  assert.equal(legacy.image, `${SITE_SEO.url}/legacy-cover.png`);
 });
 
 test('MDC summaries prefer text-sum including bound frontmatter references', () => {
@@ -147,7 +150,7 @@ test('dates require complete valid calendar days and retain explicit time zones'
 });
 
 test('explicit indexing restrictions remain effective and complete robots instructions are preserved', () => {
-  for (const doc of [{ noindex: true }, { seo: { noindex: true } }, { robots: 'none' }, { seo: { robots: ['noindex', 'nofollow'] } }, { robots: { index: false, follow: false } }]) {
+  for (const doc of [{ noindex: true }, { index: false }, { indexable: false }, { seo: { noindex: true } }, { robots: 'none' }, { seo: { robots: ['noindex', 'nofollow'] } }, { robots: { index: false, follow: false } }]) {
     assert.equal(documentSeo(doc, '/book/private').noindex, true);
   }
   const restricted = documentSeo({ seo: { noindex: true }, robots: 'index, nofollow, max-image-preview:large' }, '/book/private');

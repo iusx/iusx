@@ -176,6 +176,71 @@ plan: "100,100"
 ::git-info{url="https://github.com/iusx/cdx"}
 ::
 
+## 代码块
+
+`text-code` 把多个代码块组织成文件列表。`files` 按顺序对应正文里的代码块，支持 YAML 数组或逗号分隔；`active` 可传文件路径或序号，默认第一个。目录名会自动从路径中提取。
+
+````md
+::text-code
+---
+title: Rust 示例
+files:
+  - /src/hello.rs
+  - /src/main.rs
+---
+```rust
+// hello.rs
+```
+```rust
+// main.rs
+```
+::
+````
+
+::text-code
+---
+title: Rust 示例
+files:
+  - /src/hello.rs
+  - /src/main.rs
+---
+```rust
+// 系统提供的“打印一行字符串”函数。
+unsafe extern "C" {
+    fn puts(text: *const core::ffi::c_char) -> core::ffi::c_int;
+}
+
+#[unsafe(no_mangle)]
+#[inline(never)]
+pub extern "C" fn hello() {
+    // SAFETY: c"..." 提供有效、以零结尾的字符串，puts 只在调用期间读取它。
+    unsafe {
+        puts(c"Hello, world!".as_ptr());
+    }
+}
+```
+```rust
+#[cfg(not(xollvm))]
+mod hello;
+
+#[cfg(xollvm)]
+unsafe extern "C" {
+    fn hello();
+}
+
+fn main() {
+    #[cfg(not(xollvm))]
+    hello::hello();
+
+    #[cfg(xollvm)]
+    // SAFETY: 链接的 hello 来自本示例，没有参数或调用前提。
+    unsafe {
+        hello();
+    }
+}
+```
+::
+
 ## 时间线
 
 ### 手写条目
@@ -286,7 +351,7 @@ text: |
 ::
 ::::
 
-大图默认从起点以可读比例进入，右上角依次为缩小、原始比例、放大、适配、起点和全屏图标；悬停可查看名称与当前缩放比例。下方“文字列表”提供完整节点文本，画布聚焦后也可用方向键平移、`+` / `-` 缩放、`0` 适配。
+大图默认从起点以可读比例进入，右上角依次为缩小、原始比例、放大、适配、起点、导出透明背景 PNG 和全屏图标；悬停可查看名称与当前缩放比例。下方“文字列表”提供完整节点文本，画布聚焦后也可用方向键平移、`+` / `-` 缩放、`0` 适配。
 
 ## Markdown 与其他组件
 

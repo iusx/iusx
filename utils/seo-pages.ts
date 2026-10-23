@@ -4,7 +4,7 @@ import { SITE_SEO } from './seo';
 const pages: Record<string, SeoPage> = {
   '/': {
     title: 'ritsu | 视觉设计、安全研究与编程笔记',
-    description: 'ritsu 的个人网站，分享视觉设计作品、安全研究与漏洞披露、编程学习和阅读笔记，记录项目计划与探索过程。',
+    description: SITE_SEO.description,
     type: 'website',
   },
   '/about': {

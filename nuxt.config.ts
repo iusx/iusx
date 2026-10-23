@@ -28,6 +28,11 @@ export default defineNuxtConfig({
   nitro: {
     prerender: { routes: ["/rss.xml", "/robots.txt"] },
     hooks: {
+      "prerender:generate"(route) {
+        if ((route.route === "/200.html" || route.route === "/404.html") && typeof route.contents === "string") {
+          route.contents = route.contents.replace("</head>", '<meta name="robots" content="noindex, follow"></head>');
+        }
+      },
       async "prerender:init"(nitro) {
         // Nuxt 3.11 copies public files after prerendering. Copy them before
         // Nitro builds its asset manifest so SSR file requests resolve correctly.
