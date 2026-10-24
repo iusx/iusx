@@ -4,8 +4,16 @@
         <description><![CDATA[Computer networking, Security, and Design Enthusiast.]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Fri, 23 Oct 2026 10:55:35 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 24 Oct 2026 21:11:16 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[STM32]]></title>
+            <description><![CDATA[现在我才知道那种包着硬件的灰色透明塑胶袋，实际上叫 ESD静电保护袋抗静电袋（Electrostatic Discharge Bag，简称 ESD Bag）是一种专门设计用来防止静电累积与静电放电的包装材料，主要应用于电子元件、半导体、PCB、感测器、精密零组件等对静电敏感的产品。]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/stm32</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/stm32</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+            <pubDate>Fri, 15 May 2026 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[Season Log 胡罗北日历]]></title>
             <description><![CDATA[近年来逐渐关注自己身体的健康，例如去年买了两个椭圆机。同时年底还买了一辆自行车，每天有氧 35 分钟坚持了大半年，而自行车每天凌晨两三点的时候在地下停车场练习。毕竟上马路了摇摇晃晃的会被后车问候家人。自行车到了之后感觉非常精致，齿轮、链条甚至是刹车系统、变速系统都很有分量。全套 Shimano 的，自行车也让我了…]]></description>
