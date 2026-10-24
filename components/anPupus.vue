@@ -53,7 +53,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 const colorMode = useColorMode();
 const props = defineProps({
   pupusData: {

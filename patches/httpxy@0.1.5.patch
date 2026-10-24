@@ -1,0 +1,30 @@
+diff --git a/dist/index.cjs b/dist/index.cjs
+index 5121f5e2d3ff693dfdae73f535188e36e951e7fa..23608b3a7a90b00d6f9321c13b96318ac762531d 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -538,6 +538,10 @@ function _createProxyFn(type, server) {
+       _resolve();
+     });
+     res.on("error", (error) => {
++      if (res.destroyed && (error.code === "ECONNABORTED" || error.code === "ECONNRESET" || error.code === "EPIPE")) {
++        _resolve();
++        return;
++      }
+       _reject(error);
+     });
+     for (const pass of type === "ws" ? server._wsPasses : server._webPasses) {
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 9a6359436d6e13007f2947e5b2d27f1504271bd7..124b7525f29067682ce35f2aaae951e2f382e8fb 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -531,6 +531,10 @@ function _createProxyFn(type, server) {
+       _resolve();
+     });
+     res.on("error", (error) => {
++      if (res.destroyed && (error.code === "ECONNABORTED" || error.code === "ECONNRESET" || error.code === "EPIPE")) {
++        _resolve();
++        return;
++      }
+       _reject(error);
+     });
+     for (const pass of type === "ws" ? server._wsPasses : server._webPasses) {

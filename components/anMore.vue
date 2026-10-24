@@ -1,221 +1,210 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { onClickOutside } from "@vueuse/core";
+import { computed } from "vue";
 
 const route = useRoute();
 const router = useRouter();
-
-const isHovered = ref(false);
-const navRef = ref<HTMLElement | null>(null);
-
-onClickOutside(navRef, () => {
-  isHovered.value = false;
+const props = withDefaults(defineProps<{ appearance?: "default" | "artwork" }>(), {
+  appearance: "default",
 });
-
-const toggleNav = () => {
-  isHovered.value = !isHovered.value;
-};
-
-const isActive = (path: string) => {
-  if (path === '/') {
-    return route.path === '/' || route.path === '/about';
-  }
-  return route.path.startsWith(path);
-};
-
+const currentPath = computed(() => route.path.replace(/\/+$/, "") || "/");
+const isHome = computed(() => currentPath.value === "/");
 const navItems = [
-  { path: '/', icon: 'RhymeIcon', label: 'HOME' },
-  { path: '/des', icon: 'DesIcon', label: 'DESIGN' },
-  { path: '/sec', icon: 'SecIcon', label: 'SECURITY' },
-  { path: '/book', icon: 'BookIcon', label: 'LIBRARY' },
+  { path: "/", icon: "RhymeIcon", label: "HOME" },
+  { path: "/des", icon: "DesIcon", label: "DESIGN" },
+  { path: "/sec", icon: "SecIcon", label: "SECURITY" },
+  { path: "/book", icon: "BookIcon", label: "LIBRARY" },
 ];
 
-const handleNavigate = (path: string) => {
-  router.push(path);
+function isActive(path: string) {
+  if (path === "/") return currentPath.value === "/" || currentPath.value === "/about";
+  return currentPath.value === path || currentPath.value.startsWith(path + "/");
+}
 
-  isHovered.value = false;
-};
+function goBack() {
+  const previous = router.options.history.state.back;
+  const hasRouteHistory = typeof previous === "string" && previous.startsWith("/") && !previous.startsWith("//");
+  let hasSameSiteReferrer = false;
+  // The homepage also uses ordinary links, which create a fresh router history.
+  if (document.referrer && window.history.length > 1) {
+    try {
+      hasSameSiteReferrer = new URL(document.referrer).origin === window.location.origin;
+    } catch {
+      hasSameSiteReferrer = false;
+    }
+  }
+  if (hasRouteHistory || hasSameSiteReferrer) {
+    router.back();
+  } else if (currentPath.value !== "/") {
+    router.replace("/");
+  }
+}
 </script>
 
 <template>
-  <aside
-    ref="navRef"
-    class="hud-sidebar"
-    :class="{ 'is-expanded': isHovered }"
-    @mouseenter="isHovered = true"
-    @mouseleave="isHovered = false"
-    @click="toggleNav"
-  >
-    <div class="drag-handle">
-      <span class="dots">::</span>
-    </div>
-
-    <nav class="nav-links">
-      <a
-        v-for="item in navItems"
-        :key="item.path"
-        class="nav-item"
-        :class="{ active: isActive(item.path) }"
-        @click.stop="handleNavigate(item.path)"
-      >
-        <div class="icon-box">
-          <Icon :name="item.icon" size="24px" />
-        </div>
-
-        <span class="label-text">{{ item.label }}</span>
-
-        <div v-if="isActive(item.path)" class="active-indicator"></div>
-      </a>
+  <aside class="site-menu" :class="{ 'is-artwork': props.appearance === 'artwork' }">
+    <nav class="menu-tabs" aria-label="Site navigation">
+      <button v-if="!isHome" class="menu-back" type="button" aria-label="Go back" title="Back" @click="goBack">
+        <svg class="back-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+      </button>
+      <NuxtLink v-for="item in navItems" :key="item.path" :to="item.path"
+        class="menu-tab" :class="{ 'is-current': isActive(item.path), 'is-brand': isHome && item.path === '/' }"
+        :aria-label="item.label" :aria-current="isActive(item.path) ? 'page' : undefined">
+        <span class="menu-icon" aria-hidden="true"><Icon :name="item.icon" :size="isHome && item.path === '/' ? '28px' : '24px'" /></span>
+        <span class="menu-label" aria-hidden="true">{{ item.label }}</span>
+      </NuxtLink>
     </nav>
   </aside>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
+.site-menu {
+  --menu-surface: #fff;
+  --menu-ink: #111512;
+  --menu-muted: #68746c;
+  --menu-line: #d9ded9;
+  --menu-accent: #007f73;
 
-$primary-color: #38e7cd;
-$bg-color: rgba(10, 10, 10, 0.9); 
-$panel-width: 60px;
+  .dark-mode & {
+    --menu-surface: #000;
+    --menu-ink: #eef1ed;
+    --menu-muted: #8d9990;
+    --menu-line: #252c27;
+    --menu-accent: #38e7cd;
+  }
 
-.hud-sidebar {
+  &.is-artwork {
+    --menu-surface: var(--gallery-bg, #050606);
+    --menu-ink: var(--gallery-ink, #fff);
+    --menu-muted: var(--gallery-muted, #bfc1c1);
+    --menu-line: var(--gallery-line, #373838);
+    --menu-accent: var(--gallery-accent, #38e7cd);
+  }
+
   position: fixed;
-  right: 0;
   top: 50%;
+  right: 0;
+  z-index: 200;
+  width: var(--site-menu-width, 48px);
+  box-sizing: border-box;
+  padding: 8px 0;
+  transform: translateY(-50%);
+  background: var(--menu-surface);
+  color: var(--menu-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  &::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 1px; background: var(--menu-line); pointer-events: none; }
+}
 
-  transform: translateY(-50%) translateX(100%); 
-  z-index: 999;
-
+.menu-tabs {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+}
 
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+.menu-tab, .menu-back {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 44px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  &:focus-visible { outline: 1px solid var(--menu-accent); outline-offset: -4px; }
+}
 
-  &.is-expanded {
-    transform: translateY(-50%) translateX(0);
-  }
+.menu-back {
+  margin-bottom: 8px;
+  .back-arrow { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.3; transition: transform 0.2s ease; }
+  &::after { content: ""; position: absolute; bottom: -4px; left: 50%; width: 12px; height: 1px; background: var(--menu-line); transform: translateX(-50%); }
+}
 
-  .drag-handle {
-    width: 24px;
-    height: 100px; 
-    background: $bg-color;
-
-    border-radius: 0; 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-right: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.5);
-
+.menu-tab {
+  &::after {
+    content: "";
     position: absolute;
-    left: -24px; 
-
-    .dots {
-      writing-mode: vertical-rl;
-      color: $primary-color;
-      font-weight: 900;
-      font-size: 12px;
-      letter-spacing: 2px;
-      opacity: 0.8;
-    }
+    left: 0;
+    top: 50%;
+    width: 2px;
+    height: 12px;
+    background: var(--menu-accent);
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.2s ease;
   }
+  &.is-current, &.is-brand { color: var(--menu-accent); }
+  &.is-current::after { opacity: 1; }
+}
 
-  .nav-links {
-    background: $bg-color;
-    backdrop-filter: blur(10px);
-    border-left: 2px solid $primary-color;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding: 15px 10px;
-    box-shadow: -5px 0 30px rgba($primary-color, 0.15);
+.menu-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  // Keep the original SVG shapes, with ink inherited from the menu state.
+  :deep(path[fill="#38E7CD"]) { fill: currentColor; }
+  :deep(path[stroke="#38E7CD"]) { stroke: currentColor; }
+  :deep(path[stroke="black"]) { stroke: var(--menu-surface); }
+}
 
-    border-radius: 0;
+.menu-label {
+  font-size: 10px;
+  line-height: 1.1;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  pointer-events: none;
+}
 
+@media (hover: hover) and (pointer: fine) {
+  .menu-tab:hover, .menu-back:hover { color: var(--menu-accent); }
+  .menu-back:hover .back-arrow { transform: translateX(-2px); }
+}
+@media (min-width: 701px) {
+  .site-menu {
+    inset: 0 0 0 auto;
+    height: 100%;
+    padding: max(8px, env(safe-area-inset-top)) 0 max(8px, env(safe-area-inset-bottom));
+    transform: none;
+  }
+  .menu-tabs { height: 100%; gap: 0; overflow-y: auto; scrollbar-width: none; }
+  .menu-tab {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    min-width: $panel-width;
+    justify-content: center;
+    gap: 10px;
+    flex: 1;
+    height: auto;
+    min-height: 112px;
+    padding: 8px 0;
   }
-
-  .nav-item {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #888;
-    padding: 8px;
-
-    border-radius: 2px; 
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-
-    .icon-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 30px;
-      transition: transform 0.3s ease;
-    }
-
-    .label-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-      margin-left: 15px;
-      opacity: 0;
-      white-space: nowrap;
-      transform: translateX(10px);
-      transition: all 0.3s ease;
-      color: #fff;
-    }
-
-    .active-indicator {
-      position: absolute;
-      left: 0; top: 50%; transform: translateY(-50%);
-      width: 3px; height: 60%; background-color: $primary-color;
-      box-shadow: 0 0 8px $primary-color; 
-      border-radius: 0; 
-    }
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      .icon-box { transform: scale(1.1); color: $primary-color; }
-    }
-
-    &.active {
-      color: $primary-color;
-      background: rgba($primary-color, 0.05);
-      .icon-box { filter: drop-shadow(0 0 5px rgba($primary-color, 0.5)); }
-    }
-  }
-
-  &.is-expanded {
-    .nav-links { padding-right: 20px; }
-    .nav-item .label-text { opacity: 1; transform: translateX(0); }
-  }
+  .menu-label { writing-mode: vertical-rl; text-orientation: mixed; }
 }
 
-@media (max-width: 768px) {
-  .hud-sidebar {
-    top: auto;
-    bottom: 100px; 
-
-    .drag-handle {
-
-      display: flex; 
-      height: 60px; 
-    }
-
-    .nav-links {
-
-    }
-
-    &.is-expanded {
-
-    }
+@media (max-width: 700px) {
+  .site-menu {
+    inset: auto 0 0;
+    width: auto;
+    height: var(--site-menu-height, 48px);
+    padding: 0 max(8px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(8px, env(safe-area-inset-left));
+    transform: none;
+    &::before { inset: 0 0 auto; width: auto; height: 1px; }
   }
+  .menu-tabs { height: 100%; flex-direction: row; align-items: center; gap: 0; }
+  .menu-tab { flex: 1; min-width: 44px; width: auto; }
+  .menu-tab::after { top: auto; bottom: 0; left: 50%; width: 12px; height: 2px; transform: translateX(-50%); }
+  .menu-back { width: 44px; margin: 0 8px 0 0; }
+  .menu-back::after { inset: 50% -4px auto auto; width: 1px; height: 12px; transform: translateY(-50%); }
+  .menu-label { display: none; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-tab, .menu-tab::after, .menu-label, .menu-back, .back-arrow { transition: none; }
+  .back-arrow { transform: none !important; }
+}
+@media print { .site-menu { display: none; } }
 </style>

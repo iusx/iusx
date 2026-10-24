@@ -48,7 +48,7 @@ info: 图 2 ｜ 在 pinterest 上发现的 style，很个性，并且布局很�
 
 最近学习到了一个新的词汇，叫 [CSS Hack](https://en.wikipedia.org/wiki/CSS_hack) 是水 AOSC 的时候在 group 上有一个大佬指出来的（很严谨，学到很多:
 
-```
+```diff
 table {
   margin: 1em 0;
 + display: block;

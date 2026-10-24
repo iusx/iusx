@@ -1,95 +1,167 @@
-<template>
-  <div class="wise-layout">
-    <div class="wise-box">
-      <p>
-        {{ topic }}
-        <Icon class="tip-quto" name="QutoIcon" size="20" />
-      </p>
-      <div class="content">
-        <slot />
-      </div>
-    </div>
-    <span class="by">{{ by }}</span>
-  </div>
-</template>
-
 <script setup>
-import { defineProps, onMounted } from "vue";
-
-const colorMode = useColorMode();
-defineProps(["by", "topic"]);
+defineProps({
+  by: {
+    type: String,
+    default: "",
+  },
+  topic: {
+    type: String,
+    default: "",
+  },
+});
 </script>
 
+<template>
+  <figure class="wise-layout">
+    <div v-if="topic" class="wise-topic">
+      <span class="wise-marker" aria-hidden="true">▪</span>
+      <span>{{ topic }}</span>
+    </div>
+    <blockquote class="wise-content"><slot /></blockquote>
+    <figcaption v-if="by" class="wise-by">
+      <span aria-hidden="true">/</span> {{ by }}
+    </figcaption>
+  </figure>
+</template>
+
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap");
-
-.dark-mode p {
-  background: #121212 !important;
-}
-
-.dark-mode .wise-layout {
-  border: 1px solid #202020;
-}
-
 .wise-layout {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  border: 1px solid #e1e1e1;
-  flex-direction: column;
-  align-items: stretch;
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  margin: 1.5rem 0;
+  border: 1px solid var(--article-border, #d4d4d4);
+  border-radius: 0;
+  background: var(--article-surface, transparent);
+  font-family: var(--article-font, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace);
+  text-align: left;
+  text-transform: none;
+}
 
-  p {
-    background: #fafafa;
-    margin: 0;
-    text-transform: capitalize;
-    gap: 12px;
-    align-items: flex-start;
-    padding: 12px;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-  }
+.wise-topic {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--article-soft-border, #e8e8e8);
+  color: var(--article-muted, #737373);
+  font-size: 0.8125rem;
+  line-height: 1.6;
 
-  .content {
-    padding: 12px;
-    font-style: oblique;
-    font-size: 17px;
-    color: #888888;
-    font-family: "Noto Serif SC", serif;
-
-  }
-
-  .by {
-    text-transform: capitalize;
-    padding: 0px 12px 12px 0px;
-    font-family: "Noto Serif SC", serif;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    font-style: oblique;
-    color: #888888;
-
-    &::before {
-      content: "";
-      width: 30px;
-      height: 1px;
-      background: #888888;
-      display: block;
-    }
+  > span:last-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 }
 
-.tip-quto {
-  opacity: 0.1;
+.wise-marker {
+  flex-shrink: 0;
+  color: var(--article-accent, #007f73);
+}
+
+.wise-content {
+  min-width: 0;
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+  color: var(--article-text, #4a4a4a);
+  font-size: 0.9375rem;
+  font-style: normal;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+
+  :deep(p) {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  :deep(> * + *) {
+    margin-top: 0.875rem;
+  }
+
+  :deep(blockquote) {
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding: 0 0 0 0.875rem;
+    border-left: 1px solid var(--article-border, #d4d4d4);
+    color: var(--article-muted, #737373);
+    font-style: normal;
+  }
+
+  :deep(blockquote > * + *) {
+    margin-top: 0.75rem;
+  }
+
+  :deep(ul),
+  :deep(ol) {
+    padding-left: 1.5rem;
+  }
+
+  :deep(a) {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+}
+
+.wise-by {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  padding: 0 1rem 0.875rem;
+  color: var(--article-muted, #737373);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+
+  > span {
+    color: var(--article-faint, #999);
+  }
 }
 
 .dark-mode {
-  .tip-quto {
-    opacity: 1;
-    stroke: #575757;
+  .wise-layout {
+    border-color: var(--article-border, #363636);
+  }
+
+  .wise-topic {
+    border-color: var(--article-soft-border, #222);
+  }
+
+  .wise-topic,
+  .wise-by {
+    color: var(--article-muted, #808080);
+  }
+
+  .wise-marker {
+    color: var(--article-accent, #38e7cd);
+  }
+
+  .wise-content {
+    color: var(--article-text, #b3b3b3);
+
+    :deep(blockquote) {
+      border-color: var(--article-border, #363636);
+      color: var(--article-muted, #808080);
+    }
+  }
+
+  .wise-by > span {
+    color: var(--article-faint, #606060);
+  }
+}
+
+@media (max-width: 640px) {
+  .wise-topic,
+  .wise-content {
+    padding: 0.875rem;
+  }
+
+  .wise-by {
+    padding: 0 0.875rem 0.875rem;
   }
 }
 </style>

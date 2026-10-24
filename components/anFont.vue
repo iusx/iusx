@@ -5,7 +5,7 @@
   </template>
   
   <script setup>
-  import { ref, onMounted, defineProps, toRefs } from "vue";
+  import { ref, onMounted, onBeforeUnmount, watch } from "vue";
   
   const props = defineProps({
     text: {
@@ -17,13 +17,16 @@
     }
   });
   
-  const textSequenceRef = toRefs(props).text;
-  
   let currentTextIndex = 0;
-  const scrambledText = ref(textSequenceRef.value[currentTextIndex]);
+  let timer;
+  let mounted = false;
+  const scrambledText = ref(props.text[0] || "");
   
-  async function animateTextShuffle() {
-    const currentText = textSequenceRef.value[currentTextIndex];
+  function animateTextShuffle() {
+    if (!mounted || !props.text.length) return;
+    currentTextIndex %= props.text.length;
+    const currentText = props.text[currentTextIndex];
+    if (typeof currentText !== "string") return;
     const characters = currentText.split("");
     let currentIndex = characters.length;
     let temporaryValue;
@@ -40,36 +43,44 @@
   
     scrambledText.value = characters.join("");
   
-    await Promise.all(
-      characters.map(
-        (char, index) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              scrambledText.value =
-                scrambledText.value.slice(0, index) +
-                currentText[index] +
-                scrambledText.value.slice(index + 1);
-              resolve();
-            }, index * 100);
-          })
-      )
-    );
-  
-    currentTextIndex = (currentTextIndex + 1) % textSequenceRef.value.length;
-  
-    setTimeout(animateTextShuffle, 2000);
+    let index = 0;
+    const revealCharacter = () => {
+      if (!mounted) return;
+      if (index < characters.length) {
+        scrambledText.value =
+          scrambledText.value.slice(0, index) +
+          currentText[index] +
+          scrambledText.value.slice(index + 1);
+        index++;
+      }
+
+      if (index < characters.length) {
+        timer = setTimeout(revealCharacter, 100);
+      } else {
+        currentTextIndex = (currentTextIndex + 1) % props.text.length;
+        timer = setTimeout(animateTextShuffle, 2000);
+      }
+    };
+
+    // Keep the original reveal cadence with at most one pending timer.
+    timer = setTimeout(revealCharacter, 0);
   }
   
   onMounted(() => {
-    if (
-      Array.isArray(textSequenceRef.value) &&
-      textSequenceRef.value.length > 0
-    ) {
-      const scrambledText = ref(textSequenceRef.value[currentTextIndex]);
-      animateTextShuffle();
-    } else {
-      console.error("Invalid or empty text sequence provided as prop.");
-    }
+    mounted = true;
+    animateTextShuffle();
+  });
+
+  watch(() => props.text, () => {
+    clearTimeout(timer);
+    currentTextIndex = 0;
+    scrambledText.value = props.text[0] || "";
+    if (mounted) animateTextShuffle();
+  }, { deep: true });
+
+  onBeforeUnmount(() => {
+    mounted = false;
+    clearTimeout(timer);
   });
   </script>
   

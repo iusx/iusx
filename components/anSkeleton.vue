@@ -8,8 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
-
 defineOptions({ name: "QlSkeleton" });
 
 export interface Props {

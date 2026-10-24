@@ -12,7 +12,7 @@ plan: "0,71"
 
 起因是在 neovim 群中看到了群友的名字是 `panic!("")` 每次 @ 他的时候文字都会被 `""` 包裹起来。`@panic!("类似你看到的这个情况，这个问题不仅是在群组，就算在浏览器、终端环境下都是存在的。")` 实际上我并没有将文字写在 `""` 中，而是默认这样的，这个用到的就是 `U+2067` 
 
-```
+```rust
 panic!("\U+2067")
 ```
 
@@ -41,7 +41,7 @@ This diff contains bidirectional Unicode text that may be interpreted or compile
 
 Unicode 转义序列又称之为 Escaped Unicode characters, 可以参考 [Escape character ](https://en.wikipedia.org/wiki/Escape_character) **。就是说将一个字符转义成另一个编码** 的过程, 基于 Unicode 的各种编码，可以做很多事情。这也意味着需要做很多类似转义的操作，可以用在线工具或 code lang 来完成这个过程，如使用 PY 的 [`s.encode`](https://docs.python.org/3/howto/unicode.html) 对象方法：
 
-```
+```python
 s = '你好'
 unicode_str = s.encode('unicode_escape').decode()
 print(unicode_str)  # 输出: \u4f60\u597d
@@ -49,14 +49,14 @@ print(unicode_str)  # 输出: \u4f60\u597d
 
 之后，我们拿到 `\u4f60\u597d` 到 [CyberChef](https://gchq.github.io/CyberChef/) 来进行添加 Unicode 字符，之后将 output 结果 copy 到剪贴板中即可使用（需要添加 `Unescape string` 模块）例如：
 
-```
+```text
 \u5b87\u5b99\u65e0\u654c\u67e0\u6aac\u738b\u2067\uD83C\uDF4B
 ```
 
 
 这是是一串 Unicode 字符，转义成字符串就是：
 
-```
+```text
 宇宙无敌柠檬王⁧🍋
 ```
 
@@ -76,7 +76,7 @@ print(unicode_str)  # 输出: \u4f60\u597d
 
 由于用了 `u2067`, 这会导致渲染的时候会隔断 `🍋`，别人 @ 我的时候就会夹着消息，比如 @ 我的时候输入 Hello 就会变成：
 
-```
+```text
 @宇宙无敌柠檬王 Hello 🍋
 ---如果是正常的
 @宇宙无敌柠檬王🍋 Hello
@@ -101,7 +101,7 @@ print(unicode_str)  # 输出: \u4f60\u597d
 
 如果只看上面的这些描述，或者说 Unicode 的标准原文。那您肯定有很多疑惑，看不懂各种缩写，感觉超级高端和高攀不起。上面图表的原文是：
 
-```
+```text
 --- LEFT-TO-RIGHT
 200E;LEFT-TO-RIGHT MARK;Cf;0;L;;;;;N;;;;;
 202A;LEFT-TO-RIGHT EMBEDDING;Cf;0;LRE;;;;;N;;;;;
@@ -126,7 +126,7 @@ print(unicode_str)  # 输出: \u4f60\u597d
 
 由于实在是太多了，以 `200E;LEFT-TO-RIGHT MARK;Cf;0;L;;;;;N;;;;;` 为例，如果要读懂，先拆分以更好的理解：
 
-```
+```text
                                    200E;LEFT-TO-RIGHT MARK;Cf;0;L;;;;;N;;;;;
                       Code Point-> |  200E;                                 
       Implicit Directional Marks-> +---->  LEFT-TO-RIGHT MARK;              

@@ -45,7 +45,7 @@ plan: "100,100"
 
 其次是记住了很多快捷键，以及命令，确实增加了一些效率。而且赏心悦目。目前我使用的是 Kitty + Neovim。由于 Kitty 不支持 Iterm2 的 Quake (全局热键召唤终端，听起来就很厉害), 所以我也搭配使用了 Hammerspoon，可以通过 `control+a` 来进行显示和隐藏 kitty，很舒服：
 
-```
+```lua
 hs.hotkey.bind({"ctrl"}, "a", function()
     local appName = "kitty"
     local app = hs.application.find(appName)
@@ -72,7 +72,7 @@ end)
 
 我 Neovim 的开屏封面是一个 ASCII art 风格的一个曲线。只是随便 copy 的，感觉很有意境？或者很简洁也很好看。但 [Hank](https://github.com/HCHogan) 说这个曲线很像目前在学的电力系统相关的概念：
 
-```
+```text
 
      .-.                                                  
     /   \         .-.                                     
@@ -101,7 +101,7 @@ text: 由于我是双向识别障碍+色盲，所以在颜色很多的地方会�
 ---
 ::
 
-```
+```lua
 local noiropts = {
   preset = "minimal",
   colors = {
@@ -140,13 +140,13 @@ return {
 
 其实看 [Substitute](https://neovim.io/doc/user/change.html#%3Asubstitute) 原文就挺好的，但是我太懒了，English 很弱鸡。所以我的理解 `:s` 就是将这个用于全局替换。
 
-```
+```viml
 :[range]s[ubstitute]/{pattern}/{string}/[flags] [count]
 ```
 
 虽然有很多参数，但我常用的就两个：
 
-```
+```viml
 :%s/foo/bar/g
 ---
 :%g/foo/d

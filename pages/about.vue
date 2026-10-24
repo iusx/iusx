@@ -153,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 const socialLinks = [
   {
@@ -184,12 +184,9 @@ const handleTagHover = (id: string) => {
   activeTag.value = id;
 };
 
-const wireframeColor = computed(() => {
-  return getComputedStyle(document.documentElement).getPropertyValue('--wireframe-main').trim() || '#333';
-});
-const wireframeDim = computed(() => {
-  return getComputedStyle(document.documentElement).getPropertyValue('--wireframe-dim').trim() || '#222';
-});
+// Preserve the existing fallback colors without accessing the DOM during SSR.
+const wireframeColor = '#333';
+const wireframeDim = '#222';
 </script>
 
 <style scoped lang="scss">

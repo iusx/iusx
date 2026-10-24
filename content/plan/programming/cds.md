@@ -45,7 +45,7 @@ type: tip
 
 基本的功能实现的差不多了，学到了很多有用的知识，体验了很多。不过貌似基础的功能 [zoxide](https://github.com/ajeetdsouza/zoxide) 已经实现了。（这就是作为井底之蛙的好处，如果我知道了 zoxide 已经能实现我想要的了，我就不会自己去写，自己去体验）不过 zoxide 雀实很不错，例如他有 Tui，而我还是傻傻停留在字符串输出的表现形式。
 
-```
+```text
 ~ [ cd Code/My/iusx                                                                                                              ] 3:51 PM
 My/iusx [ cds save iusx                                                                                                   main * ] 3:52 PM
 Saved path 'iusx' -> /Users/uwu/Code/My/iusx
@@ -72,7 +72,7 @@ My/iusx [                                                                       
 
 其实依赖 shell 环境也没什么的，毕竟连 Nim-lang 的 [choosenim](https://github.com/nim-lang/choosenim) 在安装完后也需要手动设置不是吗？
 
-```
+```text
 choosenim-init: ChooseNim installed in /Users/uwu/.nimble/bin
 choosenim-init: You must now ensure that the Nimble bin dir is in your PATH.
 choosenim-init: Place the following line in the ~/.profile or ~/.bashrc file.
@@ -115,7 +115,7 @@ Seen that
 :text-title{t="实现自动记录" type="2"}
 要实现这个功能，需要使用到 `dirs`，算是内置命令。例如在 [zsh](https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#Directory-Stack) 和 [bash](https://www.gnu.org/software/bash/manual/html_node/Directory-Stack-Builtins.html) 中均有记载，效果还是很不错的：
 
-```
+```text
 macOS My/iusx ‹main*› » dirs
 ~/Code/My/iusx
 macOS My/iusx ‹main*› » cd ~/Code/Project/company
@@ -126,7 +126,7 @@ macOS Project/company »
 
 唯一可惜的是只记录当前 shell 会话的目录栈，关闭终端或 shell 会话后就会丢失。因此还需要 shell 环境配合，最终效果就是每次 `cd` 目录的时候都会存储到 `~/.cds_config.json`:
 
-```
+```json
 {
   "iusx": {
     "path": "/Users/uwu/Code/My/iusx",
@@ -155,7 +155,7 @@ macOS Project/company »
 
 但是这就会产生一个问题，之后我还需要 TUI 来进行快速访问，例如我进行了如下的操作：
 
-```
+```text
 macOS My/cds ‹main*› » cd ~
 macOS ~ » cd development/flutter/dev
 macOS flutter/dev » pwd
@@ -166,7 +166,7 @@ macOS dev/bots ‹stable› »
 
 你会发现我在当前目录什么都没做，只是单纯的浏览，还是被记录下来了，而且很繁杂，几乎每次 cd 的停顿都会被记录：
 
-```
+```json
   "dev": {
     "path": "/Users/uwu/development/flutter/dev",
     "commands": []
@@ -179,7 +179,7 @@ macOS dev/bots ‹stable› »
 
 为此我增加了一个逻辑，也就是每次在当前目录执行命令，权重 `score` +1, 这会方便之后的 TUI 的数据展示，权重越高的越在前面，甚至还有升序降序:
 
-```
+```json
 {
   "iusx": {
     "path": "/Users/uwu/Code/My/iusx",
@@ -213,7 +213,7 @@ macOS dev/bots ‹stable› »
 
 不过这些都是通过 shell 实现的，之后可能还需要写一个 Install 的脚本，毕竟连 zoxide 也是这么做的， [src/shell.rs](https://github.com/ajeetdsouza/zoxide/blob/main/src/shell.rs) 写的非常全，不过我貌似只是为了自己用，所以我自己用的舒服就好了，不需要考虑兼容下的问题？（或许吧:
 
-```
+```rust
 make_template!(Bash, "bash.txt");
 make_template!(Elvish, "elvish.txt");
 make_template!(Fish, "fish.txt");

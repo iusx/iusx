@@ -1,25 +1,25 @@
 <template>
-  <ContentDoc :path="path">
-    <template #not-found>
-      <error />
-    </template>
-  </ContentDoc>
+  <div :class="{ 'article-page': route.path !== '/' }">
+    <DocumentSeo v-if="document" :document="document" />
+    <ContentRenderer v-if="document" :value="document">
+      <template #empty>
+        <main class="empty-content">
+          <h1>{{ document.title || document.name }}</h1>
+          <NuxtLink to="/">返回首页</NuxtLink>
+        </main>
+      </template>
+    </ContentRenderer>
+  </div>
 </template>
 
 <script setup lang="ts">
-const slug = useRoute().params.slug;
-
-import error from '../error.vue';
+const route = useRoute();
+const path = route.path;
+const { data: document } = await useAsyncData(`page-document:${path}`, () => queryContent(path).findOne());
+if (!document.value) throw createError({ statusCode: 404, statusMessage: 'Page not found' });
 </script>
 
 <style lang="scss">
-p a {
-  color: rgb(152, 152, 152);
-  text-decoration: none;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: #38E7CD;
-  }
-}
+@import "../public/scss/article.scss";
+.empty-content { padding: 5rem 1.5rem; text-align: center; }
 </style>
