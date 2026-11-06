@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="240" viewBox="0 0 320 240" fill="none">
+  <!-- A faded hazard stencil on a transparent field; no text or raster dependencies. -->
+  <defs>
+    <mask id="worn-stencil" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="240">
+      <path fill="#fff" d="M0 0h320v240H0z" />
+      <path fill="#000" d="m34 29 32-2-5 4-27 2zm88 8 12-3-2 5-12 2zM21 68h11v4H21zm43 21 18-4-5 4-13 3zm94-14 12-4-3 5-10 2zM70 133l24-2-3 4-23 2zm54-8 18-5-2 4-16 5zm34 28h13v3h-13zm-111 5 33-3-5 5-28 1zm139 25 41-3-3 4-37 2zm49 17 25-2-3 3-22 2zM137 208h17v3h-17zm135-37 20-2-4 4-17 1z" />
+      <path fill="#000" d="M40 117h4v5h-4zm103-69h3v6h-3zM103 14h5v4h-5zm8 163h4v3h-4zm84 30h6v3h-6zm94-9h4v5h-4z" />
+    </mask>
+    <path id="hazard-blade" d="M68 45a60 60 0 0 1 60 0l-20 35a20 20 0 0 0-20 0z" />
+  </defs>
+  <g fill="#9b473e" opacity=".72" mask="url(#worn-stencil)">
+    <g transform="rotate(-9 98 97)">
+      <circle cx="98" cy="97" r="78" fill="none" stroke="#9b473e" stroke-width="7" />
+      <circle cx="98" cy="97" r="10" />
+      <use href="#hazard-blade" />
+      <use href="#hazard-blade" transform="rotate(120 98 97)" />
+      <use href="#hazard-blade" transform="rotate(240 98 97)" />
+      <path d="M94 14h8v10h-8zm0 146h8v20h-8zM15 93h10v8H15zm146 0h20v8h-20z" />
+    </g>
+    <g transform="rotate(4 227 194)">
+      <path d="M154 167h3v47h-3zm7 0h7v47h-7zm12 0h2v47h-2zm6 0h4v47h-4zm9 0h8v47h-8zm12 0h3v47h-3zm8 0h2v47h-2zm6 0h6v47h-6zm10 0h3v47h-3zm7 0h9v47h-9zm13 0h2v47h-2zm6 0h5v47h-5zm9 0h3v47h-3zm7 0h8v47h-8zm12 0h2v47h-2zm6 0h6v47h-6z" />
+      <path d="M147 162v-7h18v3h-15v4zm135-7h15v7h-3v-4h-12zm-135 64h3v4h15v3h-18zm147 0h3v7h-15v-3h12z" />
+    </g>
+    <path fill-opacity=".55" d="m213 59 5-2 18 48-5 2zm17-6 5-2 18 48-5 2zm17-6 5-2 18 48-5 2z" />
+  </g>
+</svg>

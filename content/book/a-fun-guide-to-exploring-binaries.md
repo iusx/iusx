@@ -287,6 +287,33 @@ pub extern "C" fn hello() {
 :::
 ::
 
+#### obfuscated
+通过 IDA PRO 打开 `obfuscated` ，然后在 IDA View-A 中点击任意字符按 `G`, 搜索 `_hello` -> `fn+f5` 查看 C 伪代码
+
+::text-compare{title="hello 对照"}
+:::text-compare-side{title="C / 伪代码"}
+```c
+__int64 hello()
+{
+  char v1[16]; // [xsp+0h] [xbp-10h] BYREF
+
+  *(_QWORD *)v1 = *(_QWORD *)"\x97\xBA\xB3\xB3\xB0\xF3\xFF\xA8\xB0\xAD\xB3\xBB\xFE";
+  strcpy(&v1[6], "\xFF\xA8\xB0\xAD\xB3\xBB\xFE");
+  sub_10002FD9C(a1: v1);
+  return puts(a1: v1);
+}
+```
+:::
+:::text-compare-side{title="未加壳 / Use IDA"}
+```rust
+__int64 hello()
+{
+  return puts(a1: "Hello, world!");
+}
+```
+:::
+::
+
 #### LLVM
 
 ::img-tip{url="a-fun-guide-to-exploring-binaries/LLVM_Logo.png" text="我超为以前就在某 Linux telegram group 中看到了这个小恐龙头像，当时还以为这个是 Linux 什么的，没想到是 LLVM 的 logo" alt="LLVM logo"}
