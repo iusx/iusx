@@ -126,7 +126,8 @@ onBeforeUnmount(() => stopScrollWatcher?.());
     100% 4px,
     3px 100%;
   pointer-events: none;
-  z-index: 100;
+  // Cover the navigation (z-index: 200) without intercepting its controls.
+  z-index: 201;
 }
 
 @media (prefers-color-scheme: light) {
