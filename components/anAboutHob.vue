@@ -66,7 +66,7 @@ defineProps<{
 .box:last-child .title {
   border-bottom: none;
 }
-@media (prefers-color-scheme: dark) {
+.dark-mode {
   .box .title {
     background-image: linear-gradient(white, white);
     color: rgb(0, 0, 0) !important;

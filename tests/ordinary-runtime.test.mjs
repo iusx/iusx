@@ -1,11 +1,96 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
 import test from 'node:test';
+import { computed, effectScope, nextTick, reactive, watch } from 'vue';
 import { fetchGithubJson } from '../utils/github-data.ts';
 import { preloadImages } from '../utils/preload-images.ts';
 import { parseStringList, readStoredValue, removeStoredValue, writeStoredValue } from '../utils/browser-storage.ts';
 
 const response = (data) => ({ ok: true, json: async () => data });
+
+test('color-mode recovers retired preferences and keeps explicit choices across hydration and OS changes', async (t) => {
+  const options = {
+    preference: 'system', fallback: 'light', storageKey: 'nuxt-color-mode',
+    globalName: '__NUXT_COLOR_MODE__', classPrefix: '', classSuffix: '-mode', dataValue: '',
+  };
+  const bootstrap = readFileSync(new URL('../node_modules/@nuxtjs/color-mode/dist/script.min.js', import.meta.url), 'utf8')
+    .replace(/<%= options\.([^ ]+) %>/g, (_, key) => options[key]);
+  // Execute the installed Nuxt integration with real Vue watchers. Only its
+  // Nuxt/browser boundaries are supplied by this harness.
+  const client = readFileSync(new URL('../node_modules/@nuxtjs/color-mode/dist/runtime/plugin.client.mjs', import.meta.url), 'utf8')
+    .replace(/^import .*;\n/gm, '').replace('export default', 'return');
+  const recovery = readFileSync(new URL('../plugins/color-mode.client.ts', import.meta.url), 'utf8')
+    .replace('export default', 'return');
+
+  for (const hydrating of [true, false]) {
+    for (const stored of ['native', 'retired-theme', 'system', 'dark', 'light']) {
+      for (const initialSystem of ['dark', 'light']) {
+        await t.test(`${hydrating ? 'SSR hydration' : 'SPA'}: ${stored}, system ${initialSystem}`, async () => {
+          let system = initialSystem;
+          const classes = new Set();
+          const mediaListeners = new Set();
+          const storage = new Map([[options.storageKey, stored]]);
+          const document = { documentElement: {
+            getAttribute: () => null,
+            classList: { add: value => classes.add(value), remove: value => classes.delete(value) },
+          } };
+          const window = {
+            localStorage: { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) },
+            matchMedia: query => ({
+              media: query,
+              matches: query.replace(/\s/g, '') === `(prefers-color-scheme:${system})`,
+              addEventListener: (_, callback) => mediaListeners.add(callback),
+            }),
+          };
+          runInNewContext(bootstrap, { window, document });
+          assert.deepEqual([...classes], [`${stored === 'system' ? system : stored}-mode`]);
+          const hooks = new Map();
+          const scope = effectScope();
+          let state = hydrating ? reactive({ preference: 'system', value: 'system', unknown: true, forced: false }) : undefined;
+          let navigate;
+          try {
+            scope.run(() => {
+              const dependency = new Function(
+                'window', 'computed', 'reactive', 'watch', 'defineNuxtPlugin', 'isVue2', 'isVue3',
+                'useRouter', 'useHead', 'useState', 'globalName', 'storageKey', 'dataValue', 'disableTransition', client,
+              )(window, computed, reactive, watch, plugin => plugin, false, true,
+                () => ({ afterEach: callback => { navigate = callback; } }), () => {},
+                (_, create) => ({ value: state ??= create() }), options.globalName, options.storageKey, '', false);
+              dependency({ hook: (name, callback) => hooks.set(name, callback), provide: () => {} });
+              new Function('defineNuxtPlugin', 'useColorMode', 'watch', recovery)(plugin => plugin, () => state, watch)();
+            });
+            await nextTick();
+            if (hydrating) hooks.get('app:mounted')();
+            await nextTick();
+            const expectedPreference = ['system', 'light', 'dark'].includes(stored) ? stored : 'system';
+            const check = preference => {
+              const expectedValue = preference === 'system' ? system : preference;
+              assert.equal(state.preference, preference);
+              assert.equal(state.value, expectedValue);
+              assert.equal(storage.get(options.storageKey), preference);
+              assert.deepEqual([...classes], [`${expectedValue}-mode`]);
+            };
+            check(expectedPreference);
+            system = system === 'dark' ? 'light' : 'dark';
+            for (const callback of mediaListeners) callback();
+            await nextTick();
+            check(expectedPreference);
+            navigate({ meta: {} });
+            await nextTick();
+            check(expectedPreference);
+            // An invalid setting introduced after hydration also recovers.
+            state.preference = 'unknown-theme';
+            await nextTick();
+            check('system');
+          } finally {
+            scope.stop();
+          }
+        });
+      }
+    }
+  }
+});
 
 test('GitHub requests share results and isolate cancellation', async (t) => {
   const originalFetch = globalThis.fetch;

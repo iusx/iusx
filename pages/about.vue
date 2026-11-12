@@ -231,7 +231,7 @@ const wireframeDim = '#222';
   }
 }
 
-@media (prefers-color-scheme: dark) {
+.dark-mode {
   .page-container {
     --page-bg: #0a0a0a;
     --wrapper-bg: #1a1a1a;

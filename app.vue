@@ -130,11 +130,14 @@ onBeforeUnmount(() => stopScrollWatcher?.());
   z-index: 201;
 }
 
-@media (prefers-color-scheme: light) {
-  body,
-  html {
-    background: #f4f5f7;
-  }
+html.light-mode {
+  color-scheme: light;
+  &, body { background: #f4f5f7; }
+}
+
+html.dark-mode {
+  color-scheme: dark;
+  &, body { background: #000; }
 }
 
 .light-mode .scanline {

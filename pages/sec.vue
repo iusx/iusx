@@ -242,14 +242,14 @@ $font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation M
   --sec-light-border: #e0e0e0;
 }
 
-@media (prefers-color-scheme: dark) {
+.dark-mode {
   .platform-logo {
     filter: grayscale(1) brightness(1.5);
     transition: filter 0.3s ease;
   }
 }
 
-@media (prefers-color-scheme: light) {
+.light-mode {
   .sec-container {
     background-color: var(--sec-light-bg);
     color: var(--sec-light-text);

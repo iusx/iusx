@@ -3,6 +3,7 @@ import { computed } from "vue";
 
 const route = useRoute();
 const router = useRouter();
+const colorMode = useColorMode();
 const props = withDefaults(defineProps<{ appearance?: "default" | "artwork" }>(), {
   appearance: "default",
 });
@@ -53,6 +54,16 @@ function goBack() {
         <span class="menu-label" aria-hidden="true">{{ item.label }}</span>
       </NuxtLink>
     </nav>
+    <div class="menu-appearance">
+      <label for="site-color-mode">主题</label>
+      <ColorScheme tag="span" placeholder="系统">
+        <select id="site-color-mode" v-model="colorMode.preference" aria-label="主题">
+          <option value="system">系统</option>
+          <option value="light">浅色</option>
+          <option value="dark">深色</option>
+        </select>
+      </ColorScheme>
+    </div>
   </aside>
 </template>
 
@@ -81,6 +92,8 @@ function goBack() {
   }
 
   position: fixed;
+  display: flex;
+  flex-direction: column;
   top: 50%;
   right: 0;
   z-index: 200;
@@ -95,9 +108,32 @@ function goBack() {
 }
 
 .menu-tabs {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.menu-appearance {
+  flex-shrink: 0;
+  display: grid;
+  gap: 4px;
+  padding: 8px 2px;
+  text-align: center;
+  font-size: 10px;
+
+  select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 28px;
+    border: 1px solid var(--menu-line);
+    border-radius: 0;
+    background: var(--menu-surface);
+    color: var(--menu-ink);
+    font: inherit;
+    &:focus-visible { outline: 1px solid var(--menu-accent); outline-offset: 2px; }
+  }
 }
 
 .menu-tab, .menu-back {
@@ -188,6 +224,7 @@ function goBack() {
 @media (max-width: 700px) {
   .site-menu {
     inset: auto 0 0;
+    flex-direction: row;
     width: auto;
     height: var(--site-menu-height, 48px);
     padding: 0 max(8px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(8px, env(safe-area-inset-left));
@@ -200,6 +237,8 @@ function goBack() {
   .menu-back { width: 44px; margin: 0 8px 0 0; }
   .menu-back::after { inset: 50% -4px auto auto; width: 1px; height: 12px; transform: translateY(-50%); }
   .menu-label { display: none; }
+  .menu-appearance { width: 60px; padding: 0 2px; align-content: center; }
+  .menu-appearance label { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
