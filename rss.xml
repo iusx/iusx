@@ -4,7 +4,7 @@
         <description><![CDATA[Computer networking, Security, and Design Enthusiast.]]></description>
         <link>https://m.ritsu.jiangxue.org/</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Thu, 12 Nov 2026 15:39:10 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 24 Nov 2026 09:03:14 GMT</lastBuildDate>
         <atom:link href="https://m.ritsu.jiangxue.org/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[STM32]]></title>
@@ -181,6 +181,13 @@
             <description><![CDATA[还记得我第一次玩 Minecraft 的时候，还是在小学，同学来我家帮我注册邮箱. 记得当时有很多启动器, 里面有很多服务器可以选择. 我影响比较深的就是多玩我的世界盒子和麦块(好像是叫这个名字). 到之后加 QQ 群下载启动器 Hello Minecraft! Launcher(那个时候还不知道是这个) 我影响…]]></description>
             <link>https://m.ritsu.jiangxue.org/book/minecraft</link>
             <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/minecraft</guid>
+            <dc:creator><![CDATA[ritsu]]></dc:creator>
+        </item>
+        <item>
+            <title><![CDATA[我创建的第一家公司]]></title>
+            <description><![CDATA[以前上小学和初中的时候一直想着创业，名字当初都想好了分别是 “芈极创新” ，和负责安全的 “江雪分析”。依稀记得当时是 2018 年,也不知道当初是怎么想的，几年过后我跟他们都闹掰了淡淡的忘了联系。]]></description>
+            <link>https://m.ritsu.jiangxue.org/book/my-company</link>
+            <guid isPermaLink="true">https://m.ritsu.jiangxue.org/book/my-company</guid>
             <dc:creator><![CDATA[ritsu]]></dc:creator>
         </item>
         <item>
