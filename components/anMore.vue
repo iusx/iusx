@@ -54,16 +54,6 @@ function goBack() {
         <span class="menu-label" aria-hidden="true">{{ item.label }}</span>
       </NuxtLink>
     </nav>
-    <div class="menu-appearance">
-      <label for="site-color-mode">主题</label>
-      <ColorScheme tag="span" placeholder="系统">
-        <select id="site-color-mode" v-model="colorMode.preference" aria-label="主题">
-          <option value="system">系统</option>
-          <option value="light">浅色</option>
-          <option value="dark">深色</option>
-        </select>
-      </ColorScheme>
-    </div>
   </aside>
 </template>
 
