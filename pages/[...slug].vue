@@ -16,6 +16,7 @@
 const route = useRoute();
 const path = route.path;
 const { data: document } = await useAsyncData(`page-document:${path}`, () => queryContent(path).findOne());
+provide("articleDocument", document);
 if (!document.value) throw createError({ statusCode: 404, statusMessage: 'Page not found' });
 </script>
 

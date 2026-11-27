@@ -58,24 +58,23 @@ const logoImage = computed(() => {
 .game-info-layout {
   width: 100%;
   min-width: 0;
-  margin: 1.75rem 0;
-  border: 1px solid var(--article-border, #d4d4d4);
+  margin: 2rem 0;
   border-radius: 0;
   background: var(--article-surface, transparent);
   color: var(--article-text, #4a4a4a);
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.7;
   text-transform: none;
+  text-align: left;
 }
 
 .game-loading {
   min-height: 8rem;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 0;
   color: var(--article-muted, #737373);
-  &::before { content: '›'; margin-right: 0.625rem; color: var(--article-accent, #007f73); }
 }
 
 .img {
@@ -103,8 +102,7 @@ const logoImage = computed(() => {
 
 .desc-layout {
   min-width: 0;
-  padding: 0.8rem 1rem;
-  border-top: 1px solid var(--article-soft-border, #e8e8e8);
+  padding: 0.875rem 0 0;
 }
 
 .stars {
@@ -124,6 +122,6 @@ const logoImage = computed(() => {
 
 @media (max-width: 640px) {
   .game-info-layout { margin-block: 1.5rem; }
-  .desc-layout, .img .title { padding: 0.75rem; }
+  .img .title { padding: 0.75rem; }
 }
 </style>

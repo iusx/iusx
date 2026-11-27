@@ -42,7 +42,6 @@ const headingId = computed(() => {
     :class="{ 'text-title-subheading': isSubheading }"
     :data-toc-exclude="isBookTitle ? '' : undefined"
   >
-    <span class="heading-marker" aria-hidden="true">{{ isBookTitle ? '>' : isSubheading ? '##' : '#' }}</span>
     <span>{{ t }}</span>
   </component>
 </template>
@@ -52,10 +51,9 @@ const headingId = computed(() => {
   --heading-space-before: 3.25rem;
   display: flex;
   align-items: baseline;
-  gap: 0.625rem;
+  gap: 0;
   margin: var(--heading-space-before) 0 1.25rem;
-  padding-bottom: 0.625rem;
-  border-bottom: 1px solid var(--article-soft-border, #e8e8e8);
+  padding: 0;
   font-family: var(--article-font, monospace);
   color: var(--article-strong, #242424);
   font-size: var(--article-chapter-size, clamp(1.25rem, 1.6vw, 1.5rem));
@@ -71,17 +69,8 @@ const headingId = computed(() => {
   > span:last-child { min-width: 0; }
   &[data-toc-exclude] {
     margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--article-border, #d4d4d4);
     font-size: clamp(1.25rem, 2vw, 1.625rem);
   }
-}
-
-.heading-marker {
-  flex-shrink: 0;
-  color: var(--article-accent, #007f73);
-  font-size: 0.875em;
-  font-weight: 400;
 }
 
 .text-title-subheading {
@@ -91,12 +80,5 @@ const headingId = computed(() => {
   border-bottom: 0;
   font-size: var(--article-subheading-size, 1.0625rem);
 }
-.text-title-subheading .heading-marker { color: var(--article-muted, #737373); }
 .dark-mode .text-title { color: var(--article-strong, #ededed); }
-.dark-mode .heading-marker { color: var(--article-accent, #38e7cd); }
-.dark-mode .text-title-subheading .heading-marker { color: var(--article-muted, #808080); }
-
-@media (max-width: 640px) {
-  .text-title { gap: 0.5rem; }
-}
 </style>

@@ -5,6 +5,7 @@ import type { PropType, Ref, VNode } from "vue";
 interface TocHeading {
   id: string;
   text: string;
+  number: string;
   level: number;
   count: number | null;
   children: TocHeading[];
@@ -67,7 +68,10 @@ const TocList = defineComponent({
               window.location.hash = encodeURIComponent(heading.id);
               listEmit("navigate", heading.id);
             },
-          }, heading.text),
+          }, [
+            h("span", { class: "toc-number" }, heading.number),
+            h("span", { class: "toc-text" }, heading.text),
+          ]),
           heading.count === null ? null : h("span", {
             class: "toc-count",
             "aria-label": `${heading.count} 则摘录`,
@@ -102,7 +106,7 @@ const createId = (text: string) => text.toLowerCase()
 function sameHeadings(previous: TocHeading[], next: TocHeading[]): boolean {
   return previous.length === next.length && previous.every((heading, index) => {
     const other = next[index];
-    return heading.id === other.id && heading.text === other.text && heading.level === other.level
+    return heading.id === other.id && heading.text === other.text && heading.number === other.number && heading.level === other.level
       && heading.count === other.count && sameHeadings(heading.children, other.children);
   });
 }
@@ -110,7 +114,8 @@ function sameHeadings(previous: TocHeading[], next: TocHeading[]): boolean {
 function refreshHeadings() {
   if (!content) return;
 
-  // Disconnect while supplying missing IDs so our own attributes do not queue a scan.
+  // Supply IDs and section labels without modifying Vue-owned heading children.
+  // The number attribute is also excluded from the observer's attribute filter.
   observer?.disconnect();
   const elements = Array.from(content.querySelectorAll<HTMLElement>(headingSelector));
   const duplicateTitles = new Set<Element>();
@@ -128,6 +133,7 @@ function refreshHeadings() {
   const roots: TocHeading[] = [];
   const parents: TocHeading[] = [];
   const groups: HeadingGroup[] = [];
+  const numberedElements = new Set<HTMLElement>();
   for (const element of elements) {
     const text = headingText(element);
     if (!text || duplicateTitles.has(element) || element.closest("[data-toc-exclude]")) continue;
@@ -151,6 +157,7 @@ function refreshHeadings() {
     const heading: TocHeading = {
       id,
       text,
+      number: "",
       level: Number(element.tagName.slice(1)),
       count: count !== null && Number.isSafeInteger(count) && count >= 0 ? count : null,
       children: [],
@@ -165,9 +172,20 @@ function refreshHeadings() {
     group.headings.push({ id, element: positionElement });
 
     while (parents.length && parents[parents.length - 1].level >= heading.level) parents.pop();
-    if (parents.length) parents[parents.length - 1].children.push(heading);
-    else roots.push(heading);
+    const parent = parents[parents.length - 1];
+    const siblings = parent ? parent.children : roots;
+    heading.number = `${parent?.number || ""}${siblings.length + 1}.`;
+    siblings.push(heading);
     parents.push(heading);
+    numberedElements.add(positionElement);
+    if (positionElement.getAttribute("data-section-number") !== heading.number) {
+      positionElement.setAttribute("data-section-number", heading.number);
+    }
+  }
+  // Refresh after lazy section replacement, exclusion changes, or legacy-pair
+  // changes without leaving stale numbers on hidden or duplicate headings.
+  for (const element of elements) {
+    if (!numberedElements.has(element)) element.removeAttribute("data-section-number");
   }
 
   if (!sameHeadings(headings.value, roots)) headings.value = roots;
@@ -330,10 +348,9 @@ onBeforeUnmount(() => {
 .table-of-contents {
   --toc-color: var(--article-text, #4a4a4a);
   --toc-muted: var(--article-muted, #737373);
-  --toc-line: var(--article-soft-border, #e8e8e8);
   --toc-accent: var(--article-accent, #007f73);
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
 
   :deep(.toc-list) {
     list-style: none;
@@ -342,22 +359,20 @@ onBeforeUnmount(() => {
   }
 
   :deep(.toc-list .toc-list) {
-    margin-left: 0.7rem;
-    padding-left: 0.875rem;
-    border-left: 1px solid var(--toc-line);
+    margin-left: 0.75rem;
   }
 
   :deep(.toc-row) {
     display: flex;
     align-items: baseline;
-    gap: 0.5rem;
+    gap: 0.625rem;
     margin: 0.375rem 0;
   }
 
   :deep(a) {
     display: flex;
     align-items: baseline;
-    gap: 0.5rem;
+    gap: 0.625rem;
     min-width: 0;
     padding: 0.125rem 0;
     color: var(--toc-color);
@@ -366,27 +381,28 @@ onBeforeUnmount(() => {
     text-decoration: none;
     overflow-wrap: anywhere;
 
-    &::before {
-      content: "[ ]";
-      color: var(--toc-muted);
-      font-size: 0.75rem;
-      white-space: pre;
-      flex-shrink: 0;
-    }
-
     &:hover,
     &[data-active-ancestor],
     &[aria-current="location"] {
       color: var(--toc-accent);
     }
 
-    &[aria-current="location"]::before { content: "[>]"; color: var(--toc-accent); }
+    &[aria-current="location"] .toc-number { color: var(--toc-accent); }
 
     &:focus-visible {
       outline: 1px solid var(--toc-accent);
       outline-offset: 3px;
     }
   }
+
+  :deep(.toc-number) {
+    flex-shrink: 0;
+    min-width: 2ch;
+    color: var(--toc-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  :deep(.toc-text) { min-width: 0; }
 
   :deep(.toc-count) {
     flex-shrink: 0;
@@ -408,7 +424,6 @@ onBeforeUnmount(() => {
 .dark-mode .table-of-contents {
   --toc-color: var(--article-text, #b3b3b3);
   --toc-muted: var(--article-muted, #808080);
-  --toc-line: var(--article-soft-border, #222);
   --toc-accent: var(--article-accent, #38e7cd);
 }
 </style>

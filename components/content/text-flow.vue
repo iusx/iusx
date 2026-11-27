@@ -41,10 +41,10 @@ const source = computed(() => {
   --flow-digest: #52764d;
   --flow-note: var(--flow-muted);
   min-width: 0;
-  margin: 1.75rem 0;
+  margin: 2rem 0;
   color: var(--flow-text);
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.7;
   text-align: left;
   text-transform: none;
@@ -63,5 +63,5 @@ const source = computed(() => {
   --flow-fact: #d9b77b;
   --flow-digest: #99c79a;
 }
-.flow-source-error { margin: 0; padding: 1rem; border: 1px dashed var(--flow-border); color: var(--flow-muted); overflow-wrap: anywhere; }
+.flow-source-error { margin: 0; padding: 0.5rem 0; color: var(--flow-muted); overflow-wrap: anywhere; }
 </style>

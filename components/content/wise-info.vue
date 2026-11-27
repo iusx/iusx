@@ -13,13 +13,13 @@ defineProps({
 
 <template>
   <figure class="wise-layout">
-    <div v-if="topic" class="wise-topic">
-      <span class="wise-marker" aria-hidden="true">▪</span>
-      <span>{{ topic }}</span>
+    <div class="wise-topic">
+      <span class="wise-marker">Quotation</span>
+      <span v-if="topic">{{ topic }}</span>
     </div>
     <blockquote class="wise-content"><slot /></blockquote>
     <figcaption v-if="by" class="wise-by">
-      <span aria-hidden="true">/</span> {{ by }}
+      <span>Source:</span> {{ by }}
     </figcaption>
   </figure>
 </template>
@@ -30,10 +30,7 @@ defineProps({
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  margin: 1.5rem 0;
-  border: 1px solid var(--article-border, #d4d4d4);
-  border-radius: 0;
-  background: var(--article-surface, transparent);
+  margin: 2rem 0;
   font-family: var(--article-font, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace);
   text-align: left;
   text-transform: none;
@@ -41,12 +38,12 @@ defineProps({
 
 .wise-topic {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.625rem;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--article-soft-border, #e8e8e8);
+  padding: 0 0 0.75rem;
   color: var(--article-muted, #737373);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.6;
 
   > span:last-child {
@@ -57,16 +54,16 @@ defineProps({
 
 .wise-marker {
   flex-shrink: 0;
-  color: var(--article-accent, #007f73);
+  color: var(--article-strong, #242424);
 }
 
-.wise-content {
+.wise-layout .wise-content {
   min-width: 0;
   margin: 0;
-  padding: 1rem;
+  padding: 0 0 0 1.5rem;
   border: 0;
   color: var(--article-text, #4a4a4a);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-style: normal;
   line-height: 1.85;
   overflow-wrap: anywhere;
@@ -86,8 +83,8 @@ defineProps({
     margin-right: 0;
     margin-bottom: 0;
     margin-left: 0;
-    padding: 0 0 0 0.875rem;
-    border-left: 1px solid var(--article-border, #d4d4d4);
+    padding: 0 0 0 1.5rem;
+    border: 0;
     color: var(--article-muted, #737373);
     font-style: normal;
   }
@@ -111,57 +108,42 @@ defineProps({
   display: flex;
   align-items: baseline;
   gap: 0.625rem;
-  padding: 0 1rem 0.875rem;
+  padding: 0.75rem 0 0 1.5rem;
   color: var(--article-muted, #737373);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.6;
   overflow-wrap: anywhere;
 
   > span {
-    color: var(--article-faint, #999);
+    color: var(--article-muted, #737373);
   }
 }
 
 .dark-mode {
-  .wise-layout {
-    border-color: var(--article-border, #363636);
-  }
-
-  .wise-topic {
-    border-color: var(--article-soft-border, #222);
-  }
-
   .wise-topic,
   .wise-by {
     color: var(--article-muted, #808080);
   }
 
   .wise-marker {
-    color: var(--article-accent, #38e7cd);
+    color: var(--article-strong, #ededed);
   }
 
   .wise-content {
     color: var(--article-text, #b3b3b3);
 
     :deep(blockquote) {
-      border-color: var(--article-border, #363636);
       color: var(--article-muted, #808080);
     }
   }
 
   .wise-by > span {
-    color: var(--article-faint, #606060);
+    color: var(--article-muted, #808080);
   }
 }
 
 @media (max-width: 640px) {
-  .wise-topic,
-  .wise-content {
-    padding: 0.875rem;
-  }
-
-  .wise-by {
-    padding: 0 0.875rem 0.875rem;
-  }
+  .wise-layout .wise-content { padding-left: 1rem; }
+  .wise-by { padding-left: 1rem; }
 }
 </style>

@@ -46,7 +46,7 @@ function keyResize(event: KeyboardEvent) {
 <template>
   <figure class="text-compare" :aria-label="title">
     <header class="compare-heading">
-      <span class="compare-heading-title"><span aria-hidden="true">&gt;</span> {{ displayText(title) }}</span>
+      <span class="compare-heading-title">{{ displayText(title) }}</span>
     </header>
     <div class="compare-wrap" :class="{ 'is-resizing': resizing }" :style="{ '--compare-split': `${split}%` }">
       <div ref="grid" class="compare-grid"><slot /></div>
@@ -80,11 +80,10 @@ function keyResize(event: KeyboardEvent) {
   --compare-soft: var(--article-soft-border, #e8e8e8);
   --compare-accent: var(--article-accent, #007f73);
   min-width: 0;
-  margin: 1.75rem 0;
-  border: 1px solid var(--compare-border);
+  margin: 2rem 0;
   color: var(--compare-text);
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.7;
   text-align: left;
 }
@@ -103,15 +102,12 @@ function keyResize(event: KeyboardEvent) {
   align-items: baseline;
   justify-content: space-between;
   gap: 0.375rem 1rem;
-  padding: 0.625rem 1rem;
-  border-bottom: 1px solid var(--compare-border);
+  padding: 0 0 1rem;
   color: var(--compare-muted);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   overflow-wrap: anywhere;
 }
 .compare-heading-title { color: var(--compare-strong); }
-.compare-heading-title > span { color: var(--compare-accent); }
-.compare-heading-note { font-size: 0.6875rem; }
 .compare-wrap { position: relative; }
 .compare-grid {
   display: grid;
@@ -139,7 +135,7 @@ function keyResize(event: KeyboardEvent) {
   bottom: 0;
   left: 50%;
   width: 1px;
-  background: transparent;
+  background: var(--compare-soft);
   transition: background 0.15s;
 }
 .compare-resizer::after {

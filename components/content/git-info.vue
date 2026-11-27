@@ -302,17 +302,17 @@ onBeforeUnmount(() => stopWatching?.());
 
 <style lang="scss" scoped>
 .git-layout {
-  margin: 1.75rem 0;
+  margin: 2rem 0;
   min-width: 0;
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.7;
   text-transform: none;
+  text-align: left;
 }
 
 .git-info {
   min-width: 0;
-  border: 1px solid var(--article-border, #d4d4d4);
   border-radius: 0;
   background: var(--article-surface, transparent);
   color: var(--article-text, #4a4a4a);
@@ -330,8 +330,7 @@ onBeforeUnmount(() => stopWatching?.());
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid var(--article-soft-border, #e8e8e8);
+  padding: 0;
   color: var(--article-strong, #242424);
   font-weight: 600;
 
@@ -339,15 +338,15 @@ onBeforeUnmount(() => stopWatching?.());
   p { min-width: 0; margin: 0; font-size: inherit; line-height: inherit; }
 }
 
-.git-state { padding: 0.8rem 1rem; }
-.git-desc { color: var(--article-muted, #737373); overflow-wrap: anywhere; }
+.git-state { padding: 0.625rem 0 0; }
+.git-desc { overflow-wrap: anywhere; }
 .git-num {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 1.25rem;
   margin-top: 0.75rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: var(--article-muted, #737373);
 
   a { display: flex; align-items: center; gap: 0.375rem; }
@@ -359,9 +358,9 @@ onBeforeUnmount(() => stopWatching?.());
   flex-direction: column;
   align-items: flex-start;
   gap: 0.625rem;
-  margin-top: 0.8rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid var(--article-soft-border, #e8e8e8);
+  margin-top: 1.25rem;
+  padding-top: 0;
+  font-size: 0.875rem;
 
   a { display: flex; align-items: flex-start; gap: 0.5rem; }
   svg { flex-shrink: 0; margin-top: 0.25rem; color: var(--article-muted, #737373); }
@@ -369,10 +368,9 @@ onBeforeUnmount(() => stopWatching?.());
   .close, .Close { color: var(--article-muted, #737373); }
 }
 
-.git-pr-state { color: var(--article-faint, #999); font-size: 0.75rem; white-space: nowrap; }
+.git-pr-state { color: var(--article-muted, #737373); font-size: 0.875rem; white-space: nowrap; }
 
 @media (max-width: 640px) {
   .git-layout { margin-block: 1.5rem; }
-  .git-title, .git-state { padding: 0.75rem; }
 }
 </style>

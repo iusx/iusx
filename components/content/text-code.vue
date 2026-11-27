@@ -77,7 +77,7 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
   <figure class="text-code" :aria-label="title">
     <component v-if="files.length" is="style">{{ visibilityCss }}</component>
     <header class="code-heading">
-      <span class="code-heading-title"><span aria-hidden="true">&gt;</span> {{ displayText(title) }}</span>
+      <span class="code-heading-title">{{ displayText(title) }}</span>
       <span class="code-count">{{ files.length }} 文件</span>
     </header>
     <div class="code-layout" :class="{ 'is-single': files.length <= 1 }">
@@ -104,7 +104,7 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
             @click="select(entry.index)"
             @keydown="handleTabKey($event, entry.index)"
           >
-            <span aria-hidden="true">·</span>{{ entry.name }}
+            {{ entry.name }}
           </button>
         </template>
       </nav>
@@ -132,11 +132,10 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
   --code-soft: var(--article-soft-border, #e8e8e8);
   --code-accent: var(--article-accent, #007f73);
   min-width: 0;
-  margin: 1.75rem 0;
-  border: 1px solid var(--code-border);
+  margin: 2rem 0;
   color: var(--code-text);
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.7;
   text-align: left;
 }
@@ -155,30 +154,27 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
   align-items: baseline;
   justify-content: space-between;
   gap: 0.375rem 1rem;
-  padding: 0.625rem 1rem;
-  border-bottom: 1px solid var(--code-border);
+  padding: 0 0 1rem;
   color: var(--code-muted);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   overflow-wrap: anywhere;
 }
 .code-heading-title { color: var(--code-strong); }
-.code-heading-title > span { color: var(--code-accent); }
-.code-count { font-size: 0.6875rem; font-variant-numeric: tabular-nums; }
-.code-layout { display: grid; grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr); }
+.code-count { font-variant-numeric: tabular-nums; }
+.code-layout { display: grid; grid-template-columns: minmax(8rem, 11rem) minmax(0, 1fr); column-gap: 1.5rem; }
 .code-layout.is-single { grid-template-columns: minmax(0, 1fr); }
 .code-tree {
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
   min-width: 0;
-  padding: 0.625rem 0.5rem;
-  border-right: 1px solid var(--code-soft);
+  padding: 0;
   overflow: auto;
 }
 .code-folder-name {
   padding: 0.25rem 0.5rem;
   color: var(--code-muted);
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   overflow-wrap: anywhere;
 }
 .code-folder-name:not(:first-child) { margin-top: 0.5rem; }
@@ -193,31 +189,28 @@ watch([files, () => props.active], () => { activeIndex.value = resolveActive(); 
   background: transparent;
   color: var(--code-text);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.6;
   text-align: left;
   cursor: pointer;
   overflow-wrap: anywhere;
 }
-.code-file > span { color: var(--code-muted); }
 .code-file:hover { color: var(--code-accent); }
 .code-file.is-active {
   color: var(--code-accent);
-  box-shadow: inset 2px 0 0 var(--code-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
 }
-.code-file.is-active > span { color: var(--code-accent); }
-.code-file:focus-visible { outline: 1px solid var(--code-accent); outline-offset: -2px; }
+.code-file:focus-visible { outline: 1px solid var(--code-accent); outline-offset: -1px; }
 .code-body { min-width: 0; overflow: hidden; }
 .code-body :deep(> *) { margin-top: 0 !important; margin-bottom: 0 !important; }
-.code-body :deep(pre) { margin: 0 !important; padding: 1rem !important; overflow-x: auto; }
-.code-body :deep(code) { font-family: inherit; font-size: 0.8125rem; }
+.code-body :deep(pre) { margin: 0 !important; padding: 0.5rem 1rem !important; border: 0; overflow-x: auto; }
+.code-body :deep(code) { font-family: inherit; font-size: 0.875rem; }
 @media (max-width: 640px) {
-  .code-layout { grid-template-columns: minmax(0, 1fr); }
+  .code-layout { grid-template-columns: minmax(0, 1fr); row-gap: 1rem; }
   .code-tree {
     max-height: 15rem;
-    padding: 0.5rem;
-    border-right: 0;
-    border-bottom: 1px solid var(--code-soft);
+    padding: 0;
     overflow: auto;
   }
 }

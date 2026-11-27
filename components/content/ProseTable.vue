@@ -28,7 +28,7 @@ function handleWheel(event: WheelEvent) {
   --table-surface: var(--article-surface, transparent);
   width: 100%;
   min-width: 0;
-  margin: 1.75rem 0;
+  margin: 2rem 0;
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
 }
 
@@ -43,7 +43,6 @@ function handleWheel(event: WheelEvent) {
 .prose-table-scroll {
   max-width: 100%;
   overflow-x: auto;
-  border: 1px solid var(--table-border);
   border-radius: 0;
   background: var(--table-surface);
   overscroll-behavior-x: contain;
@@ -62,23 +61,23 @@ function handleWheel(event: WheelEvent) {
 table {
   width: 100%;
   border-collapse: collapse;
+  border-block: 1px solid var(--table-border);
   color: var(--table-text);
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.7;
   text-align: left;
 
   :deep(th),
   :deep(td) {
-    padding: 0.8rem 1rem;
-    border-bottom: 1px solid var(--table-row-border);
+    padding: 0.8rem 1.25rem;
     text-align: inherit;
     vertical-align: top;
     overflow-wrap: break-word;
   }
 
   :deep(th) {
-    border-bottom-color: var(--table-border);
+    border-bottom: 1px solid var(--table-border);
     background: transparent;
     color: var(--table-heading);
     font-size: 0.875rem;
@@ -86,7 +85,8 @@ table {
     white-space: nowrap;
   }
 
-  :deep(tbody tr:last-child td) { border-bottom: 0; }
+  :deep(th:first-child), :deep(td:first-child) { padding-left: 0; }
+  :deep(th:last-child), :deep(td:last-child) { padding-right: 0; }
   :deep(td:first-child) { color: var(--table-heading); }
   :deep([align="left"]) { text-align: left; }
   :deep([align="center"]) { text-align: center; }
@@ -107,8 +107,9 @@ table {
   .prose-table { margin: 1.5rem 0; }
 
   table {
-    font-size: 0.875rem;
     :deep(th), :deep(td) { padding: 0.7rem 0.8rem; }
+    :deep(th:first-child), :deep(td:first-child) { padding-left: 0; }
+    :deep(th:last-child), :deep(td:last-child) { padding-right: 0; }
     :deep(th) { white-space: normal; }
   }
 
@@ -117,12 +118,12 @@ table {
     table { min-width: 38rem; }
     .prose-table-hint {
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
       align-items: center;
       gap: 0.4rem;
       margin-top: 0.45rem;
       color: var(--table-muted);
-      font-size: 0.75rem;
+      font-size: 0.875rem;
       line-height: 1.5;
       span { font-size: 1rem; }
     }

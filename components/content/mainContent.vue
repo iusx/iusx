@@ -36,25 +36,23 @@ defineProps(["title", "info", "time", "client", "img", "types"]);
 }
 
 .layout {
-  width: min(960px, 90%);
-  margin: 2.5rem auto 5rem;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  width: min(780px, 88%);
+  margin: 4rem auto 5rem;
+  padding: 0;
   box-sizing: border-box;
-  border: 1px solid var(--article-border, #d4d4d4);
   background: var(--article-bg, #fff);
   font-family: var(--article-font, monospace);
 }
 
 .content {
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--article-border, #d4d4d4);
+  padding-bottom: 2rem;
 }
 
 .dark-mode .layout { background: var(--article-bg, #000); }
 .dark-mode .text-layout .text { color: var(--article-text, #b3b3b3); }
 
 @media (max-width: 640px) {
-  .layout { width: 92%; margin-top: 1.25rem; padding: 1rem; }
-  .text-layout .text { font-size: 0.9375rem; }
+  .layout { margin-top: 2.5rem; }
+  .text-layout .text { font-size: 1rem; }
 }
 </style>

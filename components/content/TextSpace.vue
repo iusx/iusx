@@ -25,11 +25,10 @@ function imageUrl(image: string) {
 
 <template>
   <aside v-if="type === 'tip'" class="text-space-note">
-    <span class="note-marker" aria-hidden="true">&gt;</span>
+    <span class="note-marker">Note:</span>
     <div class="note-content"><slot /></div>
   </aside>
   <figure v-else-if="info || images.length" class="text-space-figure">
-    <figcaption v-if="info" class="text-space-caption" v-html="info" />
     <div v-if="images.length" class="text-space-media">
       <page-image v-if="images.length > 1 && type !== 'flat'" :img="images.join(',')" :alt="info" />
       <template v-else>
@@ -45,6 +44,7 @@ function imageUrl(image: string) {
         </button>
       </template>
     </div>
+    <figcaption v-if="info" class="text-space-caption" v-html="info" />
     <ImagePreview v-if="previewSrc" :src="previewSrc" :alt="altText" @close="previewSrc = ''" />
   </figure>
 </template>
@@ -62,18 +62,20 @@ function imageUrl(image: string) {
 
 .text-space-note {
   display: grid;
-  grid-template-columns: 1ch minmax(0, 1fr);
+  grid-template-columns: max-content minmax(0, 1fr);
   align-items: start;
   gap: 0.75rem;
-  padding: 0.875rem 1rem;
-  border-left: 1px solid var(--article-border, #d4d4d4);
+  margin: 1.75rem 0;
+  padding: 0;
   background: var(--article-surface, transparent);
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.8;
 }
 
 .note-marker {
-  color: var(--article-accent, #007f73);
+  color: var(--article-muted, #737373);
+  font-size: 0.875rem;
+  line-height: calc(1.8 / 0.875);
 }
 
 .note-content {
@@ -94,10 +96,10 @@ function imageUrl(image: string) {
 
 .text-space-figure {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-areas: "caption media";
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "media" "caption";
   align-items: start;
-  gap: 1.25rem;
+  gap: 0.75rem;
 
   &:not(:has(.text-space-caption)) {
     grid-template-columns: minmax(0, 1fr);
@@ -113,10 +115,8 @@ function imageUrl(image: string) {
 .text-space-caption {
   grid-area: caption;
   min-width: 0;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--article-soft-border, #e8e8e8);
   color: var(--article-muted, #737373);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.8;
   overflow-wrap: anywhere;
 
@@ -157,17 +157,16 @@ function imageUrl(image: string) {
     width: auto;
     max-width: 100%;
     height: auto;
-    margin: 0 auto;
+    margin: 0;
     border-radius: 0;
   }
 
   :deep(.tips) {
     margin: 0;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--article-border, #d4d4d4);
+    padding: 0.375rem 0;
     background: var(--article-bg, #fff);
     color: var(--article-accent, #007f73);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
   }
 
   button:focus-visible {
@@ -182,16 +181,11 @@ function imageUrl(image: string) {
     color: var(--article-text, #b3b3b3);
   }
 
-  .text-space-note {
-    border-color: var(--article-border, #363636);
-  }
-
   .note-marker {
-    color: var(--article-accent, #38e7cd);
+    color: var(--article-muted, #808080);
   }
 
   .text-space-caption {
-    border-color: var(--article-soft-border, #222);
     color: var(--article-muted, #808080);
 
     :deep(b),
@@ -205,24 +199,15 @@ function imageUrl(image: string) {
   }
 
   .text-space-media :deep(.tips) {
-    border-color: var(--article-border, #363636);
     background: var(--article-bg, #000);
     color: var(--article-accent, #38e7cd);
   }
 }
 
-@media (max-width: 1024px) {
-  .text-space-figure {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "media" "caption";
-    gap: 0.875rem;
-  }
-}
-
 @media (max-width: 640px) {
   .text-space-note {
-    gap: 0.625rem;
-    padding: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.375rem;
   }
 }
 </style>

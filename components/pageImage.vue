@@ -135,9 +135,9 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
           <button v-else type="button" class="image-link" aria-haspopup="dialog"
             :aria-label="`预览图片：${altText}（${index + 1} / ${images.length}）`" draggable="false"
             @click="previewSrc = item">
-            <span class="image-original" aria-hidden="true">＋ 预览图片</span>
             <img :src="item" :alt="`${altText}（${index + 1} / ${images.length}）`" data-article-image
               :loading="index === 0 ? 'eager' : 'lazy'" decoding="async" draggable="false" @error="markFailed(item)" />
+            <span class="image-original" aria-hidden="true">预览原图</span>
           </button>
         </div>
       </div>
@@ -159,8 +159,8 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
       <div v-if="failedImages.includes(images[0])" class="image-error" role="status">图片暂时无法显示</div>
       <button v-else type="button" class="image-link" aria-haspopup="dialog"
         :aria-label="`预览图片：${altText}`" @click="previewSrc = images[0]">
-        <span class="image-original" aria-hidden="true">＋ 预览图片</span>
         <img :src="images[0]" :alt="altText" data-article-image decoding="async" @error="markFailed(images[0])" />
+        <span class="image-original" aria-hidden="true">预览原图</span>
       </button>
     </template>
     <figcaption v-if="info || type" class="info">
@@ -180,11 +180,10 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
 }
 .image-link {
   appearance: none;
-  position: relative;
   display: block;
   width: 100%;
   padding: 0;
-  border: 1px solid var(--article-border, #d4d4d4);
+  border: 0;
   background: transparent;
   color: inherit;
   font: inherit;
@@ -193,17 +192,15 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
   img { display: block; width: 100%; height: auto; border-radius: 0; }
 }
 .image-original {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  padding: 0.375rem 0.625rem;
-  border-top: 1px solid var(--article-border, #d4d4d4);
-  border-left: 1px solid var(--article-border, #d4d4d4);
-  background: var(--article-bg, #fff);
+  display: block;
+  flex-shrink: 0;
+  padding: 0.5rem 0;
   color: var(--article-muted, #737373);
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   line-height: 1.5;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 .image-link:hover .image-original { color: var(--article-accent, #007f73); }
 .article-media :is(a, button, .gallery-track):focus-visible {
@@ -212,8 +209,7 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
 }
 .article-gallery {
   overflow: hidden;
-  border: 1px solid var(--article-border, #d4d4d4);
-  background: var(--article-bg, #fff);
+  background: transparent;
 }
 .gallery-track {
   display: flex;
@@ -235,19 +231,19 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
-  .image-link { height: 100%; border: 0; }
-  .image-link img { width: 100%; height: 100%; object-fit: contain; }
+  .image-link { display: flex; flex-direction: column; height: 100%; }
+  .image-link img { flex: 1; width: 100%; min-height: 0; height: 0; object-fit: contain; }
   .image-error {
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: 0.75rem;
     height: 100%;
-    padding: 1rem;
+    padding: 1rem 0;
     border: 0;
-    text-align: center;
+    text-align: left;
 
     p { margin: 0; }
   }
@@ -255,20 +251,21 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
 .image-error-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: flex-start;
+  gap: 0.5rem 1.25rem;
 
   :is(a, button) {
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--article-border, #d4d4d4);
+    padding: 0.5rem 0;
+    border: 0;
     background: transparent;
     color: inherit;
     font: inherit;
     line-height: 1.5;
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
     cursor: pointer;
 
     &:hover { color: var(--article-accent, #007f73); }
@@ -279,10 +276,9 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
   align-items: center;
   gap: 0.75rem;
   min-height: 2.75rem;
-  padding-left: 0.75rem;
-  border-top: 1px solid var(--article-border, #d4d4d4);
+  padding: 0;
   color: var(--article-muted, #737373);
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   line-height: 1;
 
   button {
@@ -325,13 +321,12 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
   display: flex;
   flex-shrink: 0;
 
-  button { border-left: 1px solid var(--article-border, #d4d4d4); font-size: 1rem; }
+  button { font-size: 1rem; }
 }
 .image-error {
-  padding: 3rem 1rem;
-  border: 1px solid var(--article-border, #d4d4d4);
+  padding: 3rem 0;
   color: var(--article-muted, #737373);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
 }
 .info {
   display: flex;
@@ -340,7 +335,7 @@ onBeforeUnmount(() => clearTimeout(scrollEndTimer));
   gap: 1rem;
   margin-top: 0.75rem;
   color: var(--article-muted, #737373);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.8;
   .info-title { min-width: 0; overflow-wrap: anywhere; }
   img { flex-shrink: 0; width: 61px; height: auto; }

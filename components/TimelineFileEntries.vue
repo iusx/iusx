@@ -57,7 +57,7 @@ const remainingCount = computed(() => Math.max((entries.value?.length ?? 0) - pr
       <div v-if="remainingCount && !expanded" class="timeline-file-footer">
         <button type="button" class="timeline-file-expand" @click="expanded = true">
           <span>显示全部</span>
-          <span class="timeline-file-remaining">剩余 {{ remainingCount }} 条 <span aria-hidden="true">↓</span></span>
+          <span class="timeline-file-remaining">剩余 {{ remainingCount }} 条</span>
         </button>
       </div>
       <div v-if="!entries?.length" class="timeline-file-message" role="status">暂无时间线记录。</div>
@@ -68,14 +68,14 @@ const remainingCount = computed(() => Math.max((entries.value?.length ?? 0) - pr
 <style scoped>
 .timeline-file-text { white-space: pre-wrap; overflow-wrap: anywhere; }
 .timeline-file-detail + .timeline-file-detail { margin-top: 1rem; }
-.timeline-file-label { color: var(--timeline-muted); font-size: 0.6875rem; }
-.timeline-file-footer { position: relative; padding-top: 0.25rem; background: var(--timeline-bg); }
-.timeline-file-expand { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; box-sizing: border-box; padding: 0.625rem 0.875rem; border: 1px solid var(--timeline-border); background: var(--timeline-bg); color: var(--timeline-accent); font: inherit; font-size: 0.75rem; text-align: left; cursor: pointer; }
-.timeline-file-expand:hover { border-color: var(--timeline-accent); }
+.timeline-file-label { color: var(--timeline-muted); font-size: 0.875rem; }
+.timeline-file-footer { padding-top: 0.5rem; }
+.timeline-file-expand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.375rem 1rem; width: fit-content; max-width: 100%; box-sizing: border-box; padding: 0.5rem 0; border: 0; background: transparent; color: var(--timeline-accent); font: inherit; font-size: 0.875rem; text-align: left; cursor: pointer; }
+.timeline-file-expand > span:first-child { text-decoration: underline; text-underline-offset: 0.25em; }
+.timeline-file-expand:hover > span:first-child { text-decoration-thickness: 2px; }
 .timeline-file-expand:focus-visible { outline: 1px solid var(--timeline-accent); outline-offset: 3px; }
 .timeline-file-remaining { color: var(--timeline-muted); font-variant-numeric: tabular-nums; }
-.timeline-file-remaining > span { margin-left: 0.5rem; color: var(--timeline-accent); }
-.timeline-file-message { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; padding: 1rem 0; color: var(--timeline-muted); font-size: 0.75rem; }
+.timeline-file-message { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; padding: 1rem 0; color: var(--timeline-muted); font-size: 0.875rem; }
 .timeline-file-message button { padding: 0; border: 0; background: transparent; color: var(--timeline-accent); font: inherit; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
 .timeline-file-message button:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
 </style>

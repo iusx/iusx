@@ -127,14 +127,14 @@ function buildExportSvg() {
   const font = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
   const parts = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`,
-    `<defs><marker id="flow-export-arrow" viewBox="0 -4 7 8" refX="6" refY="0" markerWidth="7" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,-3 L6,0 L0,3" fill="${colors.border}"/></marker></defs>`,
+    `<defs><marker id="flow-export-arrow" viewBox="0 -4 7 8" refX="6" refY="0" markerWidth="7" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,-3 L6,0 L0,3" fill="${colors.muted}"/></marker></defs>`,
     `<g transform="translate(${margin} ${margin})">`,
   ];
   for (const group of graph.groups) {
-    parts.push(`<g><rect x="${group.x}" y="${group.y}" width="${group.width}" height="${group.height}" fill="none" stroke="${colors.border}" stroke-dasharray="6 4"/><text x="${group.x + 12}" y="${group.y + 18}" font-family="${font}" font-size="11" fill="${colors.muted}">${xmlText(group.label)}</text></g>`);
+    parts.push(`<g><rect x="${group.x}" y="${group.y}" width="${group.width}" height="${group.height}" fill="none" stroke="${colors.muted}" stroke-width="1.25"${group.depth > 0 ? ' stroke-dasharray="5 4"' : ""}/><text x="${group.x + 12}" y="${group.y + 18}" font-family="${font}" font-size="11" font-weight="600" fill="${colors.strong}">${xmlText(group.label)}</text></g>`);
   }
   for (const edge of graph.edges) {
-    parts.push(`<path d="${edge.path}" fill="none" stroke="${colors.border}" stroke-width="1.25"${edge.kind === "covers" ? ' stroke-dasharray="4 4"' : ""} marker-end="url(#flow-export-arrow)"/>`);
+    parts.push(`<path d="${edge.path}" fill="none" stroke="${colors.muted}" stroke-width="1.25"${edge.kind === "covers" ? ' stroke-dasharray="4 4"' : ""} marker-end="url(#flow-export-arrow)"/>`);
     if (edge.label) {
       parts.push(`<text x="${edge.labelX}" y="${edge.labelY}" text-anchor="middle" dominant-baseline="central" font-family="${font}" font-size="11" fill="${colors.text}" stroke="${colors.bg}" stroke-width="3" stroke-linejoin="round" paint-order="stroke">${xmlText(edge.label.slice(0, 18))}</text>`);
     }
@@ -564,7 +564,7 @@ onBeforeUnmount(() => {
 <template>
   <figure ref="figure" class="content-flow" :class="{ 'is-wheel-pending': desktopInput && !wheelActive }" :style="{ '--flow-height': `${height}px` }" :data-lenis-prevent="wheelActive ? '' : undefined" @pointerenter="beginWheelHover" @pointermove="beginWheelHover" @pointerleave="resetWheelHover" @keydown.capture="handleEscape">
     <header class="flow-toolbar">
-      <div class="flow-heading"><span aria-hidden="true">&gt;</span><span>{{ displayText(title) }}</span><span class="flow-count">{{ graph.nodes.length }} 节点 / {{ graph.edges.length }} 关系</span></div>
+      <div class="flow-heading"><span>{{ displayText(title) }}</span><span class="flow-count">{{ graph.nodes.length }} 节点 / {{ graph.edges.length }} 关系</span></div>
       <div v-if="graph.nodes.length" class="flow-tools" role="group" aria-label="流程图视图控制">
         <button type="button" aria-label="缩小流程图" title="缩小" @click="zoomBy(0.8)"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12" /></svg></button>
         <button type="button" :aria-label="`当前缩放 ${scalePercentage}%，恢复 100%`" :title="`100%（当前 ${scalePercentage}%）`" @click="actualSize"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="14" height="14" /><path d="M7 7v6M13 7v6" /><circle cx="10" cy="8" r="0.6" fill="currentColor" stroke="none" /><circle cx="10" cy="12" r="0.6" fill="currentColor" stroke="none" /></svg></button>
@@ -618,7 +618,7 @@ onBeforeUnmount(() => {
       <span class="flow-announcement" aria-live="polite">{{ selectedNode ? `已选中 ${displayText(selectedNode.id)}，详情显示于图下方。` : '' }}</span>
 
       <aside v-if="selectedNode" :id="`${id}-details`" class="flow-inspector" :style="{ '--flow-kind': kindColor(selectedNode.kind) }" aria-label="节点详情" data-toc-exclude :data-lenis-prevent="wheelActive || !desktopInput ? '' : undefined">
-        <header class="flow-inspector-heading"><span><span aria-hidden="true">&gt;</span> {{ kindLabel(selectedNode.kind) }} / #{{ displayText(selectedNode.id) }} <span v-if="selectedNode.status">· {{ statusLabel(selectedNode.status) }}</span></span><button type="button" aria-label="关闭节点详情" @click="closeDetails">关闭 ×</button></header>
+        <header class="flow-inspector-heading"><span>{{ kindLabel(selectedNode.kind) }} / #{{ displayText(selectedNode.id) }} <span v-if="selectedNode.status">· {{ statusLabel(selectedNode.status) }}</span></span><button type="button" aria-label="关闭节点详情" @click="closeDetails">关闭 ×</button></header>
         <p class="flow-detail-title">{{ displayText(selectedNode.label) }}</p>
         <dl v-if="selectedNode.details.length" class="flow-detail-fields"><template v-for="(detail, index) in selectedNode.details" :key="index"><dt>{{ displayText(detail.label) }}</dt><dd>{{ displayText(detail.text) }}</dd></template></dl>
         <div v-if="incidentEdges.length" class="flow-neighbors"><span class="flow-neighbors-label">关联节点</span><button v-for="edge in incidentEdges" :key="edge.id" type="button" @click="selectNode(edge.source === selectedId ? edge.target : edge.source, true)">{{ edge.source === selectedId ? '→' : '←' }} {{ displayText(edge.label || '关联') }} / #{{ displayText(edge.source === selectedId ? edge.target : edge.source) }}</button></div>
@@ -636,30 +636,29 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.content-flow { min-width: 0; margin: 0; border: 1px solid var(--flow-border); background: var(--flow-bg); color: var(--flow-text); overflow: hidden; }
-.flow-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1rem; padding: 0.875rem 1rem; border-bottom: 1px solid var(--flow-border); }
-.flow-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; min-width: 0; color: var(--flow-strong); font-size: 0.8125rem; overflow-wrap: anywhere; }
-.flow-heading > :first-child { color: var(--flow-accent); }
-.flow-count { color: var(--flow-muted); font-size: 0.6875rem; font-variant-numeric: tabular-nums; }
+.content-flow { min-width: 0; margin: 0; background: var(--flow-bg); color: var(--flow-text); overflow: hidden; }
+.flow-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1rem; padding: 0 0 1rem; }
+.flow-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; min-width: 0; color: var(--flow-strong); font-size: 0.875rem; overflow-wrap: anywhere; }
+.flow-count { color: var(--flow-muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 .flow-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem; }
-.flow-tools button, .flow-inspector-heading button { display: inline-flex; align-items: center; justify-content: center; min-width: 1.875rem; min-height: 1.875rem; box-sizing: border-box; padding: 0.25rem 0.5rem; border: 1px solid var(--flow-border); background: var(--flow-bg); color: var(--flow-text); font: inherit; font-size: 0.6875rem; line-height: 1.4; cursor: pointer; }
+.flow-tools button, .flow-inspector-heading button { display: inline-flex; align-items: center; justify-content: center; min-width: 1.875rem; min-height: 1.875rem; box-sizing: border-box; padding: 0.25rem 0.5rem; border: 0; background: transparent; color: var(--flow-text); font: inherit; font-size: 0.875rem; line-height: 1.4; cursor: pointer; }
 .flow-tools button { flex: none; width: 2rem; height: 2rem; padding: 0; }
 .flow-tools button:disabled { opacity: 0.45; cursor: wait; }
 .flow-tools svg { display: block; width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
-.flow-viewport { position: relative; height: var(--flow-height, 520px); min-width: 0; background-color: var(--flow-bg); background-image: radial-gradient(var(--flow-soft) 0.75px, transparent 0.75px); background-size: 18px 18px; overflow: hidden; }
-.flow-viewport.is-empty { height: 0; }
+.flow-viewport { position: relative; height: var(--flow-height, 520px); min-width: 0; box-sizing: border-box; border: 1px solid var(--flow-border); background: var(--flow-bg); overflow: hidden; }
+.flow-viewport.is-empty { height: 0; border: 0; }
 .flow-viewport.is-empty .flow-svg { display: none; }
 .flow-svg { display: block; width: 100%; height: 100%; touch-action: auto; }
 .flow-svg:focus, .flow-svg:focus-visible { outline: none; }
 .flow-groups { pointer-events: none; }
-.flow-group rect { fill: var(--flow-bg); fill-opacity: 0.55; stroke: var(--flow-border); stroke-width: 1; stroke-dasharray: 6 4; vector-effect: non-scaling-stroke; }
-.flow-group.is-nested rect { stroke-dasharray: 3 3; }
-.flow-group text { fill: var(--flow-muted); font: 11px var(--article-font, ui-monospace, monospace); letter-spacing: 0.02em; }
-.flow-edge { fill: none; stroke: var(--flow-border); stroke-width: 1.25; vector-effect: non-scaling-stroke; pointer-events: none; }
+.flow-group rect { fill: var(--flow-bg); fill-opacity: 0.55; stroke: var(--flow-muted); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.flow-group.is-nested rect { stroke-dasharray: 5 4; }
+.flow-group text { fill: var(--flow-strong); font: 600 11px var(--article-font, ui-monospace, monospace); letter-spacing: 0.02em; }
+.flow-edge { fill: none; stroke: var(--flow-muted); stroke-width: 1.25; vector-effect: non-scaling-stroke; pointer-events: none; }
 .flow-edge.is-summary { stroke-dasharray: 4 4; }
 .flow-edge.is-active { stroke: var(--flow-accent); stroke-width: 2.25; }
 .flow-edge.is-muted { opacity: 0.15; }
-.flow-arrow { fill: var(--flow-border); }
+.flow-arrow { fill: var(--flow-muted); }
 .flow-arrow.is-active { fill: var(--flow-accent); }
 .flow-edge-label { pointer-events: none; }
 .flow-edge-label.is-muted { opacity: 0.2; }
@@ -681,32 +680,35 @@ onBeforeUnmount(() => {
 .flow-node-footer { color: var(--flow-muted); }
 .flow-node-footer .has-status { color: var(--flow-accent); }
 .flow-node-priority { font-variant-numeric: tabular-nums; }
-.flow-caption { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1rem; padding: 0.625rem 1rem; border-top: 1px solid var(--flow-soft); color: var(--flow-muted); font-size: 0.625rem; line-height: 1.8; }
+.flow-caption { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.75rem 1rem; padding: 1rem 0 0; color: var(--flow-muted); font-size: 0.875rem; line-height: 1.8; }
 .flow-legend { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .flow-help { display: flex; flex-wrap: wrap; gap: 0 1rem; }
 .flow-legend > span::before { content: "▪"; margin-right: 0.3rem; color: var(--flow-kind, var(--flow-accent)); }
-.flow-inspector { max-height: 22rem; padding: 1rem; border-top: 1px solid var(--flow-border); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--flow-border) var(--flow-bg); }
-.flow-inspector-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; color: var(--flow-muted); font-size: 0.6875rem; }
-.flow-inspector-heading > span > span:first-child { color: var(--flow-kind, var(--flow-accent)); }
-.flow-detail-title { margin: 0.75rem 0 0 !important; color: var(--flow-strong); font-size: 0.8125rem; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
-.flow-detail-fields { margin: 1rem 0 0; font-size: 0.75rem; }
-.flow-detail-fields dt { margin: 1rem 0 0.375rem; color: var(--flow-muted); font-size: 0.6875rem; }
+.flow-inspector { max-height: 22rem; margin-top: 1.5rem; padding: 1rem 0 0.5rem; border-top: 1px solid var(--flow-border); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--flow-border) var(--flow-bg); }
+.flow-inspector-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; color: var(--flow-muted); font-size: 0.875rem; }
+.flow-inspector-heading > span { overflow-wrap: anywhere; }
+.flow-inspector-heading button { flex: none; }
+.flow-detail-title { margin: 0.75rem 0 0 !important; color: var(--flow-strong); font-size: 1rem; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+.flow-detail-fields { margin: 1rem 0 0; font-size: 1rem; }
+.flow-detail-fields dt { margin: 1rem 0 0.375rem; color: var(--flow-muted); font-size: 0.875rem; }
 .flow-detail-fields dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
-.flow-neighbors { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--flow-soft); }
-.flow-neighbors-label { width: 100%; color: var(--flow-muted); font-size: 0.6875rem; }
-.flow-neighbors button { padding: 0.25rem 0.5rem; border: 1px solid var(--flow-border); background: transparent; color: var(--flow-text); font: inherit; font-size: 0.6875rem; cursor: pointer; }
-.flow-outline { border-top: 1px solid var(--flow-border); font-size: 0.75rem; }
-.flow-outline summary { padding: 0.625rem 1rem; color: var(--flow-muted); cursor: pointer; }
-.flow-outline summary > span { margin-left: 0.5rem; font-size: 0.625rem; }
-.flow-outline-list { max-height: 18rem; padding: 0 1rem 0.5rem; overflow-y: auto; overscroll-behavior: contain; }
+.flow-neighbors { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 1.5rem; }
+.flow-neighbors-label { width: 100%; color: var(--flow-muted); font-size: 0.875rem; }
+.flow-neighbors button { padding: 0.25rem 0; border: 0; background: transparent; color: var(--flow-text); font: inherit; font-size: 0.875rem; text-decoration: underline; text-underline-offset: 0.25em; cursor: pointer; }
+.flow-neighbors button:hover { color: var(--flow-accent); }
+.flow-outline { margin-top: 1.5rem; border-top: 1px solid var(--flow-border); font-size: 1rem; }
+.flow-outline summary { padding: 0.75rem 0; color: var(--flow-muted); font-size: 0.875rem; cursor: pointer; }
+.flow-outline summary > span { margin-left: 0.5rem; }
+.flow-outline-list { max-height: 18rem; padding: 0.5rem 0 0.5rem 1rem; overflow-y: auto; overscroll-behavior: contain; }
 /* While waiting, nested panels also let wheel scrolling reach the article. */
 .is-wheel-pending .flow-inspector, .is-wheel-pending .flow-outline-list { overflow-y: hidden; overscroll-behavior: auto; }
-.flow-outline-list button { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; padding: 0.75rem 0; border: 0; border-top: 1px solid var(--flow-soft); background: transparent; color: var(--flow-text); font: inherit; text-align: left; cursor: pointer; white-space: pre-wrap; overflow-wrap: anywhere; }
-.flow-outline-list button > span { color: var(--flow-muted); font-size: 0.6875rem; }
+.flow-outline-list button { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; padding: 0.75rem 0; border: 0; background: transparent; color: var(--flow-text); font: inherit; text-align: left; cursor: pointer; white-space: pre-wrap; overflow-wrap: anywhere; }
+.flow-outline-list button:hover { color: var(--flow-accent); }
+.flow-outline-list button > span { color: var(--flow-muted); font-size: 0.875rem; }
 .content-flow button:focus-visible, .flow-outline summary:focus-visible { outline: 1px solid var(--flow-accent); outline-offset: -3px; }
-.flow-empty { margin: 0 !important; padding: 1rem; color: var(--flow-muted); font-size: 0.75rem; }
+.flow-empty { margin: 0 !important; padding: 0.75rem 0; color: var(--flow-muted); font-size: 0.875rem; }
 .flow-announcement { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.content-flow:fullscreen { display: flex; flex-direction: column; width: 100%; height: 100dvh; border: 0; }
+.content-flow:fullscreen { display: flex; flex-direction: column; width: 100%; height: 100dvh; box-sizing: border-box; padding: 1rem; }
 .content-flow:fullscreen .flow-viewport { flex: 1; height: auto; min-height: 200px; }
 .content-flow:fullscreen .flow-inspector { max-height: 28dvh; }
 @media (hover: hover) and (pointer: fine) {
@@ -716,11 +718,8 @@ onBeforeUnmount(() => {
   .flow-tools button:not(:disabled):hover, .flow-inspector-heading button:hover { border-color: var(--flow-accent); color: var(--flow-accent); }
 }
 @media (max-width: 640px) {
-  .flow-toolbar { padding: 0.75rem; }
   .flow-tools button { width: 2.25rem; height: 2.25rem; }
   .flow-viewport { max-height: 65svh; }
-  .flow-caption { padding: 0.625rem 0.75rem; }
-  .flow-inspector { padding: 0.75rem; }
   .content-flow:fullscreen .flow-viewport { max-height: none; }
 }
 </style>

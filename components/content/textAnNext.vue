@@ -21,7 +21,7 @@ onBeforeUnmount(() => clearTimeout(redirectTimer));
 
 <template>
   <div class="article-redirect" role="status">
-    <span class="article-redirect-marker" aria-hidden="true">→</span>
+    <span class="article-redirect-marker">Redirect:</span>
     <NuxtLink to="/">返回首页...</NuxtLink>
   </div>
 </template>
@@ -34,9 +34,7 @@ onBeforeUnmount(() => clearTimeout(redirectTimer));
   width: fit-content;
   max-width: 100%;
   margin: 1.5rem 0;
-  padding: 0.875rem 1rem;
-  border: 1px solid var(--article-border, #d4d4d4);
-  border-radius: 0;
+  padding: 0.5rem 0;
   color: var(--article-muted, #737373);
   font-family: var(--article-font, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace);
   font-size: 0.875rem;
@@ -46,7 +44,8 @@ onBeforeUnmount(() => clearTimeout(redirectTimer));
   a {
     min-width: 0;
     color: inherit;
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
     overflow-wrap: anywhere;
 
     &:hover {
@@ -66,7 +65,6 @@ onBeforeUnmount(() => clearTimeout(redirectTimer));
 
 .dark-mode {
   .article-redirect {
-    border-color: var(--article-border, #363636);
     color: var(--article-muted, #808080);
 
     a:hover {

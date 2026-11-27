@@ -52,7 +52,7 @@ const formattedTime = computed(() => {
 
 <template>
   <div class="article-title">
-    <h1><span class="title-prompt" aria-hidden="true">&gt;</span><span>{{ title }}</span></h1>
+    <h1>{{ title }}</h1>
     <div v-if="formattedTime || client" class="article-meta">
       <span v-if="formattedTime" class="time">{{ formattedTime }}</span>
       <span v-if="client" class="client"><span class="meta-label">client /</span> {{ client }}</span>
@@ -66,29 +66,23 @@ const formattedTime = computed(() => {
   font-family: var(--article-font, monospace);
 }
 h1 {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
   margin: 0;
   color: var(--article-strong, #242424);
   font-size: clamp(1.25rem, 2.5vw, 1.625rem);
   line-height: 1.6;
   font-weight: 600;
   overflow-wrap: anywhere;
-  > span:last-child { min-width: 0; }
+  text-align: left;
 }
-.title-prompt { color: var(--article-accent, #007f73); font-weight: 400; }
 .article-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 0.375rem 1.5rem;
   margin-top: 0.75rem;
-  padding-left: 1.5rem;
   color: var(--article-muted, #737373);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.8;
 }
 .meta-label { color: var(--article-faint, #999); }
 .dark-mode h1 { color: var(--article-strong, #ededed); }
-.dark-mode .title-prompt { color: var(--article-accent, #38e7cd); }
 </style>

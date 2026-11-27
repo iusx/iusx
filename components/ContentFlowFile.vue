@@ -35,7 +35,7 @@ const { data: graph, status, error, refresh } = useAsyncData(
 </template>
 
 <style scoped>
-.flow-file-state { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; padding: 1rem; border: 1px solid var(--flow-border); color: var(--flow-muted); font-size: 0.75rem; overflow-wrap: anywhere; }
+.flow-file-state { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; padding: 0.5rem 0; color: var(--flow-muted); font-size: 0.875rem; overflow-wrap: anywhere; }
 .flow-file-state button { flex: none; padding: 0; border: 0; background: transparent; color: var(--flow-accent); font: inherit; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
 .flow-file-state button:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
 </style>

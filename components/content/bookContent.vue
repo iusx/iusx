@@ -10,6 +10,10 @@ const props = defineProps({
   plan: { type: String, default: "" },
 });
 provide("bookTitle", computed(() => props.title));
+const route = useRoute();
+const articleDocument = inject("articleDocument", null);
+const documentName = computed(() => route.path.split("/").filter(Boolean).pop() || "notes");
+const documentDate = computed(() => unref(articleDocument)?.time || "");
 
 const titleParts = computed(() => {
   const separatorIndex = props.title.indexOf(":");
@@ -162,29 +166,41 @@ const handleSidebarKeydown = event => {
         :aria-modal="isDrawerOpen ? 'true' : undefined" aria-label="书籍信息与目录"
         tabindex="-1" data-lenis-prevent @keydown="handleSidebarKeydown">
         <button class="directory-close" type="button" aria-label="关闭目录" @click="closeDrawer">CLOSE ×</button>
-        <NuxtLink class="library-link" to="/book" @click="closeDrawer">← LIBRARY</NuxtLink>
-        <div class="book-cover">
-          <img v-if="coverSrc && !coverFailed" ref="coverElement" :src="coverSrc" :alt="`${title} 封面`" width="540" height="710"
-            decoding="async" @error="coverFailed = true" />
-          <span v-else class="cover-fallback">{{ title || "暂无封面" }}</span>
-        </div>
-        <div class="book-meta">
-          <p v-if="by">By {{ by }}</p>
-          <span v-if="percentage !== null">{{ percentage === 100 ? 'READ' : 'READING' }} {{ percentage }}%</span>
-          <span v-else-if="plan">{{ plan }}</span>
-        </div>
-        <progress v-if="percentage !== null" class="book-completion" :value="percentage" max="100" aria-label="书籍阅读进度"></progress>
-        <div class="book-title">
-          <p>{{ titleParts.first }}</p>
-          <span v-if="titleParts.second">{{ titleParts.second }}</span>
+        <NuxtLink class="library-link" to="/book" @click="closeDrawer">../ library</NuxtLink>
+        <div class="document-source">
+          <div class="book-cover">
+            <img v-if="coverSrc && !coverFailed" ref="coverElement" :src="coverSrc" :alt="`${title} 封面`" width="540" height="710"
+              decoding="async" @error="coverFailed = true" />
+            <span v-else class="cover-fallback">{{ title || "暂无封面" }}</span>
+          </div>
+          <div class="book-meta">
+            <p v-if="by">By {{ by }}</p>
+            <span v-if="percentage !== null">{{ percentage === 100 ? 'READ' : 'READING' }} {{ percentage }}%</span>
+            <span v-else-if="plan">{{ plan }}</span>
+          </div>
+          <div class="book-title">
+            <p>{{ titleParts.first }}</p>
+            <span v-if="titleParts.second">{{ titleParts.second }}</span>
+          </div>
         </div>
         <div class="dir-layout">
-          <p class="directory-label">DIRECTORY</p>
+          <p class="directory-label">Contents</p>
           <TableOfContents @navigate="navigateToHeading" />
         </div>
       </aside>
       <article ref="contentElement" class="main-con text markdown-content" :inert="isDrawerOpen || undefined">
+        <header class="document-header" data-toc-exclude>
+          <div class="document-meta">
+            <div><span>ritsu / library</span><span class="document-id">{{ documentName }}</span></div>
+            <div class="document-attribution"><span v-if="by">{{ by }}</span><span v-if="documentDate">{{ documentDate }}</span></div>
+          </div>
+          <h1 class="document-title">{{ title }}</h1>
+          <p class="document-category">Personal notes</p>
+        </header>
         <slot />
+        <footer class="document-footer" data-toc-exclude>
+          <span>{{ by || 'ritsu' }}</span><span>[ End of document ]</span>
+        </footer>
       </article>
     </main>
   </div>
@@ -212,31 +228,23 @@ const handleSidebarKeydown = event => {
   --book-accent: var(--article-accent, #38e7cd);
 }
 .book-layout {
-  --sidebar-width: clamp(230px, 25vw, 280px);
+  --sidebar-width: 240px;
   position: relative;
   display: grid;
   grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  column-gap: clamp(3rem, 6vw, 6rem);
   align-items: start;
-  width: min(1240px, 90%);
-  margin: 2.5rem auto 5rem;
-  border: 1px solid var(--book-border);
+  width: min(1120px, 88%);
+  margin: 4rem auto 6rem;
   box-sizing: border-box;
   background: var(--book-bg);
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 var(--sidebar-width);
-    width: 1px;
-    background: var(--book-border);
-    pointer-events: none;
-  }
 }
 .book-info {
   position: sticky;
-  top: 1.5rem;
-  max-height: calc(100dvh - 3rem);
+  top: 3rem;
+  max-height: calc(100dvh - 6rem);
   min-width: 0;
-  padding: 1.5rem;
+  padding: 0 0.5rem 1rem 0;
   box-sizing: border-box;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -263,13 +271,12 @@ const handleSidebarKeydown = event => {
 }
 .library-link {
   display: inline-block;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   color: var(--book-muted);
   text-decoration: none;
   font-family: inherit;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.5;
-  letter-spacing: 0.04em;
   &:hover { color: var(--book-accent); }
 }
 .book-cover {
@@ -277,8 +284,7 @@ const handleSidebarKeydown = event => {
   align-items: center;
   justify-content: center;
   aspect-ratio: 54 / 71;
-  max-width: 220px;
-  border: 1px solid var(--book-border);
+  width: 100%;
   background: transparent;
   overflow: hidden;
   img { display: block; width: 100%; height: 100%; object-fit: contain; }
@@ -296,49 +302,33 @@ const handleSidebarKeydown = event => {
   p { margin: 0; }
   span { font-variant-numeric: tabular-nums; }
 }
-.book-completion {
-  display: block;
-  width: 100%;
-  height: 2px;
-  border: 0;
-  border-radius: 0;
-  appearance: none;
-  background: var(--book-soft-border);
-  color: var(--book-accent);
-  &::-webkit-progress-bar { background: var(--book-soft-border); }
-  &::-webkit-progress-value { background: var(--book-accent); }
-  &::-moz-progress-bar { background: var(--book-accent); }
-}
+.document-source { margin-top: 0; }
 .book-title {
-  margin-top: 1.125rem;
+  margin-top: 0.5rem;
   line-height: 1.65;
   overflow-wrap: anywhere;
-  p { margin: 0; color: var(--book-strong); font-size: 1.0625rem; font-weight: 600; }
+  p { margin: 0; color: var(--book-muted); font-size: 0.8125rem; font-weight: 400; }
   span { display: block; margin-top: 0.25rem; color: var(--book-muted); font-size: 0.8125rem; }
 }
-.dir-layout { margin-top: 1.75rem; }
+.dir-layout { margin-top: 2.5rem; }
 .directory-label {
-  margin: 0 0 0.875rem;
-  padding: 0 0 0.625rem;
-  border-bottom: 1px solid var(--book-border);
+  margin: 0 0 1.125rem;
   color: var(--book-strong);
   font-family: inherit;
-  font-size: 0.6875rem;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 400;
   line-height: 1.4;
-  letter-spacing: 0.08em;
-  &::before { content: "> "; color: var(--book-muted); }
 }
 .main-con.markdown-content {
   display: block;
   width: 100%;
   min-width: 0;
-  padding: clamp(1.5rem, 3vw, 2.75rem);
+  padding: 0;
   box-sizing: border-box;
   color: var(--book-text);
   font-family: inherit;
   font-size: 1rem;
-  line-height: 1.85;
+  line-height: 2;
   overflow-wrap: anywhere;
   :deep(> p), :deep(> .article-section > p) { color: inherit; font-size: inherit; line-height: inherit; }
   :deep(> p), :deep(> .article-section > p) { margin: 1.25rem 0; }
@@ -346,8 +336,43 @@ const handleSidebarKeydown = event => {
   :deep(> .article-section:first-child > :first-child) { margin-top: 0; }
   :deep(:is(h1, h2, h3, h4, h5, h6)) { scroll-margin-top: 2rem; text-transform: none; }
   :deep([data-toc-marker]) { height: 0; margin: 0 !important; padding: 0; overflow: hidden; font-size: 0 !important; }
+  :deep(.text-title[data-toc-exclude]) { display: none; }
   :deep(img) { display: block; max-width: 100%; height: auto; }
   :deep(pre) { overflow-x: auto; }
+}
+.document-header { margin-bottom: 3.75rem; }
+.document-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  color: var(--book-muted);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  > div { min-width: 0; }
+  span { display: block; }
+  .document-id { overflow-wrap: anywhere; }
+  .document-attribution { flex-shrink: 0; text-align: right; }
+}
+.main-con .document-title {
+  margin: 3.5rem 0 0.5rem;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: left;
+}
+.main-con .document-category {
+  margin: 0;
+  color: var(--book-muted);
+  font-size: 0.8125rem;
+  text-align: left;
+}
+.document-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 5rem;
+  color: var(--book-muted);
+  font-size: 0.8125rem;
 }
 .library-link,
 .directory-toggle,
@@ -377,20 +402,19 @@ const handleSidebarKeydown = event => {
 @media (max-width: 1024px) {
   .book-layout {
     display: block;
-    width: min(800px, 92%);
-    margin-top: 4.75rem;
-    &::before { display: none; }
+    width: min(760px, 88%);
+    margin-top: 5.5rem;
   }
-  .main-con.markdown-content { padding: 1.5rem; }
+  .main-con.markdown-content { padding: 0; }
   .main-con.markdown-content :deep(:is(h1, h2, h3, h4, h5, h6)) { scroll-margin-top: 5rem; }
   .directory-toggle {
     display: block;
     position: fixed;
     top: 1rem;
-    left: 4%;
+    left: 6%;
     z-index: 101;
-    padding: 0.625rem 0.875rem;
-    border: 1px solid var(--book-border);
+    padding: 0.625rem 0;
+    border: 0;
     border-radius: 0;
     background: var(--book-bg);
     color: var(--book-text);
@@ -398,7 +422,7 @@ const handleSidebarKeydown = event => {
     font-size: 0.8125rem;
     line-height: 1.4;
     cursor: pointer;
-    &::before { content: "[+] "; color: var(--book-accent); }
+    &::before { content: "≡ "; color: var(--book-accent); }
     &:hover { color: var(--book-strong); }
   }
   .directory-backdrop { display: block; position: fixed; inset: 0; z-index: 1000; background: #0008; }
@@ -411,7 +435,6 @@ const handleSidebarKeydown = event => {
     height: 100dvh;
     max-height: none;
     padding: 1.5rem;
-    border-right: 1px solid var(--book-border);
     box-sizing: border-box;
     background: var(--book-bg);
     transform: translateX(-100%);
@@ -431,7 +454,7 @@ const handleSidebarKeydown = event => {
     min-height: 32px;
     padding: 0 0.375rem;
     margin: -0.375rem -0.375rem 0 0;
-    border: 1px solid var(--book-border);
+    border: 0;
     border-radius: 0;
     background: transparent;
     color: var(--book-muted);
@@ -441,10 +464,12 @@ const handleSidebarKeydown = event => {
     cursor: pointer;
     &:hover { color: var(--book-strong); border-color: var(--book-muted); }
   }
-  .book-cover { max-width: 200px; }
+  .book-cover { max-width: 240px; }
+  .document-header { margin-bottom: 3rem; }
+  .main-con .document-title { margin-top: 2.5rem; }
 }
 @media (max-width: 480px) {
-  .main-con.markdown-content { padding: 1.125rem; font-size: 0.9375rem; }
+  .main-con.markdown-content { font-size: 1rem; }
   .book-layout { margin-bottom: 3rem; }
 }
 @media (prefers-reduced-motion: reduce) {

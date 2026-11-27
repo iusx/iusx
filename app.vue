@@ -9,7 +9,7 @@ const isReadingPage = computed(() => route.path.startsWith("/book/"));
 const pagePath = computed(() => route.path.replace(/\/+$/, "") || "/");
 const isContentDetail = computed(() => pagePath.value !== "/"
   && route.matched.some(record => record.name === "slug"));
-const showHackerAmbient = computed(() => !isContentDetail.value && pagePath.value !== "/des");
+const showHackerAmbient = computed(() => !isContentDetail.value && !["/des", "/link"].includes(pagePath.value));
 const reducedMotion = usePreferredReducedMotion();
 const pageTransitionActive = ref(false);
 // The app mounts once per document load, so every entry route gets the intro

@@ -49,13 +49,13 @@ onNuxtReady(() => {
   --image-caption: var(--article-muted, #656565);
   --image-emphasis: var(--article-strong, #242424);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-areas: "caption media";
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "media" "caption";
   align-items: start;
-  gap: 1.25rem;
+  gap: 0.75rem;
   width: 100%;
   min-width: 0;
-  margin: 1.75rem 0;
+  margin: 2rem 0;
   border-radius: 0;
   font-family: var(--article-font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
   text-align: left;
@@ -69,7 +69,7 @@ onNuxtReady(() => {
   width: 100%;
   min-width: 0;
   padding: 0;
-  border: 1px solid var(--article-border, #d4d4d4);
+  border: 0;
   background: var(--image-surface);
   color: inherit;
   font: inherit;
@@ -86,7 +86,7 @@ onNuxtReady(() => {
   width: auto;
   max-width: 100%;
   height: auto;
-  margin: 0 auto;
+  margin: 0;
   opacity: 1;
   border-radius: 0;
 }
@@ -98,8 +98,7 @@ onNuxtReady(() => {
   align-items: stretch;
   gap: 0.625rem;
   min-width: 0;
-  padding: 0 0 0 0.75rem;
-  border-left: 1px solid var(--article-soft-border, #e8e8e8);
+  padding: 0;
   color: var(--image-caption);
   font-size: 0.875rem;
   line-height: 1.8;
@@ -129,7 +128,7 @@ onNuxtReady(() => {
   background: transparent;
   color: var(--article-accent, #007f73);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   text-decoration: none;
   white-space: nowrap;
@@ -141,11 +140,10 @@ onNuxtReady(() => {
 
 .image-tip-fallback {
   grid-area: media;
-  padding: 2.5rem 1rem;
-  border: 1px solid var(--article-border, #d4d4d4);
+  padding: 2.5rem 0;
   background: var(--image-surface);
   color: var(--image-caption);
-  text-align: center;
+  text-align: left;
   font-size: 0.875rem;
 }
 
@@ -156,16 +154,8 @@ onNuxtReady(() => {
 
 .dark-mode .image-tip .image-tip-image { opacity: 0.7; }
 
-.image-tip:not(:has(.image-tip-description)) {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "media" "caption";
-}
-
 @media (max-width: 1024px) {
   .image-tip {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "media" "caption";
-    gap: 0.75rem;
     margin-block: 1.5rem;
   }
 }

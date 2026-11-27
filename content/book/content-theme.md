@@ -12,7 +12,9 @@ plan: "100,100"
 ::text-title{:t="title"}
 ::
 
-文章组件速查。每项附写法与效果，统一跟随黑白主题、等宽字体和青色点缀，无需手动导入。
+文章组件速查。每项附写法与效果，沿用 RFC 文档的左对齐排版、章节编号和留白，保留黑白主题、等宽字体和青色点缀，无需手动导入。
+
+摘要、提示和摘录以文字标注区分；代码和图片以内容为主。表格横线、时间线连接线与分组括线、流程图分组边界与箭头保留，用于表达结构和归属。
 
 属性写 `title="文字"` 传固定值，`:title="title"` 引用文章 frontmatter；正文放在开始与结束标记之间。嵌套时外层使用更多冒号。
 
@@ -22,7 +24,7 @@ plan: "100,100"
 | --- | --- |
 | `book-content` | 本页布局：封面、作者、阅读进度、目录及正文。`title`、`img`、`by`、`plan`；`plan="25,100"` 表示已读 25% |
 | `main-content` | 普通文章布局：标题、日期、项目及可选封面。`title`、`time`、`client`、`img`、`info`、`types` |
-| `table-of-contents` | `book-content` 已自动包含；从正文标题生成可点击目录，随正文滚动高亮当前小节及所属章节，手机通过“目录”按钮打开 |
+| `table-of-contents` | `book-content` 已自动包含；从正文标题生成 `1.`、`1.1.` 层级编号和可点击目录，随正文滚动高亮当前小节及所属章节，手机通过“目录”按钮打开 |
 
 两种外层布局选一种，不需要相互嵌套：
 
@@ -42,7 +44,7 @@ plan: "100,100"
 
 ### 标题与摘要
 
-`text-title` 默认生成带 `#` 的二级标题；`type="2"` 为三级标题。`id` 可指定锚点。`text-sum` 用 `desc` 显示 overview 摘要。
+`text-title` 默认生成二级标题，`type="2"` 为三级标题；在书籍文章中编号与目录一致。`id` 可指定锚点。`text-sum` 用 `desc` 显示 Abstract 摘要，直接融入正文。
 
 ```md
 ::text-title{t="标题示例" type="2" id="heading-demo"}
@@ -59,7 +61,7 @@ plan: "100,100"
 
 ### 提示
 
-`text-tip` 默认左侧细线；`type="big"` 改为完整边框。内容支持 Markdown。
+`text-tip` 默认以 Note 标注补充说明；`type="big"` 使用青色 Important 标注强调。内容支持 Markdown，窄屏标注排在正文上方。
 
 ```md
 ::text-tip
@@ -80,7 +82,7 @@ plan: "100,100"
 
 ### 摘录
 
-`wise-info` 显示主题、引用正文与来源；`topic`、`by` 均可省略。
+`wise-info` 以 Quotation 标注摘录，正文缩进，来源列在下方；`topic`、`by` 均可省略。
 
 ```md
 ::wise-info{topic="阅读笔记" by="ritsu"}
@@ -96,7 +98,7 @@ plan: "100,100"
 
 ### 图文注释
 
-`img-tip` 大屏左文右图，小屏图片在上；点击可查看原图。`url` 相对路径从 `/img/book/` 读取，`text` 为图注，`alt` 为图片描述。
+`img-tip` 先显示图片，下方左对齐显示图注；图片最大不超过正文宽度，点击可查看原图。`url` 相对路径从 `/img/book/` 读取，`text` 为图注，`alt` 为图片描述。
 
 ```md
 ::img-tip{url="gimp/test.jpg" text="图 1：图像修复工具对比。" alt="图像修复结果对比"}
@@ -144,11 +146,11 @@ plan: "100,100"
 
 图片也可传 `/img/...` 完整路径。`img-tip.text`、`text-space.info` 支持 HTML；属性中的 `**文字**` 不会作为 Markdown 渲染。
 
-## 信息卡片
+## 信息记录
 
 ### 漏洞记录
 
-`cve-info` 显示编号、CWE 链接及说明。`cwe` 多个编号用逗号分隔；`to` 为编号链接；`type` 的数值 1、2、3 分别为灰色、深色、青色色标。
+`cve-info` 显示编号、CWE 链接及说明。`cwe` 多个编号用逗号分隔；`to` 为编号链接；`type` 的数值 1、2、3 分别使用灰色、深色、青色强调。
 
 ```md
 ::cve-info{cve="CVE-2022-36114" cwe="400" :type="3"}
@@ -324,6 +326,34 @@ fn main() {
 ::::
 
 `kind`：`fact` 事实、`intent` 意图、`finding` 发现、`digest` 摘要、`goal` 目标、`note` 记录。常用 `status`：`pending/open` 待处理、`active` 进行中、`confirmed` 已确认、`done` 已完成、`blocked` 已阻塞；也支持自定义文字。条目可加 `title`、`ago`、`datetime`、`details-label`，`:expanded="true"` 默认展开详情。
+
+### 事件分组
+
+`timeline-group` 将相关条目归为一段，左侧青色括线标出整组范围，组内用竖线连接事件，并根据组内 `datetime` 显示经过的天数。点击标题可折叠，`:expanded="false"` 默认收起。
+
+````md
+:::::text-timeline{title="修订记录"}
+::::timeline-group{title="排版整理"}
+:::timeline-item{time="10-22" datetime="2026-10-22" title="整理组件"}
+统一文字标注与正文间距。
+:::
+:::timeline-item{time="10-24" datetime="2026-10-24" title="完成检查" status="done"}
+检查文章中的图片、代码和表格。
+:::
+::::
+:::::
+````
+
+:::::text-timeline{title="修订记录"}
+::::timeline-group{title="排版整理"}
+:::timeline-item{time="10-22" datetime="2026-10-22" title="整理组件"}
+统一文字标注与正文间距。
+:::
+:::timeline-item{time="10-24" datetime="2026-10-24" title="完成检查" status="done"}
+检查文章中的图片、代码和表格。
+:::
+::::
+:::::
 
 ### 读取 JSON
 
